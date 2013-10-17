@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="This is how I would describe last night in one sentence.?"
+        android:text="Describe your experience last night using three words"
         android:gravity="center"
         android:textSize="20sp" />
 
@@ -27,29 +27,49 @@
     android:layout_weight="1"
      >
 
-	<RelativeLayout
+	<LinearLayout
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:orientation="horizontal" >
+	    android:orientation="vertical"
+	    android:weightSum="3"
+	    >
 
-	    <Button
-	        android:id="@+id/bDS2Record"
-	        android:layout_width="50sp"
-	        android:layout_height="50sp"
-	        android:background="@drawable/record"
-	        android:layout_centerInParent="true"
-	        android:text="Yes" />
-
-	    <TextView
-	        android:id="@+id/tvDS2Time"
+	    <EditText
+	        android:id="@+id/etDS2Word1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_below="@+id/bDS2Record"
-	        android:layout_centerHorizontal="true"
-	       	android:textSize="20sp" 
-	        android:text="00:00" />
+	        android:layout_weight="1"
+	        android:textSize="15sp"
+	        android:layout_gravity="center"
+	        android:gravity="center"
+	        android:hint="1st Word"
+	        android:ems="10" >
+	        <requestFocus />
+	    </EditText>
 
-	</RelativeLayout>
+	    <EditText
+	        android:id="@+id/etDS2Word2"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textSize="15sp"
+	        android:layout_gravity="center"
+	        android:gravity="center"
+	        android:hint="2nd Word"
+	        android:ems="10" />
+
+	    <EditText
+	        android:id="@+id/etDS2Word3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"
+	        android:textSize="15sp"
+	        android:layout_gravity="center"
+	        android:gravity="center"
+	        android:hint="3rd Word"
+	        android:ems="10" />
+
+	</LinearLayout>
 
 </RelativeLayout>
 <RelativeLayout 
