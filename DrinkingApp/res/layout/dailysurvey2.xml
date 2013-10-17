@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:weightSum="5">
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="This is how I would describe last night in one sentence.?"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+</RelativeLayout>
+<RelativeLayout 
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_weight="1"
+     >
+
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="horizontal" >
+
+	    <Button
+	        android:id="@+id/bDS2Record"
+	        android:layout_width="50sp"
+	        android:layout_height="50sp"
+	        android:background="@drawable/record"
+	        android:layout_centerInParent="true"
+	        android:text="Yes" />
+
+	    <TextView
+	        android:id="@+id/tvDS2Time"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/bDS2Record"
+	        android:layout_centerHorizontal="true"
+	       	android:textSize="20sp" 
+	        android:text="00:00" />
+
+	</RelativeLayout>
+
+</RelativeLayout>
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:layout_weight="1">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="How enjoyable was last night?"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+</RelativeLayout>
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:layout_weight="1">
+
+    <SeekBar
+        android:id="@+id/sbDS2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true" />
+    <TextView
+        android:id="@+id/tvDS2Test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Scale"
+        android:layout_below="@+id/sbDS2"
+        android:gravity="center"
+        android:textSize="10sp" />
+</RelativeLayout>
+<RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal" 
+    android:layout_weight="1">
+
+	    <Button
+	        android:id="@+id/bDS2Finish"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerInParent="true"
+	        android:text="Finish" />
+
+</RelativeLayout>
+</LinearLayout>
