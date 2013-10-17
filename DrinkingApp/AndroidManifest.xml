@@ -53,6 +53,14 @@
             android:name=".DailySurvey2"
             android:label="@string/app_name" >
         </activity>
+                <activity
+            android:name=".DailySurvey3"
+            android:label="@string/app_name" >
+        </activity>
+                <activity
+            android:name=".DailySurvey4"
+            android:label="@string/app_name" >
+        </activity>
     </application>
     
 
