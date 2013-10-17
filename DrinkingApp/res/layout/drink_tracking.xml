@@ -10,7 +10,7 @@
         android:layout_height="90dp"
         android:contentDescription="@string/drink_counter_desc"
         android:scaleType="fitXY"
-        android:onClick="hadDrink"
+        android:onClick="hadDrink"></ImageButton>
 
     <Button
         android:id="@+id/finish_drink"
