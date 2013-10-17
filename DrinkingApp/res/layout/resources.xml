@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@android:id/tabcontent"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent" >
+        <ScrollView         
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/bMenuAssessment"
+        android:background="#7b9aad"
+         >
+
+<RelativeLayout
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="#7b9aad"
+ >
+
+    <Button
+        android:id="@+id/bCallGannett"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call Gannett" 
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>
+    </ScrollView>
+<RelativeLayout
+    android:background="#717171"
+    android:layout_width="match_parent"
+    android:layout_height="60sp"
+    android:layout_gravity="bottom">
+
+    <RelativeLayout
+   	android:background="#717171"
+   	android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/bMenuBottomHome"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+         android:textSize="12sp" 
+        android:text="Home" />
+    <Button
+        android:id="@+id/bMenuBottomTracking"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_toRightOf="@+id/bMenuBottomHome"
+        android:background="@drawable/trackingmenubutton"
+        android:text="" />
+    <Button
+        android:id="@+id/bMenuBottomAssessment"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_toRightOf="@+id/bMenuBottomTracking"
+        android:background="@drawable/assessmenubutton"
+        android:text="" />
+
+    <Button
+        android:id="@+id/bMenuBottomVisualize"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_toRightOf="@+id/bMenuBottomAssessment"
+        android:background="@drawable/visualizemenubutton"
+        android:text="" />
+
+    <Button
+        android:id="@+id/bMenuBottomSettings"
+        android:layout_width="60sp"
+        android:layout_height="60sp"
+        android:layout_toRightOf="@+id/bMenuBottomVisualize"
+		android:background="@drawable/settingsmenubutton"
+        android:text="" />
+         
+</RelativeLayout>
+</RelativeLayout>
+    </FrameLayout>
