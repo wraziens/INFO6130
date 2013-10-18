@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvDS5Title1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Night I..."
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/cbDS5Box1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Myself only"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box1"
+            android:text="Relatives/Family"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box2"
+            android:text="Male Friend(s)"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box3"
+            android:text="Female Friend(s)"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box4"
+            android:text="Strangers"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box5"
+            android:text="Others (Specify):"
+            android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etDS5Other1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box5"
+            android:layout_toRightOf="@+id/cbDS5Box6"
+            android:ems="6"
+            android:gravity="center"
+            android:hint="Enter Text"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tvDS5Title2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I went out drinking because I wanted to:"
+        android:textSize="20sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <CheckBox
+            android:id="@+id/cbDS5Box7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Celebrate an occasion"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box7"
+            android:text="Relax"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box8"
+            android:text="Be social"
+            android:textSize="20sp" />
+
+        <CheckBox
+            android:id="@+id/cbDS5Box10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box9"
+            android:text="Other(Specify)"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/etDS5Other2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cbDS5Box9"
+            android:layout_toRightOf="@+id/cbDS5Box10"
+            android:ems="6"
+            android:gravity="center"
+            android:hint="Enter Text"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/bDS5Finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Finish" />
+    </LinearLayout>
+
+</LinearLayout>

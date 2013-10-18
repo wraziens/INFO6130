@@ -79,27 +79,27 @@
                 android:text="Public Event(sports, party, concert, etc.)"
                 android:textSize="20sp" />
 
-                <RadioButton
-                    android:id="@+id/rDS4radio8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Other(Specify):"
-                    android:textSize="20sp" />
-
-
+            <RadioButton
+                android:id="@+id/rDS4radio8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Other(Specify):"
+                android:textSize="20sp" />
         </RadioGroup>
-                <EditText
-                    android:id="@+id/etDS4Other"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="6"
-                    android:ems="6"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
-                    android:hint="Enter Text"
-                    android:gravity="center"
-                    android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/etDS4Other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_weight="6"
+            android:ems="6"
+            android:gravity="center"
+            android:hint="Enter Text"
+            android:textSize="20sp" />
+
         <TextView
             android:id="@+id/tvDS4Hidden"
             android:layout_width="wrap_content"

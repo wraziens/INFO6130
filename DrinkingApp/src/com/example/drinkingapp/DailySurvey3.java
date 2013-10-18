@@ -67,7 +67,7 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 		//checks which checklist is check and input 
 		//that value in a string to pass onto the database function to parse
 		case R.id.bDS2Finish:
-			for (int x=0;x<8;x++){
+			for (int x=0;x<optionList.size();x++){
 				if(optionList.get(x).isChecked()){
 					words.add(optionList.get(x).getText().toString());
 				}
