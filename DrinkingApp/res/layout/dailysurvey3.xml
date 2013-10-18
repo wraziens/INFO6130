@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvDS3Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Last Night I..."
+        android:textSize="20sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        android:orientation="vertical"
+        android:weightSum="8" >
+
+        <CheckBox
+            android:id="@+id/cbDS3Box1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            
+            android:text="Forgot or escaped from my responsibilities or problems" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Blacked out" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Felt closer/bonded to my friends" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Met new people" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Felt more attractive" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Felt less inhibited" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Was loud and belligerent" />
+
+        <CheckBox
+            android:id="@+id/cbDS3Box8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Got sloppy and did something I now regret" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/bDS3Finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Finish" 
+            android:layout_gravity="center"
+            
+            />
+    </LinearLayout>
+
+</LinearLayout>

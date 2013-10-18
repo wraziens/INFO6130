@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tvDS3Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="I primarily drank at a..."
+        android:textSize="25sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="350sp"
+        android:orientation="vertical"
+        android:weightSum="10" >
+
+        <RadioGroup
+            android:id="@+id/rgDS4"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:weightSum="8" >
+
+            <RadioButton
+                android:id="@+id/rDS4radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Bar"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Restaurant"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="My own residence"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Other’s residence"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Work/School"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Club/Fraternity/Sorority Event"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Public Event(sports, party, concert, etc.)"
+                android:textSize="20sp" />
+
+            <RadioButton
+                android:id="@+id/rDS4radio8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Other(Specify):"
+                android:textSize="20sp" />
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/etDS4Other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_weight="6"
+            android:ems="6"
+            android:gravity="center"
+            android:hint="Enter Text"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tvDS4Hidden"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="N/A"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/bDS3Finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Finish" />
+    </LinearLayout>
+
+</LinearLayout>
