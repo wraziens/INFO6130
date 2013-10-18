@@ -71,6 +71,14 @@
             android:name=".DailySurvey5"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".DailySurvey6"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".DailySurveySleep"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
