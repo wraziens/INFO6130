@@ -36,7 +36,7 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.dailysurvey3);
+		setContentView(R.layout.dailysurvey5);
 		finish=(Button)findViewById(R.id.bDS5Finish);
 		finish.setOnClickListener(this);
 		option1=(CheckBox)findViewById(R.id.cbDS5Box1);
@@ -49,6 +49,8 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 		option8=(CheckBox)findViewById(R.id.cbDS5Box8);
 		option9=(CheckBox)findViewById(R.id.cbDS5Box9);
 		option10=(CheckBox)findViewById(R.id.cbDS5Box10);
+		otherTop=(EditText)findViewById(R.id.etDS5Other1);
+		otherBot=(EditText)findViewById(R.id.etDS5Other2);
 		
 		optionListTop.add(option1);
 		optionListTop.add(option2);

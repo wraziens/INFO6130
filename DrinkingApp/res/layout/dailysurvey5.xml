@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cbDS5Box9"
-            android:text="Other(Specify)"
+            android:text="Others (Specify)"
             android:textSize="20sp" />
         <EditText
             android:id="@+id/etDS5Other2"

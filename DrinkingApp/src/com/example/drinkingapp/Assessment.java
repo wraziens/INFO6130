@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 public class Assessment extends ListActivity{
 
-	String surveys[]={"DailySurvey1","DailySurvey2","DailySurvey3","DailySurvey4","DailySurvey5"};
+	String surveys[]={"DailySurvey1","DailySurvey2","DailySurvey3","DailySurvey4","DailySurvey5","DailySurvey6","DailySurveySleep"};
 	String placement;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
