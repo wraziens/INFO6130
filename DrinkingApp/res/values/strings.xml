@@ -6,5 +6,6 @@
     <string name="drink_counter_desc">Drink Counter</string>
     <string name="hello_world">Hello World</string>
     <string name="done_drinking">Finished Drinking</string>
-
+    <string name="resourcebutton">Resources</string>
+	
 </resources>
