@@ -15,14 +15,14 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class DailySurveySleep extends Activity implements OnClickListener,OnCheckedChangeListener{
+public class DailySurveySocial extends Activity implements OnClickListener,OnCheckedChangeListener{
 
 	Button finish;
-	SeekBar sleepQualityBar;
+	SeekBar socialQualityBar;
 	TextView test;
-	RadioGroup sleepGroup,coffeeGroup;
-	RadioButton yes1,yes2,no1,no2;
-	String sleepQuestion,sleepResult="0",coffeeQuestion;
+	RadioGroup socialGroup;
+	RadioButton yes,no;
+	String socialQuestion,socialResult="0";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,31 +31,31 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.dailysurveysleep);
+		setContentView(R.layout.dailysurveysocial);
 
-		finish=(Button)findViewById(R.id.bDSSleepFinish);
-		test=(TextView)findViewById(R.id.tvDSSleepTest);
-		sleepQualityBar=(SeekBar)findViewById(R.id.sbDSSleep);
+		finish=(Button)findViewById(R.id.bDSSocialFinish);
+		test=(TextView)findViewById(R.id.tvDSSocialTest);
+		socialQualityBar=(SeekBar)findViewById(R.id.sbDSSocial);
 		
 		
 
 		finish.setOnClickListener(this);
-		sleepQualityBar.setProgress(0); //this is line 19
-		sleepQualityBar.setMax(100);
+		socialQualityBar.setProgress(0); //this is line 19
+		socialQualityBar.setMax(100);
 		
 		initializeSeekBar();
 	}
 
 	private void initializeSeekBar() {
 		// TODO Auto-generated method stub
-		sleepQualityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+		socialQualityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
 
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test.setText(String.valueOf(progress));
-				sleepResult=String.valueOf(progress);
+				socialResult=String.valueOf(progress);
 			}
 
 			@Override
@@ -102,11 +102,8 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 	public void onCheckedChanged(RadioGroup group, int checkedId) {
 		// TODO Auto-generated method stub
 		switch(group.getId()){
-			case R.id.rgDSSleep1:
-				sleepQuestion=((RadioButton)findViewById(checkedId)).getText().toString();
-				break;
-			case R.id.rgDSSleep2:
-				coffeeQuestion=((RadioButton)findViewById(checkedId)).getText().toString();
+			case R.id.rgDSExercise:
+				socialQuestion=((RadioButton)findViewById(checkedId)).getText().toString();
 				break;
 		}
 	}

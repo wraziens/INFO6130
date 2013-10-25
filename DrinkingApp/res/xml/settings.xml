@@ -5,14 +5,25 @@
         android:defaultValue="false"
         android:key="initialSurvey"
         android:summary="for the splash screen"
-        android:title="InitialSurvey" />
+        android:title="Initial Survey" />
 
-    <MultiSelectListPreference
-        android:dialogTitle="Dialog Title"
-        android:entries="@array/list"
-        android:entryValues="@array/lValues"
-        android:key="measuresPicked"
-        android:summary="Choose how to evaluate their status"
-        android:title="Title" />
+    <PreferenceCategory android:title="Evaluation Categories" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="sleepInEvaluation"
+            android:summary="Sleep" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="exerciseInEvaluation"
+            android:summary="Exercise" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="productivityInEvaluation"
+            android:summary="Productivity" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="socialInEvaluation"
+            android:summary="Social" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
