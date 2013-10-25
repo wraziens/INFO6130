@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="initialSurvey"
+        android:summary="for the splash screen"
+        android:title="InitialSurvey" />
+
+    <MultiSelectListPreference
+        android:dialogTitle="Dialog Title"
+        android:entries="@array/list"
+        android:entryValues="@array/lValues"
+        android:key="measuresPicked"
+        android:summary="Choose how to evaluate their status"
+        android:title="Title" />
+
+</PreferenceScreen>
