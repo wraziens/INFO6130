@@ -138,6 +138,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return handleCursor(cursor);
 	}
 	
+	public List<DatabaseStore> getVarValuesForMonth(String variable, Integer month, Integer year) throws ParseException{
+		//get reference to the database
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "Select * FROM " + TABLE_QUES + "WHERE " + 
+				QUES_KEY_VAR + " = " + variable + ", " +
+				QUES_KEY_MONTH + " = " + month + ", " + 
+				QUES_KEY_YEAR + " = " + year;
+		Cursor cursor = db.rawQuery(query, null);
+		return handleCursor(cursor);
+	}	
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 
