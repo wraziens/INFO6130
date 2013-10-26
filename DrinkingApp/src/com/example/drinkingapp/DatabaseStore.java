@@ -1,6 +1,10 @@
+package com.example.drinkingapp;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
 
 public class DatabaseStore {
 	public String value;
@@ -57,5 +61,18 @@ public class DatabaseStore {
 	
 	public static DatabaseStore DatabaseRadioStore(String variable, String value, Date date){
 		return new DatabaseStore(variable, value, date, "Radio" );
+	}
+	
+	public static DatabaseStore FromDatabase(String variable, String value, Date date, 
+			String type){
+		return new DatabaseStore(variable, value, date, type);
+	}
+	
+	public static Date GetDate(Integer month, Integer day, 
+			Integer year, String time) throws ParseException{
+		String date_string = year.toString() + "-" + month.toString() + "-" +
+			day.toString() + " " + time;
+		Date date =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date_string);
+		return date;
 	}
 }

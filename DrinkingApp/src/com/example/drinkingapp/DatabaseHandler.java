@@ -1,9 +1,9 @@
 package com.example.drinkingapp;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -71,34 +71,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(CREATE_QUES);
 	}
 	
-	public void addTextQuestion(Date date, String value, String variable_name){
-		String type = text_type;
-		//extract the values from Date to store in db.
-		SimpleDateFormat day_ft = new SimpleDateFormat("dd", Locale.US);
-		SimpleDateFormat month_ft = new SimpleDateFormat("MM", Locale.US);
-		SimpleDateFormat year_ft = new SimpleDateFormat("yyyy", Locale.US);
-		SimpleDateFormat day_week_ft = new SimpleDateFormat("E", Locale.US);
-		SimpleDateFormat time_ft = new SimpleDateFormat("HH:mm:ss", Locale.US);
-		
-		Integer day_val = Integer.parseInt(day_ft.format(date));
-		Integer month_val = Integer.parseInt(month_ft.format(date));
-		Integer year_val = Integer.parseInt(year_ft.format(date));
-		String day_week = day_week_ft.format(date);
-		String time = time_ft.format(date);
-		
+	public void addTextQuestion(DatabaseStore store){
 		//get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
 		
 		//create the ContentValues to hold column values
 		ContentValues values = new ContentValues();
-		values.put(QUES_KEY_DAY, day_val);
-		values.put(QUES_KEY_MONTH, month_val);
-		values.put(QUES_KEY_YEAR, year_val);
-		values.put(QUES_KEY_TIME, time);
-		values.put(QUES_KEY_DAY_WEEK, day_week);
-		values.put(QUES_KEY_VALUE,value);
-		values.put(QUES_KEY_TYPE, type);
-		values.put(QUES_KEY_VAR, variable_name);
+		values.put(QUES_KEY_DAY, store.day);
+		values.put(QUES_KEY_MONTH, store.month);
+		values.put(QUES_KEY_YEAR, store.year);
+		values.put(QUES_KEY_TIME, store.time);
+		values.put(QUES_KEY_DAY_WEEK, store.day_week);
+		values.put(QUES_KEY_VALUE, store.value);
+		values.put(QUES_KEY_TYPE, store.type);
+		values.put(QUES_KEY_VAR, store.variable);
 		
 		//insert the values into the table
 		db.insert(TABLE_QUES, null, values);
@@ -107,25 +93,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 	
-	public String getAllVarValue(String variable){
-		//Get reference to the db
-		SQLiteDatabase db = this.getWritableDatabase();
-		
-		String type = text_type;
-		
-		String query = "Select value FROM " + TABLE_QUES + "WHERE " + 
-				QUES_KEY_TYPE + " = " + type + ", " +
-				QUES_KEY_VAR + " = " + variable + ", ";
-				
-		Cursor cursor = db.rawQuery(query, null);
-		
+	private List<DatabaseStore> handleCursor(Cursor cursor) throws ParseException{
 		//check to see if our query returned values
+		DatabaseStore store = null;
+		ArrayList<DatabaseStore> store_list = new ArrayList<DatabaseStore>();
 		if(cursor.moveToFirst()){
-			String value = cursor.getString(0);
-			return value;
+			do{
+				String variable = cursor.getString(1);
+				Integer month = cursor.getInt(2);
+				Integer day = cursor.getInt(3);
+				Integer year = cursor.getInt(4);
+				String time = cursor.getString(6);
+				String type = cursor.getString(7);
+				String value = cursor.getString(8);
+				Date date = DatabaseStore.GetDate(month, day, year, time);
+				store = DatabaseStore.FromDatabase(variable, value, date, type); 
+				store_list.add(store);
+			} while (cursor.moveToNext());
 		}else{
 			return null;
 		}
+		return store_list;		
+	}
+	
+	public List<DatabaseStore> getAllVarValue(String variable) throws ParseException{
+		//Get reference to the database
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "Select * FROM " + TABLE_QUES + "WHERE " + 
+				QUES_KEY_VAR + " = " + variable + ", ";
+		Cursor cursor = db.rawQuery(query, null);
+		return handleCursor(cursor);
+	}
+	
+	public List<DatabaseStore> getVarValuesForDay(String variable, Integer month, 
+			Integer day, Integer year) throws ParseException{
+		//get reference to the database
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "Select * FROM " + TABLE_QUES + "WHERE " + 
+				QUES_KEY_VAR + " = " + variable + ", " +
+				QUES_KEY_DAY + " = " + day + ", " + 
+				QUES_KEY_MONTH + " = " + month + ", " + 
+				QUES_KEY_YEAR + " = " + year;
+		Cursor cursor = db.rawQuery(query, null);
+		return handleCursor(cursor);
 	}
 	
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
