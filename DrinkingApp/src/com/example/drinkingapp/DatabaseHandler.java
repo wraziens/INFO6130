@@ -34,13 +34,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String QUES_KEY_TYPE= "type";
 	private static final String QUES_KEY_VALUE = "value";
 	
-	//values for the question types the db can handle
-	private static final String text_type = "text";
-	private static final String multi_type = "multi";
-	private static final String slider_type = "slider";
-	private static final String radio_type = "radio";
-	private static final String number_type = "number";
-	
 	public DatabaseHandler(Context context){
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
@@ -51,7 +44,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		String CREATE_MULTI = "CREATE TABLE multichoice (" +
 				"id INTEGER PRIMARY KEY AUTOINCREMENT, " +
 				"question_id INTEGER, " + 
-				"value TEXT ) ";
+				"value TEXT ); ";
 		//create the mutli-answer table
 		db.execSQL(CREATE_MULTI);
 		
@@ -65,10 +58,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				"day_week TEXT, " + 
 				"time TEXT, " + 
 				"type TEXT, " +
-				"value TEXT )";
+				"value TEXT );";
 
 		//create the question table
 		db.execSQL(CREATE_QUES);
+	}
+	
+	//Adds an integer value to the database
+	public void addValue(String variable, Integer int_value){
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable, int_value.toString(), date);
+		addTextQuestion(ds);
 	}
 	
 	public void addTextQuestion(DatabaseStore store){
@@ -85,7 +85,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(QUES_KEY_VALUE, store.value);
 		values.put(QUES_KEY_TYPE, store.type);
 		values.put(QUES_KEY_VAR, store.variable);
-		
 		//insert the values into the table
 		db.insert(TABLE_QUES, null, values);
 		
@@ -93,58 +92,67 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 	
-	private List<DatabaseStore> handleCursor(Cursor cursor) throws ParseException{
+	private List<DatabaseStore> handleCursor(Cursor cursor){
 		//check to see if our query returned values
-		DatabaseStore store = null;
-		ArrayList<DatabaseStore> store_list = new ArrayList<DatabaseStore>();
-		if(cursor.moveToFirst()){
-			do{
-				String variable = cursor.getString(1);
-				Integer month = cursor.getInt(2);
-				Integer day = cursor.getInt(3);
-				Integer year = cursor.getInt(4);
-				String time = cursor.getString(6);
-				String type = cursor.getString(7);
-				String value = cursor.getString(8);
-				Date date = DatabaseStore.GetDate(month, day, year, time);
-				store = DatabaseStore.FromDatabase(variable, value, date, type); 
-				store_list.add(store);
-			} while (cursor.moveToNext());
-		}else{
+		try{
+			DatabaseStore store = null;
+			ArrayList<DatabaseStore> store_list = new ArrayList<DatabaseStore>();
+			if(cursor.moveToFirst()){
+				do{
+					String variable = cursor.getString(1);
+					Integer month = cursor.getInt(2);
+					Integer day = cursor.getInt(3);
+					Integer year = cursor.getInt(4);
+					String time = cursor.getString(6);
+					String type = cursor.getString(7);
+					String value = cursor.getString(8);
+					Date date = DatabaseStore.GetDate(month, day, year, time);
+					store = DatabaseStore.FromDatabase(variable, value, date, type); 
+					store_list.add(store);
+				} while (cursor.moveToNext());
+			}else{
+				return null;
+			}
+			return store_list;
+		} catch (ParseException pe) {
+			System.out.println("Cannot parse string.");
 			return null;
 		}
-		return store_list;		
 	}
 	
-	public List<DatabaseStore> getAllVarValue(String variable) throws ParseException{
+	public List<DatabaseStore> getAllVarValue(String variable){
 		//Get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "Select * FROM " + TABLE_QUES + "WHERE " + 
-				QUES_KEY_VAR + " = " + variable + ", ";
+		String query = "Select * FROM " + TABLE_QUES + " WHERE " + 
+				QUES_KEY_VAR + " = " + variable + "; ";
 		Cursor cursor = db.rawQuery(query, null);
 		return handleCursor(cursor);
 	}
 	
 	public List<DatabaseStore> getVarValuesForDay(String variable, Integer month, 
-			Integer day, Integer year) throws ParseException{
+			Integer day, Integer year){
 		//get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "Select * FROM " + TABLE_QUES + "WHERE " + 
-				QUES_KEY_VAR + " = " + variable + ", " +
-				QUES_KEY_DAY + " = " + day + ", " + 
-				QUES_KEY_MONTH + " = " + month + ", " + 
-				QUES_KEY_YEAR + " = " + year;
+		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + 
+				QUES_KEY_VAR + "='" + variable + "' AND " +
+				QUES_KEY_DAY + "=" + day + " AND " + 
+				QUES_KEY_MONTH + "=" + month + " AND " + 
+				QUES_KEY_YEAR + "=" + year;
 		Cursor cursor = db.rawQuery(query, null);
-		return handleCursor(cursor);
+		if (cursor.getCount() == 0){
+			return null;
+		}else{
+			return handleCursor(cursor);
+		}
 	}
 	
-	public List<DatabaseStore> getVarValuesForMonth(String variable, Integer month, Integer year) throws ParseException{
+	public List<DatabaseStore> getVarValuesForMonth(String variable, Integer month, Integer year){
 		//get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "Select * FROM " + TABLE_QUES + "WHERE " + 
-				QUES_KEY_VAR + " = " + variable + ", " +
-				QUES_KEY_MONTH + " = " + month + ", " + 
-				QUES_KEY_YEAR + " = " + year;
+		String query = "Select * FROM " + TABLE_QUES + " WHERE " + 
+				QUES_KEY_VAR + "='" + variable + "' AND " +
+				QUES_KEY_MONTH + "=" + month + " AND " + 
+				QUES_KEY_YEAR + "=" + year + ";";
 		Cursor cursor = db.rawQuery(query, null);
 		return handleCursor(cursor);
 	}	
