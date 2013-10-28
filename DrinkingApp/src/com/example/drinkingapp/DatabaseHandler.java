@@ -68,10 +68,44 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void addValue(String variable, Integer int_value){
 		Date date = new Date();
 		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable, int_value.toString(), date);
-		addTextQuestion(ds);
+		addQuestion(ds);
 	}
 	
-	public void addTextQuestion(DatabaseStore store){
+	//Adds an integer value to the database
+	public void addValue(String variable, String str_value){
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable, str_value.toString(), date);
+		addQuestion(ds);
+	}	
+	//Adds an integer value to the database
+	public void addValue(String variable, List<String> list_values){
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseMultichoiceStore(variable, "multichoice", date);
+		long pid = addQuestion(ds);
+		for (int i = 0; i< list_values.size(); i++){
+			addMulti((int)pid, list_values.get(i));
+		}
+	}
+	
+	/*
+	 *Inserts a row into the table mutlichoice and returns the pid. 
+	 */
+	public long addMulti(Integer qid, String value){
+		SQLiteDatabase db = this.getWritableDatabase();
+		
+		ContentValues values =  new ContentValues();
+		values.put(MULTI_KEY_QUES_ID, qid);
+		values.put(MULTI_KEY_VALUE, value);
+		
+		long pid = db.insert(TABLE_MULTI, null, values);
+		db.close();
+		return pid;
+	}
+	
+	/*
+	 * Inserts a row into the table questions and returns the pid.
+	 */
+	public long addQuestion(DatabaseStore store){
 		//get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
 		
@@ -86,10 +120,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		values.put(QUES_KEY_TYPE, store.type);
 		values.put(QUES_KEY_VAR, store.variable);
 		//insert the values into the table
-		db.insert(TABLE_QUES, null, values);
+		long pid = db.insert(TABLE_QUES, null, values);
 		
 		//close the database
 		db.close();
+		return pid;
 	}
 	
 	private List<DatabaseStore> handleCursor(Cursor cursor){
