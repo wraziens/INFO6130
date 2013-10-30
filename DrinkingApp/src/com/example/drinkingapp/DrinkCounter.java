@@ -24,6 +24,10 @@ public class DrinkCounter extends Activity {
 	private int color;
 	private double bac;
 	
+	//TODO:Temporary, move to a class that makes more sense
+	private final Double CALORIES_PER_DRINK = 120.0;
+	private final Double CALORIES_PER_CHICKEN = 264.0;
+	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
@@ -41,10 +45,10 @@ public class DrinkCounter extends Activity {
 		view.setBackgroundColor(color);
 		setContentView(view);
 		
-		TextView check = new TextView(this);
-		check.setText(String.valueOf(bac));
-		FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
-		layout.addView(check);
+		//TextView check = new TextView(this);
+		//check.setText(String.valueOf(bac));
+		//FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
+		//layout.addView(check);
 
 	}
 
@@ -154,10 +158,21 @@ public class DrinkCounter extends Activity {
 		calculateColor();
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
+		//TextView check = new TextView(this);
+		//check.setText(String.valueOf(bac));
+		//FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
+		//layout.addView(check);
+		
+		//TODO: Move this to a more appropriate Class
+		//Save Chicken values
+		
+		Double drink_cals = drink_count * CALORIES_PER_DRINK;
+		int number_chickens = (int)Math.ceil(drink_cals/CALORIES_PER_CHICKEN);
+		db.addValue("number_chickens", number_chickens);
+		
 		TextView check = new TextView(this);
-		check.setText(String.valueOf(bac));
+		check.setText(String.valueOf(number_chickens));
 		FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
 		layout.addView(check);
-	
 	}
 }
