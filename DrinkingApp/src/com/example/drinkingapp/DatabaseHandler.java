@@ -89,6 +89,21 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
+	//Updates an integer value in the database
+	public void updateValue(String variable, Integer int_value){
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable, int_value.toString(), date);
+		updateQuestion(ds);
+	}
+	
+	//updates all values that have the variable and current 
+	//date to the value supplied.
+	public void updateValue(String variable, String str_value){
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable, str_value.toString(), date);
+		updateQuestion(ds);
+	}
+	
 	/*
 	 *Inserts a row into the table mutlichoice and returns the pid. 
 	 */
@@ -102,6 +117,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		long pid = db.insert(TABLE_MULTI, null, values);
 		db.close();
 		return pid;
+	}
+	
+	public void updateQuestion(DatabaseStore store){
+		//get reference to the database
+		SQLiteDatabase db = this.getWritableDatabase();
+		//create Question Table
+		String update_sql = "UPDATE questions SET" +
+				QUES_KEY_VALUE + "='" + store.value + " WHERE " +
+				QUES_KEY_VAR + "='" + store.variable + "' AND " +
+				QUES_KEY_MONTH +"=" + store.month + " AND " + 
+				QUES_KEY_YEAR + "=" + store.year + " AND " +
+				QUES_KEY_DAY + "=" + store.day + " AND " +
+				QUES_KEY_TYPE + "=" + store.type + ";";
+
+		//create the question table
+		db.execSQL(update_sql);
+		//close the database
+		db.close();
 	}
 	
 	/*
@@ -156,6 +189,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			return null;
 		}
 	}
+	
 	
 	public List<DatabaseStore> getAllVarValue(String variable){
 		//Get reference to the database
