@@ -69,16 +69,8 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 			public void onStopTrackingTouch(SeekBar seekBar) {
 				// TODO Auto-generated method stub
 				
-			}
-			
-			
-			
-			
-			
-			
+			}			
 		});
-		
-		
 	}
 
 	@Override
@@ -91,9 +83,7 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 			
 			*/
 		case R.id.bDSSleepFinish:
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
-			//pass sleepResult coffeeResults via intent.
+			finish();
 			break;
 			
 		}

@@ -70,12 +70,6 @@ public class DailySurveyExercise extends Activity implements OnClickListener,OnC
 				// TODO Auto-generated method stub
 				
 			}
-			
-			
-			
-			
-			
-			
 		});
 		
 		
@@ -90,11 +84,9 @@ public class DailySurveyExercise extends Activity implements OnClickListener,OnC
 			break;
 			
 			*/
-		case R.id.bDSSleepFinish:
+		case R.id.bDSExerciseFinish:
 			
-			//pass sleepResult coffeeResults via intent.
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			finish();
 			break;
 			
 		}

@@ -102,9 +102,7 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 					checkListResult2.add("null");
 				}
 			}
-			//pass intent with two word lists attached
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			finish();
 			break;
 			
 		}

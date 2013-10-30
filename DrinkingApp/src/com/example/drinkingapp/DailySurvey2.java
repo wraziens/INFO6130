@@ -67,12 +67,6 @@ public class DailySurvey2 extends Activity implements OnClickListener{
 				// TODO Auto-generated method stub
 				
 			}
-			
-			
-			
-			
-			
-			
 		});
 		
 		
@@ -92,8 +86,7 @@ public class DailySurvey2 extends Activity implements OnClickListener{
 			wordResult1=word1.getText().toString();
 			wordResult2=word2.getText().toString();
 			wordResult3=word3.getText().toString();
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			finish();
 			break;
 			
 		}
