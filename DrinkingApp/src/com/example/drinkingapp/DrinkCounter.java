@@ -4,21 +4,25 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import com.parse.ParseUser;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 
 public class DrinkCounter extends Activity {
 	private int drink_count = 0;
-	int start_color = 0xFF7b9aad;
+	//int start_color = 0xFF7b9aad;
+	int start_color = 0x884D944D;
 	int offset = 10;
 	private DatabaseHandler db;
+	private double hours;
+	private int color;
+	private double bac;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -31,7 +35,29 @@ public class DrinkCounter extends Activity {
 		}
 		
 		db = new DatabaseHandler(this);
-		//get the current date
+		View view = findViewById(R.id.drink_layout);
+		calculateBac();
+		calculateColor();
+		view.setBackgroundColor(color);
+		setContentView(view);
+		
+		TextView check = new TextView(this);
+		check.setText(String.valueOf(bac));
+		FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
+		layout.addView(check);
+
+	}
+
+	@Override
+	protected void onResume(){
+		super.onResume();
+		View view = findViewById(R.id.drink_layout);
+		calculateBac();
+		calculateColor();
+		view.setBackgroundColor(color);
+	}
+	
+	private void calculateHours(){
 		Date date = new Date();
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
@@ -41,56 +67,97 @@ public class DrinkCounter extends Activity {
 		int month = Integer.parseInt(month_fmt.format(date));
 		int day = Integer.parseInt(day_fmt.format(date));
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", month , day, year);
-		
+		color = start_color;
 		if (drink_count_vals != null){
 			drink_count = drink_count_vals.size();
-		}
+			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
 		
-		int color = start_color - (0x00000900 * drink_count);
-		if (color < 0xFF7b0000){
-			color = 0xFF7b0000;
+			//calculate the hours drinking
+			if(drink_count_vals.size() > 0 ){
+				DatabaseStore start = drink_count_vals.get(0);
+				Integer start_time = start.hour * 60 + start.minute;
+				DatabaseStore last = drink_count_vals.get(drink_count_vals.size()-1);
+				Integer last_time = last.hour * 60 + last.minute;
+				hours = (last_time - start_time) / 60.0;
+			}
+			//color = start_color - (0x00000900 * drink_count);
 		} 
-		View view = findViewById(R.id.drink_layout);
-		//view.setBackgroundColor(0xF2FA27);
-		view.setBackgroundColor(color);
-		setContentView(view);
-
 	}
 	
 	public void doneDrinking(View view){
 		finish();
 	}
+	public void calculateColor(){
+		if (bac < 0.06){
+			color = start_color;
+		} else if(bac < 0.15 ){
+			color = 0X88E68A2E;
+		} else if(bac < 0.24){
+			color = 0X88A30000;
+		} else {
+			color = 0XCC000000;
+		}
+	}
+	
+	private void calculateBac(){
+		Date date = new Date();
+		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
+		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
+		
+		int year = Integer.parseInt(year_fmt.format(date));
+		int month = Integer.parseInt(month_fmt.format(date));
+		int day = Integer.parseInt(day_fmt.format(date));
+		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", month , day, year);
+		if (drink_count_vals != null){
+			calculateHours();
+		
+			//get the users gender
+			ArrayList<DatabaseStore> stored_gender = (ArrayList<DatabaseStore>)db.getAllVarValue("gender");
+			// If user did not set gender use "Female" as default
+			String gender = "Female";
+			if (stored_gender != null){
+				gender = stored_gender.get(0).value;
+			}
+		
+			//fetch the users weight
+			ArrayList<DatabaseStore> stored_weight = (ArrayList<DatabaseStore>)db.getAllVarValue("weight");
+			Integer weight_lbs = 120;
+			if (stored_weight != null){
+				weight_lbs = Integer.parseInt(stored_weight.get(0).value);
+			}
+		
+			double metabolism_constant = 0;
+			double gender_constant = 0;
+			double weight_kilograms = weight_lbs * 0.453592;
+
+			if (gender.equals("Male")){
+				metabolism_constant = 0.015;
+				gender_constant = 0.58; 
+			} else {
+				metabolism_constant = 0.017;
+				gender_constant = 0.49;
+			}
+		
+			bac = ((0.806 * drink_count * 1.2) / (gender_constant * weight_kilograms)) - (metabolism_constant * hours);
+		}else{
+			bac = 0;
+		}
+	}
+		
 	
 	@SuppressLint("NewApi")
 	public void hadDrink(View view){
 		drink_count ++;
 		db.addValue("drink_count", drink_count);
-		//Should actually get the color based on BAC which can be calculated using:
-		//EBAC = ((0.806 * number_drinks * 1.2) / (gender_constant * weight_kilograms)) - (metabolism_constant * hours)
-		//need to get stored weight and gender.
-		//get the gender from the input survey
-		/*
-		double metabolism_constant = 0;
-		double gender_constant = 0;
-		double weight_lbs = 130;
-		double weight_kilograms = weight_lbs * 0.453592;
-
-		String gender = "FEMALE";
-		if (gender == "MALE"){
-			metabolism_constant = 0.015;
-			gender_constant = 0.58; 
-		} else {
-			metabolism_constant = 0.017;
-			gender_constant = 0.49;
-		}
-		
-		//float bac = ((0.806 * drink_count * 1.2) / (gender_constant * weight_kilograms)) - (metabolism_constant * 1);//hours);
-		*/
-		int color = start_color - (0x00000900 * drink_count);
-		if (color < 0xFF7b0000){
-			color = 0xFF7b0000;
-		} 
+		calculateBac();
+		calculateColor();
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
+		TextView check = new TextView(this);
+		check.setText(String.valueOf(bac));
+		FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
+		layout.addView(check);
+	
 	}
 }
