@@ -52,17 +52,14 @@
 			   android:background="@drawable/settingsmenubutton"
 			   android:text="" />
 	</LinearLayout>
-    
+
     <Button
         android:id="@+id/bMenuResources"
         android:layout_width="180dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="150dp"
-		android:gravity= "center_horizontal"
-		android:layout_marginLeft="30dp"
-        android:background="@drawable/resourcebutton"
-        android:textColor = "#FFFFFF"
         android:layout_weight="1"
-        android:text="" />
+        android:gravity="center"
+        android:text="Resources"
 
+        android:textColor="#FFFFFF" />
 </LinearLayout>
