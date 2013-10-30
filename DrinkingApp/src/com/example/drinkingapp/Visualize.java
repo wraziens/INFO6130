@@ -1,7 +1,15 @@
 package com.example.drinkingapp;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Date;
 
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
+import android.widget.TextView;
+/*
 import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -9,26 +17,19 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import android.app.Activity;
-import android.os.Bundle;
-import android.text.format.Time;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.ImageButton;
-import android.widget.TextView;
+*/
 
 public class Visualize extends Activity implements OnClickListener {
 	ImageButton dataUpdate;
 	TextView dataDisplay;
 	Graphics ourView;
+	private DatabaseHandler db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+		db = new DatabaseHandler(this);
 		
 		
 		ourView = new Graphics(this);
@@ -44,12 +45,30 @@ public class Visualize extends Activity implements OnClickListener {
 		defaultACL.setPublicReadAccess(true);
 
 		ParseACL.setDefaultACL(defaultACL, true);
+		*/
 		setContentView(R.layout.visualization);
 
 		dataUpdate = (ImageButton) findViewById(R.id.ibDataUpdate);
 		dataDisplay = (TextView) findViewById(R.id.tvData);
 		dataUpdate.setOnClickListener(this);
-*/
+		
+		Date date = new Date();
+		
+		//get drink counts
+		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", date);
+		if (drink_count_vals != null){
+			int drink_count = drink_count_vals.size();
+		}
+		
+		//get chicken counts
+		ArrayList<DatabaseStore> chicken_count_vals =(ArrayList<DatabaseStore>)db.getVarValuesForDay("number_chickens", date);
+
+		if (chicken_count_vals != null){
+		            chicken_count_vals = DatabaseStore.sortByTime(chicken_count_vals);
+		            Integer chicken_count = Integer.parseInt(chicken_count_vals.get(chicken_count_vals.size()-1).value);
+		}
+		
+		
 	}
 
 	@Override
