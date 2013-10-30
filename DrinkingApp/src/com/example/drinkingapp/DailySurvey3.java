@@ -11,19 +11,15 @@ import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
+
 
 public class DailySurvey3 extends Activity implements OnClickListener{
 
 	Button finish;
 	CheckBox option1,option2,option3,option4,option5,option6,option7,option8;
 	ArrayList<String> words=new ArrayList<String>();
-	ArrayList<CheckBox> optionList=new ArrayList();
+	ArrayList<String> checkListResult = new ArrayList<String>();
+	ArrayList<CheckBox> optionList=new ArrayList<CheckBox>();
 	Intent goToAssessment;
 	
 	@Override
