@@ -48,12 +48,8 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 		optionList.add(option6);
 		optionList.add(option7);
 		optionList.add(option8);
-		
-
-		
 	}
 
-	
 
 	@Override
 	public void onClick(View arg0) {
@@ -66,7 +62,7 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 			*/
 		//checks which checklist is check and input 
 		//that value in a string to pass onto the database function to parse
-		case R.id.bDS2Finish:
+		case R.id.bDS3Finish:
 			for (int x=0;x<optionList.size();x++){
 				if(optionList.get(x).isChecked()){
 					checkListResult.add(optionList.get(x).getText().toString());
@@ -75,9 +71,8 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 					checkListResult.add("null");
 				}
 			}
-			//pass intent with this^
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			//TODO: save values to db Here
+			finish();
 			break;
 			
 		}
