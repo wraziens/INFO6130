@@ -159,7 +159,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		//Get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
 		String query = "Select * FROM " + TABLE_QUES + " WHERE " + 
-				QUES_KEY_VAR + " = " + variable + "; ";
+				QUES_KEY_VAR + "='" + variable + "'; ";
 		Cursor cursor = db.rawQuery(query, null);
 		return handleCursor(cursor);
 	}
