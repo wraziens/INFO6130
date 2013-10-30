@@ -3,6 +3,7 @@ package com.example.drinkingapp;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -21,8 +22,9 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 
 	Button finish;
 	CheckBox option1,option2,option3,option4,option5,option6,option7,option8;
-	ArrayList<String> words=new ArrayList();
+	ArrayList<String> checkListResult=new ArrayList();
 	ArrayList<CheckBox> optionList=new ArrayList();
+	Intent goToAssessment;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 		optionList.add(option7);
 		optionList.add(option8);
 		
+
+		
 	}
 
 	
@@ -69,16 +73,25 @@ public class DailySurvey3 extends Activity implements OnClickListener{
 		case R.id.bDS2Finish:
 			for (int x=0;x<optionList.size();x++){
 				if(optionList.get(x).isChecked()){
-					words.add(optionList.get(x).getText().toString());
+					checkListResult.add(optionList.get(x).getText().toString());
+				}
+				if(!optionList.get(x).isChecked()){
+					checkListResult.add("null");
 				}
 			}
 			//pass intent with this^
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			break;
 			
 		}
 		
 	}
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 
 }

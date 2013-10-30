@@ -3,6 +3,7 @@ package com.example.drinkingapp;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -26,7 +27,8 @@ public class DailySurvey4 extends Activity implements OnClickListener, OnChecked
 	TextView hiddeText;
 	ArrayList<String> words=new ArrayList();
 	ArrayList<RadioButton> optionList=new ArrayList();
-	String optionChose;
+	String radioResult;
+	Intent goToAssessment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -79,6 +81,8 @@ public class DailySurvey4 extends Activity implements OnClickListener, OnChecked
 				}
 			}
 			//pass intent with this^
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			break;
 			
 		}
@@ -91,14 +95,20 @@ public class DailySurvey4 extends Activity implements OnClickListener, OnChecked
 		switch(checkedId){
 			case R.id.rDS4radio8:
 				hiddeText.setText(other.getText().toString());
+				radioResult=other.getText().toString();
 				break;
 			default:
 				hiddeText.setText(((RadioButton)findViewById(checkedId)).getText().toString());
+				radioResult=((RadioButton)findViewById(checkedId)).getText().toString();
 				break;
 		}
 		
 		
 	}
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }

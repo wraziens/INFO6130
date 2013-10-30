@@ -1,6 +1,7 @@
 package com.example.drinkingapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -20,8 +21,8 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 	Button finish;
 	SeekBar productivityQualityBar,academicsQualityBar,stressBar;
 	TextView test1,test2,test3;
-	String productivityResult="0",academicsResult="0",stressResult="0";
-	
+	String seekbarResult1="0",seekbarResult2="0",seekbarResult3="0";
+	Intent goToAssessment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -60,7 +61,7 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test1.setText(String.valueOf(progress));
-				productivityResult=String.valueOf(progress);
+				seekbarResult1=String.valueOf(progress);
 			}
 
 			@Override
@@ -82,7 +83,7 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test2.setText(String.valueOf(progress));
-				academicsResult=String.valueOf(progress);
+				seekbarResult2=String.valueOf(progress);
 			}
 
 			@Override
@@ -104,7 +105,7 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test3.setText(String.valueOf(progress));
-				stressResult=String.valueOf(progress);
+				seekbarResult3=String.valueOf(progress);
 			}
 
 			@Override
@@ -132,7 +133,8 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 			
 			*/
 		case R.id.bDSExerciseFinish:
-			
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			//pass sleepResult coffeeResults via intent.
 			break;
 			
@@ -146,6 +148,10 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 		switch(group.getId()){
 		}
 	}
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }

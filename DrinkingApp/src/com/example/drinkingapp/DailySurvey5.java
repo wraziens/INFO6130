@@ -3,6 +3,7 @@ package com.example.drinkingapp;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -22,11 +23,11 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 	Button finish;
 	CheckBox option1,option2,option3,option4,option5,option6,option7,option8,option9,option10;
 	EditText otherTop,otherBot;
-	ArrayList<String> wordsTop=new ArrayList();
-	ArrayList<String> wordsBot=new ArrayList();
+	ArrayList<String> checkListResult1=new ArrayList();
+	ArrayList<String> checkListResult2=new ArrayList();
 	ArrayList<CheckBox> optionListTop=new ArrayList();
 	ArrayList<CheckBox> optionListBot=new ArrayList();
-	
+	Intent goToAssessment;
 	
 	
 	@Override
@@ -83,25 +84,37 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 			for (int x=0;x<optionListTop.size();x++){
 				if(optionListTop.get(x).isChecked()){
 					if (optionListTop.get(x).getId()==R.id.cbDS5Box6)
-						wordsTop.add(otherTop.getText().toString());
+						checkListResult1.add(otherTop.getText().toString());
 					else
-						wordsTop.add(optionListTop.get(x).getText().toString());
+						checkListResult1.add(optionListTop.get(x).getText().toString());
+				}
+				if(!optionListTop.get(x).isChecked()){
+					checkListResult1.add("null");
 				}
 			}
 			for (int x=0;x<optionListTop.size();x++){
 				if(optionListBot.get(x).isChecked()){
 					if (optionListBot.get(x).getId()==R.id.cbDS5Box10)
-						wordsBot.add(otherBot.getText().toString());
-					wordsBot.add(optionListBot.get(x).getText().toString());
+						checkListResult2.add(otherBot.getText().toString());
+					checkListResult2.add(optionListBot.get(x).getText().toString());
+				}
+				if(!optionListBot.get(x).isChecked()){
+					checkListResult2.add("null");
 				}
 			}
 			//pass intent with two word lists attached
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			break;
 			
 		}
 		
 	}
 
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }

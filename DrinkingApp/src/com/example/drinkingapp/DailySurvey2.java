@@ -1,6 +1,7 @@
 package com.example.drinkingapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -18,7 +19,8 @@ public class DailySurvey2 extends Activity implements OnClickListener{
 	SeekBar happySeekBar;
 	TextView test;
 	EditText word1,word2,word3;
-	
+	String seekbarResult,wordResult1,wordResult2,wordResult3;
+	Intent goToAssessment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -51,6 +53,7 @@ public class DailySurvey2 extends Activity implements OnClickListener{
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test.setText(String.valueOf(progress));
+				seekbarResult=String.valueOf(progress);
 			}
 
 			@Override
@@ -85,11 +88,21 @@ public class DailySurvey2 extends Activity implements OnClickListener{
 			
 			*/
 		case R.id.bDS2Finish:
+			
+			wordResult1=word1.getText().toString();
+			wordResult2=word2.getText().toString();
+			wordResult3=word3.getText().toString();
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			break;
 			
 		}
 		
 	}
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }
