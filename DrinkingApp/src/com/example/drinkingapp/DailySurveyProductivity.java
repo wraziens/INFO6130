@@ -132,12 +132,9 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 			break;
 			
 			*/
-		case R.id.bDSExerciseFinish:
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
-			//pass sleepResult coffeeResults via intent.
-			break;
-			
+		case R.id.bDSProductivityFinish:
+			finish();
+			break;	
 		}
 		
 	}
