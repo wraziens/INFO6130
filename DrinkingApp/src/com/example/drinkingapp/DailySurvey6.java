@@ -68,12 +68,6 @@ public class DailySurvey6 extends Activity implements OnClickListener{
 				// TODO Auto-generated method stub
 				
 			}
-			
-			
-			
-			
-			
-			
 		});
 		foodHealthySeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
 
@@ -96,12 +90,6 @@ public class DailySurvey6 extends Activity implements OnClickListener{
 				// TODO Auto-generated method stub
 				
 			}
-			
-			
-			
-			
-			
-			
 		});
 		
 	}
@@ -116,8 +104,7 @@ public class DailySurvey6 extends Activity implements OnClickListener{
 			
 			*/
 		case R.id.bDS6Finish:
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			finish();
 			break;
 			
 		}
