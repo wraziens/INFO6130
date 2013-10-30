@@ -37,13 +37,11 @@ public class DailySurvey1 extends Activity implements OnClickListener{
 		switch(arg0.getId()){
 		case R.id.bDS1Yes:
 			result="yes";
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			finish();
 			break;
 		case R.id.bDS1No:
 			result="no";
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			finish();
 			break;
 			
 		}
