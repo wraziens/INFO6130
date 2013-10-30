@@ -18,8 +18,8 @@ import android.view.View;
 public class Graphics extends View{
 
 	Bitmap chicken,badCircle;
-	int drinkCount=7;
-	int chickenCount=8;
+	public int drinkCount=0;
+	public int chickenCount=0;
 	public Graphics(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub

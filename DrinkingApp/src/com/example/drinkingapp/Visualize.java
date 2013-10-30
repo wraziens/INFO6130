@@ -32,8 +32,7 @@ public class Visualize extends Activity implements OnClickListener {
 		db = new DatabaseHandler(this);
 		
 		
-		ourView = new Graphics(this);
-		setContentView(ourView);
+
 		/*
 		Parse.initialize(this, "pzrwzzF69gXSQrxr9gmfhWVQq3it1UrLFxCbPyUw",
 				"8dZZu0sRje5F4K31FwAmYXbdSmkCOTZvUIfQo1N1");
@@ -53,22 +52,25 @@ public class Visualize extends Activity implements OnClickListener {
 		dataUpdate.setOnClickListener(this);
 		
 		Date date = new Date();
-		
+		int drink_count=0;
 		//get drink counts
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", date);
 		if (drink_count_vals != null){
-			int drink_count = drink_count_vals.size();
+			drink_count = drink_count_vals.size();
 		}
 		
 		//get chicken counts
 		ArrayList<DatabaseStore> chicken_count_vals =(ArrayList<DatabaseStore>)db.getVarValuesForDay("number_chickens", date);
-
+		Integer chicken_count=0;
 		if (chicken_count_vals != null){
 		            chicken_count_vals = DatabaseStore.sortByTime(chicken_count_vals);
-		            Integer chicken_count = Integer.parseInt(chicken_count_vals.get(chicken_count_vals.size()-1).value);
+		            chicken_count = Integer.parseInt(chicken_count_vals.get(chicken_count_vals.size()-1).value);
 		}
 		
-		
+		ourView = new Graphics(this);
+		ourView.drinkCount=drink_count;
+		ourView.chickenCount=chicken_count;
+		setContentView(ourView);
 	}
 
 	@Override
