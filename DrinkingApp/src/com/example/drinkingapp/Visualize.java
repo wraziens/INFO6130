@@ -22,11 +22,18 @@ import android.widget.TextView;
 public class Visualize extends Activity implements OnClickListener {
 	ImageButton dataUpdate;
 	TextView dataDisplay;
-
+	Graphics ourView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		
+		
+		
+		ourView = new Graphics(this);
+		setContentView(ourView);
+		/*
 		Parse.initialize(this, "pzrwzzF69gXSQrxr9gmfhWVQq3it1UrLFxCbPyUw",
 				"8dZZu0sRje5F4K31FwAmYXbdSmkCOTZvUIfQo1N1");
 
@@ -42,12 +49,14 @@ public class Visualize extends Activity implements OnClickListener {
 		dataUpdate = (ImageButton) findViewById(R.id.ibDataUpdate);
 		dataDisplay = (TextView) findViewById(R.id.tvData);
 		dataUpdate.setOnClickListener(this);
-
+*/
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
+		
+		/*
 		switch(arg0.getId()){
 		case R.id.ibDataUpdate:
 			Time timeNow=new Time();
@@ -89,6 +98,6 @@ public class Visualize extends Activity implements OnClickListener {
 			
 			break;
 		}
-		
+	*/	
 	}
 }
