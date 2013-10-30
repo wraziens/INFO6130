@@ -20,7 +20,7 @@
                 android:id="@+id/tvISSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sex" />
+                android:text="Gender" />
 
             <RadioGroup
                 android:id="@+id/rgISSex"

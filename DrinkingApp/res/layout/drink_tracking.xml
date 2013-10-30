@@ -6,13 +6,7 @@
     android:padding="@dimen/drink_counter_margin"
     android:id="@+id/drink_layout">
 
-     <Button
-         android:layout_width="180dp"
-         android:layout_height="wrap_content"
-         android:layout_marginTop="280dp"
-         android:onClick="doneDrinking"
-         android:text="@string/done_drinking"
-         android:layout_gravity="center_horizontal" />
+ 
 
      <ImageButton
      	android:id="@+id/increaseDrink"
@@ -25,5 +19,13 @@
         android:scaleType="fitXY"
         android:src="@drawable/drink_counter_button"
         android:background="@android:color/transparent" />
+        
+     <Button
+         android:layout_width="180dp"
+         android:layout_height="wrap_content"
+         android:layout_marginTop="280dp"
+         android:onClick="doneDrinking"
+         android:text="@string/done_drinking"
+         android:layout_gravity="center_horizontal" />
 
 </FrameLayout>
