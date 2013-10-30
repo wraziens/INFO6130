@@ -1,9 +1,11 @@
 package com.example.drinkingapp;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -181,6 +183,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
+	public List<DatabaseStore> getVarValuesForDay(String variable, Date date){
+		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
+		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
+		
+		int year = Integer.parseInt(year_fmt.format(date));
+		int month = Integer.parseInt(month_fmt.format(date));
+		int day = Integer.parseInt(day_fmt.format(date));
+		
+		return getVarValuesForDay(variable, month, day, year); 
+	}
+	
 	public List<DatabaseStore> getVarValuesForMonth(String variable, Integer month, Integer year){
 		//get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -191,6 +205,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery(query, null);
 		return handleCursor(cursor);
 	}	
+	public List<DatabaseStore> getVarValuesForMonth(String variable, Date date){
+		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
+		
+		int year = Integer.parseInt(year_fmt.format(date));
+		int month = Integer.parseInt(month_fmt.format(date));
+		
+		return getVarValuesForMonth(variable, month, year); 
+	}
+	
+	
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 
