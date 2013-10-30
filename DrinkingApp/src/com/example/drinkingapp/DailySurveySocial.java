@@ -1,6 +1,7 @@
 package com.example.drinkingapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -22,8 +23,8 @@ public class DailySurveySocial extends Activity implements OnClickListener,OnChe
 	TextView test;
 	RadioGroup socialGroup;
 	RadioButton yes,no;
-	String socialQuestion,socialResult="0";
-	
+	String radioResult,seekbarResult="0";
+	Intent goToAssessment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -55,7 +56,7 @@ public class DailySurveySocial extends Activity implements OnClickListener,OnChe
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test.setText(String.valueOf(progress));
-				socialResult=String.valueOf(progress);
+				seekbarResult=String.valueOf(progress);
 			}
 
 			@Override
@@ -90,7 +91,8 @@ public class DailySurveySocial extends Activity implements OnClickListener,OnChe
 			
 			*/
 		case R.id.bDSSleepFinish:
-			
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			//pass sleepResult coffeeResults via intent.
 			break;
 			
@@ -103,10 +105,14 @@ public class DailySurveySocial extends Activity implements OnClickListener,OnChe
 		// TODO Auto-generated method stub
 		switch(group.getId()){
 			case R.id.rgDSExercise:
-				socialQuestion=((RadioButton)findViewById(checkedId)).getText().toString();
+				radioResult=((RadioButton)findViewById(checkedId)).getText().toString();
 				break;
 		}
 	}
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }

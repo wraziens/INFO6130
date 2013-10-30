@@ -1,6 +1,7 @@
 package com.example.drinkingapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -11,8 +12,11 @@ import android.widget.SeekBar;
 
 public class DailySurvey1 extends Activity implements OnClickListener{
 
+
+
 	Button yes,no;
-	
+	String result;
+	Intent goToAssessment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -32,12 +36,23 @@ public class DailySurvey1 extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
 		case R.id.bDS1Yes:
+			result="yes";
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			break;
 		case R.id.bDS1No:
+			result="no";
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			break;
 			
 		}
 		
 	}
-
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 }

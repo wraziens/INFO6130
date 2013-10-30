@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 public class Assessment extends ListActivity{
@@ -63,6 +64,8 @@ public class Assessment extends ListActivity{
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
 		super.onListItemClick(l, v, position, id);
+		CheckedTextView textview = (CheckedTextView)v;
+	    textview.setChecked(true);
 		placement=surveys.get(position);
 
 		try{

@@ -1,6 +1,7 @@
 package com.example.drinkingapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -22,8 +23,8 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 	TextView test;
 	RadioGroup sleepGroup,coffeeGroup;
 	RadioButton yes1,yes2,no1,no2;
-	String sleepQuestion,sleepResult="0",coffeeQuestion;
-	
+	String radioResult1,seekbarResult="0",radioResult2;
+	Intent goToAssessment;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -55,7 +56,7 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 					boolean fromUser) {
 				// TODO Auto-generated method stub
 				test.setText(String.valueOf(progress));
-				sleepResult=String.valueOf(progress);
+				seekbarResult=String.valueOf(progress);
 			}
 
 			@Override
@@ -90,7 +91,8 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 			
 			*/
 		case R.id.bDSSleepFinish:
-			
+			goToAssessment=new Intent(this,Assessment.class);
+			startActivity(goToAssessment);
 			//pass sleepResult coffeeResults via intent.
 			break;
 			
@@ -103,13 +105,17 @@ public class DailySurveySleep extends Activity implements OnClickListener,OnChec
 		// TODO Auto-generated method stub
 		switch(group.getId()){
 			case R.id.rgDSSleep1:
-				sleepQuestion=((RadioButton)findViewById(checkedId)).getText().toString();
+				radioResult1=((RadioButton)findViewById(checkedId)).getText().toString();
 				break;
 			case R.id.rgDSSleep2:
-				coffeeQuestion=((RadioButton)findViewById(checkedId)).getText().toString();
+				radioResult2=((RadioButton)findViewById(checkedId)).getText().toString();
 				break;
 		}
 	}
-
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }
