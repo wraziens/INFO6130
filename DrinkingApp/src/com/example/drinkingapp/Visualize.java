@@ -6,6 +6,8 @@ import java.util.Date;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +31,9 @@ public class Visualize extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		db = new DatabaseHandler(this);
 		
 		
@@ -52,7 +57,10 @@ public class Visualize extends Activity implements OnClickListener {
 		dataUpdate.setOnClickListener(this);
 		
 		Date date = new Date();
+		Date something = new Date();
+
 		int drink_count=0;
+		
 		//get drink counts
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", date);
 		if (drink_count_vals != null){
@@ -70,6 +78,8 @@ public class Visualize extends Activity implements OnClickListener {
 		ourView = new Graphics(this);
 		ourView.drinkCount=drink_count;
 		ourView.chickenCount=chicken_count;
+		ourView.month=date.getMonth();
+		ourView.day=date.getDay();
 		setContentView(ourView);
 	}
 

@@ -20,6 +20,7 @@ public class Graphics extends View{
 	Bitmap chicken,badCircle;
 	public int drinkCount=0;
 	public int chickenCount=0;
+	public int month=0,day=0;
 	public Graphics(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -42,12 +43,14 @@ public class Graphics extends View{
 		textPaint.setTextSize(50);
 		canvas.drawText(String.valueOf(drinkCount), canvas.getWidth()/2, canvas.getHeight()/2-10-200, textPaint);
 		canvas.drawText("Drinks", canvas.getWidth()/2, canvas.getHeight()/2+textPaint.getTextSize()-10-200, textPaint);
-		
+		canvas.drawText(month+"/"+day, canvas.getWidth()/2, 90, textPaint);
+
 		for (int n=0;n<chickenCount;n++){
 			Random randomPosition=new Random();
-			canvas.drawBitmap(chicken, randomPosition.nextInt(canvas.getWidth())-chicken.getWidth(), randomPosition.nextInt(canvas.getHeight()/2)-chicken.getHeight()+canvas.getHeight()/2, null);
+			canvas.drawBitmap(chicken, randomPosition.nextInt(canvas.getWidth())-chicken.getWidth()/2, randomPosition.nextInt(canvas.getHeight()/2)-chicken.getHeight()+canvas.getHeight()/2, null);
 		}
-		
+		canvas.drawText(String.valueOf(drinkCount*120), canvas.getWidth()/2, canvas.getHeight()-75, textPaint);
+		canvas.drawText("CALORIES", canvas.getWidth()/2, canvas.getHeight()-25, textPaint);
 		requestLayout();
 		
 		
