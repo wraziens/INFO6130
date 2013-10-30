@@ -74,15 +74,19 @@ public class DailySurvey4 extends Activity implements OnClickListener, OnChecked
 			*/
 		//checks which checklist is check and input 
 		//that value in a string to pass onto the database function to parse
-		case R.id.bDS2Finish:
-			for (int x=0;x<optionList.size();x++){
-				if(optionList.get(x).isChecked()){
-					words.add(optionList.get(x).getText().toString());
+		case R.id.bDS3Finish:
+		/*
+			if (optionList != null){
+				for (int x=0;x<optionList.size();x++){
+					if(optionList.get(x).isChecked()){
+						words.add(optionList.get(x).getText().toString());
+					}
 				}
-			}
+			}*/
 			//pass intent with this^
-			goToAssessment=new Intent(this,Assessment.class);
-			startActivity(goToAssessment);
+			//goToAssessment=new Intent(this,Assessment.class);
+			//startActivity(goToAssessment);
+			finish();
 			break;
 			
 		}
