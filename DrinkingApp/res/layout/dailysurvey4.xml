@@ -95,7 +95,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="wrap_content"
 		        android:text="@string/company"
-		        android:layout_marginTop="30dp"
+		        android:layout_marginTop="10dp"
 		       	android:background="#0099CC"
 				android:textColor ="#FFFFFF"
 		        android:textSize="30sp"
@@ -179,7 +179,7 @@
       	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/objective"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
        	android:background="#0099CC"
 		android:textColor ="#FFFFFF"
         android:textSize="30sp"
@@ -200,35 +200,45 @@
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:text="@string/celebrate_radio"
-		            android:textSize="20sp" />
+		       		android:layout_marginTop="6dp"
+			        android:layout_marginBottom="6dp"
+			        android:layout_marginLeft="15dp"/>
 		
 		        <RadioButton
 		            android:id="@+id/relax_radio"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:text="@string/relax_radio"
-		            android:textSize="20sp" />
+		            android:layout_marginTop="6dp"
+			        android:layout_marginBottom="6dp"
+			        android:layout_marginLeft="15dp" />
 		
 		        <RadioButton
 		            android:id="@+id/social_obj_radio"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:text="@string/social_obj_radio"
-		            android:textSize="20sp" />
+		            android:layout_marginTop="6dp"
+			        android:layout_marginBottom="6dp"
+			        android:layout_marginLeft="15dp" />
 				 
 				 <RadioButton
 		            android:id="@+id/forget_radio"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
 		            android:text="@string/forget_radio"
-		            android:textSize="20sp" />
+		            android:layout_marginTop="6dp"
+			        android:layout_marginBottom="6dp"
+			        android:layout_marginLeft="15dp" />
 		
 		        <RadioButton
 		            android:id="@+id/objective_other"
 		            android:layout_width="wrap_content"
 		            android:layout_height="wrap_content"
 		            android:text="@string/other_label"
-		            android:textSize="20sp" />
+		            android:layout_marginTop="6dp"
+			        android:layout_marginBottom="6dp"
+			        android:layout_marginLeft="15dp" />
 		        </RadioGroup>
 	        <EditText
 		            android:id="@+id/objective_other_ans"
