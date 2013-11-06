@@ -12,7 +12,7 @@
     <string name="na">N/A</string>
     <string name="finish">Save</string>
     <string name="other_label">Other(Specify)</string>
-	<string name="other_hint">Location</string>
+
     
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
@@ -23,6 +23,7 @@
 	<string name="school_label">School or Work</string>
 	<string name="frat_label">A Club, Fraternity, or Sorority Event</string>
 	<string name="sport_label">A Public Event(sports, party, concert, etc.)</string>
+		<string name="other_hint">Enter where you went drinking</string>
 
 	<!-- Strings for Company Quesiton -->
 	<string name="company">I went drinking with:</string>	
@@ -32,6 +33,13 @@
 	<string name="female_radio">Female Friends Only</string>
 	<string name="mixed_radio">Both Male and Female Friends</string>
 	<string name="strangers_radio">Strangers</string>
-	<string name="other_company_hint">With whom you went drinking</string>
+	<string name="other_company_hint">Enter who you went drinking with</string>
 	
+	<!-- Strings for Objective Question -->
+	<string name="objective">I went drinking to:</string>
+	<string name="relax_radio">Relax</string>
+	<string name="celebrate_radio">Celebrate an occasion</string>
+	<string name="social_obj_radio">To be social</string>
+	<string name="forget_radio">To forget about my problems</string>
+	<string name="other_objective_hint">Enter why you went drinking</string>	
 </resources>

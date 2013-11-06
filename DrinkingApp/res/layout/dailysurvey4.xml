@@ -82,7 +82,6 @@
 		            android:layout_height="wrap_content"
 		            android:ems="6"
 		            android:gravity="center"
-		            android:selectAllOnFocus="true"
 		            android:visibility="invisible"
 		            android:hint="@string/other_hint"
 		           	android:layout_marginTop="10dp"
@@ -170,12 +169,78 @@
 		            android:layout_height="wrap_content"
 		            android:ems="6"
 		            android:gravity="center"
-		            android:selectAllOnFocus="true"
 		            android:visibility="invisible"
 		            android:hint="@string/other_company_hint"
 		            android:textSize="20sp" 
 		            android:layout_margin="10dp"/>
 		    </LinearLayout>
+    
+    <TextView
+      	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/objective"
+        android:layout_marginTop="30dp"
+       	android:background="#0099CC"
+		android:textColor ="#FFFFFF"
+        android:textSize="30sp"
+        android:padding="10dp"/>
+
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	       	<RadioGroup
+				android:id="@+id/objective_group"
+			   	android:layout_width="fill_parent"
+			    android:layout_height="match_parent"
+			    android:textSize="20sp">
+		        <RadioButton
+		            android:id="@+id/celebrate_radio"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="@string/celebrate_radio"
+		            android:textSize="20sp" />
+		
+		        <RadioButton
+		            android:id="@+id/relax_radio"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="@string/relax_radio"
+		            android:textSize="20sp" />
+		
+		        <RadioButton
+		            android:id="@+id/social_obj_radio"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="@string/social_obj_radio"
+		            android:textSize="20sp" />
+				 
+				 <RadioButton
+		            android:id="@+id/forget_radio"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:text="@string/forget_radio"
+		            android:textSize="20sp" />
+		
+		        <RadioButton
+		            android:id="@+id/objective_other"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="@string/other_label"
+		            android:textSize="20sp" />
+		        </RadioGroup>
+	        <EditText
+		            android:id="@+id/objective_other_ans"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:ems="6"
+		            android:gravity="center"
+		            android:visibility="invisible"
+		            android:hint="@string/other_objective_hint"
+		            android:textSize="20sp" 
+		            android:layout_margin="10dp"/>
+	    </LinearLayout>
 		
 		    <LinearLayout
 		        android:layout_width="match_parent"
@@ -189,6 +254,7 @@
 		            android:layout_gravity="center"
 		            android:text="@string/finish" />
 		    </LinearLayout>
+		    		    
 		</LinearLayout>
 	</ScrollView>
 </LinearLayout>
