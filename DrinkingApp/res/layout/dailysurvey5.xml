@@ -5,10 +5,9 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tvDS5Title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Last Night I..."
+        android:text="@string/company"
         android:textSize="20sp" />
 
     <RelativeLayout
@@ -16,62 +15,70 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <CheckBox
-            android:id="@+id/cbDS5Box1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Myself only"
-            android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/cbDS5Box2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cbDS5Box1"
-            android:text="Relatives/Family"
-            android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/cbDS5Box3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cbDS5Box2"
-            android:text="Male Friend(s)"
-            android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/cbDS5Box4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cbDS5Box3"
-            android:text="Female Friend(s)"
-            android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/cbDS5Box5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cbDS5Box4"
-            android:text="Strangers"
-            android:textSize="20sp" />
-
-        <CheckBox
-            android:id="@+id/cbDS5Box6"
+        <RadioGroup
+            android:id="@+id/company_group"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cbDS5Box5"
-            android:text="Others (Specify):"
-            android:textSize="20sp" />
-
+            android:layout_height="match_parent"
+            android:weightSum="8" >
+	            
+	        <RadioButton
+	            android:id="@+id/myself_radio"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/myself_radio"
+	            android:textSize="20sp" />
+	
+	        <RadioButton
+	            android:id="@+id/family_radio"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/family_radio"
+	            android:textSize="20sp" />
+	
+	        <RadioButton
+	            android:id="@+id/male_radio"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/male_radio"
+	            android:textSize="20sp" />
+	
+	        <RadioButton
+	            android:id="@+id/female_radio"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/female_radio"
+	            android:textSize="20sp" />
+		   	
+		   	<RadioButton
+	            android:id="@+id/mixed_radio"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/mixed_radio"
+	            android:textSize="20sp" />
+		   	
+	        <RadioButton
+	            android:id="@+id/strangers_radio"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="@string/strangers_radio"
+	            android:textSize="20sp" />
+	
+	        <RadioButton
+	            android:id="@+id/company_other"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/other_label"
+	            android:textSize="20sp" />
+		</RadioGroup>
         <EditText
-            android:id="@+id/etDS5Other1"
+            android:id="@+id/company_other_ans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cbDS5Box5"
-            android:layout_toRightOf="@+id/cbDS5Box6"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:ems="6"
             android:gravity="center"
-            android:hint="Enter Text"
+            android:hint="@string/other_company_hint"
             android:textSize="20sp" />
     </RelativeLayout>
 

@@ -1,126 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        android:id="@+id/location_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/loc_prompt"
-        android:background="#7b9aad"
-		android:textColor ="#FFFFFF"
-        android:textSize="25sp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="350sp"
-        android:orientation="vertical"
-        android:weightSum="10" >
-
-        <RadioGroup
-            android:id="@+id/location_group"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:weightSum="8" >
-
-            <RadioButton
-                android:id="@+id/bar_radio"
-                android:button="@drawable/bar_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/bar_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/restaurant_radio"
-                android:button="@drawable/restaurant_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/rest_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/myhome_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/myhome_button"
-                android:text="@string/home_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/friend_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/friend_button"
-                android:text="@string/friend_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/school_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/school_button"
-                android:text="@string/school_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/frat_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/frat_button"
-                android:text="@string/frat_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/sport_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:button="@drawable/sport_button"
-                android:text="@string/sport_label"
-                android:textSize="20sp" />
-
-            <RadioButton
-                android:id="@+id/other_radio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/other_label"
-                android:textSize="20sp" />
-        </RadioGroup>
-
-        <EditText
-            android:id="@+id/other_ans"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:ems="6"
-            android:gravity="center"
-            android:hint="@string/other_hint"
-            android:textSize="20sp" />
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/location_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/finish" />
-    </LinearLayout>
-
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >	
+    <ScrollView 
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent">
+	    <LinearLayout
+	        android:orientation="vertical"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content">
+		    <TextView
+		        android:id="@+id/location_title"
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/loc_prompt"
+		        android:background="#0099CC"
+				android:textColor ="#FFFFFF"
+		        android:textSize="30sp"
+		        android:padding="10dp" />
+		
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:orientation="vertical">
+		
+		        <RadioGroup
+		            android:id="@+id/location_group"
+		            android:layout_width="wrap_content"
+		            android:layout_height="match_parent"
+		            android:layout_marginTop="10dp"
+		            android:layout_marginBottom="10dp"
+		            android:layout_marginRight="10dp"
+		            android:layout_marginLeft="10dp"
+		            android:textSize="20sp">
+		
+		            <RadioButton
+		                android:id="@+id/bar_radio"
+		                android:button="@drawable/bar_button"
+		                android:text="@string/bar_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/restaurant_radio"
+		                android:button="@drawable/restaurant_button"
+		                android:text="@string/rest_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/myhome_radio"
+		                android:button="@drawable/myhome_button"
+		                android:text="@string/home_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/friend_radio"
+		                android:button="@drawable/friend_button"
+		                android:text="@string/friend_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/school_radio"
+		                android:button="@drawable/school_button"
+		                android:text="@string/school_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/frat_radio"
+		                android:button="@drawable/frat_button"
+		                android:text="@string/frat_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/sport_radio"
+		                android:button="@drawable/sport_button"
+		                android:text="@string/sport_label"/>
+		
+		            <RadioButton
+		                android:id="@+id/other_radio"
+		                android:text="@string/other_label"
+		                android:layout_marginLeft="15dp"/>
+		        </RadioGroup>
+		
+		        <EditText
+		            android:id="@+id/other_ans"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:ems="6"
+		            android:gravity="center"
+		            android:selectAllOnFocus="true"
+		            android:visibility="invisible"
+		            android:hint="@string/other_hint"
+		           	android:layout_marginTop="10dp"
+		           	android:layout_marginBottom="10dp"
+		           	android:layout_marginRight="10dp"
+		           	android:layout_marginLeft="10dp"
+		            android:textSize="20sp" />
+		
+		    </LinearLayout>
+		        <TextView
+		        android:layout_width="fill_parent"
+		        android:layout_height="wrap_content"
+		        android:text="@string/company"
+		        android:layout_marginTop="30dp"
+		       	android:background="#0099CC"
+				android:textColor ="#FFFFFF"
+		        android:textSize="30sp"
+		        android:padding="10dp" />
+		
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical">
+		
+		        <RadioGroup
+		            android:id="@+id/company_group"
+		            android:layout_width="fill_parent"
+		            android:layout_height="match_parent"
+		            android:textSize="20sp">
+			            
+			        <RadioButton
+			            android:id="@+id/myself_radio"
+			            android:text="@string/myself_radio"
+			           	android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft="15dp"/>
+			
+			        <RadioButton
+			            android:id="@+id/family_radio"
+			            android:text="@string/family_radio"
+			            android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft= "15dp"/>
+			
+			        <RadioButton
+			            android:id="@+id/male_radio"
+			            android:text="@string/male_radio"
+			            android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft="15dp"/>
+			
+			        <RadioButton
+			            android:id="@+id/female_radio"
+			            android:text="@string/female_radio"
+			            android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft="15dp"/>
+				   	
+				   	<RadioButton
+			            android:id="@+id/mixed_radio"
+			            android:text="@string/mixed_radio"
+			            android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft="15dp"/>
+				   	
+			        <RadioButton
+			            android:id="@+id/strangers_radio"
+			            android:text="@string/strangers_radio"
+			            android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft="15dp"/>
+			
+			        <RadioButton
+			            android:id="@+id/company_other"
+			            android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:text="@string/other_label"
+			            android:layout_marginTop="6dp"
+			            android:layout_marginBottom="6dp"
+			            android:layout_marginLeft="15dp"/>
+				</RadioGroup>
+		        <EditText
+		            android:id="@+id/company_other_ans"
+		            android:layout_width="fill_parent"
+		            android:layout_height="wrap_content"
+		            android:ems="6"
+		            android:gravity="center"
+		            android:selectAllOnFocus="true"
+		            android:visibility="invisible"
+		            android:hint="@string/other_company_hint"
+		            android:textSize="20sp" 
+		            android:layout_margin="10dp"/>
+		    </LinearLayout>
+		
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:orientation="vertical" >
+		
+		        <Button
+		            android:id="@+id/location_finish"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="center"
+		            android:text="@string/finish" />
+		    </LinearLayout>
+		</LinearLayout>
+	</ScrollView>
 </LinearLayout>

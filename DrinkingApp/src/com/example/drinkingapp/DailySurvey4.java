@@ -10,82 +10,148 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
-
-public class DailySurvey4 extends Activity implements OnClickListener{
+public class DailySurvey4 extends Activity implements OnClickListener {
 
 	private Button finish;
-	private RadioGroup radioGroup;
-	private EditText other_ans;
+	private RadioGroup radioGroup, companyGroup;
 	private String locationResult = null;
+	private String companyResult = null;
 	private DatabaseHandler db;
-	
-	private void addDrinkLocation(){
-		db = new DatabaseHandler(this);
-		finish=(Button)findViewById(R.id.location_finish);
-		finish.setOnClickListener(this);
+
+	private void addDrinkLocation() {
 		
-		radioGroup=(RadioGroup)findViewById(R.id.location_group);
-		radioGroup.setOnCheckedChangeListener( new RadioGroup.OnCheckedChangeListener() {			
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				switch (checkedId) {
-					case R.id.bar_radio:
-						locationResult = "Bar";
-						break;
-					case R.id.restaurant_radio:
-						locationResult = "Restaurant";
-						break;
-					case R.id.myhome_radio:
-						locationResult = "Home";
-						break;
-					case R.id.friend_radio:
-						locationResult = "Friend";
-						break;
-					case R.id.school_radio:
-						locationResult = "School";
-						break;	
-					case R.id.frat_radio:
-						locationResult = "Fraternity";
-						break;
-					case R.id.sport_radio:
-						locationResult = "Public";
-						break;
-					case R.id.other_radio:
-						locationResult = other_ans.getText().toString();
-						break;
-					default:
-						throw new RuntimeException("Unknown Button ID For Location Question.");
-				}		
-			}
-		});
+		finish = (Button) findViewById(R.id.location_finish);
+		finish.setOnClickListener(this);
+
+		radioGroup = (RadioGroup) findViewById(R.id.location_group);
+		radioGroup
+				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup group, int checkedId) {
+						switch (checkedId) {
+						case R.id.bar_radio:
+							locationResult = "Bar";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.restaurant_radio:
+							locationResult = "Restaurant";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.myhome_radio:
+							locationResult = "Home";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.friend_radio:
+							locationResult = "Friend";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.school_radio:
+							locationResult = "School";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.frat_radio:
+							locationResult = "Fraternity";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.sport_radio:
+							locationResult = "Public";
+							findViewById(R.id.other_ans).setVisibility(View.INVISIBLE);
+							break;
+						case R.id.other_radio:
+							locationResult = "Other";
+							findViewById(R.id.other_ans).setVisibility(View.VISIBLE);
+							break;
+						default:
+							throw new RuntimeException(
+									"Unknown Button ID For Location Question.");
+						}
+					}
+				});
+		}
+		private void addDrinkCompany(){
+			companyGroup = (RadioGroup)findViewById(R.id.company_group);
+			companyGroup
+					.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+						@Override
+						public void onCheckedChanged(RadioGroup group, int checkedId){
+							switch (checkedId) {
+							case R.id.myself_radio:
+								companyResult = "Alone";
+								findViewById(R.id.company_other_ans).setVisibility(View.INVISIBLE);
+								break;
+							case R.id.family_radio:
+								locationResult = "Family";
+								findViewById(R.id.company_other_ans).setVisibility(View.INVISIBLE);
+								break;
+							case R.id.male_radio:
+								locationResult = "Male";
+								findViewById(R.id.company_other_ans).setVisibility(View.INVISIBLE);
+								break;
+							case R.id.female_radio:
+								locationResult = "Female";
+								findViewById(R.id.company_other_ans).setVisibility(View.INVISIBLE);
+								break;
+							case R.id.mixed_radio:
+								locationResult = "Mixed";
+								findViewById(R.id.company_other_ans).setVisibility(View.INVISIBLE);
+								break;
+							case R.id.strangers_radio:
+								locationResult = "Strangers";
+								findViewById(R.id.company_other_ans).setVisibility(View.INVISIBLE);
+								break;
+							case R.id.company_other:
+								locationResult = "Other";
+								findViewById(R.id.company_other_ans).setVisibility(View.VISIBLE);
+								break;
+							default:
+								throw new RuntimeException(
+										"Unknown Button ID For Location Question.");
+							}
+						}
+
+					});
 	}
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//Get the database
+		db = new DatabaseHandler(this);
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
+
 		setContentView(R.layout.dailysurvey4);
-		
-		//add questions to the survey
+
+		// add questions to the survey
 		addDrinkLocation();
+		addDrinkCompany();
 	}
 
-	private void saveToDB(){
-		if (locationResult != null){
+	private void saveToDB() {
+		if (locationResult != null) {
+			if (locationResult.equals("Other")) {
+				locationResult = ((EditText)findViewById(R.id.other_ans)).getText().toString();
+			}
 			db.addValue("location", locationResult);
+		}
+		if (companyResult != null) {
+			if(companyResult.equals("Other")){
+				companyResult = ((EditText)findViewById(R.id.company_other_ans)).getText().toString();
+			}
+			db.addValue("company", companyResult);
 		}
 	}
 
 	@Override
 	public void onClick(View view) {
-		switch(view.getId()){
-			case R.id.location_finish:
-				saveToDB();
-				finish();
-				break;
+		switch (view.getId()) {
+		case R.id.location_finish:
+
+			saveToDB();
+			finish();
+			break;
 		}
 	}
 

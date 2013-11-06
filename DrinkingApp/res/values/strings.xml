@@ -8,19 +8,30 @@
     <string name="done_drinking">Finished Drinking</string>
     <string name="resourcebutton">Resources</string>
     
+    <!-- Shared Strings for Questions -->
     <string name="na">N/A</string>
     <string name="finish">Save</string>
+    <string name="other_label">Other(Specify)</string>
+	<string name="other_hint">Location</string>
     
-    <!-- Strings for DailySurvey4 -->
-    <string name="loc_prompt">Select the location you primarily drank at last night:</string>
-	<string name="bar_label">Bar</string>
-	<string name="rest_label">Restaurant</string>
+    <!-- Strings for Location Question -->
+    <string name="loc_prompt">I drank primarily at:</string>
+	<string name="bar_label">A Bar</string>
+	<string name="rest_label">A Restaurant</string>
 	<string name="home_label">Home</string>
 	<string name="friend_label">Other Residence</string>
 	<string name="school_label">School or Work</string>
-	<string name="frat_label">Club, Fraternity, or Sorority Event</string>
-	<string name="sport_label">Public Event(sports, party, concert, etc.)</string>
-	<string name="other_label">Other(Specify)</string>
-	<string name="other_hint">Location</string>
+	<string name="frat_label">A Club, Fraternity, or Sorority Event</string>
+	<string name="sport_label">A Public Event(sports, party, concert, etc.)</string>
+
+	<!-- Strings for Company Quesiton -->
+	<string name="company">I went drinking with:</string>	
+	<string name="myself_radio">Myself/Alone</string>
+	<string name="family_radio">Family Members or Relatives</string>
+	<string name="male_radio">Male Friends Only</string>
+	<string name="female_radio">Female Friends Only</string>
+	<string name="mixed_radio">Both Male and Female Friends</string>
+	<string name="strangers_radio">Strangers</string>
+	<string name="other_company_hint">With whom you went drinking</string>
 	
 </resources>
