@@ -1,5 +1,8 @@
 package com.example.drinkingapp;
 
+import java.util.ArrayList;
+import java.util.Date;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,13 +14,17 @@ import android.widget.Button;
 
 public class Menu extends Activity implements OnClickListener {
 
-	Button tracking, assessment, visualize, settings, resources;
-	Intent goToThisPage;
-
+	private Button tracking, assessment, visualize, settings, resources;
+	private Intent goToThisPage;
+	private DatabaseHandler db;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		//get database
+		db = new DatabaseHandler(this);
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -41,20 +48,28 @@ public class Menu extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.bMenuTracking:
-			//goToThisPage = new Intent(Menu.this,Class.Tracking);
+			// goToThisPage = new Intent(Menu.this,Class.Tracking);
 			goToThisPage = new Intent(Menu.this, DrinkCounter.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuAssessment:
+			Date date = new Date();
+			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
 			goToThisPage = new Intent(Menu.this, Assessment.class);
 			startActivity(goToThisPage);
+			
+			if (drank == null) {
+				Intent drink_ques = new Intent(this, DailySurvey1.class);
+				startActivity(drink_ques);
+			}
+
 			break;
 		case R.id.bMenuVisualize:
-			goToThisPage = new Intent(Menu.this,Visualize.class);
+			goToThisPage = new Intent(Menu.this, Visualize.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuSettings:
-			goToThisPage = new Intent(Menu.this,Settings.class);
+			goToThisPage = new Intent(Menu.this, Settings.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuResources:
