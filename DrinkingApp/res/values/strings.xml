@@ -7,5 +7,20 @@
     <string name="hello_world">Hello World</string>
     <string name="done_drinking">Finished Drinking</string>
     <string name="resourcebutton">Resources</string>
+    
+    <string name="na">N/A</string>
+    <string name="finish">Save</string>
+    
+    <!-- Strings for DailySurvey4 -->
+    <string name="loc_prompt">Select the location you primarily drank at last night:</string>
+	<string name="bar_label">Bar</string>
+	<string name="rest_label">Restaurant</string>
+	<string name="home_label">Home</string>
+	<string name="friend_label">Other Residence</string>
+	<string name="school_label">School or Work</string>
+	<string name="frat_label">Club, Fraternity, or Sorority Event</string>
+	<string name="sport_label">Public Event(sports, party, concert, etc.)</string>
+	<string name="other_label">Other(Specify)</string>
+	<string name="other_hint">Location</string>
 	
 </resources>

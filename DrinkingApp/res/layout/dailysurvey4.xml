@@ -5,10 +5,12 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/tvDS3Title"
+        android:id="@+id/location_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="I primarily drank at a..."
+        android:text="@string/loc_prompt"
+        android:background="#7b9aad"
+		android:textColor ="#FFFFFF"
         android:textSize="25sp" />
 
     <RelativeLayout
@@ -18,94 +20,94 @@
         android:weightSum="10" >
 
         <RadioGroup
-            android:id="@+id/rgDS4"
+            android:id="@+id/location_group"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:weightSum="8" >
 
             <RadioButton
-                android:id="@+id/rDS4radio1"
+                android:id="@+id/bar_radio"
+                android:button="@drawable/bar_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Bar"
+                android:text="@string/bar_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio2"
+                android:id="@+id/restaurant_radio"
+                android:button="@drawable/restaurant_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Restaurant"
+                android:text="@string/rest_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio3"
+                android:id="@+id/myhome_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="My own residence"
+                android:button="@drawable/myhome_button"
+                android:text="@string/home_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio4"
+                android:id="@+id/friend_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Other’s residence"
+                android:button="@drawable/friend_button"
+                android:text="@string/friend_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio5"
+                android:id="@+id/school_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Work/School"
+                android:button="@drawable/school_button"
+                android:text="@string/school_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio6"
+                android:id="@+id/frat_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Club/Fraternity/Sorority Event"
+                android:button="@drawable/frat_button"
+                android:text="@string/frat_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio7"
+                android:id="@+id/sport_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Public Event(sports, party, concert, etc.)"
+                android:button="@drawable/sport_button"
+                android:text="@string/sport_label"
                 android:textSize="20sp" />
 
             <RadioButton
-                android:id="@+id/rDS4radio8"
+                android:id="@+id/other_radio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Other(Specify):"
+                android:text="@string/other_label"
                 android:textSize="20sp" />
         </RadioGroup>
 
         <EditText
-            android:id="@+id/etDS4Other"
+            android:id="@+id/other_ans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_weight="6"
             android:ems="6"
             android:gravity="center"
-            android:hint="Enter Text"
+            android:hint="@string/other_hint"
             android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tvDS4Hidden"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="N/A"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout
@@ -114,11 +116,11 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/bDS3Finish"
+            android:id="@+id/location_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Finish" />
+            android:text="@string/finish" />
     </LinearLayout>
 
 </LinearLayout>
