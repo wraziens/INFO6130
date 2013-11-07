@@ -26,6 +26,7 @@ public class DrinkCounter extends Activity {
 	// TODO:Temporary, move to a class that makes more sense
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_PER_CHICKEN = 264.0;
+	private final Double CALORIES_PER_PIZZA = 285.0;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -43,11 +44,6 @@ public class DrinkCounter extends Activity {
 		calculateColor();
 		view.setBackgroundColor(color);
 		setContentView(view);
-
-		// TextView check = new TextView(this);
-		// check.setText(String.valueOf(bac));
-		// FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
-		// layout.addView(check);
 
 	}
 
@@ -163,6 +159,7 @@ public class DrinkCounter extends Activity {
 		}
 		db.addValue("drink_count", drink_count);
 		calculateBac();
+		db.addValue("bac", String.valueOf(bac));
 		calculateColor();
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
@@ -171,14 +168,17 @@ public class DrinkCounter extends Activity {
 		// FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
 		// layout.addView(check);
 
-		// TODO: Move this to a more appropriate Class
-		// Save Chicken values
-
+		//calculate number of chickens that equate the number of calories
 		Double drink_cals = drink_count * CALORIES_PER_DRINK;
 		int number_chickens = (int) Math
 				.ceil(drink_cals / CALORIES_PER_CHICKEN);
-		db.addValue("number_chickens", number_chickens);
+		db.updateOrAdd("number_chickens", number_chickens);
 
+		//calculate the number of slices of pizza that equate to the 
+		//number of drinks consumed that day.
+		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
+		db.updateOrAdd("number_pizza", number_pizza);
+		
 		TextView check = new TextView(this);
 		check.setText(String.valueOf(number_chickens));
 		FrameLayout layout = (FrameLayout) findViewById(R.id.drink_layout);
