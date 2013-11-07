@@ -62,6 +62,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(CREATE_QUES);
 	}
 
+	//Will update the value if it already exists in the db for the 
+	//current day. Otherwise it will add the value to the db
+	public void updateOrAdd(String variable, Integer int_value){
+		Date date = new Date();
+		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>)getVarValuesForDay(variable, date);
+		if (exist != null){
+			addValue(variable, int_value);
+		}else{
+			updateValue(variable, int_value);
+		}
+	}
+	
 	// Adds an integer value to the database
 	public void addValue(String variable, Integer int_value) {
 		Date date = new Date();
