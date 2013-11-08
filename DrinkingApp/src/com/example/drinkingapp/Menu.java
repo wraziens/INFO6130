@@ -64,7 +64,7 @@ public class Menu extends Activity implements OnClickListener {
 
 			break;
 		case R.id.bMenuVisualize:
-			goToThisPage = new Intent(Menu.this, Visualize.class);
+			goToThisPage = new Intent(Menu.this, VisualizeExercise.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuSettings:

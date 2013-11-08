@@ -45,10 +45,10 @@
             </intent-filter>
         </activity>
                 <activity
-            android:name=".Visualize"
+            android:name=".VisualizeExercise"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZE" />
+                <action android:name="com.example.drinkingapp.VISUALIZEEXERCISE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
