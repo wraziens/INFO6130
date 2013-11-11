@@ -67,7 +67,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public void updateOrAdd(String variable, Integer int_value){
 		Date date = new Date();
 		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>)getVarValuesForDay(variable, date);
-		if (exist != null){
+		if (exist == null){
 			addValue(variable, int_value);
 		}else{
 			updateValue(variable, int_value);
