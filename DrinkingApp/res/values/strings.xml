@@ -12,7 +12,7 @@
     <string name="na">N/A</string>
     <string name="finish">Save</string>
     <string name="other_label">Other(Specify)</string>
-
+	<string name="submit">Submit</string>
     
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
@@ -42,4 +42,49 @@
 	<string name="social_obj_radio">To be social</string>
 	<string name="forget_radio">To forget about my problems</string>
 	<string name="other_objective_hint">Enter why you went drinking</string>	
+
+	<!-- Strings for Drink Assessment -->
+	<string name="number_drinks">How many drinks do you think you had last night?</string>
+	<string name="excess_drinks">Do you think you had too many drinks last night?</string>
+	
+	<!--  Strings for Effects from last night Might get rid of this-->
+	<string name="effects">Please select all of the fields that apply to last night:</string>
+	<string name="forgot">Forgot or escaped from my responsibilities and problems.</string>
+	
+	<!-- Strings for Wordle Prompt -->
+	<string name="wordle_prompt">Select 3 words that best describe your day yesterday:</string>
+	<string name="happy">Happy</string>
+	<string name="productive">Productive</string>
+	<string name="lazy">Lazy</string>
+	<string name="foggy">Foggy</string>
+	<string name="sick">Sick</string>
+	<string name="strong">Strong</string>
+	<string name="excited">Excited</string>
+	<string name="angry">Angry</string>
+	<string name="unhappy">Unhappy</string>
+	<string name="sad">Sad</string>
+	<string name="defeated">Defeated</string>
+	<string name="social">Social</string>
+	<string name="fun">Fun</string>
+	<string name="energetic">Energetic</string>
+	<string	name="healthy">Healthy</string>
+	<string name="lonely">Lonely</string>
+	<string name="successful">Successful</string>
+	<string name="apathetic">Apathetic</string>
+	<string name="optimistic">Optimistic</string>
+	<string name="loved">Loved</string>
+	<string name="embarrassed">Embarrassed</string>
+	<string name="sloppy">Sloppy</string>
+	<string name="out_control">Out of control</string>
+	<string name="relaxed">Relaxed</string>
+	<string name="uncomfortable">Uncomfortable</string>
+	<string name="adventurous">Adventurous</string>
+	<string name="stressed">Stressed</string>
+	<string name="anxious">Anxious</string>
+	<string name="depressed">Depressed</string>
+	<string name="humorous">Humorous</string>
+	<string name="regretful">Regretful</string>
+	<string name="hopeful">Hopeful</string>
+	<string name="outgoing">Outgoing</string>
+	
 </resources>
