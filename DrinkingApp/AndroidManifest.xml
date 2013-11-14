@@ -135,6 +135,10 @@
             android:name=".DrinkSubmenu"
             android:label="@string/app_name" >
         </activity>
+                <activity
+            android:name=".MoodSelection"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>

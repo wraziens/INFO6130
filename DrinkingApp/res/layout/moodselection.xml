@@ -4,22 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/bCalendarVisualization"
+    <GridView
+        android:id="@+id/gvMood"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Calendar Visualization" />
+        android:numColumns="4" >
+    </GridView>
+
+    <TextView
+        android:id="@+id/tvMoodTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="test" />
 
     <Button
-        android:id="@+id/bWordCloudVisualization"
-        android:layout_width="match_parent"
+        android:id="@+id/bMoodFinish"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cloud Visualization" />
-
-    <Button
-        android:id="@+id/bMoodVisualization"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mood Visualization" />
+        android:layout_gravity="center_horizontal"
+        android:text="Finish" />
 
 </LinearLayout>

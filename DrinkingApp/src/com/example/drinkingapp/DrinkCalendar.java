@@ -41,16 +41,6 @@ public class DrinkCalendar extends Activity implements OnClickListener{
 	next = (Button) findViewById(R.id.bNextMonth);
 	back.setOnClickListener(this);
 	next.setOnClickListener(this);
-	drinkCalendar.setOnItemClickListener(new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View v,
-                int position, long id) {
-
-            // DO something
-        	bottomDisplay.setText("NOPE");
-
-        }
-    });
 	
 	//sample numbers to be added
 	ArrayList<Integer>drinkingDays=new ArrayList<Integer>();
