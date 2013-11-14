@@ -1,11 +1,14 @@
 package com.example.drinkingapp;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -13,29 +16,34 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class ColorAdapter extends BaseAdapter {
+public class ColorAdapter extends BaseAdapter implements OnClickListener{
 	private Context mContext;
-	int month;
+	int monthSelected,yearSelected;
 	ArrayList<Integer> drinkingDays;
 	ArrayList<Double>  maxbac;
 	int daysSetBack=0;
 	int daysInMonth=0;
+	static ArrayList<Button> buttonStore=new ArrayList<Button>();
+	static int focused=0;
+	TextView test;
 	
-	public ColorAdapter(Context c,int m,ArrayList<Integer> d,ArrayList<Double> mb) {
+	public ColorAdapter(Context c,int m, int y, ArrayList<Integer> d,ArrayList<Double> mb) {
 		mContext = c;
-		month = m;
+		monthSelected = m;
+		yearSelected = y;
 		drinkingDays = d;
 		maxbac= mb;
+
 	}
-
+	//given month and year, it detects the 1st day of the month and see what day it is, days in that month
+	//and shift the calender accordingly.
 	public int getCount() {
-
-		if (month==11){
-			daysSetBack=4;
-			daysInMonth=30;
-			return daysInMonth+daysSetBack+7;
-		}
-		else return 0;
+		Calendar selectedCalendar=Calendar.getInstance();
+		selectedCalendar.set(yearSelected, monthSelected, 1);
+		int daysInSelectedMonth=selectedCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		int dayOfTheWeekSelected=selectedCalendar.get(Calendar.DAY_OF_WEEK);
+		daysSetBack=dayOfTheWeekSelected-1;
+		return daysInSelectedMonth+daysSetBack+7;
 	}
 
 	@Override
@@ -51,8 +59,9 @@ public class ColorAdapter extends BaseAdapter {
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		Button view=new Button(mContext);
+	public View getView(final int position, View convertView, final ViewGroup parent) {
+		final Button view=new Button(mContext);
+
 			//view.setPadding(0, 0, 0, 0);
 		double bacLevel;
 		
@@ -61,9 +70,24 @@ public class ColorAdapter extends BaseAdapter {
 			for (int n=0;n<drinkingDays.size();n++){
 				if (drinkingDays.get(n)+daysSetBack+7==position+1){
 					view.setBackgroundColor(Color.RED);
-					
 					bacLevel=maxbac.get(n);
-					
+					final String bac=""+bacLevel;
+					view.setOnClickListener(new OnClickListener(){
+
+						@Override
+	                    public void onClick(View v) {
+							((DrinkCalendar)mContext).changeBottomDisplay("Max Bac: "+bac);
+							if (focused>0){
+								int something=parent.getChildCount();
+								View child=parent.getChildAt(focused);
+								child.setBackgroundColor(Color.RED);
+							}
+							focused=position;
+							v.setSelected(true);
+							view.setBackgroundResource(R.drawable.border);
+	                    }
+						
+					});
 				}
 			}
 			if (position>6&&position<7+daysSetBack){
@@ -108,5 +132,16 @@ public class ColorAdapter extends BaseAdapter {
 		    
 
 		return view;
+	}
+	
+	public ArrayList<Button> getButtonView(){
+		return buttonStore;
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+
 	}
 }

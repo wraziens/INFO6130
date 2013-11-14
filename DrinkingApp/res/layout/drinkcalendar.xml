@@ -9,15 +9,60 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CalenderViewExampleActivity" >
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/tvMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="Month"
+            android:layout_below="@+id/bNextMonth"
+            android:layout_marginTop="-20sp"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/bPreviousMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/bNextMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Next" />
+
+        <TextView
+            android:id="@+id/tvYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:text="2000"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
     <GridView
         android:id="@+id/gvDrinkCalendar"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:columnWidth="42dp"
-        android:verticalSpacing="0sp"
-        android:stretchMode="none"
+        android:layout_height="wrap_content"
+        android:columnWidth="40dp"
         android:gravity="center"
-        android:numColumns="7" >
+        android:listSelector="#00ff8c"
+        android:numColumns="7"
+        android:stretchMode="none"
+        android:verticalSpacing="0sp" >
     </GridView>
+
+    <TextView
+        android:id="@+id/tvCalendarBottomDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NOTHING" />
 
 </LinearLayout>

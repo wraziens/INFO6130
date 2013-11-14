@@ -62,7 +62,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-                <activity
+        <activity
             android:name=".VisualizeMenu"
             android:label="@string/app_name" >
             <intent-filter>
@@ -127,8 +127,12 @@
             android:name=".DailySurveySocial"
             android:label="@string/app_name" >
         </activity>
-                <activity
+        <activity
             android:name=".DrinkCalendar"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name=".DrinkSubmenu"
             android:label="@string/app_name" >
         </activity>
     </application>
