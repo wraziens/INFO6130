@@ -9,230 +9,244 @@
         android:layout_height="wrap_content">
 
     	<TextView
-        	android:layout_width="wrap_content"
+        	android:layout_width="fill_parent"
         	android:layout_height="wrap_content"
         	android:text="@string/wordle_prompt"
         	android:gravity="center"
-        	android:textSize="20sp" />
+        	android:background="#0099CC"
+			android:textColor ="#FFFFFF"
+	        android:textSize="30sp"
+	        android:padding="10dp" />
 
     	<LinearLayout
     	   	android:orientation="horizontal"
     	   	android:layout_width="wrap_content"
-        	android:layout_height="wrap_content">
+        	android:layout_height="wrap_content"
+        	android:layout_gravity="center_horizontal">
     	  	<LinearLayout
     	  		android:orientation="vertical"  
 		    	android:layout_width="wrap_content"
-        		android:layout_height="wrap_content">
+        		android:layout_height="wrap_content"
+        		android:layout_marginRight="20dp">
         		
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_happy"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/happy"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_productive"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/productive"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_lazy"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/lazy"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_foggy"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/foggy"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_sick"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/sick"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_strong"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/strong"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_excited"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/excited"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_angry"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/angry"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_unhappy"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/unhappy"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_sad"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/sad"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_defeated"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/defeated"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_social"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/social"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_fun"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/fun"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_energetic"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/energetic"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_healthy"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/healthy"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_lonely"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/lonely"
 		    	/>
-		    </LinearLayout>
-		    <LinearLayout
-		        android:orientation="vertical"
-		        android:layout_width="wrap_content"
-        		android:layout_height="wrap_content">
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_successful"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/successful"
 		    	/>
-		    	<Checkbox
+		    </LinearLayout>
+		    <LinearLayout
+		        android:orientation="vertical"
+		        android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"
+        		android:layout_marginLeft="20dp">
+		    	
+		    	<CheckBox
 		    	    android:id="@+id/wordle_apathetic"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/apathetic"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_optimistic"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/optimistic"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_loved"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/loved"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_embarrassed"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/embarrassed"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_sloppy"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/sloppy"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_out_control"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/out_control"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_relaxed"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/relaxed"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_uncomfortable"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/uncomfortable"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_adventurous"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/adventurous"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_stressed"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/stressed"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_anxious"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/anxious"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_depressed"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/depressed"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_humorous"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/humorous"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_regretful"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/regretful"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_hopeful"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/hopeful"
 		    	/>
-		    	<Checkbox
+		    	<CheckBox
 		    	    android:id="@+id/wordle_outgoing"
 		    	    android:layout_width="wrap_content"
 		    	    android:layout_height="wrap_content"
 		    	    android:text="@string/outgoing"
+		    	/>
+		    	<CheckBox
+		    	    android:id="@+id/wordle_busy"
+		    	    android:layout_width="wrap_content"
+		    	    android:layout_height="wrap_content"
+		    	    android:text="@string/busy"
 		    	/>
 		    </LinearLayout>
 		</LinearLayout>
     	<LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
-	        android:orientation="vertical" >
+	        android:orientation="vertical" 
+	        android:layout_marginTop="25dp">
 	
 	        <Button
 	            android:id="@+id/wordle_finish"
