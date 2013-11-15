@@ -11,6 +11,8 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class Menu extends Activity implements OnClickListener {
 
@@ -55,12 +57,20 @@ public class Menu extends Activity implements OnClickListener {
 		case R.id.bMenuAssessment:
 			Date date = new Date();
 			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
-			goToThisPage = new Intent(Menu.this, Assessment.class);
-			startActivity(goToThisPage);
+
+			
 			if (drank == null) {
 				Intent drink_ques = new Intent(this, DailySurvey1.class);
 				startActivityForResult(drink_ques,2);
-			} 
+			} else {
+				ArrayList<DatabaseStore> assess = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_assess", date);
+				goToThisPage = new Intent(Menu.this, Assessment.class);
+				startActivity(goToThisPage);
+				if(assess == null && drank.get(0).value.equals("True")){
+					Intent drink_assess = new Intent(this, DrinkAssessment.class);
+					startActivity(drink_assess);
+				}
+			}
 			break;
 		case R.id.bMenuVisualize:
 			goToThisPage = new Intent(Menu.this, Visualize.class);
@@ -79,11 +89,13 @@ public class Menu extends Activity implements OnClickListener {
 	}
 
 	@Override
-	protected void onActivityResult(int requectCode, int resultCode, Intent data){
+	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		Date date = new Date();
 		ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
-		if (drank.equals("True")){
-			//TODO: get to estimated value from the db if the user already answered.
+		goToThisPage = new Intent(Menu.this, Assessment.class);
+		startActivity(goToThisPage);
+		
+		if (drank.get(0).value.equals("True")){
 			Intent how_many = new Intent(this, DrinkAssessment.class);
 			startActivity(how_many);
 		}		
