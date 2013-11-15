@@ -194,21 +194,21 @@ public class DailySurvey4 extends Activity implements OnClickListener {
 				locationResult = ((EditText) findViewById(R.id.other_ans))
 						.getText().toString();
 			}
-			db.addValue("location", locationResult);
+			db.updateOrAdd("location", locationResult);
 		}
 		if (companyResult != null) {
 			if (companyResult.equals("Other")) {
 				companyResult = ((EditText) findViewById(R.id.company_other_ans))
 						.getText().toString();
 			}
-			db.addValue("company", companyResult);
+			db.updateOrAdd("company", companyResult);
 		}
 		if (objectiveResult != null) {
 			if (objectiveResult.equals("Other")) {
 				objectiveResult = ((EditText) findViewById(R.id.objective_other_ans))
 						.getText().toString();
 			}
-			db.addValue("objective", objectiveResult);
+			db.updateOrAdd("objective", objectiveResult);
 		}
 	}
 
@@ -216,7 +216,6 @@ public class DailySurvey4 extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.location_finish:
-
 			saveToDB();
 			finish();
 			break;
