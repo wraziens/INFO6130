@@ -59,9 +59,8 @@ public class Menu extends Activity implements OnClickListener {
 			startActivity(goToThisPage);
 			if (drank == null) {
 				Intent drink_ques = new Intent(this, DailySurvey1.class);
-				startActivity(drink_ques);
-			}
-
+				startActivityForResult(drink_ques,2);
+			} 
 			break;
 		case R.id.bMenuVisualize:
 			goToThisPage = new Intent(Menu.this, Visualize.class);
@@ -79,4 +78,15 @@ public class Menu extends Activity implements OnClickListener {
 
 	}
 
+	@Override
+	protected void onActivityResult(int requectCode, int resultCode, Intent data){
+		Date date = new Date();
+		ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
+		if (drank.equals("True")){
+			//TODO: get to estimated value from the db if the user already answered.
+			Intent how_many = new Intent(this, DrinkAssessment.class);
+			startActivity(how_many);
+		}		
+	}
+	
 }

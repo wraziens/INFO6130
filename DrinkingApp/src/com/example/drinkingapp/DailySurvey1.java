@@ -32,17 +32,19 @@ public class DailySurvey1 extends Activity implements OnClickListener {
 	}
 
 	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		switch (arg0.getId()) {
+	public void onClick(View view) {
+		Intent intent = new Intent();
+		switch (view.getId()) {
 		case R.id.bDS1Yes:
 			result = "yes";
 			db.addValue("drank_last_night", "True");
+			setResult(2, intent);
 			finish();
 			break;
 		case R.id.bDS1No:
 			result = "no";
 			db.addValue("drank_last_night", "False");
+			setResult(2, intent);
 			finish();
 			break;
 
