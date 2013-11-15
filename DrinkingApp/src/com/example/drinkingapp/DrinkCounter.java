@@ -64,6 +64,9 @@ public class DrinkCounter extends Activity {
 		int year = Integer.parseInt(year_fmt.format(date));
 		int month = Integer.parseInt(month_fmt.format(date));
 		int day = Integer.parseInt(day_fmt.format(date));
+		
+		DatabaseStore current = new DatabaseStore("","",date, "Integer");
+		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
 				.getVarValuesForDay("drink_count", month, day, year);
 		color = start_color;
@@ -75,9 +78,7 @@ public class DrinkCounter extends Activity {
 			if (drink_count_vals.size() > 0) {
 				DatabaseStore start = drink_count_vals.get(0);
 				Integer start_time = start.hour * 60 + start.minute;
-				DatabaseStore last = drink_count_vals.get(drink_count_vals
-						.size() - 1);
-				Integer last_time = last.hour * 60 + last.minute;
+				Integer last_time = current.hour * 60 + current.minute;
 				hours = (last_time - start_time) / 60.0;
 			}
 		}
