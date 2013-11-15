@@ -32,6 +32,7 @@
 	<string name="male_radio">Male Friends Only</string>
 	<string name="female_radio">Female Friends Only</string>
 	<string name="mixed_radio">Both Male and Female Friends</string>
+	<string name="so_radio">Significant Other</string>
 	<string name="strangers_radio">Strangers</string>
 	<string name="other_company_hint">Enter who you went drinking with</string>
 	
