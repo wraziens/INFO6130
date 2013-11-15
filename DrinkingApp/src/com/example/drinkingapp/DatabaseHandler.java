@@ -22,13 +22,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	private static final String TABLE_MULTI = "multichoice";
 	private static final String TABLE_QUES = "questions";
 
+	private static final String KEY_ID = "id";
+	
 	// Multi Choice column names
-	private static final String MULTI_KEY_ID = "id";
 	private static final String MULTI_KEY_QUES_ID = "question_id";
 	private static final String MULTI_KEY_VALUE = "value";
 
 	// Question column names
-	private static final String QUES_KEY_ID = "id";
 	private static final String QUES_KEY_VAR = "variable";
 	private static final String QUES_KEY_DAY = "day";
 	private static final String QUES_KEY_MONTH = "month";
@@ -161,7 +161,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		// get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
 		// create Question Table
-		String update_sql = "UPDATE questions SET" + QUES_KEY_VALUE + "='"
+		String update_sql = "UPDATE questions SET " + QUES_KEY_VALUE + "='"
 				+ store.value + " WHERE " + QUES_KEY_VAR + "='"
 				+ store.variable + "' AND " + QUES_KEY_MONTH + "="
 				+ store.month + " AND " + QUES_KEY_YEAR + "=" + store.year
@@ -174,6 +174,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	public void clearAllValuesDay(String variable){
+		SQLiteDatabase db = this.getWritableDatabase();
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
+				"", date);		
+		// Delete the variable for today from the DB
+		String delete_sql = "DELETE FROM " +  TABLE_QUES +
+				" WHERE " + QUES_KEY_VAR + "='" + ds.variable +
+				"' AND " + QUES_KEY_YEAR + "='" +  ds.year +
+				"' AND " + QUES_KEY_MONTH + "='" + ds.month +
+				"' AND " + QUES_KEY_DAY + "='" + ds.day + ";";
+		// execute the SQL
+		db.execSQL(delete_sql);
+		// close the database
+		db.close();
+	}
 	/*
 	 * Inserts a row into the table questions and returns the pid.
 	 */
