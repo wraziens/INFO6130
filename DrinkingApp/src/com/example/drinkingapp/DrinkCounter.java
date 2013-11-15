@@ -44,7 +44,6 @@ public class DrinkCounter extends Activity {
 		calculateColor();
 		view.setBackgroundColor(color);
 		setContentView(view);
-
 	}
 
 	@Override
@@ -81,7 +80,6 @@ public class DrinkCounter extends Activity {
 				Integer last_time = last.hour * 60 + last.minute;
 				hours = (last_time - start_time) / 60.0;
 			}
-			// color = start_color - (0x00000900 * drink_count);
 		}
 	}
 
@@ -163,15 +161,10 @@ public class DrinkCounter extends Activity {
 		calculateColor();
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
-		// TextView check = new TextView(this);
-		// check.setText(String.valueOf(bac));
-		// FrameLayout layout = (FrameLayout)findViewById(R.id.drink_layout);
-		// layout.addView(check);
 
 		//calculate number of chickens that equate the number of calories
 		Double drink_cals = drink_count * CALORIES_PER_DRINK;
-		int number_chickens = (int) Math
-				.ceil(drink_cals / CALORIES_PER_CHICKEN);
+		int number_chickens = (int) Math.ceil(drink_cals / CALORIES_PER_CHICKEN);
 		db.updateOrAdd("number_chickens", number_chickens);
 
 		//calculate the number of slices of pizza that equate to the 
@@ -181,7 +174,6 @@ public class DrinkCounter extends Activity {
 		
 		TextView check = new TextView(this);
 		check.setText(String.valueOf(number_chickens));
-		FrameLayout layout = (FrameLayout) findViewById(R.id.drink_layout);
-		layout.addView(check);
+		((FrameLayout)parent_view).addView(check);
 	}
 }
