@@ -109,6 +109,10 @@
             android:name=".DailySurveySocial"
             android:label="@string/app_name" >
         </activity>
+        <activity
+            android:name=".DrinkAssessment"
+            android:label="@string/app_name" >
+        </activity>
     </application>
 
 </manifest>
