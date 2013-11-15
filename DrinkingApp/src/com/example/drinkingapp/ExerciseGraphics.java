@@ -110,6 +110,7 @@ public class ExerciseGraphics extends View{
 		canvas.rotate(90);
 		canvas.drawText("Days", canvas.getHeight()/2, 50, text);
 		canvas.rotate(-90);
+
 		
 		
 		axis.setColor(Color.RED);
@@ -135,7 +136,6 @@ public class ExerciseGraphics extends View{
 				Rect bounds=new Rect();
 				String weekData="Week "+weekNumber;
 				text.getTextBounds(weekData, 0, weekData.length(), bounds);
-				
 				canvas.drawRect(xPosition+widthOfBar + posX, (yScale-daysExercise)*yAxisIncrement + posY, xPosition+(widthOfBar*2) + posX, 
 						yAxisMax + posY,axis);
 				//draws week

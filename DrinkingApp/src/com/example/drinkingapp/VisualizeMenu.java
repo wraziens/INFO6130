@@ -9,7 +9,7 @@ import android.widget.Button;
 
 public class VisualizeMenu extends Activity implements OnClickListener{
 
-	Button exercise,drink;
+	Button exercise,drink,social;
 	Intent goToThisPage;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,10 @@ public class VisualizeMenu extends Activity implements OnClickListener{
 		setContentView(R.layout.vmenu);
 		exercise=(Button)findViewById(R.id.bExercise);
 		drink=(Button)findViewById(R.id.bDrink);
+		social=(Button)findViewById(R.id.bSocialization);
 		exercise.setOnClickListener(this);
 		drink.setOnClickListener(this);
+		social.setOnClickListener(this);
 	}
 
 	@Override
@@ -32,6 +34,10 @@ public class VisualizeMenu extends Activity implements OnClickListener{
 				break;
 			case R.id.bDrink:
 				goToThisPage = new Intent(this, DrinkSubmenu.class);
+				startActivity(goToThisPage);
+				break;
+			case R.id.bSocialization:
+				goToThisPage = new Intent(this, SocialChart.class);
 				startActivity(goToThisPage);
 				break;
 		
