@@ -162,11 +162,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		// create Question Table
 		String update_sql = "UPDATE questions SET " + QUES_KEY_VALUE + "='"
-				+ store.value + " WHERE " + QUES_KEY_VAR + "='"
+				+ store.value + "' WHERE " + QUES_KEY_VAR + "='"
 				+ store.variable + "' AND " + QUES_KEY_MONTH + "="
 				+ store.month + " AND " + QUES_KEY_YEAR + "=" + store.year
 				+ " AND " + QUES_KEY_DAY + "=" + store.day + " AND "
-				+ QUES_KEY_TYPE + "=" + store.type + ";";
+				+ QUES_KEY_TYPE + "='" + store.type + "';";
 
 		// create the question table
 		db.execSQL(update_sql);
@@ -182,9 +182,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		// Delete the variable for today from the DB
 		String delete_sql = "DELETE FROM " +  TABLE_QUES +
 				" WHERE " + QUES_KEY_VAR + "='" + ds.variable +
-				"' AND " + QUES_KEY_YEAR + "='" +  ds.year +
-				"' AND " + QUES_KEY_MONTH + "='" + ds.month +
-				"' AND " + QUES_KEY_DAY + "='" + ds.day + ";";
+				"' AND " + QUES_KEY_YEAR + "=" +  ds.year +
+				" AND " + QUES_KEY_MONTH + "=" + ds.month +
+				" AND " + QUES_KEY_DAY + "=" + ds.day + ";";
 		// execute the SQL
 		db.execSQL(delete_sql);
 		// close the database
