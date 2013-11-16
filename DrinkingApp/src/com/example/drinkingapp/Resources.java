@@ -19,7 +19,6 @@ public class Resources extends Activity implements OnClickListener{
 	Intent goToThisPage,call;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);//full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -30,7 +29,6 @@ public class Resources extends Activity implements OnClickListener{
 		visualize=(Button)findViewById(R.id.bMenuBottomVisualize);
 		settings=(Button)findViewById(R.id.bMenuBottomSettings);
 		gannett=(Button)findViewById(R.id.bCallGannett);
-		//resources=(Button)findViewById(R.id.bMenuBottomResources);
 		
 		home.setOnClickListener(this);
 		tracking.setOnClickListener(this);
@@ -47,20 +45,27 @@ public class Resources extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch(arg0.getId()){
 		case R.id.bMenuBottomHome:
-			goToThisPage = new Intent(this,Menu.class);
-			startActivity(goToThisPage);
+			finish();
 			break;
 		case R.id.bMenuBottomTracking:
-			//goToThisPage = new Intent(Menu.this,Class.Tracking);
+			finish();
+			goToThisPage = new Intent(this,DrinkCounter.class);
+			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuBottomAssessment:
-			//goToThisPage = new Intent(Menu.this,Class.Assessment);
+			finish();
+			goToThisPage = new Intent(this,Assessment.class);
+			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuBottomVisualize:
-			//goToThisPage = new Intent(Menu.this,Class.Visualize);
+			finish();
+			goToThisPage = new Intent(this, VisualizeMenu.class);
+			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuBottomSettings:
-			//goToThisPage = new Intent(Menu.this,Class.Settings);
+			finish();
+			goToThisPage = new Intent(this, Settings.class);
+			startActivity(goToThisPage);
 			break;
 		case R.id.bCallGannett:
 			 try {
