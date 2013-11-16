@@ -49,7 +49,7 @@ public class VisualizeMenu extends Activity implements OnClickListener{
 				startActivity(goToThisPage);
 				break;
 			case R.id.bProductivity:
-				goToThisPage = new Intent(this, FoodVisualization.class);
+				goToThisPage = new Intent(this, ProductivityVisualization.class);
 				startActivity(goToThisPage);
 				break;
 		
