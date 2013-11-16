@@ -305,6 +305,73 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
+	public List<DatabaseStore> getVarValuesForWeek(String variable, Date date){
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.DAY_OF_YEAR, -1);
+		date = gc.getTime();
+		
+		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
+		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
+		SimpleDateFormat day_week_ft = new SimpleDateFormat("E", Locale.US);
+
+		int year = Integer.parseInt(year_fmt.format(date));
+		int month = Integer.parseInt(month_fmt.format(date));
+		int day = Integer.parseInt(day_fmt.format(date));
+		int week_day = Integer.parseInt(day_week_ft.format(date));
+		
+		return getVarValuesForWeek(variable, month, day, year,week_day);
+	}
+	
+	public List<DatabaseStore> getVarValuesForWeek(String variable,
+			Integer month, Integer day, Integer year, Integer week_day) {
+		// get reference to the database
+		SQLiteDatabase db = this.getWritableDatabase();
+		String day_str = "(" + QUES_KEY_DAY +"="+ day + " AND " +
+				QUES_KEY_MONTH + "="  + month + " AND " + 
+				QUES_KEY_YEAR + "=" + year + ")";	
+		
+		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
+		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
+		GregorianCalendar cal = new GregorianCalendar(year, month, day);
+		
+		for (int i=0; i<7; i++){	
+			Integer diff = null;
+			if(week_day < i){
+				diff = i-week_day;
+				cal.add(Calendar.DAY_OF_YEAR, diff);
+				Date date = cal.getTime();
+				int y = Integer.parseInt(year_fmt.format(date));
+				int m = Integer.parseInt(month_fmt.format(date));
+				int d = Integer.parseInt(day_fmt.format(date));
+				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + 
+						" AND " + QUES_KEY_MONTH + "=" + m + " AND " +
+						QUES_KEY_YEAR + "=" + y + ")";
+			}else if(week_day>i){
+				diff = week_day-i;
+				cal.add(Calendar.DAY_OF_YEAR, -1 * diff);
+				Date date = cal.getTime();
+				int y = Integer.parseInt(year_fmt.format(date));
+				int m = Integer.parseInt(month_fmt.format(date));
+				int d = Integer.parseInt(day_fmt.format(date));
+				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + 
+						" AND " + QUES_KEY_MONTH + "=" + m + " AND " +
+						QUES_KEY_YEAR + "=" + y + ")";
+			}
+		}
+		day_str += ")";
+		
+		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + day_str;
+		Cursor cursor = db.rawQuery(query, null);
+		if (cursor.getCount() == 0) {
+			return null;
+		} else {
+			return handleCursor(cursor);
+		}
+	}
+	
 	public List<DatabaseStore> getVarValuesForYesterday(String variable, Date date) {
 		//subtract a day from our date
 		GregorianCalendar gc = new GregorianCalendar();
