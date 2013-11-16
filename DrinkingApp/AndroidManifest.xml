@@ -173,13 +173,23 @@
         </activity>
         <activity
             android:name=".DrinkAssessment"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>
-                <activity
+        <activity
             android:name=".ProductivityVisualization"
-            android:label="@string/app_name" 
+            android:label="@string/app_name"
             android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".MoodVisualization"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DrinkCloud"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

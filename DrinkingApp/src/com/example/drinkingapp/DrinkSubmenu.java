@@ -30,8 +30,8 @@ public class DrinkSubmenu extends Activity implements OnClickListener{
 		// TODO Auto-generated method stub
 		switch(v.getId()){
 			case R.id.bWordCloudVisualization:
-				//goToPage=new Intent(this,clou);
-				//startActivity(goToPage);
+				goToPage=new Intent(this,DrinkCloud.class);
+				startActivity(goToPage);
 				break;
 			case R.id.bCalendarVisualization:
 				goToPage=new Intent(this,DrinkCalendar.class);
