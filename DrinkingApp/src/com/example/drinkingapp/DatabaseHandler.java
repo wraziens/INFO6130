@@ -309,6 +309,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		return getVarValuesForDay(variable, month, day, year);
 	}
+	
+	public List<DatabaseStore> getVarValuesDelay(String variable, Date date) {
+		//subtract a day from our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
+		
+		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
+		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
+
+		int year = Integer.parseInt(year_fmt.format(date));
+		int month = Integer.parseInt(month_fmt.format(date));
+		int day = Integer.parseInt(day_fmt.format(date));
+
+		return getVarValuesForDay(variable, month, day, year);
+	}
 	public List<DatabaseStore> getVarValuesForDay(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);

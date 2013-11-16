@@ -68,12 +68,11 @@ public class DrinkCounter extends Activity {
 		DatabaseStore current = new DatabaseStore("","",date, "Integer");
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesForDay("drink_count", month, day, year);
+				.getVarValuesDelay("drink_count", date);
 		color = start_color;
 		if (drink_count_vals != null) {
 			drink_count = drink_count_vals.size();
 			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
-
 			// calculate the hours drinking
 			if (drink_count_vals.size() > 0) {
 				DatabaseStore start = drink_count_vals.get(0);
@@ -102,15 +101,8 @@ public class DrinkCounter extends Activity {
 
 	private void calculateBac() {
 		Date date = new Date();
-		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
-		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
-		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
-
-		int year = Integer.parseInt(year_fmt.format(date));
-		int month = Integer.parseInt(month_fmt.format(date));
-		int day = Integer.parseInt(day_fmt.format(date));
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesForDay("drink_count", month, day, year);
+				.getVarValuesDelay("drink_count", date);
 		if (drink_count_vals != null) {
 			calculateHours();
 
