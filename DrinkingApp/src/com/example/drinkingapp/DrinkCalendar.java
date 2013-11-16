@@ -53,17 +53,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		//Get the values from the DB
 		Date date = new Date();
 		calculateValues(date);
-		/*
-		ArrayList<DatabaseStore> bac_colors = (ArrayList<DatabaseStore>) db
-				.getVarValuesForMonth("bac_color", date);
-		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
-		if(bac_colors != null && bac_vals != null){
-			bac_colors = DatabaseStore.sortByTime(bac_colors);
-			bac_vals = DatabaseStore.sortByTime(bac_vals);
-			getMaxForDays(bac_colors, bac_vals);
-			convertToLists(day_colors, day_values);
-		}*/
-		
+
 		selectedMonth = calendar.get(Calendar.MONTH);
 		selectedYear = calendar.get(Calendar.YEAR);
 		setMonthFromInt(selectedMonth);
@@ -79,9 +69,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	 * Construct necessary Lists for the DB
 	 */
 	private void convertToLists(ArrayList<DatabaseStore> color, ArrayList<DatabaseStore> values){
-		maxBac.clear();
-		bacColors.clear();
-		drinkingDays.clear();
 		for(int i=0; i<values.size(); i++){
 			DatabaseStore ds = values.get(i);
 			drinkingDays.add(ds.day);
@@ -120,6 +107,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		}
 	}
 	private void calculateValues(Date date){
+		maxBac.clear();
+		bacColors.clear();
+		drinkingDays.clear();
 		ArrayList<DatabaseStore> bac_colors = (ArrayList<DatabaseStore>) db
 				.getVarValuesForMonth("bac_color", date);
 		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
@@ -153,6 +143,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		
 		switch (v.getId()) {
 		case R.id.bNextMonth:		
+			
 			gc.add(Calendar.MONTH, 1);
 			date = gc.getTime();
 			
