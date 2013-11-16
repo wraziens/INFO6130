@@ -40,6 +40,7 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 		setContentView(R.layout.dailysurvey5);
 		finish=(Button)findViewById(R.id.bDS5Finish);
 		finish.setOnClickListener(this);
+		/*
 		option1=(CheckBox)findViewById(R.id.cbDS5Box1);
 		option2=(CheckBox)findViewById(R.id.cbDS5Box2);
 		option3=(CheckBox)findViewById(R.id.cbDS5Box3);
@@ -64,6 +65,7 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 		optionListBot.add(option8);
 		optionListBot.add(option9);
 		optionListBot.add(option10);
+		*/
 		
 	}
 
@@ -72,12 +74,8 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		switch(arg0.getId()){
 		/*
-		case R.id.bDS2Record:
-			break;
-			
-			*/
+		switch(arg0.getId()){
 		//checks which checklist is check and input 
 		//that value in a string to pass onto the database function to parse
 		case R.id.bDS5Finish:
@@ -106,8 +104,9 @@ public class DailySurvey5 extends Activity implements OnClickListener{
 			break;
 			
 		}
-		
+			*/
 	}
+
 
 	protected void onPause() {
 		// TODO Auto-generated method stub
