@@ -1,5 +1,10 @@
 package com.example.drinkingapp;
 
+import java.util.ArrayList;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
@@ -30,7 +35,24 @@ public class ExerciseVisualization extends Activity implements
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		visual = new ExerciseGraphics(this);
+
+		//sample database
+		
+		ArrayList<Integer> daysDrinkList = new ArrayList<Integer>();
+		ArrayList<Integer> daysExercisedList = new ArrayList<Integer>();
+		ArrayList<Double> averageExerciseQualityList = new ArrayList<Double>();
+		daysDrinkList.add(2);
+		daysDrinkList.add(4);
+		daysDrinkList.add(5);
+		daysExercisedList.add(1);
+		daysExercisedList.add(3);
+		daysExercisedList.add(2);
+		averageExerciseQualityList.add(90.0);
+		averageExerciseQualityList.add(60.0);
+		averageExerciseQualityList.add(66.0);
+
+		
+		visual = new ExerciseGraphics(this,daysDrinkList,daysExercisedList,averageExerciseQualityList);
 		setContentView(visual);
 
 		// Instantiate the gesture detector with the

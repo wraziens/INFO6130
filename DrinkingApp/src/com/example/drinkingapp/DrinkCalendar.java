@@ -147,8 +147,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			gc.add(Calendar.MONTH, 1);
 			date = gc.getTime();
 			
-			if (selectedMonth + 1 > 12) {
-				selectedMonth = 1;
+			if (selectedMonth + 1 > 11) {
+				selectedMonth = 0;
 				selectedYear++;
 				yearDisplay.setText(Integer.toString(selectedYear));
 			} else
@@ -160,8 +160,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			gc.add(Calendar.MONTH, -1);
 			date = gc.getTime();
 			
-			if (selectedMonth - 1 < 1) {
-				selectedMonth = 12;
+			if (selectedMonth - 1 < 0) {
+				selectedMonth = 11;
 				selectedYear--;
 				yearDisplay.setText(Integer.toString(selectedYear));
 			} else
@@ -181,7 +181,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		String month = "wrong";
 		DateFormatSymbols dfs = new DateFormatSymbols();
 		String[] months = dfs.getMonths();
-		month = months[num - 1];
+		month = months[num];
 		monthDisplay.setText(month);
 	}
 

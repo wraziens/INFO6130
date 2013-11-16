@@ -5,6 +5,7 @@ import java.util.Random;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
@@ -14,16 +15,16 @@ public class WordleGraphics extends View {
 
 	Context mContext;
 	ArrayList<String[]> nestArrayList = new ArrayList<String[]>();
-	String word;
+	String word,title;
 	int count;
 	ArrayList<Rect> wordRectList = new ArrayList<Rect>();
 
-	public WordleGraphics(Context context, ArrayList<String[]> l) {
+	public WordleGraphics(Context context, ArrayList<String[]> l,String t) {
 		super(context);
 		// TODO Auto-generated constructor stu
 		mContext = context;
 		nestArrayList = l;
-
+		title = t;
 	}
 
 	@Override
@@ -34,6 +35,12 @@ public class WordleGraphics extends View {
 		float leftX = canvas.getWidth() / 4;
 		float rightX = 3 * canvas.getWidth() / 4;
 
+		Paint titlePaint=new Paint();
+		titlePaint.setTextSize(30);
+		titlePaint.setTextAlign(Align.CENTER);
+		titlePaint.setColor(Color.rgb(0, 153, 204));
+		canvas.drawText("Cloud Visualization for "+title, canvas.getWidth()/2, 100, titlePaint);
+		
 		for (int n = 0; n < nestArrayList.size(); n++) {
 			word = nestArrayList.get(n)[0];
 			count = Integer.valueOf(nestArrayList.get(n)[1]);
@@ -71,7 +78,7 @@ public class WordleGraphics extends View {
 						// checks if intersects anything
 						wordBound
 								.set((int) parentRightSideX
-										- (wordBound.width() / 2),
+										- (wordBound.width() / 2)+5,
 										(int) (parentRightSideY - wordBound
 												.height()),
 										(int) (parentRightSideX + (wordBound
@@ -108,7 +115,7 @@ public class WordleGraphics extends View {
 										(int) (parentBottomSideX + (wordBound
 												.width() / 2)),
 										(int) (parentBottomSideY + wordBound
-												.height()));
+												.height())+5);
 						intersection = false;
 						for (int i = 0; i < wordRectList.size(); i++) {
 							if (Rect.intersects(wordBound, wordRectList.get(i))) {
@@ -140,7 +147,7 @@ public class WordleGraphics extends View {
 										(int) (parentLeftSideY - wordBound
 												.height()),
 										(int) (parentLeftSideX + (wordBound
-												.width() / 2)),
+												.width() / 2))-5,
 										(int) (parentLeftSideY));
 						intersection = false;
 						for (int i = 0; i < wordRectList.size(); i++) {
@@ -173,7 +180,7 @@ public class WordleGraphics extends View {
 												.height()),
 										(int) (parentTopSideX + (wordBound
 												.width() / 2)),
-										(int) (parentTopSideY ));
+										(int) (parentTopSideY )-5);
 						intersection = false;
 						for (int i = 0; i < wordRectList.size(); i++) {
 							if (Rect.intersects(wordBound, wordRectList.get(i))) {
