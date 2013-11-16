@@ -100,4 +100,15 @@
 	<string name="excer_left">My worst workout ever</string>
 	<string name="excer_right">My best workout ever</string>
 	
+	<!-- Strings for productivity questions -->
+	<string name="productive_prompt">How productive with work/school work were you today?</string>
+	<string name="prod_left">I was a sloth</string>
+	<string name="prod_right">I was extremely productive</string>
+	<string name="perform_prompt">How well do you think you are doing in school/work?</string>
+	<string name="perf_left">F</string>
+	<string name="perf_right">A+</string>	
+	<string name="stressed_prompt">How stressed did you feel today?</string>
+	<string name="stress_left">Carefree</string>
+	<string name="stress_right">Overwhelmed</string>	
+
 </resources>
