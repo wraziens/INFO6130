@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
-public class VisualizeExercise extends Activity implements
+public class ExerciseVisualization extends Activity implements
 		GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener,
 		OnClickListener {
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.os.Bundle;
 
-public class SocialChart extends Activity{
+public class SocialVisualization extends Activity{
 	SocialGraphics visual;
 	ArrayList<String> groupName=new ArrayList<String>();
 	ArrayList<Integer> hangoutCount=new ArrayList<Integer>();

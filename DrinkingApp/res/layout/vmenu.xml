@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="5" >
+    android:weightSum="6" >
 
     <Button
         android:id="@+id/bDrink"
@@ -13,31 +13,38 @@
         android:text="Last Night" />
 
     <Button
-         android:layout_weight="1"
         android:id="@+id/bExercise"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Exercise" />
 
     <Button
-        android:id="@+id/bSleep"
-         android:layout_weight="1"
+        android:id="@+id/bFood"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Sleep" />
+        android:layout_weight="1"
+        android:text="Food" />
 
     <Button
         android:id="@+id/bProductivity"
-         android:layout_weight="1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Productivity" />
 
     <Button
-        android:id="@+id/bSocialization"
-         android:layout_weight="1"
+        android:id="@+id/bMood"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Mood" />
+
+    <Button
+        android:id="@+id/bSocialization"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Socialization" />
 
 </LinearLayout>
