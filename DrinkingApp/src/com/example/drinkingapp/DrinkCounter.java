@@ -78,7 +78,7 @@ public class DrinkCounter extends Activity {
 			if (drink_count_vals.size() > 0) {
 				DatabaseStore start = drink_count_vals.get(0);
 				Integer start_time = start.hour * 60 + start.minute;
-				Integer last_time = current.hour * 60 + current.minute;
+				Integer last_time = current.hour * 60 + current.minute - 360;
 				hours = (last_time - start_time) / 60.0;
 			}
 		}
@@ -175,7 +175,7 @@ public class DrinkCounter extends Activity {
 		db.updateOrAdd("number_pizza", number_pizza);
 		
 		TextView check = new TextView(this);
-		check.setText(String.valueOf(number_chickens));
+		check.setText(String.valueOf(hours));
 		((FrameLayout)parent_view).addView(check);
 	}
 }
