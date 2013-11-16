@@ -46,7 +46,7 @@ public class MoodVisualization extends Activity {
 		test.add(testStringArray10);
 		
 	
-		visual = new WordleGraphics(this,test);
+		visual = new WordleGraphics(this,test,"Mood");
 		
 		setContentView(visual);
 	

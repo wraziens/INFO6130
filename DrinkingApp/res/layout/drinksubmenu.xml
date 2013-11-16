@@ -2,24 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_weight="2"
     android:orientation="vertical" >
 
     <Button
         android:id="@+id/bCalendarVisualization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:text="Calendar Visualization" />
 
     <Button
         android:id="@+id/bWordCloudVisualization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Cloud Visualization" />
-
-    <Button
-        android:id="@+id/bMoodVisualization"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mood Visualization" />
+        android:layout_weight="1"
+        android:text="My Experiences" />
 
 </LinearLayout>
