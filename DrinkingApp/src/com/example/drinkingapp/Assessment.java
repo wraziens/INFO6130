@@ -20,10 +20,9 @@ public class Assessment extends ListActivity {
 	ArrayList<String> surveys = new ArrayList<String>();
 	ArrayList<String> surveys_classes = new ArrayList<String>();
 	String surveyList[] = { 
-			"DailySurvey4","DailySurvey2", "DailySurvey6",
-			"DailySurveyExercise", "DailySurveyProductivity",
-			"DailySurveySocial" };
-	String surveyNames[] = {"Setting","Overall Experience",  "Food","Exercise","Productivity", "Social"};
+			"DailySurvey4","DailySurvey2",
+			"DailySurveyExercise", "DailySurveyProductivity",};
+	String surveyNames[] = {"Setting","Overall Experience","Exercise","Productivity"};
 	String placement;
 	Boolean sleepSelected, exerciseSelected, productivitySelected,
 			socialSelected;
@@ -67,19 +66,20 @@ public class Assessment extends ListActivity {
 			// gets rid of the evaluation categories if users unchecked it.
 			SharedPreferences getPreference = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
-			Boolean sleepSelected = getPreference.getBoolean("sleepInEvaluation",
-					true);
+			
+			//Boolean sleepSelected = getPreference.getBoolean("sleepInEvaluation",
+			//		true);
 			Boolean exerciseSelected = getPreference.getBoolean(
 					"exerciseInEvaluation", true);
 			Boolean productivitySelected = getPreference.getBoolean(
 					"productivityInEvaluation", true);
 			Boolean socialSelected = getPreference.getBoolean("socialInEvaluation",
 					true);
-	
+			/*
 			if (!sleepSelected) {
 				surveys_classes.remove("DailySurveySleep");
 				surveys.remove("Sleep");
-			}
+			}*/
 			if (!exerciseSelected) {
 				surveys_classes.remove("DailySurveyExercise");
 				surveys.remove("Exercise");
@@ -88,10 +88,11 @@ public class Assessment extends ListActivity {
 				surveys_classes.remove("DailySurveyProductivity");
 				surveys.remove("Productivity");
 			}
+			/*
 			if (!socialSelected) {
 				surveys_classes.remove("DailySurveySocial");
 				surveys.remove("Social");
-			}
+			}*/
 	
 			requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,

@@ -37,10 +37,10 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		weightTV=(TextView) findViewById(R.id.tvISWeight);
 		age=Integer.parseInt(ageTV.getText().toString());
 		weight=Integer.parseInt(weightTV.getText().toString());
-		sleep = (CheckBox) findViewById(R.id.cbISSleep);
+		//sleep = (CheckBox) findViewById(R.id.cbISSleep);
 		exercise = (CheckBox) findViewById(R.id.cbISExercise);
 		productivity = (CheckBox) findViewById(R.id.cbISProductivity);
-		social = (CheckBox) findViewById(R.id.cbISSocial);
+		//social = (CheckBox) findViewById(R.id.cbISSocial);
 		finish = (Button) findViewById(R.id.bISFinish);
 		plusAge = (Button) findViewById(R.id.bISPlus1);
 		plusWeight = (Button) findViewById(R.id.bISPlus2);
@@ -66,10 +66,10 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		SharedPreferences getPreference = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		SharedPreferences.Editor preferenceEditor = getPreference.edit();
-		preferenceEditor.putBoolean("sleepInEvaluation", false);
+		//preferenceEditor.putBoolean("sleepInEvaluation", false);
 		preferenceEditor.putBoolean("exerciseInEvaluation", false);
 		preferenceEditor.putBoolean("productivityInEvaluation", false);
-		preferenceEditor.putBoolean("socialInEvaluation", false);
+		//preferenceEditor.putBoolean("socialInEvaluation", false);
 		preferenceEditor.commit();
 	}
 
@@ -112,10 +112,10 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		// TODO Auto-generated method stub
 		SharedPreferences getPreference=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		SharedPreferences.Editor preferenceEditor=getPreference.edit();
-		if (sleep.isChecked())
-			preferenceEditor.putBoolean("sleepInEvaluation", true);
-		if (!sleep.isChecked())
-			preferenceEditor.putBoolean("sleepInEvaluation", false);
+		//if (sleep.isChecked())
+		//	preferenceEditor.putBoolean("sleepInEvaluation", true);
+		//if (!sleep.isChecked())
+			//preferenceEditor.putBoolean("sleepInEvaluation", false);
 		if (exercise.isChecked())
 			preferenceEditor.putBoolean("exerciseInEvaluation", true);
 		if (!exercise.isChecked())
@@ -124,10 +124,10 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 			preferenceEditor.putBoolean("productivityInEvaluation", true);
 		if (!productivity.isChecked())
 			preferenceEditor.putBoolean("productivityInEvaluation", false);
-		if (social.isChecked())
-			preferenceEditor.putBoolean("socialInEvaluation", true);
-		if (!social.isChecked())
-			preferenceEditor.putBoolean("socialInEvaluation", false);
+		//if (social.isChecked())
+		//	preferenceEditor.putBoolean("socialInEvaluation", true);
+		//if (!social.isChecked())
+		//	preferenceEditor.putBoolean("socialInEvaluation", false);
 		preferenceEditor.commit();
 	}
 
