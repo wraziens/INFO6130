@@ -3,48 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="6" >
+    android:weightSum="3" >
 
     <Button
         android:id="@+id/bDrink"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Drinking" />
+                android:background="@drawable/drinkmenu"
+        android:text="" />
 
     <Button
         android:id="@+id/bExercise"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Exercise" />
+        android:background="@drawable/exercisemenu"
+        android:text="" />
 
-    <Button
-        android:id="@+id/bFood"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Food" />
+
 
     <Button
         android:id="@+id/bProductivity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Productivity" />
+                android:background="@drawable/productivitymenu"
+        android:text="" />
 
-    <Button
-        android:id="@+id/bMood"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Mood" />
 
-    <Button
-        android:id="@+id/bSocialization"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Socialization" />
+
 
 </LinearLayout>

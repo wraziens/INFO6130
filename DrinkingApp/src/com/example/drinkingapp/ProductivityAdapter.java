@@ -33,7 +33,7 @@ public class ProductivityAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		int test=6+6*gradesAverageList.size();
+		int test = 6 + 6 * gradesAverageList.size();
 		return test;
 	}
 
@@ -53,54 +53,81 @@ public class ProductivityAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		TextView view = new TextView(mContext);
-		view.setHeight(100);
+		view.setHeight(60);
 		view.setTextSize(12);
-		switch(position){
-			case 0:
-				view.setVisibility(8);
-				break;
-			case 1:
-				view.setText("Academic");
-				break;
-			case 2:
-				view.setText("Productivity");
-				break;
-			case 3:
-				view.setText("Stress");
-				view.setWidth(50);
-				break;
-			case 4:
-				view.setText("No. of Drinking Days");
-				break;
-			case 5:
-				view.setText("Avg BAC");
-				break;
+		switch (position) {
+		case 0:
+			view.setVisibility(8);
+			break;
+		case 1:
+			view.setText("Academic");
+			break;
+		case 2:
+			view.setText("Productivity");
+			break;
+		case 3:
+			view.setText("Stress");
+			view.setWidth(50);
+			break;
+		case 4:
+			view.setText("No. of Drinking Days");
+			break;
+		case 5:
+			view.setText("Avg BAC");
+			break;
 		}
-		if (position==6){
+		if (position == 6) {
 			view.setText("Week 1");
 		}
-		if (position>6&&position%6==0)
-			view.setText("Week "+position/6);
-		
-		
-		if (position>6&&position%6==1){
-			view.setText(gradesAverageList.get((position-1)/6-1).toString());
-			
+		if (position > 6 && position % 6 == 0)
+			view.setText("Week " + position / 6);
+
+		if (position > 6 && position % 6 == 1) {
+			view.setText(getGradeFromDouble(gradesAverageList
+					.get((position - 1) / 6 - 1),false));
+
 		}
-		if (position>6&&position%6==2){
-			view.setText(productivityAverageList.get((position-2)/6-1).toString());
+		if (position > 6 && position % 6 == 2) {
+			view.setText(getGradeFromDouble(productivityAverageList
+					.get((position - 2) / 6 - 1),false));
 		}
-		if (position>6&&position%6==3){
-			view.setText(stressAverageList.get((position-3)/6-1).toString());
+		if (position > 6 && position % 6 == 3) {
+			view.setText(getGradeFromDouble(stressAverageList.get((position - 3) / 6 - 1)
+					,true));
 		}
-		if (position>6&&position%6==4){
-			view.setText(daysDrankList.get((position-4)/6-1).toString());
+		if (position > 6 && position % 6 == 4) {
+			view.setText(daysDrankList.get((position - 4) / 6 - 1).toString());
 		}
-		if (position>6&&position%6==5){
-			view.setText(bacAverageList.get((position-5)/6-1).toString());
+		if (position > 6 && position % 6 == 5) {
+			view.setText(bacAverageList.get((position - 5) / 6 - 1).toString());
 		}
 		return view;
-			
+
+	}
+
+	private String getGradeFromDouble(Double rawGrade, Boolean reverse) {
+		String grade = "N/A";
+		if (!reverse) {
+			if (rawGrade >= 90)
+				grade = "A";
+			else if (rawGrade >= 80 && rawGrade < 90)
+				grade = "B";
+			else if (rawGrade >= 70 && rawGrade < 80)
+				grade = "C";
+			else
+				grade = "D";
+		}else{
+			if (rawGrade >= 90)
+				grade = "D";
+			else if (rawGrade >= 80 && rawGrade < 90)
+				grade = "C";
+			else if (rawGrade >= 70 && rawGrade < 80)
+				grade = "B";
+			else
+				grade = "A";
+		}
+
+		return grade;
 	}
 
 }
