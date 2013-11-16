@@ -13,6 +13,7 @@
     <string name="finish">Save</string>
     <string name="other_label">Other(Specify)</string>
 	<string name="submit">Submit</string>
+	<string name="close">Close</string>
     
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
@@ -47,7 +48,9 @@
 	<!-- Strings for Drink Assessment -->
 	<string name="number_drinks">How many drinks do you think you had last night?</string>
 	<string name="excess_drinks">Do you think you had too many drinks last night?</string>
-	
+	<string name="excess_left">I had hardly anything</string>
+	<string name="excess_right">I drank way too much</string>
+		
 	<!--  Strings for Effects from last night Might get rid of this-->
 	<string name="effects">Please select all of the fields that apply to last night:</string>
 	<string name="forgot">Forgot or escaped from my responsibilities and problems.</string>
