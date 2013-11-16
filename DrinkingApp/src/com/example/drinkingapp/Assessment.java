@@ -22,10 +22,10 @@ public class Assessment extends ListActivity {
 	ArrayList<String> surveys = new ArrayList<String>();
 	ArrayList<String> surveys_classes = new ArrayList<String>();
 	String surveyList[] = { "DailySurvey2",
-			"DailySurvey4", "DailySurvey6", "DailySurveySleep",
+			"DailySurvey4", "DailySurvey6",
 			"DailySurveyExercise", "DailySurveyProductivity",
 			"DailySurveySocial" };
-	String surveyNames[] = {"Overall Experience", "Setting", "Food","Sleep","Exercise","Productivity", "Social"};
+	String surveyNames[] = {"Overall Experience", "Setting", "Food","Exercise","Productivity", "Social"};
 	String placement;
 	Boolean sleepSelected, exerciseSelected, productivitySelected,
 			socialSelected;
