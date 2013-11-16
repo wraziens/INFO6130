@@ -115,6 +115,11 @@ public class DailySurvey4 extends Activity implements OnClickListener {
 							findViewById(R.id.company_other_ans).setVisibility(
 									View.INVISIBLE);
 							break;
+						case R.id.so_radio:
+							companyResult = "Significant Other";
+							findViewById(R.id.company_other_ans).setVisibility(
+									View.INVISIBLE);
+							break;
 						case R.id.company_other:
 							companyResult = "Other";
 							findViewById(R.id.company_other_ans).setVisibility(
