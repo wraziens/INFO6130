@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="initialSurvey"
-        android:summary="for the splash screen"
-        android:title="Initial Survey" />
-
     <PreferenceCategory android:title="Evaluation Categories" >
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="sleepInEvaluation"
-            android:summary="Sleep" />
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="exerciseInEvaluation"
@@ -20,10 +9,6 @@
             android:defaultValue="true"
             android:key="productivityInEvaluation"
             android:summary="Productivity" />
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="socialInEvaluation"
-            android:summary="Social" />
     </PreferenceCategory>
 
 

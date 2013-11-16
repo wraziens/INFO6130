@@ -188,12 +188,6 @@
                 android:layout_height="wrap_content"
                 android:text="I’m interested in learning about how alcohol affects my:" />
             <CheckBox
-                android:id="@+id/cbISSleep"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Sleep Quality" />
-            <CheckBox
                 android:id="@+id/cbISExercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -205,12 +199,6 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Productivity levels" />
-           	<CheckBox
-                android:id="@+id/cbISSocial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Relationship with others" />
 <!-- Finish button here -->
 
 
