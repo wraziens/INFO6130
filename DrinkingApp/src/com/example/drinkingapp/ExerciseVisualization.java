@@ -1,23 +1,20 @@
 package com.example.drinkingapp;
 
 import java.util.ArrayList;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.LinearLayout;
 
 public class ExerciseVisualization extends Activity implements
 		GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener,
@@ -27,6 +24,11 @@ public class ExerciseVisualization extends Activity implements
 	private GestureDetectorCompat mDetector;
 	ExerciseGraphics visual;
 	float zoomVal = 1;
+	
+	private DatabaseHandler db;
+	private ArrayList<Integer> daysDrinkList;
+	private ArrayList<Integer> daysExercisedList;
+	private ArrayList<Double> averageExerciseQualityList;
 
 	// Called when the activity is first created.
 	@Override
@@ -36,11 +38,29 @@ public class ExerciseVisualization extends Activity implements
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		//sample database
+		db = new DatabaseHandler(this);
 		
-		ArrayList<Integer> daysDrinkList = new ArrayList<Integer>();
-		ArrayList<Integer> daysExercisedList = new ArrayList<Integer>();
-		ArrayList<Double> averageExerciseQualityList = new ArrayList<Double>();
+		ArrayList<Date> date_list = new ArrayList<Date>();
+		Date date =  new Date();
+		date_list.add(date);
+		//get the last 4 weeks
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		for(int i=0; i<4; i++){
+			int value = -7 * (i+1);
+			gc.add(Calendar.DAY_OF_YEAR, value);
+			date_list.add(gc.getTime());
+		}
+		
+		daysDrinkList = new ArrayList<Integer>();
+		daysExercisedList = new ArrayList<Integer>();
+		averageExerciseQualityList = new ArrayList<Double>();
+		constructLists(date_list);
+		
+		
+		//sample database
+		/*
+		
 		daysDrinkList.add(2);
 		daysDrinkList.add(4);
 		daysDrinkList.add(5);
@@ -50,7 +70,7 @@ public class ExerciseVisualization extends Activity implements
 		averageExerciseQualityList.add(90.0);
 		averageExerciseQualityList.add(60.0);
 		averageExerciseQualityList.add(66.0);
-
+*/
 		
 		visual = new ExerciseGraphics(this,daysDrinkList,daysExercisedList,averageExerciseQualityList);
 		setContentView(visual);
@@ -64,6 +84,39 @@ public class ExerciseVisualization extends Activity implements
 		mDetector.setOnDoubleTapListener(this);
 	}
 
+	private void constructLists(ArrayList<Date> date_list){
+		daysDrinkList.clear();
+		daysExercisedList.clear();
+		averageExerciseQualityList.clear();
+		
+		for (int i=0; i<4; i++){
+			Date date = date_list.get(i);
+			ArrayList<DatabaseStore> ex = (ArrayList<DatabaseStore>)db.getVarValuesForWeek("exercise", date);
+			ArrayList<DatabaseStore> quality = (ArrayList<DatabaseStore>)db.getVarValuesForWeek("exercise_quality", date);
+			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForWeek("drank", date);
+			if (ex!= null){
+				daysExercisedList.add(ex.size());
+			} else {
+				daysExercisedList.add(0);
+			}
+			if (quality != null){
+				int sum = 0;
+				for (int j=0; j<quality.size(); j++){
+					sum += Integer.parseInt(quality.get(j).value);
+				}
+				float val = (float)sum/(float)quality.size();
+				averageExerciseQualityList.add(Double.valueOf(val));
+			} else{
+				averageExerciseQualityList.add(Double.valueOf(0));
+			}
+			if (drank != null){
+				daysDrinkList.add(drank.size());
+			} else{
+				daysDrinkList.add(0);
+			}
+		}
+	}
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		this.mDetector.onTouchEvent(event);

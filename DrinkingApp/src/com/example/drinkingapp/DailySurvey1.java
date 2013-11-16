@@ -38,6 +38,7 @@ public class DailySurvey1 extends Activity implements OnClickListener {
 		case R.id.bDS1Yes:
 			result = "yes";
 			db.addValue("drank_last_night", "True");
+			db.addValueYesterday("drank", "True");
 			setResult(2, intent);
 			finish();
 			break;
