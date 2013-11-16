@@ -16,139 +16,116 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
-public class DailySurveyProductivity extends Activity implements OnClickListener,OnCheckedChangeListener{
+public class DailySurveyProductivity extends Activity implements OnClickListener{
 
+	
 	Button finish;
-	SeekBar productivityQualityBar,academicsQualityBar,stressBar;
-	TextView test1,test2,test3;
-	String seekbarResult1="0",seekbarResult2="0",seekbarResult3="0";
-	Intent goToAssessment;
+	SeekBar prodBar, stressBar, performBar;
+	String seekbarResult;
+	private DatabaseHandler db;
+	String prod_str, stress_str, perf_str ;	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.dailysurveyproductivity);
 
-		finish=(Button)findViewById(R.id.bDSProductivityFinish);
-		test1=(TextView)findViewById(R.id.tvDSProductivityTest1);
-		test2=(TextView)findViewById(R.id.tvDSProductivityTest2);
-		test3=(TextView)findViewById(R.id.tvDSProductivityTest3);
-		productivityQualityBar=(SeekBar)findViewById(R.id.sbDSProductivity1);
-		academicsQualityBar=(SeekBar)findViewById(R.id.sbDSProductivity2);
-		stressBar=(SeekBar)findViewById(R.id.sbDSProductivity3);
+		db = new DatabaseHandler(this);
 		
-
+		finish=(Button)findViewById(R.id.prod_finish);
 		finish.setOnClickListener(this);
-		productivityQualityBar.setProgress(0); //this is line 19
-		productivityQualityBar.setMax(100);
-		academicsQualityBar.setProgress(0); //this is line 19
-		academicsQualityBar.setMax(100);
-		stressBar.setProgress(0); //this is line 19
+		
+		//initialize the seek bars
+		prodBar = (SeekBar)findViewById(R.id.productive_seek);
+		prodBar.setMax(100);
+		prodBar.setProgress(0);
+		initializeProdSeekBar();
+		
+		performBar = (SeekBar)findViewById(R.id.perform_seek);
+		performBar.setMax(100);
+		performBar.setProgress(0);
+		initializePerfSeekBar();
+		
+		stressBar = (SeekBar)findViewById(R.id.stressed_seek);
 		stressBar.setMax(100);
-		
-		initializeSeekBar();
+		stressBar.setProgress(0);
+		initializeStressSeekBar();
 	}
 
-	private void initializeSeekBar() {
-		// TODO Auto-generated method stub
-		productivityQualityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
-
+	private void initializeProdSeekBar() {
+		prodBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				// TODO Auto-generated method stub
-				test1.setText(String.valueOf(progress));
-				seekbarResult1=String.valueOf(progress);
+				prod_str=String.valueOf(progress);
 			}
-
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
+			public void onStopTrackingTouch(SeekBar seekBar) {	
 			}
 		});
-		academicsQualityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
-
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
-				// TODO Auto-generated method stub
-				test2.setText(String.valueOf(progress));
-				seekbarResult2=String.valueOf(progress);
-			}
-
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+	}
+	
+	private void initializeStressSeekBar() {
 		stressBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
-
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				// TODO Auto-generated method stub
-				test3.setText(String.valueOf(progress));
-				seekbarResult3=String.valueOf(progress);
+				stress_str=String.valueOf(progress);
 			}
-
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
 			}
-
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
+			public void onStopTrackingTouch(SeekBar seekBar) {	
 			}
 		});
-		
 	}
-
+	
+	private void initializePerfSeekBar() {
+		performBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				perf_str=String.valueOf(progress);
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {	
+			}
+		});
+	}
+	private void saveToDB(){
+		if(prod_str != null){
+			db.updateOrAdd("productive", prod_str);
+		}
+		if(perf_str != null){
+			db.updateOrAdd("performance", perf_str);
+		}
+		if(stress_str != null){
+			db.updateOrAdd("stress_level", stress_str);
+		}
+	}
+	
 	@Override
-	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		switch(arg0.getId()){
-		/*
-		case R.id.bDS2Record:
-			break;
-			
-			*/
-		case R.id.bDSProductivityFinish:
+	public void onClick(View view) {
+		switch(view.getId()){
+		case R.id.prod_finish:
+			saveToDB();
 			finish();
 			break;	
-		}
-		
+		}	
 	}
-	//not used in this survey, but kept in case it's needed in the future
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		// TODO Auto-generated method stub
-		switch(group.getId()){
-		}
-	}
+	
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		finish();
 	}
-
 }
