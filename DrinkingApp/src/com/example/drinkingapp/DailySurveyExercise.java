@@ -93,15 +93,13 @@ public class DailySurveyExercise extends Activity implements OnClickListener{
 				
 			}
 		});
-		
-		
 	}
 
 	private void saveToDB(){
 		if(exer_str != null){
-			db.addValue("exercise", exer_str);
+			db.updateOrAdd("exercise", exer_str);
 			if (exer_str.equals("yes")){
-				db.addValue("exercise_quality", seekbarResult);
+				db.updateOrAdd("exercise_quality", seekbarResult);
 			}
 		}
 	}
