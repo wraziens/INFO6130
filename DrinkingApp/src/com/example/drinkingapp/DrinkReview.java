@@ -67,10 +67,15 @@ public class DrinkReview extends Activity implements OnClickListener {
 		drinkCount = String.valueOf(drink_vals.size());
 	}
 	
+	private void saveToDB(){
+		db.addValueYesterday("max_bac", maxBac.toString());
+	}
+	
 	@Override
 	public void onClick(View view){
 		switch (view.getId()) {
 		case R.id.review_finish:
+			saveToDB();
 			finish();
 			break;
 		}
