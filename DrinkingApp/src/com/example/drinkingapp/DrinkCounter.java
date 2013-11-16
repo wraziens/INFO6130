@@ -144,7 +144,7 @@ public class DrinkCounter extends Activity {
 		drink_count++;
 		if (drink_count == 1){
 			db.addValueTomorrow("drank_last_night", "True");
-			db.addValue("drank", "True");
+			db.updateOrAdd("drank", "True");
 		}
 		db.addDelayValue("drink_count", drink_count);
 		calculateBac();
