@@ -16,7 +16,7 @@ public class DailySurveyExercise extends Activity implements OnClickListener{
 	Button finish;
 	SeekBar exerciseQualityBar;
 	RadioGroup exerGroup;
-	String seekbarResult;
+	String seekbarResult = null;
 	private DatabaseHandler db;
 	String exer_str;
 	
@@ -34,8 +34,6 @@ public class DailySurveyExercise extends Activity implements OnClickListener{
 		
 		exerciseQualityBar=(SeekBar)findViewById(R.id.sbDSExercise);
 		
-		
-
 		finish.setOnClickListener(this);
 		exerciseQualityBar.setProgress(0); //this is line 19
 		exerciseQualityBar.setMax(100);
@@ -72,9 +70,7 @@ public class DailySurveyExercise extends Activity implements OnClickListener{
 				});
 }
 	private void initializeSeekBar() {
-		// TODO Auto-generated method stub
 		exerciseQualityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
-
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
@@ -83,23 +79,21 @@ public class DailySurveyExercise extends Activity implements OnClickListener{
 
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
 			}
 
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {
-				// TODO Auto-generated method stub
-				
 			}
 		});
 	}
 
 	private void saveToDB(){
 		if(exer_str != null){
-			db.updateOrAdd("exercise", exer_str);
 			if (exer_str.equals("yes")){
-				db.updateOrAdd("exercise_quality", seekbarResult);
+				db.updateOrAdd("exercise", exer_str);
+				if (seekbarResult != null){
+					db.updateOrAdd("exercise_quality", seekbarResult);
+				}
 			}
 		}
 	}

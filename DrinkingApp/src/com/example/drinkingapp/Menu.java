@@ -55,8 +55,6 @@ public class Menu extends Activity implements OnClickListener {
 		case R.id.bMenuAssessment:
 			Date date = new Date();
 			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
-
-			
 			if (drank == null) {
 				Intent drink_ques = new Intent(this, DailySurvey1.class);
 				startActivityForResult(drink_ques,2);
@@ -65,6 +63,8 @@ public class Menu extends Activity implements OnClickListener {
 				goToThisPage = new Intent(Menu.this, Assessment.class);
 				startActivity(goToThisPage);
 				if(assess == null && drank.get(0).value.equals("True")){
+					Intent drink_review = new Intent(this, DrinkReview.class);
+					startActivity(drink_review);
 					Intent drink_assess = new Intent(this, DrinkAssessment.class);
 					startActivity(drink_assess);
 				}

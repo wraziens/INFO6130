@@ -164,9 +164,11 @@ public class DrinkCounter extends Activity {
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
 		
+		/*
 		TextView check = new TextView(this);
 		check.setText(String.valueOf(bac));
 		check.setTextColor(Color.parseColor("#FFFFFF"));
 		((FrameLayout)parent_view).addView(check);
+		*/
 	}
 }
