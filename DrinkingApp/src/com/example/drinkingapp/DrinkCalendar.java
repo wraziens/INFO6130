@@ -137,10 +137,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		maxBac.add(0.1);
 		maxBac.add(0.7);
 		*/
-		Date date = new Date(selectedYear, selectedMonth, 1);
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(date);
-		
+		GregorianCalendar gc = new GregorianCalendar(selectedYear, selectedMonth, 1);
+		Date date = new Date();
 		switch (v.getId()) {
 		case R.id.bNextMonth:		
 			
