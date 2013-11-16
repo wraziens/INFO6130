@@ -2,11 +2,14 @@ package com.example.drinkingapp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -57,23 +60,18 @@ public class DrinkCounter extends Activity {
 
 	private void calculateHours() {
 		Date date = new Date();
-		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
-		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
-		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
-
-		int year = Integer.parseInt(year_fmt.format(date));
-		int month = Integer.parseInt(month_fmt.format(date));
-		int day = Integer.parseInt(day_fmt.format(date));
-		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
 		DatabaseStore current = new DatabaseStore("","",date, "Integer");
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesForDay("drink_count", month, day, year);
+				.getVarValuesDelay("drink_count", date);
 		color = start_color;
 		if (drink_count_vals != null) {
 			drink_count = drink_count_vals.size();
 			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
-
 			// calculate the hours drinking
 			if (drink_count_vals.size() > 0) {
 				DatabaseStore start = drink_count_vals.get(0);
@@ -102,15 +100,8 @@ public class DrinkCounter extends Activity {
 
 	private void calculateBac() {
 		Date date = new Date();
-		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
-		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
-		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
-
-		int year = Integer.parseInt(year_fmt.format(date));
-		int month = Integer.parseInt(month_fmt.format(date));
-		int day = Integer.parseInt(day_fmt.format(date));
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesForDay("drink_count", month, day, year);
+				.getVarValuesDelay("drink_count", date);
 		if (drink_count_vals != null) {
 			calculateHours();
 
@@ -174,8 +165,9 @@ public class DrinkCounter extends Activity {
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
 		
-		TextView check = new TextView(this);
-		check.setText(String.valueOf(number_chickens));
-		((FrameLayout)parent_view).addView(check);
+		//TextView check = new TextView(this);
+		//check.setText(String.valueOf(hours));
+		//check.setTextColor(Color.parseColor("#FFFFFF"));
+		//((FrameLayout)parent_view).addView(check);
 	}
 }

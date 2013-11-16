@@ -1,30 +1,25 @@
 package com.example.drinkingapp;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
-import android.widget.TextView;
 
-public class DailySurveyExercise extends Activity implements OnClickListener,OnCheckedChangeListener{
+public class DailySurveyExercise extends Activity implements OnClickListener{
 
 	Button finish;
 	SeekBar exerciseQualityBar;
-	TextView test;
-	RadioGroup exerciseGroup;
-	RadioButton yes,no;
-	String radioResult,seekbarResult="0";
-	Intent goToAssessment;
+	RadioGroup exerGroup;
+	String seekbarResult;
+	private DatabaseHandler db;
+	String exer_str;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -33,9 +28,10 @@ public class DailySurveyExercise extends Activity implements OnClickListener,OnC
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.dailysurveyexercise);
-
+		db = new DatabaseHandler(this);
+		
 		finish=(Button)findViewById(R.id.bDSExerciseFinish);
-		test=(TextView)findViewById(R.id.tvDSExerciseTest);
+		
 		exerciseQualityBar=(SeekBar)findViewById(R.id.sbDSExercise);
 		
 		
@@ -45,8 +41,36 @@ public class DailySurveyExercise extends Activity implements OnClickListener,OnC
 		exerciseQualityBar.setMax(100);
 		
 		initializeSeekBar();
+		exerciseToggle();
 	}
 
+	private void exerciseToggle(){
+		exerGroup = (RadioGroup) findViewById(R.id.rgDSExercise);
+		exerGroup
+				.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(RadioGroup group, int checkedId) {
+						switch (checkedId) {
+						case R.id.rbDSExerciseYes:
+							exer_str = "yes";
+							findViewById(R.id.exer_qual_prompt).setVisibility(
+									View.VISIBLE);
+							findViewById(R.id.exer_seekbar).setVisibility(View.VISIBLE);
+							break;
+						case R.id.rbDSExerciseNo:
+							exer_str = "no";
+							findViewById(R.id.exer_qual_prompt).setVisibility(
+									View.INVISIBLE);
+							findViewById(R.id.exer_seekbar).setVisibility(View.INVISIBLE);
+							break;
+						default:
+							throw new RuntimeException(
+									"Unknown Button ID For Location Question.");
+						}
+					}
+
+				});
+}
 	private void initializeSeekBar() {
 		// TODO Auto-generated method stub
 		exerciseQualityBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
@@ -54,8 +78,6 @@ public class DailySurveyExercise extends Activity implements OnClickListener,OnC
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				// TODO Auto-generated method stub
-				test.setText(String.valueOf(progress));
 				seekbarResult=String.valueOf(progress);
 			}
 
@@ -75,32 +97,25 @@ public class DailySurveyExercise extends Activity implements OnClickListener,OnC
 		
 	}
 
+	private void saveToDB(){
+		if(exer_str != null){
+			db.addValue("exercise", exer_str);
+			if (exer_str.equals("yes")){
+				db.addValue("exercise_quality", seekbarResult);
+			}
+		}
+	}
 	@Override
-	public void onClick(View arg0) {
+	public void onClick(View view) {
 		// TODO Auto-generated method stub
-		switch(arg0.getId()){
-		/*
-		case R.id.bDS2Record:
-			break;
-			
-			*/
+		switch(view.getId()){
 		case R.id.bDSExerciseFinish:
-			
+			saveToDB();
 			finish();
 			break;
 			
 		}
 		
-	}
-
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		// TODO Auto-generated method stub
-		switch(group.getId()){
-			case R.id.rgDSExercise:
-				radioResult=((RadioButton)findViewById(checkedId)).getText().toString();
-				break;
-		}
 	}
 	protected void onPause() {
 		// TODO Auto-generated method stub

@@ -13,7 +13,10 @@
     <string name="finish">Save</string>
     <string name="other_label">Other(Specify)</string>
 	<string name="submit">Submit</string>
-    
+	<string name="close">Close</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+	
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
 	<string name="bar_label">A Bar</string>
@@ -23,7 +26,7 @@
 	<string name="school_label">School or Work</string>
 	<string name="frat_label">A Club, Fraternity, or Sorority Event</string>
 	<string name="sport_label">A Public Event(sports, party, concert, etc.)</string>
-		<string name="other_hint">Enter where you went drinking</string>
+	<string name="other_hint">Enter where you went drinking</string>
 
 	<!-- Strings for Company Quesiton -->
 	<string name="company">I went drinking with:</string>	
@@ -47,7 +50,9 @@
 	<!-- Strings for Drink Assessment -->
 	<string name="number_drinks">How many drinks do you think you had last night?</string>
 	<string name="excess_drinks">Do you think you had too many drinks last night?</string>
-	
+	<string name="excess_left">I had hardly anything</string>
+	<string name="excess_right">I drank way too much</string>
+		
 	<!--  Strings for Effects from last night Might get rid of this-->
 	<string name="effects">Please select all of the fields that apply to last night:</string>
 	<string name="forgot">Forgot or escaped from my responsibilities and problems.</string>
@@ -88,4 +93,11 @@
 	<string name="hopeful">Hopeful</string>
 	<string name="outgoing">Outgoing</string>
 	<string name="busy">Busy</string>
+	
+	<!-- Strings for exercise questions -->
+	<string name="exercise_prompt">I exercised today</string>
+	<string name="exercise_quality">How good was your workout?</string>
+	<string name="excer_left">My worst workout ever</string>
+	<string name="excer_right">My best workout ever</string>
+	
 </resources>
