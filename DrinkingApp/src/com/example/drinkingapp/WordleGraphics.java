@@ -41,7 +41,7 @@ public class WordleGraphics extends View {
 		titlePaint.setColor(Color.rgb(0, 153, 204));
 		canvas.drawText("Cloud Visualization for "+title, canvas.getWidth()/2, 100, titlePaint);
 		
-		for (int n = 0; n < nestArrayList.size(); n++) {
+		for (int n = 0; n < 4; n++) {
 			word = nestArrayList.get(n)[0];
 			count = Integer.valueOf(nestArrayList.get(n)[1]);
 
@@ -66,7 +66,7 @@ public class WordleGraphics extends View {
 					intersection = false;
 					Random random = new Random();
 					int randomNode = random.nextInt(wordRectList.size() - 0) + 0;
-					int randomSide = random.nextInt(5 - 1) + 1;;
+					int randomSide = 1;
 					// int randomSide = 1;
 					Rect parentRect = wordRectList.get(randomNode);
 					switch (randomSide) {
