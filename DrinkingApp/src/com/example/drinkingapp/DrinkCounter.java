@@ -2,11 +2,14 @@ package com.example.drinkingapp;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -57,14 +60,10 @@ public class DrinkCounter extends Activity {
 
 	private void calculateHours() {
 		Date date = new Date();
-		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
-		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
-		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
-
-		int year = Integer.parseInt(year_fmt.format(date));
-		int month = Integer.parseInt(month_fmt.format(date));
-		int day = Integer.parseInt(day_fmt.format(date));
-		
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
 		DatabaseStore current = new DatabaseStore("","",date, "Integer");
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
@@ -77,7 +76,7 @@ public class DrinkCounter extends Activity {
 			if (drink_count_vals.size() > 0) {
 				DatabaseStore start = drink_count_vals.get(0);
 				Integer start_time = start.hour * 60 + start.minute;
-				Integer last_time = current.hour * 60 + current.minute - 360;
+				Integer last_time = current.hour * 60 + current.minute;
 				hours = (last_time - start_time) / 60.0;
 			}
 		}
@@ -166,8 +165,9 @@ public class DrinkCounter extends Activity {
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
 		
-		TextView check = new TextView(this);
-		check.setText(String.valueOf(hours));
-		((FrameLayout)parent_view).addView(check);
+		//TextView check = new TextView(this);
+		//check.setText(String.valueOf(hours));
+		//check.setTextColor(Color.parseColor("#FFFFFF"));
+		//((FrameLayout)parent_view).addView(check);
 	}
 }
