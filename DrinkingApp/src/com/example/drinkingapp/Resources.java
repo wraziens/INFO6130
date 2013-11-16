@@ -70,7 +70,7 @@ public class Resources extends Activity implements OnClickListener{
 		case R.id.bCallGannett:
 			 try {
                   call = new Intent(Intent.ACTION_CALL);
-                  call.setData(Uri.parse("tel:2164025724"));
+                  call.setData(Uri.parse("tel:6072550269"));
                  startActivity(call);
              } catch (ActivityNotFoundException activityException) {
                  Log.e("Calling a Phone Number", "Call failed", activityException);
