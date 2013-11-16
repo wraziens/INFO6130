@@ -105,6 +105,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				}
 			}
 		}
+		//add final values
+		day_values.add(max_day);
+		day_colors.add(max_color);
 	}
 	private void calculateValues(Date date){
 		maxBac.clear();
