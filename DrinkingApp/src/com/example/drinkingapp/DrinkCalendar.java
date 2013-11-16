@@ -156,6 +156,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			setMonthFromInt(selectedMonth);
 			break;
 		case R.id.bPreviousMonth:
+			
 			gc.add(Calendar.MONTH, -1);
 			date = gc.getTime();
 			
