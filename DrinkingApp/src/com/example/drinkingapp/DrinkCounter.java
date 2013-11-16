@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 public class DrinkCounter extends Activity {
 	private int drink_count = 0;
@@ -53,14 +57,15 @@ public class DrinkCounter extends Activity {
 
 	private void calculateHours() {
 		Date date = new Date();
+		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
+				.getVarValuesDelay("drink_count", date);
+		
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
 		date = gc.getTime();
 		DatabaseStore current = new DatabaseStore("","",date, "Integer");
 		
-		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesDelay("drink_count", date);
 		color = start_color;
 		if (drink_count_vals != null) {
 			drink_count = drink_count_vals.size();
@@ -159,9 +164,9 @@ public class DrinkCounter extends Activity {
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
 		
-		//TextView check = new TextView(this);
-		//check.setText(String.valueOf(hours));
-		//check.setTextColor(Color.parseColor("#FFFFFF"));
-		//((FrameLayout)parent_view).addView(check);
+		TextView check = new TextView(this);
+		check.setText(String.valueOf(bac));
+		check.setTextColor(Color.parseColor("#FFFFFF"));
+		((FrameLayout)parent_view).addView(check);
 	}
 }
