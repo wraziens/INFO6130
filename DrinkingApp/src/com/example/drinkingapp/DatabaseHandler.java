@@ -304,6 +304,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			return handleCursor(cursor);
 		}
 	}
+	
 	public List<DatabaseStore> getVarValuesForYesterday(String variable, Date date) {
 		//subtract a day from our date
 		GregorianCalendar gc = new GregorianCalendar();
