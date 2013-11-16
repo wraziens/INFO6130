@@ -58,6 +58,7 @@ public class DatabaseStore {
 				for (int j = 0; j< sorted.size(); j++){
 					if(to_insert.before(sorted.get(j).date)){
 						sorted.add(j, store.get(i));
+						inserted=true;
 						break;
 					}
 				}
@@ -65,7 +66,7 @@ public class DatabaseStore {
 					sorted.add(store.get(i));
 				}
 			}
-		}else if(store.size() == 0 ){
+		}else if(store.size() == 1 ){
 			return (ArrayList<DatabaseStore>)store;
 		}
 		return sorted;
