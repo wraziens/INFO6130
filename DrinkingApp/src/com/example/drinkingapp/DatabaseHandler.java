@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -305,12 +306,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
-	public List<DatabaseStore> getVarValuesForWeek(String variable, Date date){
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(date);
-		gc.add(Calendar.DAY_OF_YEAR, -1);
-		date = gc.getTime();
-		
+	public List<DatabaseStore> getVarValuesForWeek(String variable, Date date){		
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
 		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
@@ -319,26 +315,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		int year = Integer.parseInt(year_fmt.format(date));
 		int month = Integer.parseInt(month_fmt.format(date));
 		int day = Integer.parseInt(day_fmt.format(date));
-		int week_day = Integer.parseInt(day_week_ft.format(date));
+		String week_day = day_week_ft.format(date);
 		
-		return getVarValuesForWeek(variable, month, day, year,week_day);
+		Integer week_val=null;
+		if (week_day.equals("Sun")){
+			week_val = 0;
+		} else if(week_day.equals("Mon")){
+			week_val = 1;
+		} else if(week_day.equals("Tues")){
+			week_val = 2;
+		} else if(week_day.equals("Wed")){
+			week_val = 3;
+		} else if(week_day.equals("Thu")){
+			week_val = 4;
+		} else if(week_day.equals("Fri")){
+			week_val = 5;
+		} else if(week_day.equals("Sat")){
+			week_val = 6;
+		}
+		return getVarValuesForWeek(variable, month, day, year,week_val);
 	}
 	
 	public List<DatabaseStore> getVarValuesForWeek(String variable,
 			Integer month, Integer day, Integer year, Integer week_day) {
 		// get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
-		String day_str = "(" + QUES_KEY_DAY +"="+ day + " AND " +
+		String day_str = QUES_KEY_VAR + "='" + variable + "' AND (" + QUES_KEY_DAY +"="+ day + " AND " +
 				QUES_KEY_MONTH + "="  + month + " AND " + 
 				QUES_KEY_YEAR + "=" + year + ")";	
 		
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
 		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
-		GregorianCalendar cal = new GregorianCalendar(year, month, day);
 		
 		for (int i=0; i<7; i++){	
 			Integer diff = null;
+			GregorianCalendar cal = new GregorianCalendar(year, month-1, day);
 			if(week_day < i){
 				diff = i-week_day;
 				cal.add(Calendar.DAY_OF_YEAR, diff);
@@ -358,10 +370,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				int d = Integer.parseInt(day_fmt.format(date));
 				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + 
 						" AND " + QUES_KEY_MONTH + "=" + m + " AND " +
-						QUES_KEY_YEAR + "=" + y + ")";
+						QUES_KEY_YEAR + "=" + y +")";
 			}
 		}
-		day_str += ")";
 		
 		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + day_str;
 		Cursor cursor = db.rawQuery(query, null);
