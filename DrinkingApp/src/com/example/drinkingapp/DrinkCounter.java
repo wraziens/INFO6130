@@ -155,10 +155,11 @@ public class DrinkCounter extends Activity {
 		drink_count++;
 		if (drink_count == 1){
 			db.addValueTomorrow("drank_last_night", "True");
+			db.addValueTomorrow("tracked", "True");
 		}
-		db.addValue("drink_count", drink_count);
+		db.addDelayValue("drink_count", drink_count);
 		calculateBac();
-		db.addValue("bac", String.valueOf(bac));
+		db.addDelayValue("bac", String.valueOf(bac));
 		calculateColor();
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
