@@ -53,7 +53,7 @@ public class DrinkReview extends Activity implements OnClickListener {
 		maxBac = Double.valueOf(0);
 		for (int i=0; i<bacs.size(); i++){
 			Double cur = Double.valueOf(bacs.get(i).value);
-			if(cur < maxBac){
+			if(cur > maxBac){
 				maxBac = cur;
 			}
 		}
