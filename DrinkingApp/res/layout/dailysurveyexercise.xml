@@ -10,15 +10,16 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal" >
-
+        
         <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+           	android:background="#0099CC"
+			android:textColor ="#FFFFFF"
+	        android:textSize="30sp"
             android:gravity="center"
-            android:text="I exercised today"
-            android:textSize="20sp" />
+            android:text="@string/exercise_prompt" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -31,7 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical" >
-
             <RadioGroup
                 android:id="@+id/rgDSExercise"
                 android:layout_width="wrap_content"
@@ -43,13 +43,13 @@
                     android:id="@+id/rbDSExerciseYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Yes" />
+                    android:text="@string/yes" />
 
                 <RadioButton
                     android:id="@+id/rbDSExerciseNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No" />
+                    android:text="@string/no" />
             </RadioGroup>
         </LinearLayout>
     </RelativeLayout>
@@ -61,20 +61,25 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/textView1"
+            android:id="@+id/exer_qual_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:background="#0099CC"
+			android:textColor ="#FFFFFF"
+	        android:textSize="30sp"
             android:gravity="center"
-            android:text="How strenuous was your exercise?"
-            android:textSize="20sp" />
+            android:text="@string/exercise_quality"
+            android:visibility="invisible"/>
     </RelativeLayout>
 
     <RelativeLayout
+        android:id='@+id/exer_seekbar'
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:visibility="invisible">
 
         <SeekBar
             android:id="@+id/sbDSExercise"
@@ -82,16 +87,25 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true" />
-
-        <TextView
-            android:id="@+id/tvDSExerciseTest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/sbDSSleep"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:text="Scale"
-            android:textSize="10sp" />
+            <RelativeLayout
+               	android:orientation="horizontal"
+               	android:layout_width="match_parent"
+               	android:layout_height="match_parent">
+           		<TextView
+               		android:text="@string/excer_left"
+               		android:textColor="#0099CC"
+               		android:layout_alignParentLeft="true"
+               		android:layout_width="70dp"
+               		android:layout_height="wrap_content"
+               		android:paddingLeft="10dp"/>
+           		<TextView
+               		android:text="@string/excer_right"
+               		android:textColor="#0099CC"
+               		android:layout_alignParentRight="true"
+               		android:layout_width="70dp"
+               		android:layout_height="wrap_content"
+               		android:paddingRight="10dp"/>
+           </RelativeLayout>
     </RelativeLayout>
 
 
@@ -106,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Finish" />
+            android:text="@string/finish" />
 
 
     </RelativeLayout>

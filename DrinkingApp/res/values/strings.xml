@@ -14,7 +14,9 @@
     <string name="other_label">Other(Specify)</string>
 	<string name="submit">Submit</string>
 	<string name="close">Close</string>
-    
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+	
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
 	<string name="bar_label">A Bar</string>
@@ -24,7 +26,7 @@
 	<string name="school_label">School or Work</string>
 	<string name="frat_label">A Club, Fraternity, or Sorority Event</string>
 	<string name="sport_label">A Public Event(sports, party, concert, etc.)</string>
-		<string name="other_hint">Enter where you went drinking</string>
+	<string name="other_hint">Enter where you went drinking</string>
 
 	<!-- Strings for Company Quesiton -->
 	<string name="company">I went drinking with:</string>	
@@ -91,4 +93,11 @@
 	<string name="hopeful">Hopeful</string>
 	<string name="outgoing">Outgoing</string>
 	<string name="busy">Busy</string>
+	
+	<!-- Strings for exercise questions -->
+	<string name="exercise_prompt">I exercised today</string>
+	<string name="exercise_quality">How good was your workout?</string>
+	<string name="excer_left">My worst workout ever</string>
+	<string name="excer_right">My best workout ever</string>
+	
 </resources>
