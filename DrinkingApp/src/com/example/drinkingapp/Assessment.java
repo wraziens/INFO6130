@@ -17,15 +17,13 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 
 public class Assessment extends ListActivity {
-	//TODO: Clean this up and make it more manageable
-	// repetitive, but makes it easier for the programmers to add onto the list
 	ArrayList<String> surveys = new ArrayList<String>();
 	ArrayList<String> surveys_classes = new ArrayList<String>();
-	String surveyList[] = { "DailySurvey2",
-			"DailySurvey4", "DailySurvey6",
+	String surveyList[] = { 
+			"DailySurvey4","DailySurvey2", "DailySurvey6",
 			"DailySurveyExercise", "DailySurveyProductivity",
 			"DailySurveySocial" };
-	String surveyNames[] = {"Overall Experience", "Setting", "Food","Exercise","Productivity", "Social"};
+	String surveyNames[] = {"Setting","Overall Experience",  "Food","Exercise","Productivity", "Social"};
 	String placement;
 	Boolean sleepSelected, exerciseSelected, productivitySelected,
 			socialSelected;
@@ -40,7 +38,7 @@ public class Assessment extends ListActivity {
 	}
 	
 	private void nonDrinkingDay(){
-		for (int n = 3; n < surveyNames.length; n++) {
+		for (int n = 1; n < surveyNames.length; n++) {
 			surveys.add(surveyNames[n]);
 			surveys_classes.add(surveyList[n]);
 		}
