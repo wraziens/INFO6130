@@ -1,24 +1,17 @@
 package com.example.drinkingapp;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.Locale;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.TextView;
 
 public class DrinkCounter extends Activity {
 	private int drink_count = 0;
-	// int start_color = 0xFF7b9aad;
 	int start_color = 0x884D944D;
 	int offset = 10;
 	private DatabaseHandler db;
@@ -152,6 +145,7 @@ public class DrinkCounter extends Activity {
 		calculateBac();
 		db.addDelayValue("bac", String.valueOf(bac));
 		calculateColor();
+		db.addDelayValue("bac_color", String.valueOf(color));
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
 
