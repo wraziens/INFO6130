@@ -340,7 +340,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			Integer month, Integer day, Integer year, Integer week_day) {
 		// get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
-		String day_str = QUES_KEY_VAR + "='" + variable + "' AND (" + QUES_KEY_DAY +"="+ day + " AND " +
+		String day_str = QUES_KEY_VAR + "='" + variable + "' AND ( (" + QUES_KEY_DAY +"="+ day + " AND " +
 				QUES_KEY_MONTH + "="  + month + " AND " + 
 				QUES_KEY_YEAR + "=" + year + ")";	
 		
@@ -373,7 +373,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 						QUES_KEY_YEAR + "=" + y +")";
 			}
 		}
-		
+		day_str += ")";
 		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + day_str;
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.getCount() == 0) {
