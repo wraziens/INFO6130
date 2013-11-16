@@ -91,14 +91,11 @@ public class WordleGraphics extends View {
 							}
 						}
 						if (!intersection) {
-							if (wordBound.left > 0
-									&& wordBound.right < canvas.getWidth()
-									&& wordBound.top > 0
-									&& wordBound.bottom < canvas.getHeight()) {
+
 								canvas.drawText(word, parentRightSideX,
 										parentRightSideY, textPainter);
 								continueSearch = false;
-							}
+							
 
 
 						}
@@ -123,14 +120,11 @@ public class WordleGraphics extends View {
 							}
 						}
 						if (!intersection) {
-							if (wordBound.left > 0
-									&& wordBound.right < canvas.getWidth()
-									&& wordBound.top > 0
-									&& wordBound.bottom < canvas.getHeight()) {
+		
 								canvas.drawText(word, parentBottomSideX,
 										parentBottomSideY, textPainter);
 								continueSearch = false;
-							}
+							
 
 
 						}
@@ -156,14 +150,11 @@ public class WordleGraphics extends View {
 							}
 						}
 						if (!intersection) {
-							if (wordBound.left > 0
-									&& wordBound.right < canvas.getWidth()
-									&& wordBound.top > 0
-									&& wordBound.bottom < canvas.getHeight()) {
+		
 								canvas.drawText(word, parentLeftSideX,
 										parentLeftSideY, textPainter);
 								continueSearch = false;
-							}
+							
 
 
 						}
@@ -188,14 +179,11 @@ public class WordleGraphics extends View {
 							}
 						}
 						if (!intersection) {
-							if (wordBound.left > 0
-									&& wordBound.right < canvas.getWidth()
-									&& wordBound.top > 0
-									&& wordBound.bottom < canvas.getHeight()) {
+
 								canvas.drawText(word, parentTopSideX,
 										parentTopSideY, textPainter);
 								continueSearch = false;
-							}
+							
 
 
 						}
