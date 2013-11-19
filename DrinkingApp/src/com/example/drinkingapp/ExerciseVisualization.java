@@ -212,4 +212,11 @@ public class ExerciseVisualization extends Activity implements
 
 		}
 	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
+
 }

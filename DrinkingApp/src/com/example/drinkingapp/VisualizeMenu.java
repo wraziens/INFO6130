@@ -67,5 +67,10 @@ public class VisualizeMenu extends Activity implements OnClickListener{
 		}
 		
 	}
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
 
 }

@@ -63,8 +63,12 @@ public class Menu extends Activity implements OnClickListener {
 				goToThisPage = new Intent(Menu.this, Assessment.class);
 				startActivity(goToThisPage);
 				if(assess == null && drank.get(0).value.equals("True")){
+
+				
+				/*this is causing the app to crash.
 					Intent drink_review = new Intent(this, DrinkReview.class);
 					startActivity(drink_review);
+					*/
 					Intent drink_assess = new Intent(this, DrinkAssessment.class);
 					startActivity(drink_assess);
 				}
