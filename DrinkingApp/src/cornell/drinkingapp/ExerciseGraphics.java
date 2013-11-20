@@ -34,7 +34,7 @@ public class ExerciseGraphics extends View {
 	public int chickenCount = 0;
 	public int month = 0, day = 0;
 	// initiated at an offset to see the horizontal and verticle axis
-	public float posX = 0, posY = 0, zoomVal = 0.8f;
+	public float posX = 0, posY = 0, zoomVal = 0.75f;
 	public float plusX, plusY;
 	public float minusX, minusY;
 	public Bitmap plus = BitmapFactory.decodeResource(getResources(),
@@ -121,13 +121,13 @@ public class ExerciseGraphics extends View {
 		gradeLegendPaint.setTextSize(20);
 		gradeLegendPaint.setTextAlign(Align.CENTER);
 		gradeLegendPaint.setColor(Color.RED);
-		String gradeLegend="A-F";
+		String gradeLegend="A-D";
 		gradeLegendPaint.getTextBounds(gradeLegend, 0, gradeLegend.length(), gradeLegendBound);
-		canvas.drawText("A-F", legendsRect.centerX(), legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
+		canvas.drawText(gradeLegend, legendsRect.centerX(), legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
 				gradeLegendPaint);
 		gradeLegendPaint.setColor(Color.BLACK);
 		gradeLegendPaint.setTextAlign(Align.LEFT);
-		canvas.drawText("Quality",legendsRect.centerX()+gradeLegendBound.width(), legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
+		canvas.drawText("Quality",legendsRect.centerX()+gradeLegendBound.width()/2, legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
 				gradeLegendPaint);
 
 		text.setTextSize(20);
@@ -145,7 +145,7 @@ public class ExerciseGraphics extends View {
 		}
 		canvas.rotate(90);
 		text.setTextSize(30);
-		canvas.drawText("Days", canvas.getHeight() / 2 + posY, -20 - posX, text);
+		canvas.drawText("Days", canvas.getHeight() / 2 + posY, 35 - posX, text);
 		canvas.rotate(-90);
 
 		axis.setColor(Color.RED);
@@ -189,12 +189,13 @@ public class ExerciseGraphics extends View {
 				Rect bounds = new Rect();
 				String weekText = "Week " + weekNumber;
 				text.getTextBounds(weekText, 0, weekText.length(), bounds);
-				canvas.drawRect(xPosition + widthOfBar + posX,
+				canvas.drawRect(xPosition + widthOfBar + posX+5,
 						(yScale - daysExercise) * yAxisIncrement + posY,
 						xPosition + (widthOfBar * 2) + posX, yAxisMax + posY,
 						axis);
 				// draws week
 				axis.setColor(Color.BLACK);
+				axis.setTextSize(20);
 				canvas.drawText(weekText, xPosition + widthOfBar + posX
 						- (bounds.width() / 2), yAxisMax + 50 + posY, axis);
 				// draws grade

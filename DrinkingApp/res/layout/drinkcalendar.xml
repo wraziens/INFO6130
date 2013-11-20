@@ -64,7 +64,7 @@
             <GridView
         android:id="@+id/gvDrinkCalendar"
         android:layout_width="match_parent"
-        android:layout_height="400sp"
+        android:layout_height="300sp"
         android:layout_gravity="center_horizontal"
         android:columnWidth="40dp"
         android:gravity="center"

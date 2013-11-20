@@ -66,6 +66,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements OnClickListener
 			final ViewGroup parent) {
 		
 		final Button view = new Button(mContext);
+		view.setBackgroundResource(android.R.drawable.btn_default);
 		double bacLevel;
 		if (!drinkingDays.contains(position)){
 			view.setOnClickListener(new OnClickListener() {
