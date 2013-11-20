@@ -29,7 +29,7 @@ public class ProductivityVisualization extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout);
+		setContentView(R.layout.productivityvisualization);
 
 		db = new DatabaseHandler(this);
 
@@ -52,7 +52,7 @@ public class ProductivityVisualization extends Activity {
 		}
 		constructLists(date_list);
 		
-		//productivityGridView = (GridView) findViewById(R.id.gv);
+		productivityGridView = (GridView) findViewById(R.id.gvProductivity);
 		ProductivityAdapter adapter = new ProductivityAdapter(this, gradesAverageList,
 				productivityAverageList, stressAverageList, daysDrankList, bacAverageList);
 		
