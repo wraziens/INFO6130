@@ -134,5 +134,12 @@ public class ProductivityVisualization extends Activity {
 		Double val = sum/lst.size();
 		return val;
 	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
+
 	
 }

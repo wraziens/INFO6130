@@ -37,7 +37,7 @@ public class DrinkCounter extends Activity {
 		setContentView(R.layout.drink_tracking);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setDisplayHomeAsUpEnabled(true);
+			//getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
 		db = new DatabaseHandler(this);

@@ -99,7 +99,10 @@ public class ProductivityAdapter extends BaseAdapter {
 			view.setText(daysDrankList.get((position - 4) / 6 - 1).toString());
 		}
 		if (position > 6 && position % 6 == 5) {
-			view.setText(bacAverageList.get((position - 5) / 6 - 1).toString());
+			if (bacAverageList.get((position - 5) / 6 - 1)<=0)
+				view.setText("0.000");
+			else
+				view.setText(bacAverageList.get((position - 5) / 6 - 1).toString().substring(0,5));
 		}
 		return view;
 

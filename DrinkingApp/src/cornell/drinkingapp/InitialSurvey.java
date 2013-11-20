@@ -86,7 +86,7 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 				editPrefs.putBoolean("initialSurvey", true);
 				editPrefs.commit();
 				preferenceCheck();
-				Intent goToMenu=new Intent(this,Menu.class);
+				Intent goToMenu=new Intent(this,MainMenu.class);
 				startActivity(goToMenu);
 				break;
 			case R.id.bISPlus1:

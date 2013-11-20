@@ -48,6 +48,9 @@ public class ExerciseGraphics extends View {
 	ArrayList<Integer> daysExercisedList = new ArrayList<Integer>();
 	ArrayList<Double> averageExerciseQualityList = new ArrayList<Double>();
 
+	static int xBoundMax = 0;
+	static int yBoundMax = 0;
+	
 	public ExerciseGraphics(Context context, ArrayList<Integer> d,
 			ArrayList<Integer> e,
 			ArrayList<Double> q) {
@@ -77,8 +80,10 @@ public class ExerciseGraphics extends View {
 		text.setTextSize(15);
 		// draws the x-axis
 		canvas.drawLine(20 + posX, yAxisMax + posY,
-				xAxisMax * daysDrinkList.size() + posX, yAxisMax + posY, axis);
-
+				xAxisMax * daysDrinkList.size()/2 + posX, yAxisMax + posY, axis);
+		
+		xBoundMax=xAxisMax * daysDrinkList.size()/2;
+		yBoundMax=yAxisMax;
 		int yScale = 7;
 		float yAxisIncrement = yAxisMax / yScale;
 		// draws the increments on Y axis
@@ -211,6 +216,21 @@ public class ExerciseGraphics extends View {
 
 		requestLayout();
 
+	}
+	public void setPosX(float input){
+		if (-input<0)
+			input=0;
+		if (-input>xBoundMax)
+			input=xBoundMax;
+		posX=input;
+		
+	}
+	public void setPosY(float input){
+		if (-input<0)
+			input=0;
+		if (-input>yBoundMax)
+			input=yBoundMax;
+		posY=input;
 	}
 
 }

@@ -76,5 +76,12 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 			break;
 		}
 	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
+
 }
 

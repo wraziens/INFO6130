@@ -191,5 +191,12 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	public void changeBottomDisplay(String entry) {
 		bottomDisplay.setText(entry);
 	}
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
+	}
+
 
 }
