@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import cornell.drinkingapp.R;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,7 +22,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
-	TextView monthDisplay, yearDisplay, bottomDisplay;
+	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay;
 	Button back, next;
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
@@ -43,6 +44,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		monthDisplay = (TextView) findViewById(R.id.tvMonth);
 		yearDisplay = (TextView) findViewById(R.id.tvYear);
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
+		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
 		back = (Button) findViewById(R.id.bPreviousMonth);
 		next = (Button) findViewById(R.id.bNextMonth);
 		back.setOnClickListener(this);
@@ -122,26 +124,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			bac_colors = DatabaseStore.sortByTime(bac_colors);
 			bac_vals = DatabaseStore.sortByTime(bac_vals);
 			getMaxForDays(bac_colors, bac_vals);
-			convertToLists(bac_colors, bac_vals);
+			convertToLists(day_colors, day_values);
 		}
 	}
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 
-		/*
-		// finds the data in the database
-		ArrayList<Integer> drinkingDays = new ArrayList<Integer>();
-		drinkingDays.add(5);
-		drinkingDays.add(14);
-		drinkingDays.add(16);
-
-		ArrayList<Double> maxBac = new ArrayList<Double>();
-		maxBac.add(0.25);
-		maxBac.add(0.1);
-		maxBac.add(0.7);
-		*/
 		GregorianCalendar gc = new GregorianCalendar(selectedYear, selectedMonth, 1);
 		Date date = new Date();
 		switch (v.getId()) {
@@ -188,8 +177,44 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		monthDisplay.setText(month);
 	}
 
-	public void changeBottomDisplay(String entry) {
-		bottomDisplay.setText(entry);
+	public void changeBottomDisplay(String entry, double bac) {
+		//bottomDisplay.setText(entry);
+		int info_color = 0;
+		String info_txt="";
+		if (bac == 0){
+			info_color = 0xFF0099CC;
+			info_txt = "Click on a colored date for more information.";
+		}else{
+		
+			info_txt ="BAC: " + entry+ "\n\n";
+			if (bac < 0.06) {
+				info_color = 0x884D944D;
+				if(bac < 0.02){
+					info_txt += "-Begin to feel relaxed.\n-Reaction time slows.\n";
+				} else {
+					info_txt += "-Euphoria, \"the buzz\"\n-Sociability.\n-Decrease in judgement and reasoning.\n";
+				}
+			} else if (bac < 0.15) {
+				info_color = 0X88E68A2E;
+				if(bac <=0.08) {
+					info_txt +="-Legally Intoxicated.\n-Balance and Coordination impaired.\n-Less self-control.";
+				}else{
+					info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n";
+				}
+			} else if (bac < 0.24) {
+				info_color += 0X88A30000;
+				info_txt ="-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n";
+			} else {
+				if(bac < .35){ 
+					info_txt += "-May be unable to walk.\n-May pass out or lose conciousness.\n-Seek medical attention.\n";
+				}else{
+					info_txt += "-High risk for coma or death.\n";
+				}
+				info_color = 0XCC000000;
+			}
+		}
+		infoDisplay.setText(info_txt);
+		infoDisplay.setBackgroundColor(info_color);
 	}
 	@Override
 	protected void onPause() {

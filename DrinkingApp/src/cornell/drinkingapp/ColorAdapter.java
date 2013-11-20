@@ -1,5 +1,6 @@
 package cornell.drinkingapp;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -72,22 +73,50 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		
 		final Button view = new Button(mContext);
 		double bacLevel;
+		
+		
+		if (!drinkingDays.contains(position-6-daysSetBack)){
+			view.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((DrinkCalendar) mContext)
+							.changeBottomDisplay("", 0);
+					if (focused > 0) {
+						View child = parent.getChildAt(focused);
+						if(drinkingDays.contains((Integer)focused -6 - daysSetBack)){
+							int i = drinkingDays.indexOf(focused - 6 -daysSetBack);
+							child.setBackgroundColor(bacColors.get(i));
+						}else{
+							child.setBackgroundResource(android.R.drawable.btn_default);
+						}
+					}
+					focused = position;
+					v.setSelected(true);
+					view.setBackgroundResource(R.drawable.border);
+				}
 
+			});
+		}
 		for (int n = 0; n < drinkingDays.size(); n++) {
 			if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
 				view.setBackgroundColor(bacColors.get(n));
 				bacLevel = maxbac.get(n);
-				final String bac = "" + bacLevel;
+				final double bac_lev = bacLevel;
 				view.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
+						DecimalFormat formatter = new DecimalFormat("#.###");
 						((DrinkCalendar) mContext)
-								.changeBottomDisplay("Max Bac: " + bac);
+								.changeBottomDisplay(formatter.format(bac_lev), bac_lev);
 						if (focused > 0) {
-							int something = parent.getChildCount();
 							View child = parent.getChildAt(focused);
-							child.setBackgroundColor(Color.RED);
+							if(drinkingDays.contains((Integer)focused-6-daysSetBack)){
+								int i = drinkingDays.indexOf(focused - 6 -daysSetBack);
+								child.setBackgroundColor(bacColors.get(i));
+							}else{
+								child.setBackgroundResource(android.R.drawable.btn_default);
+							}
 						}
 						focused = position;
 						v.setSelected(true);
@@ -96,6 +125,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 
 				});
 			}
+			
 		}
 		if (position > 6 && position < 7 + daysSetBack) {
 			view.setVisibility(8);
