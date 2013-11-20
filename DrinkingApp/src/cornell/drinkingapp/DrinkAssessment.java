@@ -1,8 +1,7 @@
 package cornell.drinkingapp;
 
-import cornell.drinkingapp.R;
-
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -72,6 +71,8 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.drink_assess_finish:
 			saveToDB();
+			Intent intent = new Intent();
+			setResult(3, intent);
 			finish();
 			break;
 		}
@@ -80,6 +81,8 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+		Intent intent = new Intent();
+		setResult(0, intent);
 		finish();
 	}
 

@@ -54,24 +54,24 @@ public class MainMenu extends Activity implements OnClickListener {
 		case R.id.bMenuAssessment:
 			Date date = new Date();
 			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
+			//goToThisPage = new Intent(MainMenu.this, Assessment.class);
+			//startActivity(goToThisPage);
 			if (drank == null) {
 				Intent drink_ques = new Intent(this, DailySurvey1.class);
 				startActivityForResult(drink_ques,2);
 			} else {
 				ArrayList<DatabaseStore> assess = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_assess", date);
-				goToThisPage = new Intent(MainMenu.this, Assessment.class);
-				startActivity(goToThisPage);
 				if(assess == null && drank.get(0).value.equals("True")){
-
-				
-				/*this is causing the app to crash.
-					Intent drink_review = new Intent(this, DrinkReview.class);
-					startActivity(drink_review);
-					*/
-					Intent drink_assess = new Intent(this, DrinkAssessment.class);
-					startActivity(drink_assess);
+					Intent drink_assess = new Intent(MainMenu.this, DrinkAssessment.class);
+					startActivityForResult(drink_assess,4);	
+				}else{
+					Intent i = new Intent(this, Assessment.class);
+					startActivity(i);
 				}
 			}
+			
+				
+			//}
 			break;
 		case R.id.bMenuVisualize:
 			goToThisPage = new Intent(MainMenu.this, VisualizeMenu.class);
@@ -93,15 +93,32 @@ public class MainMenu extends Activity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
-		Date date = new Date();
-		ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
-		goToThisPage = new Intent(MainMenu.this, Assessment.class);
-		startActivity(goToThisPage);
-		
-		if (drank.get(0).value.equals("True")){
-			Intent how_many = new Intent(this, DrinkAssessment.class);
-			startActivity(how_many);
-		}		
+		if(resultCode == 2){
+			Date date = new Date();
+			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
+			if (drank.get(0).value.equals("True")){
+				Intent how_many = new Intent(this, DrinkAssessment.class);
+				startActivityForResult(how_many,3);
+			}else{
+				goToThisPage = new Intent(MainMenu.this, Assessment.class);
+				startActivity(goToThisPage);
+			}
+		}else if(resultCode ==3){
+			goToThisPage = new Intent(MainMenu.this, Assessment.class);
+			startActivity(goToThisPage);
+		}else if(resultCode==4){
+			Date date = new Date();
+			ArrayList<DatabaseStore> track = (ArrayList<DatabaseStore>)db.getVarValuesForDay("tracked", date);
+			if(track.get(0).value.equals("True")){
+				//goToThisPage = new Intent(MainMenu.this, Assessment.class);
+				//startActivity(goToThisPage);
+				Intent drink_review = new Intent(this, DrinkReview.class);
+				startActivityForResult(drink_review,3);
+			}else{
+				goToThisPage = new Intent(MainMenu.this, Assessment.class);
+				startActivity(goToThisPage);
+			}
+		}
 	}
 	
 }

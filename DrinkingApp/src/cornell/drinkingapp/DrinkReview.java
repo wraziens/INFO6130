@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -10,11 +11,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
-
-
-import cornell.drinkingapp.DatabaseHandler;
-import cornell.drinkingapp.DatabaseStore;
-import cornell.drinkingapp.R;
 
 
 public class DrinkReview extends Activity implements OnClickListener {
@@ -76,6 +72,8 @@ public class DrinkReview extends Activity implements OnClickListener {
 	public void onClick(View view){
 		switch (view.getId()) {
 		case R.id.review_finish:
+			Intent intent = new Intent();
+			setResult(3, intent);
 			saveToDB();
 			finish();
 			break;

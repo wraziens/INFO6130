@@ -51,17 +51,12 @@ public class Assessment extends ListActivity {
 		db = new DatabaseHandler(this);
 		Date date = new Date();
 		ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
-		if ( drank == null) {
-			finish();
-		}else{
-			if (drank.size() == 1){
-				String drank_yesterday = drank.get(0).value;
-				if (drank_yesterday.equals("True")){
-					drinkingDay();
-				}else{
-					nonDrinkingDay();
-				}
+			if (drank != null){
+				drinkingDay();
+			}else{
+				nonDrinkingDay();
 			}
+			
 
 			// gets rid of the evaluation categories if users unchecked it.
 			SharedPreferences getPreference = PreferenceManager
@@ -93,7 +88,7 @@ public class Assessment extends ListActivity {
 				surveys_classes.remove("DailySurveySocial");
 				surveys.remove("Social");
 			}*/
-	
+		
 			requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -102,7 +97,7 @@ public class Assessment extends ListActivity {
 					android.R.layout.simple_list_item_checked, surveys));// have to
 																			// create
 																			// for
-		}														// list
+		//}														// list
 	}
 
 	@Override
