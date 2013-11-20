@@ -104,8 +104,8 @@
 
     <!-- Strings for productivity questions -->
     <string name="productive_prompt">My productivity level was:</string>
-    <string name="prod_left">Sad</string>
-    <string name="prod_right">Prolific</string>
+    <string name="prod_left">Poor</string>
+    <string name="prod_right">Excellent</string>
     <string name="perform_prompt">How well I think I am doing in school right now:</string>
     <string name="perf_left">F</string>
     <string name="perf_right">A+</string>

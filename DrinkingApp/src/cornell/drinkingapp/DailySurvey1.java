@@ -60,5 +60,6 @@ public class DailySurvey1 extends Activity implements OnClickListener {
 	}
 	@Override
 	public void onBackPressed() {
+		super.onBackPressed();
 	}
 }
