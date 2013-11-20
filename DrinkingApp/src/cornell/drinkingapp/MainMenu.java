@@ -14,7 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class Menu extends Activity implements OnClickListener {
+public class MainMenu extends Activity implements OnClickListener {
 
 	private Button tracking, assessment, visualize, settings, resources;
 	private Intent goToThisPage;
@@ -51,7 +51,7 @@ public class Menu extends Activity implements OnClickListener {
 		switch (arg0.getId()) {
 		case R.id.bMenuTracking:
 			// goToThisPage = new Intent(Menu.this,Class.Tracking);
-			goToThisPage = new Intent(Menu.this, DrinkCounter.class);
+			goToThisPage = new Intent(MainMenu.this, DrinkCounter.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuAssessment:
@@ -62,7 +62,7 @@ public class Menu extends Activity implements OnClickListener {
 				startActivityForResult(drink_ques,2);
 			} else {
 				ArrayList<DatabaseStore> assess = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_assess", date);
-				goToThisPage = new Intent(Menu.this, Assessment.class);
+				goToThisPage = new Intent(MainMenu.this, Assessment.class);
 				startActivity(goToThisPage);
 				if(assess == null && drank.get(0).value.equals("True")){
 
@@ -77,15 +77,15 @@ public class Menu extends Activity implements OnClickListener {
 			}
 			break;
 		case R.id.bMenuVisualize:
-			goToThisPage = new Intent(Menu.this, VisualizeMenu.class);
+			goToThisPage = new Intent(MainMenu.this, VisualizeMenu.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuSettings:
-			goToThisPage = new Intent(Menu.this, Settings.class);
+			goToThisPage = new Intent(MainMenu.this, Settings.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenuResources:
-			goToThisPage = new Intent(Menu.this, Resources.class);
+			goToThisPage = new Intent(MainMenu.this, Resources.class);
 			startActivity(goToThisPage);
 			break;
 		}
@@ -96,7 +96,7 @@ public class Menu extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data){
 		Date date = new Date();
 		ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
-		goToThisPage = new Intent(Menu.this, Assessment.class);
+		goToThisPage = new Intent(MainMenu.this, Assessment.class);
 		startActivity(goToThisPage);
 		
 		if (drank.get(0).value.equals("True")){

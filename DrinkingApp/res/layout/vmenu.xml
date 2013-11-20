@@ -3,14 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="3" >
+    android:weightSum="4" >
 
     <Button
         android:id="@+id/bDrink"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-                android:background="@drawable/drinkmenu"
+        android:background="@drawable/drinkmenu"
         android:text="" />
 
     <Button
@@ -21,17 +20,18 @@
         android:background="@drawable/exercisemenu"
         android:text="" />
 
-
-
     <Button
         android:id="@+id/bProductivity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-                android:background="@drawable/productivitymenu"
+        android:background="@drawable/productivitymenu"
         android:text="" />
 
-
-
+    <Button
+        android:id="@+id/bMood"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
 
 </LinearLayout>

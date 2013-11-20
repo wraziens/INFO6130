@@ -167,9 +167,10 @@ public class ExerciseVisualization extends Activity implements
 	public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX,
 			float distanceY) {
 
+		//out of bounds stop here.
 		Log.d(DEBUG_TAG, "onScroll: " + e1.toString() + e2.toString());
-		visual.posX = visual.posX - distanceX;
-		visual.posY = visual.posY - distanceY;
+		visual.setPosX(visual.posX - distanceX);
+		visual.setPosY(visual.posY - distanceY);
 
 		setContentView(visual);
 

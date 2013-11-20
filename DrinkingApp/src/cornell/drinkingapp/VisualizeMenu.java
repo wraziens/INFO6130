@@ -23,13 +23,13 @@ public class VisualizeMenu extends Activity implements OnClickListener{
 		//social=(Button)findViewById(R.id.bSocialization);
 		//food=(Button)findViewById(R.id.bFood);
 		productivity=(Button)findViewById(R.id.bProductivity);
-		//mood=(Button)findViewById(R.id.bMood);
+		mood=(Button)findViewById(R.id.bMood);
 		exercise.setOnClickListener(this);
 		drink.setOnClickListener(this);
 		//social.setOnClickListener(this);
 		//food.setOnClickListener(this);
 		productivity.setOnClickListener(this);
-		//mood.setOnClickListener(this);
+		mood.setOnClickListener(this);
 	}
 
 	@Override
@@ -60,19 +60,14 @@ public class VisualizeMenu extends Activity implements OnClickListener{
 				goToThisPage = new Intent(this, ProductivityVisualization.class);
 				startActivity(goToThisPage);
 				break;
-				/*
+				
 			case R.id.bMood:
 				goToThisPage = new Intent(this, MoodVisualization.class);
 				startActivity(goToThisPage);
 				break;
-				*/
+				
 		}
 		
-	}
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		finish();
 	}
 
 }

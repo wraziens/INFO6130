@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.drinkingapp.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,21 +27,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Menu"
+            android:name=".MainMenu"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.example.drinkingapp.MENU" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".Resources"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.RESOURCES" />
+                <action android:name="Resources" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -51,27 +46,18 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZEEXERCISE" />
+                <action android:name="VisualizeExercise" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".Visualize"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZE" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".VisualizeMenu"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZEMENU" />
+                <action android:name="VisualizeMenu" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

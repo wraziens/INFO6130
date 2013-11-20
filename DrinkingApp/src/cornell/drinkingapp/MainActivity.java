@@ -28,9 +28,11 @@ public class MainActivity extends Activity {
 		}
 		else{
 		
+			Intent goToMenu=new Intent(this,MainMenu.class);
+			startActivity(goToMenu);
 		
-		Intent openStartingPoint=new Intent("com.example.drinkingapp.MENU");
-		startActivity(openStartingPoint);//then goes to onPause method tutorial 16
+		//Intent openStartingPoint=new Intent("cornell.drinkingapp.MENU");
+		//startActivity(openStartingPoint);//then goes to onPause method tutorial 16
 		}
 		//Intent goToMenu=new Intent("com.example.drinkingapp.MENU");
 		//startActivity(goToMenu);

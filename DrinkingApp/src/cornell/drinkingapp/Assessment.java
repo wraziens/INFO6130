@@ -114,7 +114,7 @@ public class Assessment extends ListActivity {
 		placement = surveys_classes.get(position);
 
 		try {
-			Class ourClass = Class.forName("com.example.drinkingapp."
+			Class ourClass = Class.forName("cornell.drinkingapp."
 					+ placement);
 			Intent goToSurvey = new Intent(this, ourClass);
 			startActivity(goToSurvey);
@@ -124,11 +124,5 @@ public class Assessment extends ListActivity {
 
 	}
 
-	@Override
-	protected void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		finish();
-	}
 
 }
