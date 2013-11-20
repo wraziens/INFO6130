@@ -99,7 +99,7 @@ public class ExerciseGraphics extends View {
 		canvas.drawRect(legendsRect, legendPaint);
 		legendPaint.setColor(Color.BLACK);
 		legendPaint.setTextSize(20);
-		canvas.drawText("Days Exercised", legendsRect.right,
+		canvas.drawText("Exercise", legendsRect.right,
 				legendsRect.centerY(), legendPaint);
 
 		// drink legend
@@ -109,7 +109,7 @@ public class ExerciseGraphics extends View {
 		canvas.drawRect(legendsRect, legendPaint);
 		legendPaint.setColor(Color.BLACK);
 		legendPaint.setTextSize(20);
-		canvas.drawText("Days Drank", legendsRect.right, legendsRect.centerY(),
+		canvas.drawText("Drinking", legendsRect.right, legendsRect.centerY(),
 				legendPaint);
 
 		text.setTextSize(20);

@@ -7,108 +7,110 @@
     <string name="hello_world">Hello World</string>
     <string name="done_drinking">Finished Drinking</string>
     <string name="resourcebutton">Resources</string>
-    
+
     <!-- Shared Strings for Questions -->
     <string name="na">N/A</string>
     <string name="finish">Save</string>
-    <string name="other_label">Other(Specify)</string>
-	<string name="submit">Submit</string>
-	<string name="close">Close</string>
+    <string name="other_label">Other (Specify)</string>
+    <string name="submit">Submit</string>
+    <string name="close">Close</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
-	
+
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
-	<string name="bar_label">A Bar</string>
-	<string name="rest_label">A Restaurant</string>
-	<string name="home_label">Home</string>
-	<string name="friend_label">Other Residence</string>
-	<string name="school_label">School or Work</string>
-	<string name="frat_label">A Club, Fraternity, or Sorority Event</string>
-	<string name="sport_label">A Public Event(sports, party, concert, etc.)</string>
-	<string name="other_hint">Enter where you went drinking</string>
+    <string name="bar_label">A Bar</string>
+    <string name="rest_label">A Restaurant</string>
+    <string name="home_label">Home</string>
+    <string name="friend_label">Other Residence</string>
+    <string name="school_label">School or Work</string>
+    <string name="frat_label">A Club, Fraternity, or Sorority Event</string>
+    <string name="sport_label">A Public Event(sports, party, concert, etc.)</string>
+    <string name="other_hint">Enter where you went drinking</string>
 
-	<!-- Strings for Company Quesiton -->
-	<string name="company">I went drinking with:</string>	
-	<string name="myself_radio">Myself/Alone</string>
-	<string name="family_radio">Family Members or Relatives</string>
-	<string name="male_radio">Male Friends Only</string>
-	<string name="female_radio">Female Friends Only</string>
-	<string name="mixed_radio">Both Male and Female Friends</string>
-	<string name="so_radio">Significant Other</string>
-	<string name="strangers_radio">Strangers</string>
-	<string name="other_company_hint">Enter who you went drinking with</string>
-	
-	<!-- Strings for Objective Question -->
-	<string name="objective">I went drinking to:</string>
-	<string name="relax_radio">Relax</string>
-	<string name="celebrate_radio">Celebrate an occasion</string>
-	<string name="social_obj_radio">To be social</string>
-	<string name="forget_radio">To forget about my problems</string>
-	<string name="other_objective_hint">Enter why you went drinking</string>	
+    <!-- Strings for Company Quesiton -->
+    <string name="company">I went drinking with:</string>
+    <string name="myself_radio">Myself/Alone</string>
+    <string name="family_radio">Family Members or Relatives</string>
+    <string name="male_radio">Male Friends Only</string>
+    <string name="female_radio">Female Friends Only</string>
+    <string name="mixed_radio">Both Male and Female Friends</string>
+    <string name="so_radio">Significant Other</string>
+    <string name="strangers_radio">Strangers</string>
+    <string name="other_company_hint">Enter who you went drinking with</string>
 
-	<!-- Strings for Drink Assessment -->
-	<string name="number_drinks">How many drinks do you think you had last night?</string>
-	<string name="excess_drinks">Do you think you had too many drinks last night?</string>
-	<string name="excess_left">I had hardly anything</string>
-	<string name="excess_right">I drank way too much</string>
-		
-	<!--  Strings for Effects from last night Might get rid of this-->
-	<string name="effects">Please select all of the fields that apply to last night:</string>
-	<string name="forgot">Forgot or escaped from my responsibilities and problems.</string>
-	
-	<!-- Strings for Wordle Prompt -->
-	<string name="wordle_prompt">Select all the words that describe yesterday:</string>
-	<string name="happy">Happy</string>
-	<string name="productive">Productive</string>
-	<string name="lazy">Lazy</string>
-	<string name="foggy">Foggy</string>
-	<string name="sick">Sick</string>
-	<string name="strong">Strong</string>
-	<string name="excited">Excited</string>
-	<string name="angry">Angry</string>
-	<string name="unhappy">Unhappy</string>
-	<string name="sad">Sad</string>
-	<string name="defeated">Defeated</string>
-	<string name="social">Social</string>
-	<string name="fun">Fun</string>
-	<string name="energetic">Energetic</string>
-	<string	name="healthy">Healthy</string>
-	<string name="lonely">Lonely</string>
-	<string name="successful">Successful</string>
-	<string name="apathetic">Apathetic</string>
-	<string name="optimistic">Optimistic</string>
-	<string name="loved">Loved</string>
-	<string name="embarrassed">Embarrassed</string>
-	<string name="sloppy">Sloppy</string>
-	<string name="out_control">Out of control</string>
-	<string name="relaxed">Relaxed</string>
-	<string name="uncomfortable">Uncomfortable</string>
-	<string name="adventurous">Adventurous</string>
-	<string name="stressed">Stressed</string>
-	<string name="anxious">Anxious</string>
-	<string name="depressed">Depressed</string>
-	<string name="humorous">Humorous</string>
-	<string name="regretful">Regretful</string>
-	<string name="hopeful">Hopeful</string>
-	<string name="outgoing">Outgoing</string>
-	<string name="busy">Busy</string>
-	
-	<!-- Strings for exercise questions -->
-	<string name="exercise_prompt">I exercised today</string>
-	<string name="exercise_quality">How good was your workout?</string>
-	<string name="excer_left">My worst workout ever</string>
-	<string name="excer_right">My best workout ever</string>
-	
-	<!-- Strings for productivity questions -->
-	<string name="productive_prompt">How productive with work/school work were you today?</string>
-	<string name="prod_left">I was a sloth</string>
-	<string name="prod_right">I was extremely productive</string>
-	<string name="perform_prompt">How well do you think you are doing in school/work?</string>
-	<string name="perf_left">F</string>
-	<string name="perf_right">A+</string>	
-	<string name="stressed_prompt">How stressed did you feel today?</string>
-	<string name="stress_left">Carefree</string>
-	<string name="stress_right">Overwhelmed</string>	
+    <!-- Strings for Objective Question -->
+    <string name="objective">I went drinking to:</string>
+    <string name="relax_radio">Relax</string>
+    <string name="celebrate_radio">Celebrate an occasion</string>
+    <string name="social_obj_radio">To be social</string>
+    <string name="forget_radio">To forget about my problems</string>
+    <string name="other_objective_hint">Enter why you went drinking</string>
+
+    <!-- Strings for Drink Assessment -->
+    <string name="number_drinks">How many drinks do you think you had last night?</string>
+    <string name="excess_drinks">Do you think you had too many drinks last night?</string>
+    <string name="excess_left">I had hardly anything</string>
+    <string name="excess_right">I drank way too much</string>
+
+    <!-- Strings for Effects from last night Might get rid of this -->
+    <string name="effects">Yesterday, I felt:</string>
+    <string name="forgot">Forgot or escaped from my responsibilities and problems.</string>
+
+    <!-- Strings for Wordle Prompt -->
+    <string name="wordle_prompt">Yesterday, I felt:</string>
+    <string name="happy">Happy</string>
+    <string name="productive">Productive</string>
+    <string name="lazy">Lazy</string>
+    <string name="foggy">Foggy</string>
+    <string name="sick">Sick</string>
+    <string name="strong">Strong</string>
+    <string name="excited">Excited</string>
+    <string name="angry">Angry</string>
+    <string name="unhappy">Unhappy</string>
+    <string name="sad">Sad</string>
+    <string name="defeated">Defeated</string>
+    <string name="social">Social</string>
+    <string name="fun">Fun</string>
+    <string name="energetic">Energetic</string>
+    <string name="healthy">Healthy</string>
+    <string name="lonely">Lonely</string>
+    <string name="successful">Successful</string>
+    <string name="apathetic">Apathetic</string>
+    <string name="optimistic">Optimistic</string>
+    <string name="loved">Loved</string>
+    <string name="embarrassed">Embarrassed</string>
+    <string name="sloppy">Sloppy</string>
+    <string name="out_control">Out of control</string>
+    <string name="relaxed">Relaxed</string>
+    <string name="uncomfortable">Uncomfortable</string>
+    <string name="adventurous">Adventurous</string>
+    <string name="stressed">Stressed</string>
+    <string name="anxious">Anxious</string>
+    <string name="depressed">Depressed</string>
+    <string name="humorous">Humorous</string>
+    <string name="regretful">Regretful</string>
+    <string name="hopeful">Hopeful</string>
+    <string name="outgoing">Outgoing</string>
+    <string name="busy">Busy</string>
+    <string name="hungover">Hungover</string>
+    <string name="like_a_boss">Like a boss</string>
+
+    <!-- Strings for exercise questions -->
+    <string name="exercise_prompt">I exercised today.</string>
+    <string name="exercise_quality">The quality of my exercise was:</string>
+    <string name="excer_left">Pitiful</string>
+    <string name="excer_right">Excellent</string>
+
+    <!-- Strings for productivity questions -->
+    <string name="productive_prompt">My productivity level was:</string>
+    <string name="prod_left">Sad</string>
+    <string name="prod_right">Prolific</string>
+    <string name="perform_prompt">How well I think I am doing in school right now:</string>
+    <string name="perf_left">F</string>
+    <string name="perf_right">A+</string>
+    <string name="stressed_prompt">How stressed I feel today:</string>
+    <string name="stress_left">Carefree</string>
+    <string name="stress_right">Overwhelmed</string>
 
 </resources>

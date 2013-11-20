@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="left"
-            android:text= "Did you drink last night?"
-            android:textSize="20sp" />
+            android:text= "I drank last night."
+            android:textSize="30sp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -39,8 +39,8 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:background="#15A48B"
-                android:text="Yes"
+                android:background="@drawable/colorbutton"
+                android:text="True"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
 
@@ -49,8 +49,8 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="No"
-                android:background="#15A48B"
+                android:text="False"
+                android:background="@drawable/colorbutton"
                 android:textColor="#ffffff"
                 android:textSize="30sp" />
         </LinearLayout>

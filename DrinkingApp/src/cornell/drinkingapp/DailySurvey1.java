@@ -58,4 +58,7 @@ public class DailySurvey1 extends Activity implements OnClickListener {
 		super.onPause();
 		finish();
 	}
+	@Override
+	public void onBackPressed() {
+	}
 }

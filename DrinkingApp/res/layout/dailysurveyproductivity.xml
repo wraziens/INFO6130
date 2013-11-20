@@ -1,137 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
- 	xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-   	android:layout_height="fill_parent">
+    android:layout_height="fill_parent" >
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-       <TextView
-           android:layout_width="fill_parent"
-           android:layout_height="wrap_content"
-           android:background="#0099CC"
-           android:gravity="center"
-           android:text="@string/productive_prompt"
-           android:textColor="#FFFFFF"
-           android:textSize="30sp" />
-
-	<SeekBar
-        android:id="@+id/productive_seek"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"/>
-    <RelativeLayout
-       	android:orientation="horizontal"
-       	android:layout_width="match_parent"
-       	android:layout_height="match_parent">
-   		<TextView
-       		android:text="@string/prod_left"
-       		android:textColor="#0099CC"
-       		android:layout_alignParentLeft="true"
-       		android:layout_width="70dp"
-       		android:layout_height="wrap_content"
-       		android:paddingLeft="10dp"/>
-   		<TextView
-       		android:text="@string/prod_right"
-       		android:textColor="#0099CC"
-       		android:layout_alignParentRight="true"
-       		android:layout_width="120dp"
-       		android:layout_height="wrap_content"
-       		android:paddingRight="10dp"/>
+        android:orientation="vertical" >
 
-   </RelativeLayout>
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
-   <TextView
-   		android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:background="#0099CC"
-		android:textColor ="#FFFFFF"
-      	android:textSize="30sp"
-        android:gravity="center"
-        android:text="@string/perform_prompt"
-        android:layout_marginTop="30dp"/>
-
-        <SeekBar
-            android:id="@+id/perform_seek"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"/>
-			<RelativeLayout
-               	android:orientation="horizontal"
-               	android:layout_width="match_parent"
-               	android:layout_height="match_parent">
-           		<TextView
-               		android:text="@string/perf_left"
-               		android:textColor="#0099CC"
-               		android:layout_alignParentLeft="true"
-               		android:layout_width="70dp"
-               		android:layout_height="wrap_content"
-               		android:paddingLeft="10dp"/>
-           		<TextView
-               		android:text="@string/perf_right"
-               		android:textColor="#0099CC"
-               		android:layout_alignParentRight="true"
-               		android:layout_width="30dp"
-               		android:layout_height="wrap_content"
-               		android:paddingRight="10dp"/>
-           </RelativeLayout>
-           
-	</LinearLayout>
-   	<LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:orientation="vertical">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:background="#0099CC"
-			android:textColor ="#FFFFFF"
-	        android:textSize="30sp"
-            android:text="@string/stressed_prompt"
-            android:layout_marginTop="30dp"/>
+            android:gravity="left"
+            android:text="@string/productive_prompt"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp" />
 
         <SeekBar
-            android:id="@+id/stressed_seek"
+            android:id="@+id/productive_seek"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp" />
-			<RelativeLayout
-               	android:orientation="horizontal"
-               	android:layout_width="match_parent"
-               	android:layout_height="match_parent">
-           		<TextView
-               		android:text="@string/stress_left"
-               		android:textColor="#0099CC"
-               		android:layout_alignParentLeft="true"
-               		android:layout_width="70dp"
-               		android:layout_height="wrap_content"
-               		android:paddingLeft="10dp"/>
-           		<TextView
-               		android:text="@string/stress_right"
-               		android:textColor="#0099CC"
-               		android:layout_alignParentRight="true"
-               		android:layout_width="100dp"
-               		android:layout_height="wrap_content"
-               		android:paddingRight="10dp"/>
-           </RelativeLayout>
-</LinearLayout>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/prod_finish"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:paddingLeft="10dp"
+                android:text="@string/prod_left"
+                android:textColor="#0099CC" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:paddingRight="10dp"
+                android:text="@string/prod_right"
+                android:textColor="#0099CC" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/finish" />
-    </RelativeLayout>
-</LinearLayout>
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="30dp"
+                android:background="#0099CC"
+                android:gravity="left"
+                android:text="@string/perform_prompt"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
+
+            <SeekBar
+                android:id="@+id/perform_seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:paddingLeft="10dp"
+                    android:text="@string/perf_left"
+                    android:textColor="#0099CC" />
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="10dp"
+                    android:text="@string/perf_right"
+                    android:textColor="#0099CC" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="#0099CC"
+                android:gravity="left"
+                android:text="@string/stressed_prompt"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp" />
+
+            <SeekBar
+                android:id="@+id/stressed_seek"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:paddingLeft="10dp"
+                    android:text="@string/stress_left"
+                    android:textColor="#0099CC" />
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:paddingRight="10dp"
+                    android:text="@string/stress_right"
+                    android:textColor="#0099CC" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/prod_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/colorbutton"
+                android:text="@string/finish"
+                android:textColor="#ffffff" />
+        </RelativeLayout>
+    </LinearLayout>
+
 </ScrollView>

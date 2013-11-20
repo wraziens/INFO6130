@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import cornell.drinkingapp.R;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -15,6 +14,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class DrinkCalendar extends Activity implements OnClickListener {
@@ -23,7 +23,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
 	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay;
-	Button back, next;
+	ImageButton back, next;
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
 	
@@ -45,8 +45,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		yearDisplay = (TextView) findViewById(R.id.tvYear);
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
 		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
-		back = (Button) findViewById(R.id.bPreviousMonth);
-		next = (Button) findViewById(R.id.bNextMonth);
+		back = (ImageButton) findViewById(R.id.bPreviousMonth);
+		next = (ImageButton) findViewById(R.id.bNextMonth);
 		back.setOnClickListener(this);
 		next.setOnClickListener(this);
 
