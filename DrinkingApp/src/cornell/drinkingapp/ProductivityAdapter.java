@@ -63,7 +63,7 @@ public class ProductivityAdapter extends BaseAdapter {
 			view.setVisibility(8);
 			break;
 		case 1:
-			view.setText("Academic");
+			view.setText("Academics");
 			break;
 		case 2:
 			view.setText("Productivity");
@@ -73,10 +73,10 @@ public class ProductivityAdapter extends BaseAdapter {
 			view.setWidth(50);
 			break;
 		case 4:
-			view.setText("No. of Drinking Days");
+			view.setText("No. of Days Drinking");
 			break;
 		case 5:
-			view.setText("Avg BAC");
+			view.setText("Avg. BAC");
 			
 			break;
 		}
@@ -128,17 +128,20 @@ public class ProductivityAdapter extends BaseAdapter {
 				grade = "B";
 			else if (rawGrade >= 70 && rawGrade < 80)
 				grade = "C";
-			else
+			else if (rawGrade < 70)
 				grade = "D";
+
 		} else {
-			if (rawGrade >= 90)
+			if (rawGrade >= 30)
 				grade = "D";
-			else if (rawGrade >= 80 && rawGrade < 90)
+			else if (rawGrade >= 20 && rawGrade < 30)
 				grade = "C";
-			else if (rawGrade >= 70 && rawGrade < 80)
+			else if (rawGrade >= 10 && rawGrade < 20)
 				grade = "B";
-			else
+			else if (rawGrade <= 10)
 				grade = "A";
+			else
+				grade = "-";
 		}
 
 		return grade;

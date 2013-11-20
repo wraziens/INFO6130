@@ -77,17 +77,17 @@ public class ProductivityVisualization extends Activity {
 			if (stress != null){
 				stressAverageList.add(getAverage(stress));
 			} else {
-				stressAverageList.add(Double.valueOf(0));
+				//stressAverageList.add(Double.valueOf(0));
 			}
 			if(perf != null){
 				gradesAverageList.add(getAverage(perf));
 			}else{
-				gradesAverageList.add(Double.valueOf(0));
+				//gradesAverageList.add(Double.valueOf(0));
 			}
 			if(prod != null){
 				productivityAverageList.add(getAverage(prod));
 			}else{
-				productivityAverageList.add(Double.valueOf(0));
+				//productivityAverageList.add(Double.valueOf(0));
 			}
 			if (drank != null){
 				daysDrankList.add(drank.size());
