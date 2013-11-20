@@ -53,13 +53,5 @@
 			   android:text="" />
 	</LinearLayout>
 
-    <Button
-        android:id="@+id/bMenuResources"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:background="@drawable/resources"
 
-        android:textColor="#FFFFFF" />
 </LinearLayout>

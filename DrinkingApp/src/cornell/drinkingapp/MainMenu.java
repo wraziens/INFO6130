@@ -27,21 +27,18 @@ public class MainMenu extends Activity implements OnClickListener {
 		//get database
 		db = new DatabaseHandler(this);
 		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.menu);
 		tracking = (Button) findViewById(R.id.bMenuTracking);
 		assessment = (Button) findViewById(R.id.bMenuAssessment);
 		visualize = (Button) findViewById(R.id.bMenuVisualize);
 		settings = (Button) findViewById(R.id.bMenuSettings);
-		resources = (Button) findViewById(R.id.bMenuResources);
+		//resources = (Button) findViewById(R.id.bMenuResources);
 
 		tracking.setOnClickListener(this);
 		assessment.setOnClickListener(this);
 		visualize.setOnClickListener(this);
 		settings.setOnClickListener(this);
-		resources.setOnClickListener(this);
+		//resources.setOnClickListener(this);
 
 	}
 
@@ -84,10 +81,12 @@ public class MainMenu extends Activity implements OnClickListener {
 			goToThisPage = new Intent(MainMenu.this, Settings.class);
 			startActivity(goToThisPage);
 			break;
+			/*
 		case R.id.bMenuResources:
 			goToThisPage = new Intent(MainMenu.this, Resources.class);
 			startActivity(goToThisPage);
 			break;
+			*/
 		}
 
 	}

@@ -23,9 +23,6 @@ public class DailySurvey1 extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		db = new DatabaseHandler(this);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.dailysurvey1);
 		yes = (Button) findViewById(R.id.bDS1Yes);
 		no = (Button) findViewById(R.id.bDS1No);
