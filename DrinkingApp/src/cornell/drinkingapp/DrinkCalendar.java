@@ -202,8 +202,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 					info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n";
 				}
 			} else if (bac < 0.24) {
-				info_color += 0X88A30000;
-				info_txt ="-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n";
+				info_color = 0X88A30000;
+				info_txt +="-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n";
 			} else {
 				if(bac < .35){ 
 					info_txt += "-May be unable to walk.\n-May pass out or lose conciousness.\n-Seek medical attention.\n";
