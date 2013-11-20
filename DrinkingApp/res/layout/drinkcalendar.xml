@@ -17,32 +17,36 @@
             android:id="@+id/tvMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Month"
             android:layout_below="@+id/bNextMonth"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="-20sp"
+            android:text="Month"
             android:textSize="20sp" />
 
-        <Button
+        <ImageButton
             android:id="@+id/bPreviousMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="75sp"
+            android:layout_height="50sp"
             android:layout_alignParentLeft="true"
+            android:background="@drawable/colorbutton"
+            android:src="@drawable/leftarrow"
             android:text="Back" />
 
-        <Button
+        <ImageButton
             android:id="@+id/bNextMonth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="75sp"
+            android:layout_height="50sp"
             android:layout_alignParentRight="true"
+            android:background="@drawable/colorbutton"
+            android:src="@drawable/rightarrow"
             android:text="Next" />
 
         <TextView
             android:id="@+id/tvYear"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:text="2000"
             android:textSize="20sp" />
     </RelativeLayout>
@@ -51,9 +55,9 @@
         android:id="@+id/gvDrinkCalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:columnWidth="40dp"
         android:gravity="center"
-        android:layout_gravity="center_horizontal"
         android:listSelector="#00ff8c"
         android:numColumns="7"
         android:verticalSpacing="0sp" >
@@ -65,16 +69,16 @@
         android:layout_height="wrap_content"
         android:text="" />
 
-        <TextView
+    <TextView
         android:id="@+id/tvInfoDisplay"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="5dp"
-        android:textSize="15sp"
-        android:textColor="#FFFFFF"
-        android:padding="10dp"
         android:background="#0099CC"
-        android:text="Click on a colored date for more information." />
-        
+        android:padding="10dp"
+        android:text="Click on a colored date for more information."
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
 </LinearLayout>

@@ -268,6 +268,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="10sp"
                 android:background="@drawable/colorbutton"
+                android:textColor="#ffffff"
                 android:text="@string/finish" />
         </LinearLayout>
     </LinearLayout>

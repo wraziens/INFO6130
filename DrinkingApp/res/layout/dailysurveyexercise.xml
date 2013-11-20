@@ -16,7 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="#0099CC"
-            android:gravity="center"
+            android:gravity="center_horizontal"
+            android:layout_alignParentTop="true"
             android:text="@string/exercise_prompt"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />
@@ -124,6 +125,8 @@
             android:layout_height="40sp"
             android:layout_centerInParent="true"
             android:background="@drawable/colorbutton"
+            android:textColor="#ffffff"
+
             android:text="@string/finish" />
     </RelativeLayout>
 

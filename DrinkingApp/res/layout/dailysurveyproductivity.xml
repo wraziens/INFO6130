@@ -12,7 +12,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#0099CC"
-            android:gravity="center"
+            android:gravity="left"
             android:text="@string/productive_prompt"
             android:textColor="#FFFFFF"
             android:textSize="30sp" />
@@ -55,7 +55,7 @@
                 android:layout_height="fill_parent"
                 android:layout_marginTop="30dp"
                 android:background="#0099CC"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="@string/perform_prompt"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="#0099CC"
-                android:gravity="center"
+                android:gravity="left"
                 android:text="@string/stressed_prompt"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp" />
@@ -142,10 +142,10 @@
                 android:id="@+id/prod_finish"
                 android:layout_width="wrap_content"
                 android:layout_height="40sp"
-                android:layout_marginBottom="10sp"
                 android:layout_centerInParent="true"
                 android:background="@drawable/colorbutton"
-                android:text="@string/finish" />
+                android:text="@string/finish"
+                android:textColor="#ffffff" />
         </RelativeLayout>
     </LinearLayout>
 

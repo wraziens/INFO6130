@@ -11,7 +11,7 @@
     <!-- Shared Strings for Questions -->
     <string name="na">N/A</string>
     <string name="finish">Save</string>
-    <string name="other_label">Other(Specify)</string>
+    <string name="other_label">Other (Specify)</string>
     <string name="submit">Submit</string>
     <string name="close">Close</string>
     <string name="yes">Yes</string>
@@ -58,7 +58,7 @@
     <string name="forgot">Forgot or escaped from my responsibilities and problems.</string>
 
     <!-- Strings for Wordle Prompt -->
-    <string name="wordle_prompt">Select all the words that describe yesterday:</string>
+    <string name="wordle_prompt">Yesterday, I felt:</string>
     <string name="happy">Happy</string>
     <string name="productive">Productive</string>
     <string name="lazy">Lazy</string>
