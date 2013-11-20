@@ -272,11 +272,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 					store_list.add(store);
 				} while (cursor.moveToNext());
 			} else {
+				cursor.close();
 				return null;
 			}
+			cursor.close();
 			return store_list;
 		} catch (ParseException pe) {
 			System.out.println("Cannot parse string.");
+			cursor.close();
 			return null;
 		}
 	}
@@ -441,6 +444,54 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return handleCursor(cursor);
 	}
 
+	public ArrayList<String[]> handleWordle(Cursor cursor){
+	// check to see if our query returned values
+			ArrayList<String []> total_list = new ArrayList<String []>();
+			if (cursor.moveToFirst()) {
+				do {
+					String value = cursor.getString(0);
+					String cnt = String.valueOf(cursor.getInt(1));
+					String[] store_list = {value, cnt};
+					total_list.add(store_list);
+				} while (cursor.moveToNext());
+			} else {
+				cursor.close();
+				return null;
+			}
+			cursor.close();
+			return total_list;
+		
+	}
+	
+	
+	
+	
+	public ArrayList<String []> getWordleDrink(){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "Select a.value, COUNT(a.value) FROM " + TABLE_QUES + " a INNER JOIN " + TABLE_QUES +
+				" b ON a." + QUES_KEY_MONTH +"=b." + QUES_KEY_MONTH + 
+				" AND a." + QUES_KEY_DAY  + "=b." + QUES_KEY_DAY +
+				" AND a." + QUES_KEY_YEAR + "=b." + QUES_KEY_YEAR +
+				" WHERE a.variable='wordle' AND b.variable='drank_last_night'" +
+				" AND b.value='True' GROUP BY a.value;";
+		Cursor cursor = db.rawQuery(query, null);
+		return handleWordle(cursor);	
+	}
+	
+	public ArrayList<String []> getWordleNoDrink(){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "Select c.value, COUNT(c.value) FROM " + TABLE_QUES + " c WHERE c.id NOT IN " +
+				"(Select a.id FROM " + TABLE_QUES + " a INNER JOIN " + TABLE_QUES +
+				" b ON a." + QUES_KEY_MONTH +"=b." + QUES_KEY_MONTH + 
+				" AND a." + QUES_KEY_DAY  + "=b." + QUES_KEY_DAY +
+				" AND a." + QUES_KEY_YEAR + "=b." + QUES_KEY_YEAR +
+				" WHERE a.variable='wordle' AND b.variable='drank_last_night'" +
+				" AND b.value='True') GROUP BY c.value;";
+		
+		Cursor cursor = db.rawQuery(query, null);
+		return handleWordle(cursor);
+	}
+	
 	public List<DatabaseStore> getVarValuesForMonth(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
