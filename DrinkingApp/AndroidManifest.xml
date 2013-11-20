@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cornell.drinkingapp"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="2" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.drinkingapp.MainActivity"
+            android:name="cornell.drinkingapp.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,7 +31,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.MENU" />
+                <action android:name="cornell.drinkingapp.MENU" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -41,7 +41,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.RESOURCES" />
+                <action android:name="cornell.drinkingapp.RESOURCES" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -51,7 +51,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZEEXERCISE" />
+                <action android:name="cornell.drinkingapp.VISUALIZEEXERCISE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -61,7 +61,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZE" />
+                <action android:name="cornell.drinkingapp.VISUALIZE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -71,7 +71,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
             <intent-filter>
-                <action android:name="com.example.drinkingapp.VISUALIZEMENU" />
+                <action android:name="cornell.drinkingapp.VISUALIZEMENU" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
