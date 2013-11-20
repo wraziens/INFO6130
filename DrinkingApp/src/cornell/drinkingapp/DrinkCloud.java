@@ -38,7 +38,7 @@ public class DrinkCloud extends Activity{
 		test.add(testStringArray10);
 		
 	
-		visual = new WordleGraphics(this,test,"Drinking");
+		//visual = new WordleGraphics(this,test,"Drinking");
 		
 		setContentView(visual);
 	}

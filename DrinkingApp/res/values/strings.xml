@@ -48,10 +48,10 @@
     <string name="other_objective_hint">Enter why you went drinking</string>
 
     <!-- Strings for Drink Assessment -->
-    <string name="number_drinks">How many drinks do you think you had last night?</string>
-    <string name="excess_drinks">Do you think you had too many drinks last night?</string>
-    <string name="excess_left">I had hardly anything</string>
-    <string name="excess_right">I drank way too much</string>
+    <string name="number_drinks">The # of drinks I think I had last Night:</string>
+    <string name="excess_drinks">I had too many drinks last night</string>
+    <string name="excess_left">Disagree</string>
+    <string name="excess_right">Agree</string>
 
     <!-- Strings for Effects from last night Might get rid of this -->
     <string name="effects">Yesterday, I felt:</string>

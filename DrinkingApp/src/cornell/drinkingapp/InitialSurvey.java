@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 public class InitialSurvey extends Activity implements OnClickListener,OnCheckedChangeListener {
 
-	TextView test,ageTV,weightTV;
+	TextView ageTV,weightTV;
 	Button finish,plusAge,plusWeight,minusAge,minusWeight;
 	CheckBox sleep, exercise, productivity, social;
 	int age,weight;
@@ -34,7 +34,7 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		super.onCreate(savedInstanceState);
 		initiate();
 		setContentView(R.layout.initialsurvey);
-		test = (TextView) findViewById(R.id.test);
+		//test = (TextView) findViewById(R.id.test);
 		ageTV=(TextView) findViewById(R.id.tvISAge);
 		weightTV=(TextView) findViewById(R.id.tvISWeight);
 		age=Integer.parseInt(ageTV.getText().toString());
@@ -80,7 +80,7 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		// TODO Auto-generated method stub
 		switch (arg0.getId()){
 			case R.id.bISFinish:
-				test.setText("TESTED");
+				//test.setText("TESTED");
 				SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 				SharedPreferences.Editor editPrefs=getPrefs.edit();
 				editPrefs.putBoolean("initialSurvey", true);
@@ -147,11 +147,11 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		if (group.getId()==R.id.rgISSex){//don't need the if statement, but inserted for coder's visual structure
 			switch(checkedId){
 				case R.id.rbISMale:
-					test.setText("Male");
+					//test.setText("Male");
 					sexResult=((RadioButton)findViewById(sex.getCheckedRadioButtonId())).getText().toString();
 					break;
 				case R.id.rbISFemale:
-					test.setText("Female");
+					//test.setText("Female");
 					sexResult=((RadioButton)findViewById(sex.getCheckedRadioButtonId())).getText().toString();
 					break;
 			}
@@ -159,15 +159,15 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		if (group.getId()==R.id.rgISAlcoholFrequency){//don't need the if statement, but inserted for coder's visual structure
 			switch(checkedId){
 				case R.id.rbISAlcoholF1:
-					test.setText("F1");
+					//test.setText("F1");
 					alcoholFrequencyResult=((RadioButton)findViewById(alcoholFrequency.getCheckedRadioButtonId())).getText().toString();
 					break;
 				case R.id.rbISAlcoholF2:
-					test.setText("F2");
+					//test.setText("F2");
 					alcoholFrequencyResult=((RadioButton)findViewById(alcoholFrequency.getCheckedRadioButtonId())).getText().toString();
 					break;
 				case R.id.rbISAlcoholF3:
-					test.setText("F3");
+					//test.setText("F3");
 					alcoholFrequencyResult=((RadioButton)findViewById(alcoholFrequency.getCheckedRadioButtonId())).getText().toString();
 					break;
 			}
@@ -175,19 +175,19 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		if (group.getId()==R.id.rgISAlcoholQuantity){//don't need the if statement, but inserted for coder's visual structure
 			switch(checkedId){
 				case R.id.rbISAlcoholQ1:
-					test.setText("Q1");
+					//test.setText("Q1");
 					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
 					break;
 				case R.id.rbISAlcoholQ2:
-					test.setText("Q2");
+					//test.setText("Q2");
 					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
 					break;
 				case R.id.rbISAlcoholQ3:
-					test.setText("Q3");
+					//test.setText("Q3");
 					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
 					break;
 				case R.id.rbISAlcoholQ4:
-					test.setText("Q4");
+					//test.setText("Q4");
 					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
 					break;
 					

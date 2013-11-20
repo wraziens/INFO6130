@@ -24,8 +24,8 @@ public class MoodVisualization extends Activity {
 		db = new DatabaseHandler(this);
 		
 		//get data from the database
-		//ArrayList<String[]> words = db.getWordleDrink();
-		//ArrayList<String[]> no_drink = db.getWordleNoDrink();
+		ArrayList<String[]> drink = db.getWordleDrink();
+		ArrayList<String[]> no_drink = db.getWordleNoDrink();
 
 		/*
 		//sample data;
@@ -53,9 +53,9 @@ public class MoodVisualization extends Activity {
 		test.add(testStringArray10);
 		*/
 	
-		//visual = new WordleGraphics(this,no_drink,"Mood");
+		visual = new WordleGraphics(this,drink,no_drink,"Mood");
 		
-		//setContentView(visual);
+		setContentView(visual);
 	
 	
 	}

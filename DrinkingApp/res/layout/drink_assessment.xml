@@ -66,7 +66,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:textColor="#FFFFFF"
-            android:background="#00005F"
+            android:background="@drawable/colorbutton"
+            android:layout_marginBottom="10sp"
             android:text="@string/submit" />
 	</LinearLayout>
 </ScrollView>
