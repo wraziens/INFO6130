@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#dd5f27"
+        android:background="#0e6d61"
         android:contentDescription="Button"
         android:src="@drawable/drinkingvisualization" />
 
@@ -19,7 +19,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#0e6d61"
+        android:background="#dd5f27"
         android:contentDescription="Button"
         android:src="@drawable/exercisevisualization" />
 
@@ -28,7 +28,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#c7baa7"
+        android:background="#f7901e"
         android:contentDescription="Button"
         android:src="@drawable/productivityvisualization" />
 
@@ -37,7 +37,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#f7901e"
+        android:background="#c7baa7"
         android:contentDescription="Button"
         android:src="@drawable/moodsvisualization" />
 
