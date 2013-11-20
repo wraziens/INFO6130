@@ -3,6 +3,8 @@ package cornell.drinkingapp;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -53,6 +55,7 @@ public class ProductivityAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		TextView view = new TextView(mContext);
+		view.setGravity(17);
 		view.setHeight(60);
 		view.setTextSize(12);
 		switch (position) {
@@ -74,35 +77,43 @@ public class ProductivityAdapter extends BaseAdapter {
 			break;
 		case 5:
 			view.setText("Avg BAC");
+			
 			break;
 		}
 		if (position == 6) {
 			view.setText("Week 1");
+			view.setGravity(17);
 		}
-		if (position > 6 && position % 6 == 0)
+		if (position > 6 && position % 6 == 0) {
 			view.setText("Week " + position / 6);
-
+			view.setGravity(17);
+		}
 		if (position > 6 && position % 6 == 1) {
-			view.setText(getGradeFromDouble(gradesAverageList
-					.get((position - 1) / 6 - 1),false));
+			view.setText(getGradeFromDouble(
+					gradesAverageList.get((position - 1) / 6 - 1), false));
 
 		}
 		if (position > 6 && position % 6 == 2) {
-			view.setText(getGradeFromDouble(productivityAverageList
-					.get((position - 2) / 6 - 1),false));
+			view.setText(getGradeFromDouble(
+					productivityAverageList.get((position - 2) / 6 - 1), false));
 		}
 		if (position > 6 && position % 6 == 3) {
-			view.setText(getGradeFromDouble(stressAverageList.get((position - 3) / 6 - 1)
-					,true));
+			view.setText(getGradeFromDouble(
+					stressAverageList.get((position - 3) / 6 - 1), true));
 		}
 		if (position > 6 && position % 6 == 4) {
 			view.setText(daysDrankList.get((position - 4) / 6 - 1).toString());
 		}
 		if (position > 6 && position % 6 == 5) {
-			if (bacAverageList.get((position - 5) / 6 - 1)<=0)
+			if (bacAverageList.get((position - 5) / 6 - 1) <= 0){
 				view.setText("0.000");
-			else
-				view.setText(bacAverageList.get((position - 5) / 6 - 1).toString().substring(0,5));
+				view.setGravity(17);
+			}
+			else{
+				view.setText(bacAverageList.get((position - 5) / 6 - 1)
+						.toString().substring(0, 5));
+				view.setGravity(17);
+			}
 		}
 		return view;
 
@@ -119,7 +130,7 @@ public class ProductivityAdapter extends BaseAdapter {
 				grade = "C";
 			else
 				grade = "D";
-		}else{
+		} else {
 			if (rawGrade >= 90)
 				grade = "D";
 			else if (rawGrade >= 80 && rawGrade < 90)
