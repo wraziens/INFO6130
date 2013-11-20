@@ -62,7 +62,8 @@
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="cornell.drinkingapp.VISUALIZE" />
-
+			</intent-filter>	
+		</activity>			
         <activity
             android:name=".VisualizeMenu"
             android:label="@string/app_name"
