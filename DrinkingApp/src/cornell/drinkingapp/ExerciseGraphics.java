@@ -85,38 +85,56 @@ public class ExerciseGraphics extends View {
 		xBoundMax=xAxisMax * daysDrinkList.size()/2;
 		yBoundMax=yAxisMax;
 		int yScale = 7;
-		float yAxisIncrement = yAxisMax / yScale;
+		float yAxisIncrement = (yAxisMax / yScale)-10;
 		// draws the increments on Y axis
 		Paint thinLines = new Paint();
 		thinLines.setStrokeWidth(5);
+		//draws Y axis
+		canvas.drawLine(20+posX, yAxisMax + posY, 20+posX, 0, axis);
 
 		// draw legends
 		Paint legendPaint = new Paint();
 		Rect legendsRect = new Rect();
-		// exercise legend
-		legendsRect.set(canvas.getWidth() - 125, 50, canvas.getWidth() - 75,
-				100);
+		// drink legend
+		legendsRect.set(canvas.getWidth() - 125, 25, canvas.getWidth() - 100,
+				50);
+		legendPaint.setColor(Color.rgb(247, 144, 30));
 		canvas.drawRect(legendsRect, legendPaint);
-		legendPaint.setColor(Color.BLACK);
+		
 		legendPaint.setTextSize(20);
-		canvas.drawText("Exercise", legendsRect.right,
+		legendPaint.setColor(Color.BLACK);
+		canvas.drawText("Drinking", legendsRect.right,
 				legendsRect.centerY(), legendPaint);
 
-		// drink legend
-		legendPaint.setColor(Color.rgb(255, 207, 17));
-		legendsRect.set(canvas.getWidth() - 300, 50, canvas.getWidth() - 250,
-				100);
+		// exercise legend
+		legendPaint.setColor(Color.rgb(14, 109, 97));
+		legendsRect.set(canvas.getWidth() - 125, 50, canvas.getWidth() - 100,
+				75);
 		canvas.drawRect(legendsRect, legendPaint);
 		legendPaint.setColor(Color.BLACK);
 		legendPaint.setTextSize(20);
-		canvas.drawText("Drinking", legendsRect.right, legendsRect.centerY(),
+		canvas.drawText("Exercise", legendsRect.right, legendsRect.centerY(),
 				legendPaint);
+		// grade legend
+		Paint gradeLegendPaint=new Paint();
+		Rect gradeLegendBound=new Rect();
+		gradeLegendPaint.setTextSize(20);
+		gradeLegendPaint.setTextAlign(Align.CENTER);
+		gradeLegendPaint.setColor(Color.RED);
+		String gradeLegend="A-F";
+		gradeLegendPaint.getTextBounds(gradeLegend, 0, gradeLegend.length(), gradeLegendBound);
+		canvas.drawText("A-F", legendsRect.centerX(), legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
+				gradeLegendPaint);
+		gradeLegendPaint.setColor(Color.BLACK);
+		gradeLegendPaint.setTextAlign(Align.LEFT);
+		canvas.drawText("Quality",legendsRect.centerX()+gradeLegendBound.width(), legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
+				gradeLegendPaint);
 
 		text.setTextSize(20);
 		text.setColor(Color.BLACK);
 		for (int n = 0; n < yScale; n++) {
-			canvas.drawLine(10 + posX, n * yAxisIncrement + posY, 50 + posX, n
-					* yAxisIncrement + posY, thinLines);
+			canvas.drawLine(10 + posX, n * yAxisIncrement , 50 + posX, n
+					* yAxisIncrement , thinLines);
 
 			Rect bounds = new Rect();
 			String scaleData = "" + (yScale - n);
@@ -126,7 +144,8 @@ public class ExerciseGraphics extends View {
 					+ posY + (bounds.width() / 2), text);
 		}
 		canvas.rotate(90);
-		canvas.drawText("Days", canvas.getHeight() / 2 + posY, 50 - posX, text);
+		text.setTextSize(30);
+		canvas.drawText("Days", canvas.getHeight() / 2 + posY, -20 - posX, text);
 		canvas.rotate(-90);
 
 		axis.setColor(Color.RED);
@@ -156,25 +175,17 @@ public class ExerciseGraphics extends View {
 						(int) ((yScale - daysDrink) * yAxisIncrement + posY),
 						(int) (xPosition + widthOfBar + posX),
 						(int) (yAxisMax + posY));
-				Bitmap alcoholBar = BitmapFactory.decodeResource(
-						getResources(), R.drawable.exercisealcoholbar);
-				// alcoholBar=Bitmap.createBitmap(alcoholBar, 0, 0,
-				// (int)widthOfBar, (int)((yScale-daysDrink)*yAxisIncrement));
-				// Bitmap
-				// alcoholBarScaled=alcoholBar.createScaledBitmap(alcoholBar,
-				// (int)widthOfBar, (int)((yScale-daysDrink)*yAxisIncrement),
-				// false);
-				canvas.drawBitmap(alcoholBar, null, alcBarRect, axis);
 
-				// axis.setColor(Color.RED);
+				Paint alcBarPaint=new Paint();
+				alcBarPaint.setColor(Color.rgb(247, 144, 30));
+				canvas.drawRect(alcBarRect, alcBarPaint);
 
-				// canvas.drawRect(xPosition + posX,
-				// (yScale-daysDrink)*yAxisIncrement + posY,
-				// xPosition+widthOfBar + posX,yAxisMax + posY,axis);
+
 
 				// draws days exercised
-				axis.setColor(Color.BLACK);
+				axis.setColor(Color.rgb(14, 109, 97));
 				// gets the bounds of the text for centering
+				
 				Rect bounds = new Rect();
 				String weekText = "Week " + weekNumber;
 				text.getTextBounds(weekText, 0, weekText.length(), bounds);
@@ -183,6 +194,7 @@ public class ExerciseGraphics extends View {
 						xPosition + (widthOfBar * 2) + posX, yAxisMax + posY,
 						axis);
 				// draws week
+				axis.setColor(Color.BLACK);
 				canvas.drawText(weekText, xPosition + widthOfBar + posX
 						- (bounds.width() / 2), yAxisMax + 50 + posY, axis);
 				// draws grade
@@ -190,15 +202,9 @@ public class ExerciseGraphics extends View {
 				Rect textBound = new Rect();
 				text.setColor(Color.BLACK);
 				text.setTextSize(10);
-				String quality = "Quality:";
-				text.getTextBounds(quality, 0, quality.length(), textBound);
-				canvas.drawText(quality, xPosition + widthOfBar + posX,
-						(yScale - daysExercise) * yAxisIncrement + posY - 10,
-						text);
-				text.setColor(Color.BLUE);
-				text.setTextSize(15);
-				canvas.drawText(grade, xPosition + widthOfBar + posX
-						+ textBound.width(), (yScale - daysExercise)
+				text.setColor(Color.RED);
+				text.setTextSize(20);
+				canvas.drawText(grade, xPosition + widthOfBar +widthOfBar/4+ posX, (yScale - daysExercise)
 						* yAxisIncrement + posY - 10, text);
 				xPosition += 200;
 			}
@@ -209,8 +215,6 @@ public class ExerciseGraphics extends View {
 		minusY = canvas.getHeight() - minus.getHeight();
 
 		canvas.restore();
-		canvas.drawBitmap(plus, plusX, plusY, null);
-		canvas.drawBitmap(minus, minusX, minusY, null);
 		// canvas.drawBitmap(BufferBitmap, (float) -posX, (float) -posY, null);
 		// canvas.drawColor(Color.parseColor("#7b9aad"));
 
@@ -221,15 +225,12 @@ public class ExerciseGraphics extends View {
 		if (-input<0)
 			input=0;
 		if (-input>xBoundMax)
-			input=xBoundMax;
+			input=-xBoundMax;
 		posX=input;
 		
 	}
 	public void setPosY(float input){
-		if (-input<0)
-			input=0;
-		if (-input>yBoundMax)
-			input=yBoundMax;
+
 		posY=input;
 	}
 

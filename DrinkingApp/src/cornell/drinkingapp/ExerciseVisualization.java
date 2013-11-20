@@ -104,12 +104,12 @@ public class ExerciseVisualization extends Activity implements
 				float val = (float)sum/(float)quality.size();
 				averageExerciseQualityList.add(Double.valueOf(val));
 			} else{
-				averageExerciseQualityList.add(Double.valueOf(0));
+				//averageExerciseQualityList.add(Double.valueOf(0));
 			}
 			if (drank != null){
 				daysDrinkList.add(drank.size());
 			} else{
-				daysDrinkList.add(0);
+				//daysDrinkList.add(0);
 			}
 		}
 	}
@@ -123,6 +123,7 @@ public class ExerciseVisualization extends Activity implements
 
 	@Override
 	public boolean onDown(MotionEvent event) {
+		/*
 		Log.d(DEBUG_TAG, "onDown: " + event.toString());
 		float mouseX = event.getX();
 		float mouseY = event.getY();
@@ -144,6 +145,7 @@ public class ExerciseVisualization extends Activity implements
 			visual.zoomVal = visual.zoomVal / 1.25f;
 			setContentView(visual);
 		}
+		*/
 
 		return true;
 	}
@@ -167,7 +169,6 @@ public class ExerciseVisualization extends Activity implements
 		//out of bounds stop here.
 		Log.d(DEBUG_TAG, "onScroll: " + e1.toString() + e2.toString());
 		visual.setPosX(visual.posX - distanceX);
-		visual.setPosY(visual.posY - distanceY);
 
 		setContentView(visual);
 

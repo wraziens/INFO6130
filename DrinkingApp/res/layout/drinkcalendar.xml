@@ -51,10 +51,20 @@
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <GridView
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+            
+            <GridView
         android:id="@+id/gvDrinkCalendar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="400sp"
         android:layout_gravity="center_horizontal"
         android:columnWidth="40dp"
         android:gravity="center"
@@ -80,5 +90,9 @@
         android:text="Click on a colored date for more information."
         android:textColor="#FFFFFF"
         android:textSize="15sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    
 
 </LinearLayout>
