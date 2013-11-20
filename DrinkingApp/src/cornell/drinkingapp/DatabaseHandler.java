@@ -480,7 +480,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	
 	public ArrayList<String []> getWordleNoDrink(){
 		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "Select c.value, COUNT(c.value) FROM " + TABLE_QUES + " c WHERE c.id NOT IN " +
+		String query = "Select c.value, COUNT(c.value) FROM " + TABLE_QUES + " c WHERE c.variable=\"wordle\" " +
+				"AND c.id NOT IN " +
 				"(Select a.id FROM " + TABLE_QUES + " a INNER JOIN " + TABLE_QUES +
 				" b ON a." + QUES_KEY_MONTH +"=b." + QUES_KEY_MONTH + 
 				" AND a." + QUES_KEY_DAY  + "=b." + QUES_KEY_DAY +
