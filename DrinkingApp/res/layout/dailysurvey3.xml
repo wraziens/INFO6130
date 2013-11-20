@@ -22,80 +22,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            
-            android:text="Forgot or escaped from my responsibilities or problems" />
+            android:text="Forgot or escaped from my responsibilities or problems"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Blacked out" />
+            android:text="Blacked out"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Felt closer/bonded to my friends" />
+            android:text="Felt closer/bonded to my friends"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Met new people" />
+            android:text="Met new people"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Felt more attractive" />
+            android:text="Felt more attractive"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Felt less inhibited" />
+            android:text="Felt less inhibited"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Was loud and belligerent" />
+            android:text="Was loud and belligerent"
+            android:textSize="20sp" />
 
         <CheckBox
             android:id="@+id/cbDS3Box8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textSize="20sp"
-            android:text="Got sloppy and did something I now regret" />
+            android:text="Got sloppy and did something I now regret"
+            android:textSize="20sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/bDS3Finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Finish" 
             android:layout_gravity="center"
-            
-            />
+            android:background="@drawable/colorbutton"
+            android:layout_marginBottom="10sp"
+            android:text="Finish" />
     </LinearLayout>
 
 </LinearLayout>

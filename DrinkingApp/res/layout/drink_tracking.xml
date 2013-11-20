@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drink_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/drink_counter_margin"
-    android:id="@+id/drink_layout">
+    android:padding="@dimen/drink_counter_margin" >
 
-     <ImageButton
-     	android:id="@+id/increaseDrink"
+    <ImageButton
+        android:id="@+id/increaseDrink"
         android:layout_width="130dp"
         android:layout_height="130dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/drink_counter_desc"
         android:onClick="hadDrink"
         android:scaleType="fitXY"
-        android:src="@drawable/trickleadddrinkbutton"
-        android:background="@android:color/transparent" />
-        
-     <Button
-         android:id="@+id/doneDrink"
-         android:layout_marginTop="280dp"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:onClick="doneDrinking"
-         android:text="@string/done_drinking"
-         android:textColor="#ffffff"
-         android:layout_gravity="center_horizontal"/>
-     
+        android:src="@drawable/trickleadddrinkbutton" />
+
+    <Button
+        android:id="@+id/doneDrink"
+        android:layout_width="200sp"
+        android:layout_height="40sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="280dp"
+        android:background="@drawable/colorbutton"
+        android:onClick="doneDrinking"
+        android:text="@string/done_drinking"
+        android:textColor="#ffffff" />
+
 </FrameLayout>
