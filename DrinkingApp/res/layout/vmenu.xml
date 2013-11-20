@@ -5,33 +5,40 @@
     android:orientation="vertical"
     android:weightSum="4" >
 
-    <Button
+    <ImageButton
         android:id="@+id/bDrink"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/drinkvisualization"
-        android:text="" />
+        android:layout_weight="1"
+        android:background="#dd5f27"
+        android:contentDescription="Button"
+        android:src="@drawable/drinkingvisualization" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bExercise"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/exercisevisualization"
-        android:text="" />
+        android:background="#0e6d61"
+        android:contentDescription="Button"
+        android:src="@drawable/exercisevisualization" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bProductivity"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="@drawable/productivityvisualization"
-        android:text="" />
+        android:background="#c7baa7"
+        android:contentDescription="Button"
+        android:src="@drawable/productivityvisualization" />
 
-    <Button
+    <ImageButton
         android:id="@+id/bMood"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="moodsvisualization"/>
+        android:layout_weight="1"
+        android:background="#f7901e"
+        android:contentDescription="Button"
+        android:src="@drawable/moodsvisualization" />
 
 </LinearLayout>
