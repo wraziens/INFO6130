@@ -16,14 +16,21 @@ import android.widget.TextView;
 public class MoodVisualization extends Activity {
 	
 	WordleGraphics visual;
+	private DatabaseHandler db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		db = new DatabaseHandler(this);
 		
+		//get data from the database
+		ArrayList<String[]> words = db.getWordleDrink();
+		ArrayList<String[]> no_drink = db.getWordleNoDrink();
+
+		/*
 		//sample data;
 		//nested arraylist/array, inner array: 0-name 1-count
-		ArrayList<String[]> test=new ArrayList<String[]>();
+		ArrayList<String[]> drinking = new ArrayList<String[]>();
 		String[] testStringArray1 = {"Sad","4"};
 		test.add(testStringArray1);
 		String[] testStringArray2 = {"Exciting","2"};
@@ -44,9 +51,9 @@ public class MoodVisualization extends Activity {
 		test.add(testStringArray9);
 		String[] testStringArray10 = {"Painful","6"};
 		test.add(testStringArray10);
-		
+		*/
 	
-		visual = new WordleGraphics(this,test,"Mood");
+		visual = new WordleGraphics(this,no_drink,"Mood");
 		
 		setContentView(visual);
 	
