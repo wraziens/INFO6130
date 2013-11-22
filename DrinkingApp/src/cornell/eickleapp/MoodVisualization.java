@@ -30,7 +30,7 @@ public class MoodVisualization extends Activity {
 		ArrayList<String[]> drink = db.getWordleDrink();
 		ArrayList<String[]> no_drink = db.getWordleNoDrink();
 
-		
+		/*
 		//sample data;
 		//nested arraylist/array, inner array: 0-name 1-count
 		ArrayList<String[]> drinking = new ArrayList<String[]>();
@@ -55,9 +55,9 @@ public class MoodVisualization extends Activity {
 		noDrinking.add(testStringArray9);
 		String[] testStringArray10 = {"great","6"};
 		noDrinking.add(testStringArray10);
-		
+		*/
 	
-		visual = new WordleGraphics(this,drinking,noDrinking,"Mood");
+		visual = new WordleGraphics(this,drink,no_drink,"Mood");
 		
 		setContentView(visual);
 	
