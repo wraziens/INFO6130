@@ -117,9 +117,20 @@ public class DrinkCounter extends Activity {
 		variables.add("bac");
 		variables.add("bac_color");
 		
+		if(drink_count_vals.size() ==1){
+			ArrayList<String> vals=new ArrayList<String>();
+			vals.add("drank_last_night");
+			vals.add("tracked");
+			db.deleteValuesTomorrow(vals);
+			
+			variables.add("drank");
+		}
+		
 		db.deleteVaribles(variables, drink_count_vals.get(drink_count_vals.size()-1));
 		calculateBac();
 		calculateColor();
+		
+		
 		
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);	

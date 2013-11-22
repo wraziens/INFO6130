@@ -461,6 +461,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 	}
 	
+	public void deleteValuesTomorrow(ArrayList<String> names){
+		Date date = new Date();
+		//Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		gc.add(Calendar.DAY_OF_YEAR, 1);
+		date = gc.getTime();
+		DatabaseStore dbstore = DatabaseStore.DatabaseTextStore("",
+				"", date);
+		SQLiteDatabase db = this.getWritableDatabase();
+		String variable_str = "(" + QUES_KEY_VAR + "='" +names.get(0);
+		for(int i=1; i<names.size(); i++){
+			variable_str += "' OR " + QUES_KEY_VAR +"='" + names.get(i);
+		}
+		variable_str += "')";
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " +
+				QUES_KEY_MONTH +"=" + dbstore.month + " AND "+
+				QUES_KEY_DAY + "=" + dbstore.day + " AND "+
+				QUES_KEY_YEAR + "=" + dbstore.year + " AND " +
+				variable_str + ";";
+		db.execSQL(query);
+		db.close();
+	}
+	
 	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore){
 		SQLiteDatabase db = this.getWritableDatabase();
 		String variable_str = "(" + QUES_KEY_VAR + "='" +names.get(0);
