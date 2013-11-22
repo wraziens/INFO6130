@@ -138,6 +138,7 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 		drink_count++;
 		if (drink_count == 1){
 			db.addValueTomorrow("drank_last_night", "True");
+			db.addValueTomorrow("tracked", "True");
 			db.updateOrAdd("drank", "True");
 		}
 		db.addDelayValue("drink_count", drink_count);
