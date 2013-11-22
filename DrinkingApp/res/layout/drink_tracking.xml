@@ -16,7 +16,7 @@
         android:contentDescription="@string/drink_counter_desc"
         android:onClick="hadDrink"
         android:scaleType="fitXY"
-        android:src="@drawable/trickleadddrinkbutton" />
+        android:src="@drawable/widgetbutton" />
 
     <Button
         android:id="@+id/doneDrink"
