@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DrinkCounter extends Activity {
 	private int drink_count = 0;
@@ -115,30 +116,14 @@ public class DrinkCounter extends Activity {
 		variables.add(drink_count_vals.get(drink_count_vals.size()-1).variable);
 		variables.add("bac");
 		variables.add("bac_color");
-		View parent_view = findViewById(R.id.drink_layout);
-		TextView d = new TextView(this);
-		d.setText(String.valueOf(drink_count_vals.size()));
-		d.setTextColor(Color.parseColor("#FFFFFF"));
-		((FrameLayout)parent_view).addView(d);
 		
 		db.deleteVaribles(variables, drink_count_vals.get(drink_count_vals.size()-1));
 		calculateBac();
 		calculateColor();
 		
-		parent_view.setBackgroundColor(color);
-		/*
-		TextView check = new TextView(this);
-		check.setText(String.valueOf(drink_count));
-		check.setTextColor(Color.parseColor("#FFFFFF"));
-		((FrameLayout)parent_view).addView(check);
-	*/
-		drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesDelay("drink_count", date);
-		TextView c = new TextView(this);
-		c.setText(String.valueOf(drink_count_vals.size()));
-		c.setTextColor(Color.parseColor("#FFFFFF"));
-		((FrameLayout)parent_view).addView(c);
-	
+		View parent_view = findViewById(R.id.drink_layout);
+		parent_view.setBackgroundColor(color);	
+		Toast.makeText(getApplicationContext(), "Your last drink has been removed", Toast.LENGTH_SHORT).show();
 	}
 	
 	
