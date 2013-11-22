@@ -8,8 +8,11 @@ import java.util.GregorianCalendar;
 
 import cornell.drinkingapp.R;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -66,6 +69,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				selectedYear, drinkingDays, maxBac, bacColors);
 		drinkCalendar.setAdapter(adapter);
 		drinkBacButtons = adapter.getButtonView();
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+		if (checkSurveyed) {
+			Intent openHint = new Intent(this, DrinkCalendarTutorial.class);
+			startActivity(openHint);
+		}
 		
 	}
 
@@ -220,6 +230,12 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
 		finish();
 	}
 

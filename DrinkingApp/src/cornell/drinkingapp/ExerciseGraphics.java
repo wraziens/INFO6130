@@ -133,14 +133,14 @@ public class ExerciseGraphics extends View {
 		text.setTextSize(20);
 		text.setColor(Color.BLACK);
 		for (int n = 0; n < yScale; n++) {
-			canvas.drawLine(10 + posX, n * yAxisIncrement , 50 + posX, n
-					* yAxisIncrement , thinLines);
+			canvas.drawLine(10 + posX, n * yAxisIncrement+yAxisIncrement , 50 + posX, n
+					* yAxisIncrement+yAxisIncrement , thinLines);
 
 			Rect bounds = new Rect();
 			String scaleData = "" + (yScale - n);
 			text.getTextBounds(scaleData, 0, scaleData.length(), bounds);
 
-			canvas.drawText("" + (yScale - n), -10 + posX, n * yAxisIncrement
+			canvas.drawText("" + (yScale - n), -10 + posX, n * yAxisIncrement+yAxisIncrement
 					+ posY + (bounds.width() / 2), text);
 		}
 		canvas.rotate(90);
@@ -172,7 +172,7 @@ public class ExerciseGraphics extends View {
 				// draws days drank
 				Rect alcBarRect = new Rect();
 				alcBarRect.set((int) (xPosition + posX),
-						(int) ((yScale - daysDrink) * yAxisIncrement + posY),
+						(int) ((yScale - daysDrink) * yAxisIncrement + posY+yAxisIncrement),
 						(int) (xPosition + widthOfBar + posX),
 						(int) (yAxisMax + posY));
 
@@ -183,16 +183,18 @@ public class ExerciseGraphics extends View {
 
 
 				// draws days exercised
-				axis.setColor(Color.rgb(14, 109, 97));
+				Paint exerciseBarPaint=new Paint();
+				exerciseBarPaint.setColor(Color.rgb(14, 109, 97));;
 				// gets the bounds of the text for centering
 				
 				Rect bounds = new Rect();
 				String weekText = "Week " + weekNumber;
 				text.getTextBounds(weekText, 0, weekText.length(), bounds);
-				canvas.drawRect(xPosition + widthOfBar + posX+5,
-						(yScale - daysExercise) * yAxisIncrement + posY,
-						xPosition + (widthOfBar * 2) + posX, yAxisMax + posY,
-						axis);
+				RectF exerciseBarRect=new RectF();
+				exerciseBarRect.set(xPosition + widthOfBar + posX+5,
+						(yScale - daysExercise) * yAxisIncrement + posY+yAxisIncrement,
+						xPosition + (widthOfBar * 2) + posX, yAxisMax + posY);
+				canvas.drawRect(exerciseBarRect,exerciseBarPaint);
 				// draws week
 				axis.setColor(Color.BLACK);
 				axis.setTextSize(20);
@@ -206,7 +208,7 @@ public class ExerciseGraphics extends View {
 				text.setColor(Color.RED);
 				text.setTextSize(20);
 				canvas.drawText(grade, xPosition + widthOfBar +widthOfBar/4+ posX, (yScale - daysExercise)
-						* yAxisIncrement + posY - 10, text);
+						* yAxisIncrement + posY - 10+yAxisIncrement, text);
 				xPosition += 200;
 			}
 

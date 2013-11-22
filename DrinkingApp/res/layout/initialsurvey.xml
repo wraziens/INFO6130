@@ -20,6 +20,7 @@
                 android:id="@+id/tvISSex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
                 android:text="Gender" />
 
             <RadioGroup
@@ -40,7 +41,8 @@
                     android:layout_height="wrap_content"
                     android:text="Female" />
             </RadioGroup>
-<!-- Age and Weight -->
+            <!-- Age and Weight -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,8 +66,12 @@
                     <Button
                         android:id="@+id/bISPlus1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:layout_height="35sp"
+                        android:background="@drawable/colorbutton"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/tvISAge"
@@ -76,8 +82,12 @@
                     <Button
                         android:id="@+id/bISMinus1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                        android:layout_height="35sp"
+                        android:background="@drawable/colorbutton"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,8 +108,12 @@
                     <Button
                         android:id="@+id/bISPlus2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="+" />
+                        android:layout_height="35sp"
+                        android:background="@drawable/colorbutton"
+                        android:gravity="center"
+                        android:text="+"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
 
                     <TextView
                         android:id="@+id/tvISWeight"
@@ -110,15 +124,21 @@
                     <Button
                         android:id="@+id/bISMinus2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-" />
+                        android:layout_height="35sp"
+                        android:background="@drawable/colorbutton"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="#ffffff"
+                        android:textSize="30sp" />
                 </LinearLayout>
             </LinearLayout>
-<!-- Rest of survey here -->
+            <!-- Rest of survey here -->
+
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
                 android:text="I drink alcohol:" />
 
             <RadioGroup
@@ -149,6 +169,7 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
                 android:text="When I go out to drink, I usually consume:" />
 
             <RadioGroup
@@ -180,39 +201,40 @@
                     android:layout_height="wrap_content"
                     android:text="7+ drinks" />
             </RadioGroup>
-<!-- Valuation Category Selection here -->
+            <!-- Valuation Category Selection here -->
 
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="5sp"
                 android:text="I’m interested in learning about how alcohol affects my:" />
+
             <CheckBox
                 android:id="@+id/cbISExercise"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Exercise patterns" />
-          	<CheckBox
+
+            <CheckBox
                 android:id="@+id/cbISProductivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Productivity levels" />
-<!-- Finish button here -->
-
+            <!-- Finish button here -->
 
             <Button
                 android:id="@+id/bISFinish"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Finish" />
-
-            <TextView
-                android:id="@+id/test"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test" />
+                android:layout_height="30sp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5sp"
+                android:background="@drawable/colorbutton"
+                android:text="Finish"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
         </LinearLayout>
     </ScrollView>
 

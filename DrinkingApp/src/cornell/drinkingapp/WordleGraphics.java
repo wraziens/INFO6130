@@ -233,7 +233,7 @@ public class WordleGraphics extends View {
 
 				if (n == 0) {
 					canvas.drawText(word, 3 * canvas.getWidth() / 4,
-							canvas.getHeight(), textPainter);
+							canvas.getHeight()-50, textPainter);
 					wordBound.set(
 							3 * (canvas.getWidth() / 4)
 									- (wordBound.width() / 2),
@@ -276,8 +276,8 @@ public class WordleGraphics extends View {
 								}
 							}
 							if (!intersection) {
-								if (wordBound.left > 0
-										&& wordBound.right < canvas.getWidth() / 2
+								if (wordBound.left > canvas.getWidth()/2
+										&& wordBound.right < canvas.getWidth()
 										&& wordBound.top > 0
 										&& wordBound.bottom < canvas
 												.getHeight()) {
@@ -311,8 +311,8 @@ public class WordleGraphics extends View {
 								}
 							}
 							if (!intersection) {
-								if (wordBound.left > 0
-										&& wordBound.right < canvas.getWidth() / 2
+								if (wordBound.left > canvas.getWidth()/2
+										&& wordBound.right < canvas.getWidth()
 										&& wordBound.top > 0
 										&& wordBound.bottom < canvas
 												.getHeight()) {
@@ -344,8 +344,8 @@ public class WordleGraphics extends View {
 								}
 							}
 							if (!intersection) {
-								if (wordBound.left > 0
-										&& wordBound.right < canvas.getWidth() / 2
+								if (wordBound.left > canvas.getWidth()/2
+										&& wordBound.right < canvas.getWidth()
 										&& wordBound.top > 0
 										&& wordBound.bottom < canvas
 												.getHeight()) {

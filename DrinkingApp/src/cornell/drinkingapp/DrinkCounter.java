@@ -6,12 +6,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import cornell.drinkingapp.R;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -46,6 +48,13 @@ public class DrinkCounter extends Activity {
 		calculateColor();
 		view.setBackgroundColor(color);
 		setContentView(view);
+		
+        SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        Boolean checkSurveyed=getPrefs.getBoolean("hints", true);
+        if (checkSurveyed){
+			Intent openTutorial=new Intent(this,DrinkCounterTutorial.class);
+			startActivity(openTutorial);
+        }
 	}
 
 	@Override

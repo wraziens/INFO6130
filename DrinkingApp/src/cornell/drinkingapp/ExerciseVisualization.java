@@ -6,7 +6,10 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -79,6 +82,15 @@ public class ExerciseVisualization extends Activity implements
 		// Set the gesture detector as the double tap
 		// listener.
 		mDetector.setOnDoubleTapListener(this);
+		
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+		if (checkSurveyed) {
+			Intent openHint = new Intent(this, ExerciseVisualizationTutorial.class);
+			startActivity(openHint);
+		}
+		
 	}
 
 	private void constructLists(ArrayList<Date> date_list){
@@ -104,12 +116,12 @@ public class ExerciseVisualization extends Activity implements
 				float val = (float)sum/(float)quality.size();
 				averageExerciseQualityList.add(Double.valueOf(val));
 			} else{
-				//averageExerciseQualityList.add(Double.valueOf(0));
+				averageExerciseQualityList.add(Double.valueOf(0));
 			}
 			if (drank != null){
 				daysDrinkList.add(drank.size());
 			} else{
-				//daysDrinkList.add(0);
+				daysDrinkList.add(0);
 			}
 		}
 	}
@@ -215,6 +227,12 @@ public class ExerciseVisualization extends Activity implements
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
 		finish();
 	}
 

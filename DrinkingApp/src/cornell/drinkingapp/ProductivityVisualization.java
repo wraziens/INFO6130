@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import cornell.drinkingapp.R;
-
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.GridView;
 
 public class ProductivityVisualization extends Activity {
@@ -57,6 +59,13 @@ public class ProductivityVisualization extends Activity {
 				productivityAverageList, stressAverageList, daysDrankList, bacAverageList);
 		
 		productivityGridView.setAdapter(adapter);
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+		if (checkSurveyed) {
+			Intent openHint = new Intent(this, ProductivityVisualizationTutorial.class);
+			startActivity(openHint);
+		}
 	}
 
 	private void constructLists(ArrayList<Date> date_list){
@@ -138,8 +147,15 @@ public class ProductivityVisualization extends Activity {
 	protected void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
+	}
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
 		finish();
 	}
+	
 
 	
 }

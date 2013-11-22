@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import cornell.drinkingapp.R;
-
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -39,7 +40,13 @@ public class MainMenu extends Activity implements OnClickListener {
 		visualize.setOnClickListener(this);
 		settings.setOnClickListener(this);
 		//resources.setOnClickListener(this);
-
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+		if (checkSurveyed) {
+			Intent openHint = new Intent(this, MainMenuTutorial.class);
+			startActivity(openHint);
+		}
 	}
 
 	@Override
@@ -120,5 +127,6 @@ public class MainMenu extends Activity implements OnClickListener {
 			}
 		}
 	}
+
 	
 }

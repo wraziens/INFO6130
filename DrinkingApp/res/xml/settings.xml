@@ -9,6 +9,11 @@
             android:defaultValue="true"
             android:key="productivityInEvaluation"
             android:summary="Productivity" />
+        
+                <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="hints"
+            android:summary="Turn On Hints" />
     </PreferenceCategory>
 
 
