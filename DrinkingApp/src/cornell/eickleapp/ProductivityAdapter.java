@@ -3,8 +3,6 @@ package cornell.eickleapp;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -56,8 +54,8 @@ public class ProductivityAdapter extends BaseAdapter {
 		// TODO Auto-generated method stub
 		TextView view = new TextView(mContext);
 		view.setGravity(17);
-		view.setHeight(60);
-		view.setTextSize(12);
+		view.setHeight(150);
+		view.setTextSize(18);
 		switch (position) {
 		case 0:
 			view.setVisibility(8);
