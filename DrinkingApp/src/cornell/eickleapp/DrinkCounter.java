@@ -55,7 +55,7 @@ public class DrinkCounter extends Activity {
 		view.setBackgroundColor(color);
 		setContentView(view);
 		remove = (Button) findViewById(R.id.removeDrink);
-		remove.setEnabled(false);
+		remove.setVisibility(View.INVISIBLE);
 		
         SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Boolean checkSurveyed=getPrefs.getBoolean("hints", true);
@@ -105,7 +105,7 @@ public class DrinkCounter extends Activity {
 
 	public void removeLast(View view) {
 		drink_count--;
-		remove.setEnabled(false);
+		remove.setVisibility(View.INVISIBLE);
 		Date date = new Date();
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
 				.getVarValuesDelay("drink_count", date);
@@ -185,7 +185,7 @@ public class DrinkCounter extends Activity {
 
 	@SuppressLint("NewApi")
 	public void hadDrink(View view) {
-		remove.setEnabled(true);
+		remove.setVisibility(View.VISIBLE);
 		drink_count++;
 		if (drink_count == 1){
 			db.addValueTomorrow("drank_last_night", "True");
