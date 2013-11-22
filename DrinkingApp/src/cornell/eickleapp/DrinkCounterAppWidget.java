@@ -71,6 +71,14 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
                 RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counterwidget_layout);
                 views.setOnClickPendingIntent(R.id.bTestClick, pendingIntent);
 
+                
+                intent = new Intent(context, MainActivity.class);
+                intent.setAction("Home");
+                PendingIntent homeIntent = PendingIntent.getActivity(context, 0, intent, 0);
+                views.setOnClickPendingIntent(R.id.bWidget, homeIntent);
+                views.setOnClickPendingIntent(R.id.ibWidgetWarning, homeIntent);
+                
+                
                 // Tell the AppWidgetManager to perform an update on the current app widget
                 appWidgetManager.updateAppWidget(appWidgetId, views);
             
@@ -82,7 +90,8 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 	public void onReceive(Context context, Intent intent) {
 		// TODO Auto-generated method stub
 		super.onReceive(context, intent);
-		if (intent.getAction().equals(counterAction)) {
+		String action=intent.getAction();
+		if (action.equals(counterAction)) {
 			// do some really cool stuff here
 			SharedPreferences getPrefs = PreferenceManager
 					.getDefaultSharedPreferences(context);
@@ -103,15 +112,25 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 				RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counterwidget_layout);
 				//calculateColor();
 				if (bac>0.15){
-					views.setInt(R.id.tvWidget, "setBackgroundColor", color);
-					views.setInt(R.id.tvWidgetWarning, "setVisibility", View.VISIBLE);
-					views.setInt(R.id.tvWidget, "setTextColor", color);
+					views.setInt(R.id.ibWidgetWarning, "setBackgroundColor", color);
+					//views.setInt(R.id.ibWidgetWarning, "setColorFilter", color);
+					views.setInt(R.id.tvWidget, "setVisibility", View.VISIBLE);
+					views.setInt(R.id.tvWidgetHomeImage, "setVisibility", View.INVISIBLE);
 				}
 				else{
-					views.setInt(R.id.tvWidget, "setBackgroundColor", color);
+					views.setInt(R.id.ibWidgetWarning, "setBackgroundColor", color);
+					views.setInt(R.id.tvWidget, "setVisibility", View.INVISIBLE);
+					views.setInt(R.id.tvWidgetHomeImage, "setVisibility", View.VISIBLE);
 				}
 				appWidgetManager.updateAppWidget(neededIds, views);
 			}
+		}
+		else if (action.equals("Home")){
+			
+			Intent i = new Intent();
+			i.setClassName("cornell.eickleapp", "cornell.eickleapp.MainActivity");
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startActivity(i);
 		}
 
 	}

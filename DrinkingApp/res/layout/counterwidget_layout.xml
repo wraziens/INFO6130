@@ -17,29 +17,46 @@
         android:scaleType="fitXY"
         android:src="@drawable/widgetbutton" />
 
-    <TextView
-        android:id="@+id/tvWidget"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bTestClick"
-        android:layout_centerHorizontal="true"
-        android:background="#000000"
-        android:padding="20sp"
-        android:text="ADD"
-        android:textColor="#ffffff" />
-
-    <TextView
-        android:id="@+id/tvWidgetWarning"
-        android:layout_width="wrap_content"
+    <ImageButton
+        android:id="@+id/ibWidgetWarning"
+        android:layout_width="80sp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/tvWidget"
         android:layout_alignLeft="@+id/tvWidget"
         android:layout_alignRight="@+id/tvWidget"
         android:layout_below="@+id/bTestClick"
-        android:background="@android:color/transparent"
-        android:text="DRINK WATER!"
+        android:background="#000000"
         android:gravity="center"
-        android:visibility="invisible"
+
+        android:text="DRINK WATER!"
         android:textColor="#ffffff" />
 
+    <Button
+        android:id="@+id/bWidget"
+        android:layout_width="60sp"
+        android:layout_height="50sp"
+        android:layout_below="@+id/bTestClick"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tvWidget"
+        android:layout_width="60sp"
+        android:layout_height="50sp"
+        android:layout_below="@+id/bTestClick"
+        android:layout_centerHorizontal="true"
+        android:text="Drink Water!"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:visibility="invisible"
+        android:textColor="#ffffff" />
+    <TextView
+        android:id="@+id/tvWidgetHomeImage"
+        android:layout_width="60sp"
+        android:layout_height="50sp"
+        android:layout_below="@+id/bTestClick"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:background="@drawable/widgethome"/>
 </RelativeLayout>
