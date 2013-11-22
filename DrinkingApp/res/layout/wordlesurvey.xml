@@ -97,10 +97,10 @@
                     android:text="@string/defeated" />
 
                 <CheckBox
-                    android:id="@+id/wordle_like_a_boss"
+                    android:id="@+id/wordle_tired"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/like_a_boss" />
+                    android:text="@string/tired" />
 
                 <CheckBox
                     android:id="@+id/wordle_social"

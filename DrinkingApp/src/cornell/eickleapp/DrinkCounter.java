@@ -130,14 +130,10 @@ public class DrinkCounter extends Activity {
 		calculateBac();
 		calculateColor();
 		
-		
-		
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);	
 		Toast.makeText(getApplicationContext(), "Your last drink has been removed", Toast.LENGTH_SHORT).show();
-	}
-	
-	
+	}	
 	
 	public void calculateColor() {
 		if (bac < 0.06) {

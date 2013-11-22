@@ -59,6 +59,7 @@ public class DailySurvey2 extends Activity implements OnClickListener {
 		checkboxes.add(new CheckValue("hopeful", (CheckBox)findViewById(R.id.wordle_hopeful)));
 		checkboxes.add(new CheckValue("outgoing", (CheckBox)findViewById(R.id.wordle_outgoing)));
 		checkboxes.add(new CheckValue("busy", (CheckBox)findViewById(R.id.wordle_busy)));
+		checkboxes.add(new CheckValue("tired", (CheckBox)findViewById(R.id.wordle_tired)));
 	}
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
