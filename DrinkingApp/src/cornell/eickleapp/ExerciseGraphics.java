@@ -107,7 +107,7 @@ public class ExerciseGraphics extends View {
 				legendsRect.centerY(), legendPaint);
 
 		// exercise legend
-		legendPaint.setColor(Color.rgb(14, 109, 97));
+		legendPaint.setColor(Color.rgb(0, 153, 204));
 		legendsRect.set(canvas.getWidth() - 125, 50, canvas.getWidth() - 100,
 				75);
 		canvas.drawRect(legendsRect, legendPaint);
@@ -184,7 +184,7 @@ public class ExerciseGraphics extends View {
 
 				// draws days exercised
 				Paint exerciseBarPaint=new Paint();
-				exerciseBarPaint.setColor(Color.rgb(14, 109, 97));;
+				exerciseBarPaint.setColor(Color.rgb(0, 153, 204));
 				// gets the bounds of the text for centering
 				
 				Rect bounds = new Rect();

@@ -10,7 +10,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#0e6d61"
+        android:background="#c7baa7"
         android:contentDescription="Button"
         android:src="@drawable/drinkingvisualization" />
 
@@ -37,7 +37,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:background="#c7baa7"
+        android:background="#0099CC"
         android:contentDescription="Button"
         android:src="@drawable/moodsvisualization" />
 
