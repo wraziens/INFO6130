@@ -11,7 +11,6 @@ import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -22,8 +21,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	private static final String TABLE_MULTI = "multichoice";
 	private static final String TABLE_QUES = "questions";
-
-	private static final String KEY_ID = "id";
 	
 	// Multi Choice column names
 	private static final String MULTI_KEY_QUES_ID = "question_id";
@@ -464,7 +461,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		
 	}
 	
-	
+	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String variable_str = "(" + QUES_KEY_VAR + "='" +names.get(0);
+		for(int i=1; i<names.size(); i++){
+			variable_str += "' OR " + QUES_KEY_VAR +"='" + names.get(i);
+		}
+		variable_str += "')";
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " +
+				QUES_KEY_MONTH +"=" + dbstore.month + " AND "+
+				QUES_KEY_DAY + "=" + dbstore.day + " AND "+
+				QUES_KEY_YEAR + "=" + dbstore.year + " AND " +
+				QUES_KEY_TIME + "='" + dbstore.time + "' AND " +
+				variable_str + ";";
+		db.execSQL(query);
+		db.close();
+	}
 	
 	
 	public ArrayList<String []> getWordleDrink(){

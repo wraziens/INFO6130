@@ -19,14 +19,14 @@
         android:src="@drawable/widgetbutton" />
 
     <Button
-        android:id="@+id/doneDrink"
+        android:id="@+id/removeDrink"
         android:layout_width="200sp"
         android:layout_height="40sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="280dp"
         android:background="@drawable/colorbutton"
-        android:onClick="doneDrinking"
-        android:text="@string/done_drinking"
+        android:onClick="removeLast"
+        android:text="@string/remove_drink"
         android:textColor="#ffffff" />
 
 </FrameLayout>

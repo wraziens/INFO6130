@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
@@ -28,7 +29,8 @@ public class DrinkCounter extends Activity {
 	private double hours;
 	private int color;
 	private double bac;
-
+	private Button remove;
+	
 	// TODO:Temporary, move to a class that makes more sense
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_PER_CHICKEN = 264.0;
@@ -37,6 +39,7 @@ public class DrinkCounter extends Activity {
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.drink_tracking);
 
@@ -50,6 +53,8 @@ public class DrinkCounter extends Activity {
 		calculateColor();
 		view.setBackgroundColor(color);
 		setContentView(view);
+		remove = (Button) findViewById(R.id.removeDrink);
+		remove.setEnabled(false);
 		
         SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         Boolean checkSurveyed=getPrefs.getBoolean("hints", true);
@@ -97,6 +102,47 @@ public class DrinkCounter extends Activity {
 		finish();
 	}
 
+	public void removeLast(View view) {
+		drink_count--;
+		remove.setEnabled(false);
+		Date date = new Date();
+		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
+				.getVarValuesDelay("drink_count", date);
+		
+		drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
+		
+		ArrayList<String> variables = new ArrayList<String>();
+		variables.add(drink_count_vals.get(drink_count_vals.size()-1).variable);
+		variables.add("bac");
+		variables.add("bac_color");
+		View parent_view = findViewById(R.id.drink_layout);
+		TextView d = new TextView(this);
+		d.setText(String.valueOf(drink_count_vals.size()));
+		d.setTextColor(Color.parseColor("#FFFFFF"));
+		((FrameLayout)parent_view).addView(d);
+		
+		db.deleteVaribles(variables, drink_count_vals.get(drink_count_vals.size()-1));
+		calculateBac();
+		calculateColor();
+		
+		parent_view.setBackgroundColor(color);
+		/*
+		TextView check = new TextView(this);
+		check.setText(String.valueOf(drink_count));
+		check.setTextColor(Color.parseColor("#FFFFFF"));
+		((FrameLayout)parent_view).addView(check);
+	*/
+		drink_count_vals = (ArrayList<DatabaseStore>) db
+				.getVarValuesDelay("drink_count", date);
+		TextView c = new TextView(this);
+		c.setText(String.valueOf(drink_count_vals.size()));
+		c.setTextColor(Color.parseColor("#FFFFFF"));
+		((FrameLayout)parent_view).addView(c);
+	
+	}
+	
+	
+	
 	public void calculateColor() {
 		if (bac < 0.06) {
 			color = start_color;
@@ -154,6 +200,7 @@ public class DrinkCounter extends Activity {
 
 	@SuppressLint("NewApi")
 	public void hadDrink(View view) {
+		remove.setEnabled(true);
 		drink_count++;
 		if (drink_count == 1){
 			db.addValueTomorrow("drank_last_night", "True");
@@ -177,10 +224,10 @@ public class DrinkCounter extends Activity {
 		//number of drinks consumed that day.
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
-		
 		/*
+		
 		TextView check = new TextView(this);
-		check.setText(String.valueOf(bac));
+		check.setText(String.valueOf(drink_count));
 		check.setTextColor(Color.parseColor("#FFFFFF"));
 		((FrameLayout)parent_view).addView(check);
 		*/

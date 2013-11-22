@@ -17,6 +17,10 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <!-- Strings for Drink Counter -->
+    <string name="remove_drink">Remove Last Drink</string>
+       
+    
     <!-- Strings for Location Question -->
     <string name="loc_prompt">I drank primarily at:</string>
     <string name="bar_label">A Bar</string>
@@ -94,7 +98,7 @@
     <string name="outgoing">Outgoing</string>
     <string name="busy">Busy</string>
     <string name="hungover">Hungover</string>
-    <string name="like_a_boss">Like a boss</string>
+    <string name="tired">Tired</string>
 
     <!-- Strings for exercise questions -->
     <string name="exercise_prompt">I exercised today.</string>
