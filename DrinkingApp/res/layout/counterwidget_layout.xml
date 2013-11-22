@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlWidget"
+    android:layout_width="100sp"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="horizontal" >
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        
-        android:layout_width="100sp"
-        android:layout_height="match_parent"
-                    android:background="@android:color/transparent"
-        android:orientation="horizontal" >
+    <ImageButton
+        android:id="@+id/bTestClick"
+        android:layout_width="100dp"
+        android:layout_height="114dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/drink_counter_desc"
+        android:padding="@dimen/widget_margin"
+        android:scaleType="fitXY"
+        android:src="@drawable/widgetbutton" />
 
-        <ImageButton
-            android:id="@+id/bTestClick"
-            android:layout_width="100dp"
-            android:layout_height="114dp"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/drink_counter_desc"
-            android:scaleType="fitXY"
-              android:padding="@dimen/widget_margin"
-            android:src="@drawable/widgetbutton" />
+    <TextView
+        android:id="@+id/tvWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bTestClick"
+        android:layout_centerHorizontal="true"
+        android:background="#000000"
+        android:padding="20sp"
+        android:text="ADD"
+        android:textColor="#ffffff" />
 
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/bTestClick"
-            android:layout_centerHorizontal="true"
-            android:textColor="#ffffff"
-            android:text="ADD" />
+    <TextView
+        android:id="@+id/tvWidgetWarning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/tvWidget"
+        android:layout_alignLeft="@+id/tvWidget"
+        android:layout_alignRight="@+id/tvWidget"
+        android:layout_below="@+id/bTestClick"
+        android:background="@android:color/transparent"
+        android:text="DRINK WATER!"
+        android:gravity="center"
+        android:visibility="invisible"
+        android:textColor="#ffffff" />
 
-    </RelativeLayout>
+</RelativeLayout>

@@ -14,9 +14,11 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
 public class DrinkCounterAppWidget extends AppWidgetProvider{
@@ -27,7 +29,7 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 	private DatabaseHandler db;
 	private double hours;
 	private int color;
-	private double bac;
+	static private double bac;
 
 	// TODO:Temporary, move to a class that makes more sense
 	private final Double CALORIES_PER_DRINK = 120.0;
@@ -37,11 +39,14 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
     public final String counterAction = "Add Drink";
     Intent intent;
 	static boolean checkSurveyed;
+	RelativeLayout widget;
+	static int[] neededIds;
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager,
 			int[] appWidgetIds) {
 		
-
+		neededIds=appWidgetIds;
+		
 
 
 		final int N = appWidgetIds.length;
@@ -89,8 +94,23 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 				context.startActivity(i);
 
 			} else {
+				
+
+				
 				db = new DatabaseHandler(context);
 				hadDrink();
+				AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+				RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.counterwidget_layout);
+				//calculateColor();
+				if (bac>0.15){
+					views.setInt(R.id.tvWidget, "setBackgroundColor", color);
+					views.setInt(R.id.tvWidgetWarning, "setVisibility", View.VISIBLE);
+					views.setInt(R.id.tvWidget, "setTextColor", color);
+				}
+				else{
+					views.setInt(R.id.tvWidget, "setBackgroundColor", color);
+				}
+				appWidgetManager.updateAppWidget(neededIds, views);
 			}
 		}
 
