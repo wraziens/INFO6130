@@ -23,7 +23,6 @@ public class WordleGraphics extends View {
 	public WordleGraphics(Context context, ArrayList<String[]> d,
 			ArrayList<String[]> nd, String t) {
 		super(context);
-		// TODO Auto-generated constructor stu
 		mContext = context;
 		nestArrayDrinkList = d;
 		nestArrayNoDrinkList = nd;
@@ -39,10 +38,27 @@ public class WordleGraphics extends View {
 		float rightX = 3 * canvas.getWidth() / 4;
 
 		// left/drink cloud
-		setUpDrinkCloud(canvas,true);
-		//right/no drink cloud
-		setUpDrinkCloud(canvas,false);
+		setUpDrinkCloud(canvas, true);
 
+		// line to divide the cloud values
+		Paint linePaint = new Paint();
+		linePaint.setStrokeWidth(10);
+		linePaint.setTextAlign(Align.CENTER);
+		linePaint.setColor(Color.rgb(242, 147, 39));
+		canvas.drawLine(canvas.getWidth() / 2, 0, canvas.getWidth() / 2,
+				canvas.getHeight(), linePaint);
+
+		// right/no drink cloud
+		setUpDrinkCloud(canvas, false);
+
+	}
+
+	private int getTotalCount(ArrayList<String[]> values) {
+		int sum = 0;
+		for (int i = 0; i < values.size(); i++) {
+			sum += Integer.parseInt(values.get(i)[1]);
+		}
+		return sum;
 	}
 
 	private void setUpDrinkCloud(Canvas canvas, Boolean drink) {
@@ -53,7 +69,7 @@ public class WordleGraphics extends View {
 			arrayList = nestArrayNoDrinkList;
 
 		Paint titlePaint = new Paint();
-		titlePaint.setTextSize(30);
+		titlePaint.setTextSize(60);
 		titlePaint.setTextAlign(Align.CENTER);
 		titlePaint.setColor(Color.rgb(0, 153, 204));
 		if (drink)
@@ -80,39 +96,49 @@ public class WordleGraphics extends View {
 				count = Integer.valueOf(arrayList.get(n)[1]);
 
 				Paint textPainter = new Paint();
+				textPainter.setTextSize(16);
 				if (drink)
 					textPainter.setColor(Color.rgb(247, 144, 30));
 				else if (!drink)
 					textPainter.setColor(Color.rgb(14, 109, 97));
-				textPainter.setTextSize(20 * 1 + count * 2);
+
+				// The sizes should be relative to the total amount
+				int total_cnt = getTotalCount(arrayList);
+
+				double size = 200 * (count / Double.valueOf(total_cnt));
+				if ((int) size < 30) {
+					size = 30.0;
+				}
+
+				// setup the text
+				textPainter.setTextSize((int) size);
 				textPainter.setTextAlign(Align.CENTER);
 				Rect wordBound = new Rect();
 				textPainter.getTextBounds(word, 0, word.length(), wordBound);
-//<------------------------root of the branching
+
+				// root of the branching
 				if (n == 0) {
 					if (drink) {
 						canvas.drawText(word, canvas.getWidth() / 4,
-								canvas.getHeight() - 50, textPainter);
+								canvas.getHeight() / 2, textPainter);
+
 						wordBound.set(
-								(canvas.getWidth() / 4)
-										- (wordBound.width() / 2),
-								canvas.getHeight() - (wordBound.height()) - 50,
-								(canvas.getWidth() / 4)
-										+ (wordBound.width() / 2),
-								canvas.getHeight() - 50);
+							(canvas.getWidth() / 4) - (wordBound.width()),
+							canvas.getHeight()/2 + (wordBound.height()/2),
+							(canvas.getWidth() / 4) + (wordBound.width()),
+							canvas.getHeight()/2 - (wordBound.height()/2));
+						
 					} else if (!drink) {
 						canvas.drawText(word, 3 * canvas.getWidth() / 4,
-								canvas.getHeight() - 50, textPainter);
+								canvas.getHeight()/2-wordBound.height(), textPainter);
+						
 						wordBound.set(
-								3 * (canvas.getWidth() / 4)
-										- (wordBound.width() / 2),
-								canvas.getHeight() - (wordBound.height() - 50),
-								3 * (canvas.getWidth() / 4)
-										+ (wordBound.width() / 2),
-								canvas.getHeight() - 50);
-
+								3 * (canvas.getWidth() / 4) - (wordBound.width()),
+								canvas.getHeight()/2 + wordBound.height(),
+								3 * (canvas.getWidth() / 4) + (wordBound.width()),
+								canvas.getHeight()/2 - wordBound.height());
 					}
-
+					wordRectList.add(wordBound);
 				} else {
 					boolean continueSearch = true;
 					boolean intersection = false;
@@ -120,13 +146,13 @@ public class WordleGraphics extends View {
 						intersection = false;
 						Random random = new Random();
 						int randomNode = random
-								.nextInt(wordRectList.size() - 0) + 0;
+								.nextInt(wordRectList.size());
+						
 						int randomSide = random.nextInt(5 - 1) + 1;
-						;
-						// int randomSide = 1;
+					
 						Rect parentRect = wordRectList.get(randomNode);
 						switch (randomSide) {
-//<-------------------right side branching
+						// <-------------------right side branching
 						case 1:
 							float parentRightSideX = parentRect.centerX()
 									+ (parentRect.width() / 2)
@@ -149,7 +175,7 @@ public class WordleGraphics extends View {
 								}
 							}
 							if (!intersection) {
-								if (checkBoundary(wordBound,canvas,drink)) {
+								if (checkBoundary(wordBound, canvas, drink)) {
 									canvas.drawText(word, parentRightSideX,
 											parentRightSideY, textPainter);
 									continueSearch = false;
@@ -157,7 +183,7 @@ public class WordleGraphics extends View {
 
 							}
 							break;
-//<-------------------Left side branching
+						// <-------------------Left side branching
 						case 3:
 							float parentLeftSideX = parentRect.exactCenterX()
 									- (parentRect.width() / 2)
@@ -180,7 +206,7 @@ public class WordleGraphics extends View {
 								}
 							}
 							if (!intersection) {
-								if (checkBoundary(wordBound,canvas,drink)) {
+								if (checkBoundary(wordBound, canvas, drink)) {
 									canvas.drawText(word, parentLeftSideX,
 											parentLeftSideY, textPainter);
 									continueSearch = false;
@@ -188,7 +214,7 @@ public class WordleGraphics extends View {
 
 							}
 							break;
-//<-------------------Top side branching
+						// <-------------------Top side branching
 						case 4:
 							float parentTopSideX = parentRect.exactCenterX();
 							float parentTopSideY = parentRect.exactCenterY()
@@ -210,7 +236,7 @@ public class WordleGraphics extends View {
 								}
 							}
 							if (!intersection) {
-								if (checkBoundary(wordBound,canvas,drink)) {
+								if (checkBoundary(wordBound, canvas, drink)) {
 									canvas.drawText(word, parentTopSideX,
 											parentTopSideY, textPainter);
 									continueSearch = false;
@@ -230,23 +256,20 @@ public class WordleGraphics extends View {
 		}
 	}
 
-	private Boolean checkBoundary(Rect bound, Canvas canvas,Boolean drink) {
-		if (drink){
+	private Boolean checkBoundary(Rect bound, Canvas canvas, Boolean drink) {
+		if (drink) {
 			if (bound.left > 0 && bound.right < canvas.getWidth() / 2
 					&& bound.top > 0 && bound.bottom < canvas.getHeight()) {
 				return true;
 			} else {
 				return false;
 			}
-		}
-		else{
+		} else {
 			if (bound.left > canvas.getWidth() / 2
-					&& bound.right < canvas.getWidth()
-					&& bound.top > 0
-					&& bound.bottom < canvas
-							.getHeight()) {
+					&& bound.right < canvas.getWidth() && bound.top > 0
+					&& bound.bottom < canvas.getHeight()) {
 				return true;
-			}else{
+			} else {
 				return false;
 			}
 		}
