@@ -55,7 +55,7 @@ public class ProductivityAdapter extends BaseAdapter {
 		TextView view = new TextView(mContext);
 		view.setGravity(17);
 		view.setHeight(150);
-		view.setTextSize(18);
+		view.setTextSize(16);
 		switch (position) {
 		case 0:
 			view.setVisibility(8);
@@ -130,13 +130,13 @@ public class ProductivityAdapter extends BaseAdapter {
 				grade = "D";
 
 		} else {
-			if (rawGrade >= 30)
+			if (rawGrade >= 60)
 				grade = "D";
-			else if (rawGrade >= 20 && rawGrade < 30)
+			else if (rawGrade >= 40 && rawGrade < 60)
 				grade = "C";
-			else if (rawGrade >= 10 && rawGrade < 20)
+			else if (rawGrade >= 20 && rawGrade < 40)
 				grade = "B";
-			else if (rawGrade <= 10)
+			else if (rawGrade <= 20)
 				grade = "A";
 			else
 				grade = "-";

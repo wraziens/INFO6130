@@ -323,7 +323,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			week_val = 0;
 		} else if(week_day.equals("Mon")){
 			week_val = 1;
-		} else if(week_day.equals("Tues")){
+		} else if(week_day.equals("Tue")){
 			week_val = 2;
 		} else if(week_day.equals("Wed")){
 			week_val = 3;
