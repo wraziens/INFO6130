@@ -107,22 +107,22 @@ public class MainMenu extends Activity implements OnClickListener {
 			ArrayList<DatabaseStore> drank = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drank_last_night", date);
 			if (drank.get(0).value.equals("True")){
 				Intent how_many = new Intent(this, DrinkAssessment.class);
-				startActivityForResult(how_many,3);
+				startActivityForResult(how_many,4);
 			}else{
 				goToThisPage = new Intent(MainMenu.this, Assessment.class);
 				startActivity(goToThisPage);
 			}
 		}else if(resultCode ==3){
-			goToThisPage = new Intent(MainMenu.this, Assessment.class);
-			startActivity(goToThisPage);
+				goToThisPage = new Intent(MainMenu.this, Assessment.class);
+				startActivity(goToThisPage);
 		}else if(resultCode==4){
 			Date date = new Date();
 			ArrayList<DatabaseStore> track = (ArrayList<DatabaseStore>)db.getVarValuesForDay("tracked", date);
-			if(track.get(0).value.equals("True")){
-				//goToThisPage = new Intent(MainMenu.this, Assessment.class);
-				//startActivity(goToThisPage);
-				Intent drink_review = new Intent(this, DrinkReview.class);
-				startActivityForResult(drink_review,3);
+			if(track != null){
+					//goToThisPage = new Intent(MainMenu.this, Assessment.class);
+					//startActivity(goToThisPage);
+					Intent drink_review = new Intent(this, DrinkReview.class);
+					startActivityForResult(drink_review,3);
 			}else{
 				goToThisPage = new Intent(MainMenu.this, Assessment.class);
 				startActivity(goToThisPage);
