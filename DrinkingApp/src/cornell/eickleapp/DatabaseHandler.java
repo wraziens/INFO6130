@@ -249,7 +249,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 		return pid;
 	}
-
+	
 	private List<DatabaseStore> handleCursor(Cursor cursor) {
 		// check to see if our query returned values
 		try {
@@ -282,6 +282,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 
+	public List<DatabaseStore> dataDump() {
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "SELECT * FROM "+ TABLE_QUES +";";
+		Cursor cursor = db.rawQuery(query, null);
+		return handleCursor(cursor);
+	}
+	
 	public List<DatabaseStore> getAllVarValue(String variable) {
 		// Get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
