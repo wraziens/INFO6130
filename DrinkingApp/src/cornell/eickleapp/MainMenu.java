@@ -2,6 +2,15 @@ package cornell.eickleapp;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseACL;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.id;
@@ -11,15 +20,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings.Secure;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainMenu extends Activity implements OnClickListener {
 
-	private Button tracking, assessment, visualize, settings, resources;
+	private Button tracking, assessment, visualize, settings, resources,sendData;
 	private Intent goToThisPage;
 	private DatabaseHandler db;
 	
@@ -29,18 +40,19 @@ public class MainMenu extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		//get database
 		db = new DatabaseHandler(this);
-		
 		setContentView(R.layout.menu);
+
 		tracking = (Button) findViewById(R.id.bMenuTracking);
 		assessment = (Button) findViewById(R.id.bMenuAssessment);
 		visualize = (Button) findViewById(R.id.bMenuVisualize);
 		settings = (Button) findViewById(R.id.bMenuSettings);
-		//resources = (Button) findViewById(R.id.bMenuResources);
+		sendData = (Button) findViewById(R.id.bSendData);
 
 		tracking.setOnClickListener(this);
 		assessment.setOnClickListener(this);
 		visualize.setOnClickListener(this);
 		settings.setOnClickListener(this);
+		sendData.setOnClickListener(this);
 		//resources.setOnClickListener(this);
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
@@ -49,6 +61,16 @@ public class MainMenu extends Activity implements OnClickListener {
 			Intent openHint = new Intent(this, MainMenuTutorial.class);
 			startActivity(openHint);
 		}
+		
+		Boolean checkSendData = getPrefs.getBoolean("data", true);
+		if (!checkSendData) {
+			sendData.setVisibility(4);
+		}
+		if (checkSendData){
+			sendData.setVisibility(0);
+		}
+		
+
 	}
 
 	@Override
@@ -90,6 +112,12 @@ public class MainMenu extends Activity implements OnClickListener {
 			goToThisPage = new Intent(MainMenu.this, Settings.class);
 			startActivity(goToThisPage);
 			break;
+		case R.id.bSendData:
+			
+			DatabaseHandler db=new DatabaseHandler(this);
+			List<DatabaseStore> list=db.dataDump();
+			sendData(list);
+			break;
 			/*
 		case R.id.bMenuResources:
 			goToThisPage = new Intent(MainMenu.this, Resources.class);
@@ -128,6 +156,48 @@ public class MainMenu extends Activity implements OnClickListener {
 				startActivity(goToThisPage);
 			}
 		}
+	}
+	private void sendData(List<DatabaseStore>dataList){
+		String android_id= Secure.getString(getBaseContext().getContentResolver(),
+                Secure.ANDROID_ID); 
+
+		Parse.initialize(this,  "pzrwzzF69gXSQrxr9gmfhWVQq3it1UrLFxCbPyUw", "8dZZu0sRje5F4K31FwAmYXbdSmkCOTZvUIfQo1N1");
+
+
+		ParseUser.enableAutomaticUser();
+		ParseACL defaultACL = new ParseACL();
+	    
+		// If you would like all objects to be private by default, remove this line.
+		defaultACL.setPublicReadAccess(true);
+		
+		ParseACL.setDefaultACL(defaultACL, true);
+		
+
+		  
+
+		
+		
+		DatabaseStore item;
+		for (int i=0;i<dataList.size();i++){
+			item=dataList.get(i);
+			ParseObject researchObject = new ParseObject("research");
+			researchObject.put("variableName", item.variable);
+			researchObject.put("varValue", item.value);
+			researchObject.put("dateValue", item.date);
+			researchObject.put("userId", android_id);
+			researchObject.put("groupNo", 2);
+			researchObject.saveInBackground();
+		}
+		
+
+		
+
+		Toast.makeText(getApplicationContext(), "Your Data Has Been Sent", Toast.LENGTH_SHORT).show();
+		sendData.setVisibility(4);
+		SharedPreferences getPreference=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+		SharedPreferences.Editor preferenceEditor=getPreference.edit();
+		preferenceEditor.putBoolean("data", false);
+		preferenceEditor.commit();
 	}
 
 	

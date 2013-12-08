@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
     <PreferenceCategory android:title="Evaluation Categories" >
         <CheckBoxPreference
             android:defaultValue="true"
@@ -9,12 +10,14 @@
             android:defaultValue="true"
             android:key="productivityInEvaluation"
             android:summary="Productivity" />
-        
-                <CheckBoxPreference
+        <CheckBoxPreference
             android:defaultValue="true"
             android:key="hints"
             android:summary="Turn On Hints" />
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="data"
+            android:summary="Turn On Upload Button" />
     </PreferenceCategory>
-
 
 </PreferenceScreen>
