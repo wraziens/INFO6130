@@ -161,6 +161,7 @@ public class MainMenu extends Activity implements OnClickListener {
 		String android_id= Secure.getString(getBaseContext().getContentResolver(),
                 Secure.ANDROID_ID); 
 
+
 		Parse.initialize(this,  "pzrwzzF69gXSQrxr9gmfhWVQq3it1UrLFxCbPyUw", "8dZZu0sRje5F4K31FwAmYXbdSmkCOTZvUIfQo1N1");
 
 
@@ -193,11 +194,7 @@ public class MainMenu extends Activity implements OnClickListener {
 		
 
 		Toast.makeText(getApplicationContext(), "Your Data Has Been Sent", Toast.LENGTH_SHORT).show();
-		sendData.setVisibility(4);
-		SharedPreferences getPreference=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		SharedPreferences.Editor preferenceEditor=getPreference.edit();
-		preferenceEditor.putBoolean("data", false);
-		preferenceEditor.commit();
+
 	}
 
 	
