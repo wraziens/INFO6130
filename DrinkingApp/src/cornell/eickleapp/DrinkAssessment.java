@@ -75,7 +75,7 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 		case R.id.drink_assess_finish:
 			saveToDB();
 			Intent intent = new Intent();
-			setResult(3, intent);
+			setResult(4, intent);
 			finish();
 			break;
 		}
