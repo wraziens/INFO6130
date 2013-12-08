@@ -62,13 +62,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			startActivity(openHint);
 		}
 		
-		Boolean checkSendData = getPrefs.getBoolean("data", true);
-		if (!checkSendData) {
-			sendData.setVisibility(4);
-		}
-		if (checkSendData){
-			sendData.setVisibility(0);
-		}
+
 		
 
 	}
