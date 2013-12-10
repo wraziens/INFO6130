@@ -5,40 +5,96 @@
     android:orientation="vertical"
     android:weightSum="4" >
 
-    <ImageButton
-        android:id="@+id/bDrink"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#c7baa7"
-        android:contentDescription="Button"
-        android:src="@drawable/drinkingvisualization" />
+        android:layout_weight="1" >
 
-    <ImageButton
-        android:id="@+id/bExercise"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#dd5f27"
-        android:contentDescription="Button"
-        android:src="@drawable/exercisevisualization" />
+        <ImageButton
+            android:id="@+id/bDrink"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#c7baa7"
+            android:contentDescription="Button"
+            android:src="@drawable/drinkingvisualization" />
 
-    <ImageButton
-        android:id="@+id/bProductivity"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#f7901e"
-        android:contentDescription="Button"
-        android:src="@drawable/productivityvisualization" />
+        <TextView
+            android:id="@+id/tvVMenuDrink"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="0/100"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/bMood"
-        android:layout_width="fill_parent"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="#0099CC"
-        android:contentDescription="Button"
-        android:src="@drawable/moodsvisualization" />
+        android:layout_weight="1" >
+
+        <ImageButton
+            android:id="@+id/bExercise"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#dd5f27"
+            android:contentDescription="Button"
+            android:src="@drawable/exercisevisualization" />
+
+        <TextView
+            android:id="@+id/tvVMenuExercise"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="0/100"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <ImageButton
+            android:id="@+id/bProductivity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#f7901e"
+            android:contentDescription="Button"
+            android:src="@drawable/productivityvisualization" />
+
+        <TextView
+            android:id="@+id/tvVMenuProductivity"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="0/100"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" >
+
+        <ImageButton
+            android:id="@+id/bMood"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#0099CC"
+            android:contentDescription="Button"
+            android:src="@drawable/moodsvisualization" />
+
+        <TextView
+            android:id="@+id/tvVMenuMood"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:text="0/100"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
 
 </LinearLayout>

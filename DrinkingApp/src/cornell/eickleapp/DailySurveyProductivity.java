@@ -26,7 +26,7 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 	SeekBar prodBar, stressBar, performBar;
 	String seekbarResult;
 	private DatabaseHandler db;
-	String prod_str, stress_str, perf_str ;	
+	String prod_str="0", stress_str="100", perf_str="0";	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

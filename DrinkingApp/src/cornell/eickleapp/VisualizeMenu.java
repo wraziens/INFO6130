@@ -1,5 +1,8 @@
 package cornell.eickleapp;
 
+import java.util.Date;
+import java.util.List;
+
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.id;
 import cornell.eickleapp.R.layout;
@@ -12,16 +15,21 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class VisualizeMenu extends Activity implements OnClickListener {
 
 	ImageButton exercise, drink, social, food, mood, productivity;
 	Intent goToThisPage;
+	TextView drinkScore, exerciseScore, productivityScore, moodScore;
+	DatabaseHandler db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		db = new DatabaseHandler(this);
 		setContentView(R.layout.vmenu);
 		exercise = (ImageButton) findViewById(R.id.bExercise);
 		drink = (ImageButton) findViewById(R.id.bDrink);
@@ -29,6 +37,18 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		// food=(Button)findViewById(R.id.bFood);
 		productivity = (ImageButton) findViewById(R.id.bProductivity);
 		mood = (ImageButton) findViewById(R.id.bMood);
+
+		drinkScore = (TextView) findViewById(R.id.tvVMenuDrink);
+		exerciseScore = (TextView) findViewById(R.id.tvVMenuExercise);
+		productivityScore = (TextView) findViewById(R.id.tvVMenuProductivity);
+		moodScore = (TextView) findViewById(R.id.tvVMenuMood);
+
+		// set up the scores for each category
+
+		// exercise
+		setAverage(2);
+		setAverage(3);
+		setAverage(4);
 		exercise.setOnClickListener(this);
 		drink.setOnClickListener(this);
 		// social.setOnClickListener(this);
@@ -42,6 +62,79 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 			Intent openHint = new Intent(this, VisualizationMenuTutorial.class);
 			startActivity(openHint);
 		}
+	}
+
+	private void setAverage(int category) {
+		// TODO Auto-generated method stub
+
+
+		List<DatabaseStore> firstTimeList = db.getAllVarValue("firstTime");
+		Date firstDate = firstTimeList.get(0).date;
+		Date currentDate = new Date();
+		int daysDifference = (int) ((currentDate.getTime() - firstDate
+				.getTime()) / 86400000);
+
+		Double totalScore = 0.0;
+
+		switch (category) {
+		case 2:
+			// gets 1st time, figure out number of days from 1st time until now,
+			// and
+			// divide score by that number
+			List<DatabaseStore> exerciseList = db
+			.getAllVarValue("exercise_quality");
+			if (exerciseList != null) {
+				for (int i = 0; i < exerciseList.size(); i++) {
+					String s = exerciseList.get(i).value;
+					totalScore = totalScore + Integer.parseInt(s);
+				}
+				exerciseScore.setText(((Double)(totalScore / (daysDifference + 1))).intValue()
+						+ "/100");
+
+			}
+			break;
+		case 3:
+			List<DatabaseStore> productiveList = db
+			.getAllVarValue("productive");
+			List<DatabaseStore> performanceList = db
+			.getAllVarValue("performance");
+			List<DatabaseStore>  stressLevelList= db
+			.getAllVarValue("stress_level");
+			
+			if (productiveList != null) {
+				for (int i = 0; i < productiveList.size(); i++) {
+					int productivityVal = Integer.parseInt(productiveList.get(i).value);
+					int performanceVal = Integer.parseInt(performanceList.get(i).value);
+					int stressVal = Integer.parseInt(stressLevelList.get(i).value);
+					
+					totalScore = totalScore + ((productivityVal+productivityVal+stressVal)/3);
+				}
+				productivityScore.setText(((Double)(totalScore / (daysDifference + 1))).intValue()
+						+ "/100");
+
+			}
+			break;
+		case 4:
+			List<DatabaseStore> moodList = db
+			.getAllVarValue("moodScore");
+			int numberOfMoods=0;
+			if(db.getAllVarValue("wordle")!=null)
+				numberOfMoods = db.getAllVarValue("wordle").size();
+			
+			if (moodList != null) {
+				for (int i = 0; i < moodList.size(); i++) {
+					int moodVal = Integer.parseInt(moodList.get(i).value);
+					
+					totalScore = totalScore + moodVal;
+				}
+				if (totalScore<0)
+					totalScore=0.0;
+				moodScore.setText(((Double)(totalScore/(numberOfMoods)*100)).intValue()+ "/100");
+
+			}
+			break;
+		}
+
 	}
 
 	@Override

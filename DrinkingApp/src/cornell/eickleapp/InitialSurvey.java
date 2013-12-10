@@ -68,6 +68,9 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		alcoholFrequency.setOnCheckedChangeListener(this);
 		alcoholQuantity.setOnCheckedChangeListener(this);
 		
+		
+		//sets the mark for 1st time use
+		db.updateOrAdd("firstTime", "here");
 	}
 
 	// first time reset. delete before launching of app.
