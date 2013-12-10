@@ -212,9 +212,9 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		  PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
 		    intent, 0);
 		  
-		  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-				  System.currentTimeMillis(), (5000), pendingIntent);  
-		   // System.currentTimeMillis() + (86400000), pendingIntent);
+		  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 
+		    System.currentTimeMillis(),(86400000), pendingIntent);
+		  //System.currentTimeMillis(), (5000), pendingIntent); 
 	}
 
 }

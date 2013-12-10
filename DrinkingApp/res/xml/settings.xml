@@ -16,8 +16,8 @@
             android:summary="Turn On Hints" />
         <CheckBoxPreference
             android:defaultValue="true"
-            android:key="data"
-            android:summary="Turn On Upload Button" />
+            android:key="notification"
+            android:summary="Turn On Notification" />
     </PreferenceCategory>
 
 </PreferenceScreen>

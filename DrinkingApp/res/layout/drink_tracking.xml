@@ -16,8 +16,22 @@
         android:contentDescription="@string/drink_counter_desc"
         android:onClick="hadDrink"
         android:scaleType="fitXY"
+
         android:src="@drawable/widgetbutton" />
 
+    
+        <TextView
+        android:id="@+id/tvDrinkCounter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:textSize="30sp"
+        android:textColor="#ffffff"
+        android:visibility="invisible"
+        android:text="80" />
+        
+        
     <Button
         android:id="@+id/removeDrink"
         android:layout_width="200sp"
@@ -28,5 +42,7 @@
         android:onClick="removeLast"
         android:text="@string/remove_drink"
         android:textColor="#ffffff" />
+
+
 
 </FrameLayout>

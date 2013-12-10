@@ -81,7 +81,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			Intent openHint = new Intent(this, MainMenuTutorial.class);
 			startActivity(openHint);
 		}
-
+		sendData.setVisibility(4);
 		nm.cancel(uniqueID);
 
 	}
