@@ -39,6 +39,8 @@ public class WordleGraphics extends View {
 		float rightX = 3 * canvas.getWidth() / 4;
 
 		// left/drink cloud
+		
+		
 		setUpDrinkCloud(canvas, true);
 
 		/*
