@@ -293,9 +293,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(80,80);
 				if(i>0){
 					ImageView last = (ImageView)dog_img.findViewById(i-1);
-					if(count >15){
-						p.addRule(RelativeLayout.BELOW, i-15);
-						p.addRule(RelativeLayout.ALIGN_START, i-15);
+					if(count >10){
+						p.addRule(RelativeLayout.BELOW, i-10);
+						p.addRule(RelativeLayout.ALIGN_START, i-10);
 					}else{
 						p.addRule(RelativeLayout.RIGHT_OF, last.getId());	
 					}
