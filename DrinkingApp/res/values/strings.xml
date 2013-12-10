@@ -116,5 +116,7 @@
     <string name="stressed_prompt">How stressed I feel today:</string>
     <string name="stress_left">Carefree</string>
     <string name="stress_right">Overwhelmed</string>
-
+    
+    <!-- Strings for DrinkCalendar -->
+	<string name="color_click">Click on a colored date for more information.</string>
 </resources>
