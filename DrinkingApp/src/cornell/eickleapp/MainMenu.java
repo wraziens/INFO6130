@@ -52,9 +52,6 @@ public class MainMenu extends Activity implements OnClickListener {
 		// get database
 		
 		nm=(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-		PowerManager pm=(PowerManager) getSystemService(Context.POWER_SERVICE);
-		mWakeLock=pm.newWakeLock(PowerManager.FULL_WAKE_LOCK, "Wakeup log");
-		mWakeLock.acquire();
 		
 		
 		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
