@@ -35,6 +35,7 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_PER_CHICKEN = 264.0;
 	private final Double CALORIES_PER_PIZZA = 285.0;
+	private final Double CALORIES_HOT_DOG = 250.0;
 	DrinkCounter counter=new DrinkCounter();
     public final String counterAction = "Add Drink";
     Intent intent;
@@ -156,6 +157,9 @@ public class DrinkCounterAppWidget extends AppWidgetProvider{
 		//number of drinks consumed that day.
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
+		
+		int number_hot_dogs = (int)Math.ceil(drink_cals/ CALORIES_HOT_DOG);
+		db.updateOrAdd("hot_dogs", number_hot_dogs);
 		
 		/*
 		TextView check = new TextView(this);
