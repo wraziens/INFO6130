@@ -285,6 +285,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		int count = 0;
 		if(index!=-1){
 			int num_dogs = Integer.parseInt(hotdogs.get(index).value);
+			dog_img.removeAllViews();
+			drink_img.removeAllViews();
+			
 			for(int i=0; i<=num_dogs; i++){
 				count+=1;
 				ImageView iv = new ImageView(this);
@@ -306,6 +309,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			}
 			count = 0;
 			for(int i=0; i<=day_counts.get(index); i++){
+				
 				count+=1;
 				ImageView iv = new ImageView(this);
 				iv.setBackgroundResource(R.drawable.beer_icon);
