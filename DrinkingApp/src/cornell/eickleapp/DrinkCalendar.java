@@ -227,7 +227,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			cnt="";
 		}else{
 			if(index != -1){
-				cnt = String.valueOf(day_counts.get(index)) + " Drinks Tracked.";
+				if(day_counts.get(index)==1){
+					cnt = String.valueOf(day_counts.get(index)) + " Drink Tracked.";
+				}else{
+					cnt = String.valueOf(day_counts.get(index)) + " Drinks Tracked.";
+				}
 				if(day_guess!=null){
 					est = day_guess.get(index).value;
 				}
