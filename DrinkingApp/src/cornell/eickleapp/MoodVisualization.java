@@ -34,8 +34,8 @@ public class MoodVisualization extends Activity {
 				.getDefaultSharedPreferences(getBaseContext());
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		if (checkSurveyed) {
-			Intent openHint = new Intent(this, MoodVisualizationTutorial.class);
-			startActivity(openHint);
+			//Intent openHint = new Intent(this, MoodVisualizationTutorial.class);
+			//startActivity(openHint);
 		}
 	}
 	
