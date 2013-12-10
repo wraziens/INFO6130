@@ -30,8 +30,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
-	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount, drinkEst;
-	RelativeLayout drink_img;
+	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount, drinkEst, dogCount;
+	RelativeLayout drink_img, dog_img;
 	ImageButton back, next;
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
@@ -44,6 +44,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	private ArrayList<DatabaseStore> day_values;
 	private ArrayList<DatabaseStore> day_guess;
 	private ArrayList<Integer> day_counts;
+	private ArrayList<DatabaseStore> hotdogs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		back = (ImageButton) findViewById(R.id.bPreviousMonth);
 		next = (ImageButton) findViewById(R.id.bNextMonth);
 		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
+		dog_img = (RelativeLayout)findViewById(R.id.hot_dog_img);
+		dogCount = (TextView) findViewById(R.id.hot_dog_count);
 		back.setOnClickListener(this);
 		next.setOnClickListener(this);
 
@@ -69,6 +72,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		bacColors = new ArrayList<Integer>();
 
 		day_guess = new ArrayList<DatabaseStore>(); 
+		hotdogs = new ArrayList<DatabaseStore>();
 		
 		//Get the values from the DB
 		Date date = new Date();
@@ -153,10 +157,12 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				.getVarValuesForMonth("bac_color", date);
 		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
 		day_guess = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drink_guess", date);
+		hotdogs = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("hot_dogs",date);
 		
-		if(bac_colors != null && bac_vals != null){
+		if(bac_colors != null && bac_vals != null && hotdogs != null){
 			bac_colors = DatabaseStore.sortByTime(bac_colors);
 			bac_vals = DatabaseStore.sortByTime(bac_vals);
+			hotdogs = DatabaseStore.sortByTime(hotdogs);
 			if(day_guess!=null){
 				day_guess =DatabaseStore.sortByTime(day_guess);
 			}
@@ -220,11 +226,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		String info_txt="";
 		String est = "";
 		String cnt = "";
+		String dogs = "";
 		if (bac == 0){
 			info_color = 0xFF0099CC;
 			info_txt = "Click on a colored date for more information.";
 			est = "";
 			cnt="";
+			dogs ="";
 		}else{
 			if(index != -1){
 				if(day_counts.get(index)==1){
@@ -234,6 +242,12 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				}
 				if(day_guess!=null){
 					est = day_guess.get(index).value;
+				}
+				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
+				if(num_dogs ==1){
+					dogs = "Which is calorically equivalent to 1 hot dog.";
+				}else{
+					dogs = "Which is calorically equivalent to " + num_dogs + " hot dogs."; 
 				}
 			}
 			info_txt ="BAC: " + entry+ "\n\n";
@@ -266,8 +280,31 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		infoDisplay.setText(info_txt);
 		infoDisplay.setBackgroundColor(info_color);
 		drinkCount.setText(cnt);
+		dogCount.setText(dogs);
+		
 		int count = 0;
 		if(index!=-1){
+			int num_dogs = Integer.parseInt(hotdogs.get(index).value);
+			for(int i=0; i<=num_dogs; i++){
+				count+=1;
+				ImageView iv = new ImageView(this);
+				iv.setBackgroundResource(R.drawable.hot_dog);
+				iv.setId(i);
+				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(80,80);
+				if(i>0){
+					ImageView last = (ImageView)dog_img.findViewById(i-1);
+					if(count >10){
+						p.addRule(RelativeLayout.BELOW, i-10);
+						p.addRule(RelativeLayout.ALIGN_START, i-10);
+					}else{
+						p.addRule(RelativeLayout.RIGHT_OF, last.getId());	
+					}
+				}
+			
+				iv.setLayoutParams(p);
+				dog_img.addView(iv, p);
+			}
+			count = 0;
 			for(int i=0; i<=day_counts.get(index); i++){
 				count+=1;
 				ImageView iv = new ImageView(this);
@@ -289,6 +326,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			}
 		}else if(index==-1){
 			drink_img.removeAllViews();
+			dog_img.removeAllViews();
 		}
 	}
 	@SuppressLint("NewApi")

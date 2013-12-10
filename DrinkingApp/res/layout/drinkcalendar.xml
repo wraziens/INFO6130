@@ -93,6 +93,20 @@
 	   	android:layout_height="wrap_content">
 	    
     </RelativeLayout>
+         <TextView
+	   	android:id="@+id/hot_dog_count"
+	   	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content"
+	   	android:textSize="15sp"
+	   	android:gravity="center"
+	   	android:text =""
+	 />
+	<RelativeLayout
+	   	android:id="@+id/hot_dog_img"
+	   	android:orientation="horizontal"
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content">
+    </RelativeLayout>
     <TextView
         android:id="@+id/tvInfoDisplay"
         android:layout_width="fill_parent"
