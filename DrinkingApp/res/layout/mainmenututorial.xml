@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000"
-    android:orientation="vertical" >
+    android:background="#000000" >
 
     <TextView
-        android:id="@+id/textView1"
-        android:layout_width="200sp"
-        android:layout_height="300sp"
-        android:layout_gravity="center"
+        android:id="@+id/tvMainMenuTutorial1"
+        android:layout_width="250sp"
+        android:layout_height="350sp"
+        android:layout_centerHorizontal="true"
+
+        android:layout_centerVertical="true"
+        
         android:background="@drawable/mainmenututorial" />
+        <TextView
+        android:id="@+id/tvMainMenuTutorial2"
+        android:layout_width="250sp"
+        android:layout_height="350sp"
+        android:layout_centerHorizontal="true"
+
+        android:layout_centerVertical="true"
+        android:visibility="invisible"
+        android:background="@drawable/visualizationmenututorial" />
+
+    <Button
+        android:id="@+id/bMainMenuPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="100sp"
+		android:layout_marginRight="60sp"
+        android:layout_toLeftOf="@+id/cbMainMenuTutorial"
+                android:layout_below="@+id/tvMainMenuTutorial1"
+                android:textSize="5sp"
+        android:text="[--" />
+
+    <Button
+        android:id="@+id/bMainMenuNext"
+        android:layout_width="wrap_content"
+        android:layout_height="100sp"
+		android:layout_marginLeft="150sp"
+                android:layout_below="@+id/tvMainMenuTutorial1"
+        android:layout_toRightOf="@+id/cbMainMenuTutorial"
+        android:textSize="5sp"
+        android:text="--]" />
 
     <CheckBox
         android:id="@+id/cbMainMenuTutorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
+        android:layout_below="@+id/tvMainMenuTutorial1"
+        android:layout_centerHorizontal="true"
         android:checked="true"
-        android:layout_gravity="right"
-        android:layout_marginRight="60sp"
-        android:text="Hints?" />
+        android:text="Hints?"
+        android:layout_marginTop="50sp"
+        android:textColor="#ffffff" />
 
-</LinearLayout>
+</RelativeLayout>

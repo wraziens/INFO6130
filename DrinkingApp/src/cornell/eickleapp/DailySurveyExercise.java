@@ -103,6 +103,8 @@ public class DailySurveyExercise extends Activity implements OnClickListener{
 		switch(view.getId()){
 		case R.id.bDSExerciseFinish:
 			saveToDB();
+			db.updateOrAdd("DailySurveyExercise" + "CheckList",
+					"done");
 			finish();
 			break;
 			

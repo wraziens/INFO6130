@@ -224,8 +224,11 @@ public class DailySurvey4 extends Activity implements OnClickListener {
 	public void onClick(View view) {
 		switch (view.getId()) {
 		case R.id.location_finish:
-			saveToDB();
+			saveToDB();		
+			db.updateOrAdd("DailySurvey4" + "CheckList",
+					"done");
 			finish();
+
 			break;
 		}
 	}

@@ -64,9 +64,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	//Will update the value if it already exists in the db for the 
 	//current day. Otherwise it will add the value to the db
 	public void updateOrAdd(String variable, Integer int_value){
-		Date date = new Date();
-		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>)getVarValuesForDay(variable, date);
-		if (exist == null){
+		
+		if (!variableExist(variable)){
 			addValue(variable, int_value);
 		}else{
 			updateValue(variable, int_value);
@@ -76,9 +75,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	//Will update the value if it already exists in the db for the 
 	//current day. Otherwise it will add the value to the db
 	public void updateOrAdd(String variable, String str_value){
-		Date date = new Date();
-		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>)getVarValuesForDay(variable, date);
-		if (exist == null){
+		if (!variableExist(variable)){
 			addValue(variable, str_value);
 		}else{
 			updateValue(variable, str_value);
@@ -538,6 +535,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return handleWordle(cursor);
 	}
 	
+	
+	
 	public List<DatabaseStore> getVarValuesForMonth(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
@@ -547,6 +546,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		return getVarValuesForMonth(variable, month, year);
 	}
+	
+	public Boolean variableExist(String variable){
+		Date date = new Date();
+		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>)getVarValuesForDay(variable, date);
+		
+		if (exist!=null)
+			return true;
+		else
+			return false;
+	}
+	
 
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub

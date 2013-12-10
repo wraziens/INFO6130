@@ -106,6 +106,8 @@ public class DailySurvey2 extends Activity implements OnClickListener {
 			case R.id.wordle_finish:
 				checkCheckBoxes();
 				saveToDb();
+				db.updateOrAdd("DailySurvey2" + "CheckList",
+						"done");
 				finish();
 				break;
 		}

@@ -14,9 +14,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.CheckedTextView;
+import android.widget.GridView;
 import android.widget.ListView;
 
-public class Assessment extends ListActivity {
+public class Assessment extends Activity {
 	ArrayList<String> surveys = new ArrayList<String>();
 	ArrayList<String> surveys_classes = new ArrayList<String>();
 	String surveyList[] = { 
@@ -27,6 +28,7 @@ public class Assessment extends ListActivity {
 	Boolean sleepSelected, exerciseSelected, productivitySelected,
 			socialSelected;
 	
+	GridView assesssmentGridView;
 	private DatabaseHandler db;
 
 	private void drinkingDay(){
@@ -56,6 +58,8 @@ public class Assessment extends ListActivity {
 			}else{
 				nonDrinkingDay();
 			}
+			db.updateOrAdd("numberofcategories", surveys_classes.size());
+			
 			
 
 			// gets rid of the evaluation categories if users unchecked it.
@@ -92,32 +96,49 @@ public class Assessment extends ListActivity {
 			requestWindowFeature(Window.FEATURE_NO_TITLE);// full screen
 			getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 					WindowManager.LayoutParams.FLAG_FULLSCREEN);
-	
+	/*
 			setListAdapter(new ArrayAdapter<String>(Assessment.this,
-					android.R.layout.simple_list_item_checked, surveys));// have to
-																			// create
-																			// for
-		//}														// list
-	}
+					android.R.layout.simple_list_item_checked, surveys));
+			*/
+			setContentView(R.layout.assessmentvisualization);
+			assesssmentGridView = (GridView) findViewById(R.id.gvAssessment);
+			AssessmentAdapter adapter = new AssessmentAdapter(this, surveys,surveys_classes);
+			
+			assesssmentGridView.setAdapter(adapter);
+			
+			
 
+	
+	
+	}
+	/*
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		// TODO Auto-generated method stub
+
 		super.onListItemClick(l, v, position, id);
 		CheckedTextView textview = (CheckedTextView) v;
 		textview.setChecked(true);
+		
+
+		
 		placement = surveys_classes.get(position);
 
 		try {
-			Class ourClass = Class.forName("cornell.eickleapp."
-					+ placement);
+			Class ourClass = Class.forName("cornell.eickleapp." + placement);
 			Intent goToSurvey = new Intent(this, ourClass);
+
+			db.updateOrAdd(surveys_classes.get(position) + "CheckList", "done");
+			
+			
+			
 			startActivity(goToSurvey);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 
 	}
+	*/
 
 
 }

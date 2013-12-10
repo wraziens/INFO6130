@@ -119,6 +119,8 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 		switch(view.getId()){
 		case R.id.prod_finish:
 			saveToDB();
+			db.updateOrAdd("DailySurveyProductivity" + "CheckList",
+					"done");
 			finish();
 			break;	
 		}	

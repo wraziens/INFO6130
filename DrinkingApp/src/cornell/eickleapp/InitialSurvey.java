@@ -1,11 +1,15 @@
 package cornell.eickleapp;
 
+import java.util.Calendar;
 import java.util.prefs.Preferences;
 
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.id;
 import cornell.eickleapp.R.layout;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -27,13 +31,16 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 	int age,weight;
 	RadioGroup sex,alcoholFrequency,alcoholQuantity;
 	String sexResult,alcoholFrequencyResult,alcoholQuantityResult;
-	
+	AlarmManager alarmManager;
+	DatabaseHandler db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		db = new DatabaseHandler(this);
 		initiate();
+		setAlarm();
 		setContentView(R.layout.initialsurvey);
 		//test = (TextView) findViewById(R.id.test);
 		ageTV=(TextView) findViewById(R.id.tvISAge);
@@ -66,6 +73,8 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 	// first time reset. delete before launching of app.
 	private void initiate() {
 		// TODO Auto-generated method stub
+		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
 		SharedPreferences getPreference = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		SharedPreferences.Editor preferenceEditor = getPreference.edit();
@@ -196,6 +205,16 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 			}
 		}
 		
+	}
+	//currently reminds the user 24 hours since 1st use
+	public void setAlarm() {
+		  Intent intent = new Intent(this, ReminderAlarm.class);
+		  PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+		    intent, 0);
+		  
+		  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+				  System.currentTimeMillis(), (5000), pendingIntent);  
+		   // System.currentTimeMillis() + (86400000), pendingIntent);
 	}
 
 }
