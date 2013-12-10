@@ -6,15 +6,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import cornell.eickleapp.R;
-import cornell.eickleapp.R.id;
-import cornell.eickleapp.R.layout;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -25,6 +21,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class DrinkCalendar extends Activity implements OnClickListener {
@@ -32,7 +30,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
-	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay;
+	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount, drinkEst;
+	RelativeLayout drink_img;
 	ImageButton back, next;
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
@@ -43,6 +42,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	private DatabaseHandler db;
 	private ArrayList<DatabaseStore> day_colors;
 	private ArrayList<DatabaseStore> day_values;
+	private ArrayList<DatabaseStore> day_guess;
+	private ArrayList<Integer> day_counts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +56,19 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		yearDisplay = (TextView) findViewById(R.id.tvYear);
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
 		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
+		drinkCount = (TextView) findViewById(R.id.drink_count);
+		//drinkEst = (TextView) findViewById(R.id.drink_est);
 		back = (ImageButton) findViewById(R.id.bPreviousMonth);
 		next = (ImageButton) findViewById(R.id.bNextMonth);
+		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
 		back.setOnClickListener(this);
 		next.setOnClickListener(this);
 
 		drinkingDays = new ArrayList<Integer>();
 		maxBac = new ArrayList<Double>();
 		bacColors = new ArrayList<Integer>();
+
+		day_guess = new ArrayList<DatabaseStore>(); 
 		
 		//Get the values from the DB
 		Date date = new Date();
@@ -106,40 +112,54 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		
 		day_colors = new ArrayList<DatabaseStore>();
 		day_values = new ArrayList<DatabaseStore>();
+		day_counts = new ArrayList<Integer>();
 		
 		DatabaseStore max_day=null;
 		DatabaseStore max_color=null;
-		for(int i=0; i< values.size(); i++){
-			DatabaseStore s = values.get(i);
-			if(max_day == null){
-				max_day = s;
-				max_color = colors.get(i);
-			}else{
-				if(max_day.day < s.day){
-					day_colors.add(max_color);
-					day_values.add(max_day);
+		if(values!=null){
+			int cnt = 0;
+			for(int i=0; i< values.size(); i++){
+				cnt+=1;
+				DatabaseStore s = values.get(i);
+				if(max_day == null){
 					max_day = s;
 					max_color = colors.get(i);
-				} else if(Double.valueOf(max_day.value)< Double.valueOf(s.value)){
-					max_day = s;
-					max_color = colors.get(i);
+				}else{
+					if(max_day.day < s.day){
+						day_colors.add(max_color);
+						day_values.add(max_day);
+						day_counts.add(cnt);
+						cnt=0;
+						max_day = s;
+						max_color = colors.get(i);
+					} else if(Double.valueOf(max_day.value)< Double.valueOf(s.value)){
+						max_day = s;
+						max_color = colors.get(i);
+					}
 				}
 			}
+			//add final values
+			day_values.add(max_day);
+			day_colors.add(max_color);
+			day_counts.add(cnt);
 		}
-		//add final values
-		day_values.add(max_day);
-		day_colors.add(max_color);
 	}
 	private void calculateValues(Date date){
 		maxBac.clear();
 		bacColors.clear();
 		drinkingDays.clear();
+		
 		ArrayList<DatabaseStore> bac_colors = (ArrayList<DatabaseStore>) db
 				.getVarValuesForMonth("bac_color", date);
 		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
+		day_guess = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drink_guess", date);
+		
 		if(bac_colors != null && bac_vals != null){
 			bac_colors = DatabaseStore.sortByTime(bac_colors);
 			bac_vals = DatabaseStore.sortByTime(bac_vals);
+			if(day_guess!=null){
+				day_guess =DatabaseStore.sortByTime(day_guess);
+			}
 			getMaxForDays(bac_colors, bac_vals);
 			convertToLists(day_colors, day_values);
 		}
@@ -193,16 +213,25 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		month = months[num];
 		monthDisplay.setText(month);
 	}
-
-	public void changeBottomDisplay(String entry, double bac) {
+	
+	public void changeBottomDisplay(String entry, double bac, int index) {
 		//bottomDisplay.setText(entry);
 		int info_color = 0;
 		String info_txt="";
+		String est = "";
+		String cnt = "";
 		if (bac == 0){
 			info_color = 0xFF0099CC;
 			info_txt = "Click on a colored date for more information.";
+			est = "";
+			cnt="";
 		}else{
-		
+			if(index != -1){
+				cnt = String.valueOf(day_counts.get(index)) + " Drinks Tracked.";
+				if(day_guess!=null){
+					est = day_guess.get(index).value;
+				}
+			}
 			info_txt ="BAC: " + entry+ "\n\n";
 			if (bac < 0.06) {
 				info_color = 0x884D944D;
@@ -232,6 +261,31 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		}
 		infoDisplay.setText(info_txt);
 		infoDisplay.setBackgroundColor(info_color);
+		drinkCount.setText(cnt);
+		int count = 0;
+		if(index!=-1){
+			for(int i=0; i<=day_counts.get(index); i++){
+				count+=1;
+				ImageView iv = new ImageView(this);
+				iv.setBackgroundResource(R.drawable.beer_icon);
+				iv.setId(i);
+				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(60,60);
+				if(i>0){
+					ImageView last = (ImageView)drink_img.findViewById(i-1);
+					if(count >15){
+						p.addRule(RelativeLayout.BELOW, i-15);
+						p.addRule(RelativeLayout.ALIGN_START, i-15);
+					}else{
+						p.addRule(RelativeLayout.RIGHT_OF, last.getId());	
+					}
+				}
+			
+				iv.setLayoutParams(p);
+				drink_img.addView(iv, p);
+			}
+		}else if(index==-1){
+			drink_img.removeAllViews();
+		}
 	}
 	@SuppressLint("NewApi")
 	@Override

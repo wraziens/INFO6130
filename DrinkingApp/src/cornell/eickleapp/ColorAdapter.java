@@ -80,7 +80,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					((DrinkCalendar) mContext)
-							.changeBottomDisplay("", 0);
+							.changeBottomDisplay("", 0,-1);
 					if (focused > 0) {
 						View child = parent.getChildAt(focused);
 						if(drinkingDays.contains((Integer)focused -6 - daysSetBack)){
@@ -102,13 +102,14 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 				view.setBackgroundColor(bacColors.get(n));
 				bacLevel = maxbac.get(n);
 				final double bac_lev = bacLevel;
+				final int i = n;
 				view.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						DecimalFormat formatter = new DecimalFormat("#.###");
 						((DrinkCalendar) mContext)
-								.changeBottomDisplay(formatter.format(bac_lev), bac_lev);
+								.changeBottomDisplay(formatter.format(bac_lev), bac_lev,i);
 						if (focused > 0) {
 							View child = parent.getChildAt(focused);
 							if(drinkingDays.contains((Integer)focused-6-daysSetBack)){

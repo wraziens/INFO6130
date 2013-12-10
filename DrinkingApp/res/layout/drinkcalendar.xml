@@ -61,10 +61,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
             
-            <GridView
+     <GridView
         android:id="@+id/gvDrinkCalendar"
         android:layout_width="match_parent"
-        android:layout_height="330sp"
+        android:layout_height="290sp"
         android:layout_gravity="center_horizontal"
         android:columnWidth="40dp"
         android:gravity="center"
@@ -78,7 +78,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="" />
-
+     <TextView
+	   	android:id="@+id/drink_count"
+	   	android:layout_width="wrap_content"
+	   	android:layout_height="wrap_content"
+	   	android:textSize="15sp"
+	   	android:gravity="center"
+	   	android:text =""
+	 />
+	<RelativeLayout
+	   	android:id="@+id/drink_img"
+	   	android:orientation="horizontal"
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content">
+	    
+    </RelativeLayout>
     <TextView
         android:id="@+id/tvInfoDisplay"
         android:layout_width="fill_parent"
@@ -87,7 +101,7 @@
         android:layout_marginTop="5dp"
         android:background="#0099CC"
         android:padding="10dp"
-        android:text="Click on a colored date for more information."
+        android:text="@string/color_click"
         android:textColor="#FFFFFF"
         android:textSize="15sp" />
         </LinearLayout>
