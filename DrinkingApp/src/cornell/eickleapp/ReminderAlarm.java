@@ -68,7 +68,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 						context, 0, homeIntent, 0);
 				Notification notif = new Notification(
 						R.drawable.trickleiconnote,
-						"Have you filled today's Assessments?",
+						"Have you filled out today's Assessments?",
 						System.currentTimeMillis());
 				notif.setLatestEventInfo(context, from, message, contentIntent);
 

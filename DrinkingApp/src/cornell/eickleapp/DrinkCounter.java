@@ -9,6 +9,7 @@ import cornell.eickleapp.R;
 import cornell.eickleapp.R.id;
 import cornell.eickleapp.R.layout;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,6 +17,9 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -31,7 +35,7 @@ public class DrinkCounter extends Activity {
 	private int color;
 	private double bac;
 	private Button remove;
-	
+
 	// TODO:Temporary, move to a class that makes more sense
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_PER_CHICKEN = 264.0;
@@ -40,12 +44,12 @@ public class DrinkCounter extends Activity {
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.drink_tracking);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			//getActionBar().setDisplayHomeAsUpEnabled(true);
+			// getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
 
 		db = new DatabaseHandler(this);
@@ -56,13 +60,14 @@ public class DrinkCounter extends Activity {
 		setContentView(view);
 		remove = (Button) findViewById(R.id.removeDrink);
 		remove.setVisibility(View.INVISIBLE);
-		
-        SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        Boolean checkSurveyed=getPrefs.getBoolean("hints", true);
-        if (checkSurveyed){
-			Intent openTutorial=new Intent(this,DrinkCounterTutorial.class);
+
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+		if (checkSurveyed) {
+			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
 			startActivity(openTutorial);
-        }
+		}
 	}
 
 	@Override
@@ -78,13 +83,13 @@ public class DrinkCounter extends Activity {
 		Date date = new Date();
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
 				.getVarValuesDelay("drink_count", date);
-		
+
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
 		date = gc.getTime();
-		DatabaseStore current = new DatabaseStore("","",date, "Integer");
-		
+		DatabaseStore current = new DatabaseStore("", "", date, "Integer");
+
 		color = start_color;
 		if (drink_count_vals != null) {
 			drink_count = drink_count_vals.size();
@@ -109,32 +114,35 @@ public class DrinkCounter extends Activity {
 		Date date = new Date();
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
 				.getVarValuesDelay("drink_count", date);
-		
+
 		drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
-		
+
 		ArrayList<String> variables = new ArrayList<String>();
-		variables.add(drink_count_vals.get(drink_count_vals.size()-1).variable);
+		variables
+				.add(drink_count_vals.get(drink_count_vals.size() - 1).variable);
 		variables.add("bac");
 		variables.add("bac_color");
-		
-		if(drink_count_vals.size() ==1){
-			ArrayList<String> vals=new ArrayList<String>();
+
+		if (drink_count_vals.size() == 1) {
+			ArrayList<String> vals = new ArrayList<String>();
 			vals.add("drank_last_night");
 			vals.add("tracked");
 			db.deleteValuesTomorrow(vals);
-			
+
 			variables.add("drank");
 		}
-		
-		db.deleteVaribles(variables, drink_count_vals.get(drink_count_vals.size()-1));
+
+		db.deleteVaribles(variables,
+				drink_count_vals.get(drink_count_vals.size() - 1));
 		calculateBac();
 		calculateColor();
-		
+
 		View parent_view = findViewById(R.id.drink_layout);
-		parent_view.setBackgroundColor(color);	
-		Toast.makeText(getApplicationContext(), "Your last drink has been removed", Toast.LENGTH_SHORT).show();
-	}	
-	
+		parent_view.setBackgroundColor(color);
+		Toast.makeText(getApplicationContext(),
+				"Your last drink has been removed", Toast.LENGTH_SHORT).show();
+	}
+
 	public void calculateColor() {
 		if (bac < 0.06) {
 			color = start_color;
@@ -194,7 +202,7 @@ public class DrinkCounter extends Activity {
 	public void hadDrink(View view) {
 		remove.setVisibility(View.VISIBLE);
 		drink_count++;
-		if (drink_count == 1){
+		if (drink_count == 1) {
 			db.addValueTomorrow("drank_last_night", "True");
 			db.addValueTomorrow("tracked", "True");
 			db.updateOrAdd("drank", "True");
@@ -207,21 +215,64 @@ public class DrinkCounter extends Activity {
 		View parent_view = findViewById(R.id.drink_layout);
 		parent_view.setBackgroundColor(color);
 
-		//calculate number of chickens that equate the number of calories
+		// calculate number of chickens that equate the number of calories
 		Double drink_cals = drink_count * CALORIES_PER_DRINK;
-		int number_chickens = (int) Math.ceil(drink_cals / CALORIES_PER_CHICKEN);
+		int number_chickens = (int) Math
+				.ceil(drink_cals / CALORIES_PER_CHICKEN);
 		db.updateOrAdd("number_chickens", number_chickens);
 
-		//calculate the number of slices of pizza that equate to the 
-		//number of drinks consumed that day.
+		// calculate the number of slices of pizza that equate to the
+		// number of drinks consumed that day.
 		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
 		db.updateOrAdd("number_pizza", number_pizza);
 		/*
-		
-		TextView check = new TextView(this);
-		check.setText(String.valueOf(drink_count));
-		check.setTextColor(Color.parseColor("#FFFFFF"));
-		((FrameLayout)parent_view).addView(check);
-		*/
+		 * 
+		 * TextView check = new TextView(this);
+		 * check.setText(String.valueOf(drink_count));
+		 * check.setTextColor(Color.parseColor("#FFFFFF"));
+		 * ((FrameLayout)parent_view).addView(check);
+		 */
+	}
+
+	@SuppressLint("NewApi")
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowTitleEnabled(false);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		Intent openPage;
+		switch (item.getItemId()) {
+
+		case R.id.tracking_menu:
+			openPage = new Intent(this, DrinkCounter.class);
+			startActivity(openPage);
+			break;
+		case R.id.assess_menu:
+			openPage = new Intent(this, Assessment.class);
+			startActivity(openPage);
+			break;
+		case R.id.visualize_menu:
+			openPage = new Intent(this, VisualizeMenu.class);
+			startActivity(openPage);
+			break;
+		case R.id.setting_menu:
+			openPage = new Intent(this, Settings.class);
+			startActivity(openPage);
+			break;
+		case android.R.id.home:
+			openPage = new Intent(this, MainMenu.class);
+			startActivity(openPage);
+			break;
+
+		}
+		return true;
 	}
 }

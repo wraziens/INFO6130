@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +15,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -222,6 +227,48 @@ public class ExerciseVisualization extends Activity implements
 		switch (v.getId()) {
 
 		}
+	}
+	
+	@SuppressLint("NewApi")
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setDisplayShowTitleEnabled(false);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		Intent openPage;
+		switch (item.getItemId()) {
+
+		case R.id.tracking_menu:
+			openPage = new Intent(this, DrinkCounter.class);
+			startActivity(openPage);
+			break;
+		case R.id.assess_menu:
+			openPage = new Intent(this, Assessment.class);
+			startActivity(openPage);
+			break;
+		case R.id.visualize_menu:
+			openPage = new Intent(this, VisualizeMenu.class);
+			startActivity(openPage);
+			break;
+		case R.id.setting_menu:
+			openPage = new Intent(this, Settings.class);
+			startActivity(openPage);
+			break;
+		case android.R.id.home:
+			openPage = new Intent(this, MainMenu.class);
+			startActivity(openPage);
+			break;
+
+		}
+		return true;
 	}
 	@Override
 	protected void onPause() {
