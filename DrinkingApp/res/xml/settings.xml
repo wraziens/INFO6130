@@ -14,10 +14,19 @@
             android:defaultValue="true"
             android:key="hints"
             android:summary="Turn On Hints" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="Notification" >
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="notification"
-            android:summary="Turn On Notification" />
+            android:summary="Have it on" />
+
+        <ListPreference
+            android:defaultValue="12"
+            android:entries="@array/notificationTimes"
+            android:entryValues="@array/notificationTimesValue"
+            android:key="notificationTime"
+            android:summary="Notification Time" />
     </PreferenceCategory>
 
 </PreferenceScreen>

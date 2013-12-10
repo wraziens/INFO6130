@@ -10,8 +10,10 @@ import android.preference.PreferenceActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
-public class Settings extends PreferenceActivity{
+public class Settings extends PreferenceActivity implements OnClickListener{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,5 +59,12 @@ public class Settings extends PreferenceActivity{
 
 		}
 		return true;
+	}
+
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
