@@ -123,7 +123,17 @@ public class DrinkCounter extends Activity {
 				.add(drink_count_vals.get(drink_count_vals.size() - 1).variable);
 		variables.add("bac");
 		variables.add("bac_color");
-
+		variables.add("hotdog");
+		
+		ArrayList<DatabaseStore> hd_val = (ArrayList<DatabaseStore>)db.getVarValuesForDay("hotdog",date);
+		if(hd_val!=null){
+			if(hd_val.size() ==1){
+					if(Integer.valueOf(hd_val.get(0).value) >0){
+						db.updateOrAdd("hotdog", Integer.valueOf(hd_val.get(0).value) - 1);
+					}
+			}
+		}
+		
 		if (drink_count_vals.size() == 1) {
 			ArrayList<String> vals = new ArrayList<String>();
 			vals.add("drank_last_night");
