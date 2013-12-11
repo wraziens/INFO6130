@@ -60,67 +60,87 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-            
-     <GridView
-        android:id="@+id/gvDrinkCalendar"
-        android:layout_width="match_parent"
-        android:layout_height="290sp"
-        android:layout_gravity="center_horizontal"
-        android:columnWidth="40dp"
-        android:gravity="center"
-        android:listSelector="#00ff8c"
-        android:numColumns="7"
-        android:verticalSpacing="0sp" >
-    </GridView>
 
-    <TextView
-        android:id="@+id/tvCalendarBottomDisplay"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
-     <TextView
-	   	android:id="@+id/drink_count"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:textSize="15sp"
-	   	android:gravity="center"
-	   	android:text =""
-	 />
-	<RelativeLayout
-	   	android:id="@+id/drink_img"
-	   	android:orientation="horizontal"
-	   	android:layout_width="fill_parent"
-	   	android:layout_height="wrap_content">
-	    
-    </RelativeLayout>
-         <TextView
-	   	android:id="@+id/hot_dog_count"
-	   	android:layout_width="wrap_content"
-	   	android:layout_height="wrap_content"
-	   	android:textSize="15sp"
-	   	android:gravity="center"
-	   	android:text =""
-	 />
-	<RelativeLayout
-	   	android:id="@+id/hot_dog_img"
-	   	android:orientation="horizontal"
-	   	android:layout_width="fill_parent"
-	   	android:layout_height="wrap_content">
-    </RelativeLayout>
-    <TextView
-        android:id="@+id/tvInfoDisplay"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="5dp"
-        android:background="#0099CC"
-        android:padding="10dp"
-        android:text="@string/color_click"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+            <GridView
+                android:id="@+id/gvDrinkCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="290sp"
+                android:layout_gravity="center_horizontal"
+                android:columnWidth="40dp"
+                android:gravity="center"
+                android:listSelector="#00ff8c"
+                android:numColumns="7"
+                android:verticalSpacing="0sp" >
+            </GridView>
+
+            <TextView
+                android:id="@+id/tvCalendarBottomDisplay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <LinearLayout
+                android:id="@+id/clickAppear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/goalStatement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#000000"
+                    android:gravity="center"
+                    android:text=""
+                    android:textColor="#eeda00"
+                    android:paddingLeft="10sp"
+                     android:paddingRight="10sp"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/drink_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:id="@+id/drink_img"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/hot_dog_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text=""
+                    android:textSize="15sp" />
+
+                <RelativeLayout
+                    android:id="@+id/hot_dog_img"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" >
+                </RelativeLayout>
         </LinearLayout>
-    </ScrollView>
+                <TextView
+                    android:id="@+id/tvInfoDisplay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="#0099CC"
+                    android:padding="10dp"
+                    android:text="@string/color_click"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp" />
+            </LinearLayout>
 
-    
+    </ScrollView>
 
 </LinearLayout>
