@@ -61,62 +61,51 @@ public class AssessmentAdapter extends BaseAdapter implements OnClickListener{
 		view.setHeight(20);
 		String classTarget=classList.get(position);
 		Boolean checked = db.variableExist(classList.get(position) + "CheckList");
-		switch (position+1){
+		String className=classList.get(position);
 		
-		//context
-		case 0:
-			if (checked) {
-				view.setBackgroundResource(R.drawable.contextassessmentbuttonchecked);
-			}
-			else{
-				view.setBackgroundResource(R.drawable.contextassessmentbutton);
-			}
-			break;
-		case 1:
+		if (className.equals("DailySurvey2")){
 			if (checked) {
 				view.setBackgroundResource(R.drawable.overallassessmentbuttonchecked);
 			}
 			else{
 				view.setBackgroundResource(R.drawable.overallassessmentbutton);
 			}
-			break;
-		case 2:
+	}
+		if (className.equals("DailySurveyExercise")){
 			if (checked) {
 				view.setBackgroundResource(R.drawable.exerciseassessmentbuttonchecked);
 			}
 			else{
 				view.setBackgroundResource(R.drawable.exerciseassessmentbutton);
 			}
-			break;
-		case 3:
+		}
+		if (className.equals("DailySurveyProductivity")){
 			if (checked) {
 				view.setBackgroundResource(R.drawable.productivityassessmentbuttonchecked);
 			}
 			else{
 				view.setBackgroundResource(R.drawable.productivityassessmentbutton);
 			}
-			break;
-			
 		}
+			
+			
+			
 		view.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				switch (position+1){
+				switch (position){
 				
 				//context
 				case 0:
-						view.setBackgroundResource(R.drawable.contextassessmentbuttonchecked);
-					break;
-				case 1:
 
 						view.setBackgroundResource(R.drawable.overallassessmentbuttonchecked);
 					break;
-				case 2:
+				case 1:
 
 						view.setBackgroundResource(R.drawable.exerciseassessmentbuttonchecked);
 					break;
-				case 3:
+				case 2:
 
 						view.setBackgroundResource(R.drawable.productivityassessmentbuttonchecked);
 					break;
