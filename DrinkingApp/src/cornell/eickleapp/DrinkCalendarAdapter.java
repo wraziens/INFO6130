@@ -84,6 +84,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements
 		view.setBackgroundResource(android.R.drawable.btn_default);
 		double bacLevel;
 		
+		
 		if (!drinkingDays.contains(position)&&drinksEstimated>0) {
 			view.setOnClickListener(new OnClickListener() {
 				@Override

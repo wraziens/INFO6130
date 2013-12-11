@@ -324,7 +324,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			if(max_day == null){
 				max_day = s;
 			}else{
-				if(max_day.day < s.day){
+				if((max_day.day < s.day) || (s.month > max_day.month) || (s.year > max_day.year)){
 					day_data.add(max_day);
 					max_day = s;
 				} else if(Double.valueOf(max_day.value)< Double.valueOf(s.value)){
