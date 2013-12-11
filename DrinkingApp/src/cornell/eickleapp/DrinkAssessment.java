@@ -39,22 +39,6 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 		drink_num = (EditText)findViewById(R.id.number_drinks);
 		
 		progress_changed = 0;
-		excess_drinks = (SeekBar)findViewById(R.id.excess_drinks);		
-		
-		excess_drinks.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			public void onProgressChanged(SeekBar seekbar, int progress, boolean fromUser){
-				progress_changed = progress;
-			}
-			
-			public void onStartTrackingTouch(SeekBar seekbar){
-				
-			}
-			public void onStopTrackingTouch(SeekBar seekbar){
-				
-			}
-		});
-		excess_drinks.setProgress(0); 
-		excess_drinks.setMax(100);
 		
 		
 	}
@@ -65,7 +49,6 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 			db.addValue("drink_guess", Integer.parseInt(drink_num.getText().toString()));
 		}
 		//Add the value for the excess slider to db
-		db.addValue("drink_excess",progress_changed);
 		db.addValue("drink_assess", "True");
 	}
 	

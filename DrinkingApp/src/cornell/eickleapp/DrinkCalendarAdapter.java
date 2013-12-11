@@ -3,6 +3,7 @@ package cornell.eickleapp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.drawable;
@@ -15,8 +16,10 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class DrinkCalendarAdapter extends BaseAdapter implements OnClickListener {
+public class DrinkCalendarAdapter extends BaseAdapter implements
+		OnClickListener {
 	private Context mContext;
+	DatabaseHandler db;
 	int monthSelected, yearSelected;
 	ArrayList<Integer> drinkingDays;
 	private ArrayList<Integer> bacColors;
@@ -35,7 +38,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements OnClickListener
 		drinkingDays = d;
 		maxbac = mb;
 		bacColors = colors;
-
+		db = new DatabaseHandler(mContext);
 	}
 
 	// given month and year, it detects the 1st day of the month and see what
@@ -66,22 +69,55 @@ public class DrinkCalendarAdapter extends BaseAdapter implements OnClickListener
 	@Override
 	public View getView(final int position, View convertView,
 			final ViewGroup parent) {
+		final int dayOfMonth = position - daysSetBack + 7 + 1;
+		List<DatabaseStore> estimateList = db.getVarValuesForDay("drink_guess",
+				monthSelected, dayOfMonth, yearSelected);
+		int drinksEstimated = 0;
+		if (estimateList!=null)
+			drinksEstimated=Integer.parseInt(estimateList.get(0).value);
+
+			
 		
+
 		final Button view = new Button(mContext);
+
 		view.setBackgroundResource(android.R.drawable.btn_default);
 		double bacLevel;
-		if (!drinkingDays.contains(position)){
+		
+		if (!drinkingDays.contains(position)&&drinksEstimated>0) {
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((DrinkCalendar) mContext)
-							.changeBottomDisplay("", 0, -1);
+					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
 					if (focused > 0) {
 						View child = parent.getChildAt(focused);
-						if(drinkingDays.contains((Integer)focused)){
+						if (drinkingDays.contains((Integer) focused)) {
 							child.setBackgroundColor(bacColors.get(focused));
-						}else{
+						} else {
+							view.setBackgroundColor(Color.rgb(0, 218, 123));
+
+						}
+					}
+					focused = position;
+					v.setSelected(true);
+					view.setBackgroundResource(R.drawable.border);
+				}
+
+			});
+		}
+		
+		if (!drinkingDays.contains(position)&&drinksEstimated<=0) {
+			view.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
+					if (focused > 0) {
+						View child = parent.getChildAt(focused);
+						if (drinkingDays.contains((Integer) focused)) {
+							child.setBackgroundColor(bacColors.get(focused));
+						} else {
 							child.setBackgroundResource(android.R.drawable.btn_default);
+
 						}
 					}
 					focused = position;
@@ -96,19 +132,19 @@ public class DrinkCalendarAdapter extends BaseAdapter implements OnClickListener
 				view.setBackgroundColor(bacColors.get(n));
 				bacLevel = maxbac.get(n);
 				final double bac_lev = bacLevel;
-				final int i = n; 
+				final int i = n;
 				view.setOnClickListener(new OnClickListener() {
 
 					@Override
 					public void onClick(View v) {
 						DecimalFormat formatter = new DecimalFormat("#.###");
-						((DrinkCalendar) mContext)
-								.changeBottomDisplay(formatter.format(bac_lev), bac_lev, i);
+						((DrinkCalendar) mContext).changeBottomDisplay(
+								formatter.format(bac_lev), bac_lev, i);
 						if (focused > 0) {
 							View child = parent.getChildAt(focused);
-							if(drinkingDays.contains((Integer)focused)){
+							if (drinkingDays.contains((Integer) focused)) {
 								child.setBackgroundColor(bacColors.get(focused));
-							}else{
+							} else {
 								child.setBackgroundResource(android.R.drawable.btn_default);
 							}
 						}
@@ -158,6 +194,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements OnClickListener
 			view.setText("Sa");
 			break;
 		}
+
 
 		return view;
 	}

@@ -2,10 +2,11 @@
    <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
        android:layout_width="fill_parent"
    	android:layout_height="fill_parent">
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
         
         <TextView
 	        android:layout_width="fill_parent"
@@ -20,51 +21,22 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:ems="6"
-            android:gravity="center"
+            android:layout_marginTop="100sp"
             android:inputType="number"
             android:textSize="20sp" 
-            android:layout_marginTop="30dp"
+            android:gravity="center"
             />
-   
-	    <TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/excess_drinks"
-	        android:background="#0099CC"
-			android:textColor ="#FFFFFF"
-	        android:textSize="30sp"
-	        android:padding="10dp"
-	        android:layout_marginTop="50dp" />
-           <SeekBar
-  				android:id="@+id/excess_drinks"
-  				android:layout_width="match_parent"
-  				android:layout_height="wrap_content"
-  				android:layout_marginTop="50dp"/>
            <RelativeLayout
                	android:orientation="horizontal"
                	android:layout_width="match_parent"
                	android:layout_height="match_parent">
-           		<TextView
-               		android:text="@string/excess_left"
-               		android:textColor="#0099CC"
-               		android:layout_alignParentLeft="true"
-               		android:layout_width="70dp"
-               		android:layout_height="wrap_content"
-               		android:paddingLeft="10dp"/>
-           		<TextView
-               		android:text="@string/excess_right"
-               		android:textColor="#0099CC"
-               		android:layout_alignParentRight="true"
-               		android:layout_width="70dp"
-               		android:layout_height="wrap_content"
-               		android:paddingRight="10dp"/>
            </RelativeLayout>
            <Button
             android:id="@+id/drink_assess_finish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="100sp"
             android:textColor="#FFFFFF"
             android:background="@drawable/colorbutton"
             android:layout_marginBottom="10sp"
