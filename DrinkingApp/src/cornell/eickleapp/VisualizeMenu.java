@@ -104,6 +104,35 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		Double totalScore = 0.0;
 
 		switch (category) {
+		case 1:
+			// list of total drinks in a day
+			List<DatabaseStore> clickDrinkCountList = null;
+			List<DatabaseStore> estimateDrinkCountList = db
+					.getAllVarValue("drink_guess");
+			SharedPreferences getPrefs = PreferenceManager
+					.getDefaultSharedPreferences(getBaseContext());
+			int goal = Integer.parseInt(getPrefs.getString("goal", "2"));
+			int total = clickDrinkCountList.size()
+					+ estimateDrinkCountList.size();
+			if (total < 1)
+				total = 1;
+			double score = 0;
+
+			if (estimateDrinkCountList != null) {
+				for (int i = 0; i < estimateDrinkCountList.size(); i++) {
+					if (Integer.parseInt(estimateDrinkCountList.get(i).value) <= goal)
+						score++;
+				}
+			}
+			if (estimateDrinkCountList != null) {
+				for (int i = 0; i < estimateDrinkCountList.size(); i++) {
+					if (Integer.parseInt(estimateDrinkCountList.get(i).value) <= goal)
+						score++;
+				}
+			}
+			drinkScore.setText((Double) (score / total) + "/100");
+
+			break;
 		case 2:
 			// gets 1st time, figure out number of days from 1st time until now,
 			// and
