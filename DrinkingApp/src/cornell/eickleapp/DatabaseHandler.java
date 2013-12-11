@@ -311,6 +311,48 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		}
 	}
 	
+	/*
+	 * Must sort both color and values by time before calling.
+	 */
+	private ArrayList<DatabaseStore> getDaysList(ArrayList<DatabaseStore> data){
+		data = DatabaseStore.sortByTime(data);
+		ArrayList<DatabaseStore> day_data = new ArrayList<DatabaseStore>();
+		
+		DatabaseStore max_day=null;
+		for(int i=0; i< data.size(); i++){
+			DatabaseStore s = data.get(i);
+			if(max_day == null){
+				max_day = s;
+			}else{
+				if(max_day.day < s.day){
+					day_data.add(max_day);
+					max_day = s;
+				} else if(Double.valueOf(max_day.value)< Double.valueOf(s.value)){
+					max_day = s;
+				}
+			}
+		}
+		day_data.add(max_day);
+		return day_data;
+	}
+	
+	public ArrayList<DatabaseStore> getDrinkCountForAllDays(){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + QUES_KEY_VAR
+				+ "= drink_count";
+		Cursor cursor = db.rawQuery(query, null);
+		if (cursor.getCount() == 0) {
+			return null;
+		} else {
+			ArrayList<DatabaseStore> data = (ArrayList<DatabaseStore>)handleCursor(cursor);
+			if(data!=null){
+				return getDaysList(data);
+			}else{
+				return null;
+			}
+		}
+	}
+	
 	public List<DatabaseStore> getVarValuesForWeek(String variable, Date date){		
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
