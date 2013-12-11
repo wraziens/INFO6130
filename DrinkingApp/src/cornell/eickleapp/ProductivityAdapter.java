@@ -3,9 +3,13 @@ package cornell.eickleapp;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff.Mode;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ProductivityAdapter extends BaseAdapter {
@@ -33,7 +37,7 @@ public class ProductivityAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		int test = 6 + 6 * gradesAverageList.size();
+		int test = 4 + 4 * gradesAverageList.size();
 		return test;
 	}
 
@@ -53,6 +57,10 @@ public class ProductivityAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		TextView view = new TextView(mContext);
+
+		Typeface tf = Typeface.createFromAsset(mContext.getAssets(),
+				"fonts/dust.ttf");
+		view.setTypeface(tf);
 		view.setGravity(17);
 		view.setHeight(150);
 		view.setTextSize(16);
@@ -61,58 +69,70 @@ public class ProductivityAdapter extends BaseAdapter {
 			view.setVisibility(8);
 			break;
 		case 1:
-			view.setText("Academics");
+
+			view.setBackgroundResource(R.drawable.academicsicon);
 			break;
 		case 2:
-			view.setText("Productivity");
+			view.setBackgroundResource(R.drawable.productivityicon);
 			break;
 		case 3:
-			view.setText("Stress");
-			view.setWidth(50);
+			view.setBackgroundResource(R.drawable.stressicon);
 			break;
-		case 4:
-			view.setText("No. of Days Drinking");
-			break;
-		case 5:
-			view.setText("Avg. BAC");
-			
-			break;
+		/*
+		 * case 4: view.setText("No. of Days Drinking"); break; case 5:
+		 * view.setText("Avg. BAC");
+		 * 
+		 * break;
+		 */
 		}
-		if (position == 6) {
+		if (position == 4) {
 			view.setText("Week 1");
 			view.setGravity(17);
+
+			view.setBackgroundColor(Color.GRAY);
+			view.setTextColor(Color.WHITE);
 		}
-		if (position > 6 && position % 6 == 0) {
-			view.setText("Week " + position / 6);
+		if (position > 4 && position % 4 == 0) {
+			view.setText("Week " + position / 4);
 			view.setGravity(17);
 		}
-		if (position > 6 && position % 6 == 1) {
+		if (position > 4 && position % 4 == 1) {
 			view.setText(getGradeFromDouble(
-					gradesAverageList.get((position - 1) / 6 - 1), false));
+					gradesAverageList.get((position - 1) / 4 - 1), false));
+			if (position == 5) {
+				view.setBackgroundColor(Color.GRAY);
+				view.setTextColor(Color.WHITE);
+			}
 
 		}
-		if (position > 6 && position % 6 == 2) {
+		if (position > 4 && position % 4 == 2) {
 			view.setText(getGradeFromDouble(
-					productivityAverageList.get((position - 2) / 6 - 1), false));
-		}
-		if (position > 6 && position % 6 == 3) {
-			view.setText(getGradeFromDouble(
-					stressAverageList.get((position - 3) / 6 - 1), true));
-		}
-		if (position > 6 && position % 6 == 4) {
-			view.setText(daysDrankList.get((position - 4) / 6 - 1).toString());
-		}
-		if (position > 6 && position % 6 == 5) {
-			if (bacAverageList.get((position - 5) / 6 - 1) <= 0){
-				view.setText("0.000");
-				view.setGravity(17);
-			}
-			else{
-				view.setText(bacAverageList.get((position - 5) / 6 - 1)
-						.toString().substring(0, 5));
-				view.setGravity(17);
+					productivityAverageList.get((position - 2) / 4 - 1), false));
+			if (position == 6) {
+				view.setBackgroundColor(Color.GRAY);
+				view.setTextColor(Color.WHITE);
 			}
 		}
+		if (position > 4 && position % 4 == 3) {
+			view.setText(getGradeFromDouble(
+					stressAverageList.get((position - 3) / 4 - 1), true));
+			if (position == 7) {
+				view.setBackgroundColor(Color.GRAY);
+				view.setTextColor(Color.WHITE);
+			}
+		}
+
+		if (position > 7) {
+			int val = (position / 4) % 2;
+			if (val == 0)
+				view.setBackgroundColor(Color.WHITE);
+			else {
+				view.setBackgroundColor(Color.GRAY);
+				view.setTextColor(Color.WHITE);
+
+			}
+		}
+
 		return view;
 
 	}
@@ -126,11 +146,15 @@ public class ProductivityAdapter extends BaseAdapter {
 				grade = "B";
 			else if (rawGrade >= 70 && rawGrade < 80)
 				grade = "C";
-			else if (rawGrade < 70)
+			else if (rawGrade >= 60 && rawGrade < 70)
 				grade = "D";
+			else if (rawGrade < 60)
+				grade = "F";
 
 		} else {
-			if (rawGrade >= 60)
+			if (rawGrade >= 80)
+				grade = "F";
+			else if (rawGrade >= 60 && rawGrade < 80)
 				grade = "D";
 			else if (rawGrade >= 40 && rawGrade < 60)
 				grade = "C";

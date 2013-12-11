@@ -11,6 +11,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -36,6 +37,9 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 
 		db = new DatabaseHandler(this);
 		setContentView(R.layout.vmenu);
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		exercise = (ImageButton) findViewById(R.id.bExercise);
 		drink = (ImageButton) findViewById(R.id.bDrink);
 		// social=(Button)findViewById(R.id.bSocialization);
@@ -51,27 +55,45 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		// set up the scores for each category
 
 		// exercise
-		setAverage(2);
-		setAverage(3);
+
 		setAverage(4);
+
+		Boolean checkExercise = getPrefs.getBoolean("exerciseInEvaluation",
+				true);
+		if (!checkExercise) {
+			Intent openHint = new Intent(this, VisualizationMenuTutorial.class);
+			exercise.setAlpha(50);
+			exerciseScore.setText("OFF");
+			exercise.setEnabled(false);
+		} else if (checkExercise) {
+			setAverage(2);
+
+		}
+		Boolean checkProductivity = getPrefs.getBoolean(
+				"productivityInEvaluation", true);
+		if (!checkProductivity) {
+			productivity.setAlpha(50);
+			productivityScore.setText("OFF");
+			productivity.setEnabled(false);
+		} else if (checkProductivity) {
+			setAverage(3);
+		}
 		exercise.setOnClickListener(this);
 		drink.setOnClickListener(this);
 		// social.setOnClickListener(this);
 		// food.setOnClickListener(this);
 		productivity.setOnClickListener(this);
 		mood.setOnClickListener(this);
-		SharedPreferences getPrefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+
 		if (checkSurveyed) {
 			Intent openHint = new Intent(this, VisualizationMenuTutorial.class);
 			startActivity(openHint);
 		}
+
 	}
 
 	private void setAverage(int category) {
 		// TODO Auto-generated method stub
-
 
 		List<DatabaseStore> firstTimeList = db.getAllVarValue("firstTime");
 		Date firstDate = firstTimeList.get(0).date;
@@ -82,59 +104,95 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		Double totalScore = 0.0;
 
 		switch (category) {
+		case 1:
+			// list of total drinks in a day
+			List<DatabaseStore> clickDrinkCountList = null;
+			List<DatabaseStore> estimateDrinkCountList = db
+					.getAllVarValue("drink_guess");
+			SharedPreferences getPrefs = PreferenceManager
+					.getDefaultSharedPreferences(getBaseContext());
+			int goal = Integer.parseInt(getPrefs.getString("goal", "2"));
+			int total = clickDrinkCountList.size()
+					+ estimateDrinkCountList.size();
+			if (total < 1)
+				total = 1;
+			double score = 0;
+
+			if (estimateDrinkCountList != null) {
+				for (int i = 0; i < estimateDrinkCountList.size(); i++) {
+					if (Integer.parseInt(estimateDrinkCountList.get(i).value) <= goal)
+						score++;
+				}
+			}
+			if (estimateDrinkCountList != null) {
+				for (int i = 0; i < estimateDrinkCountList.size(); i++) {
+					if (Integer.parseInt(estimateDrinkCountList.get(i).value) <= goal)
+						score++;
+				}
+			}
+			drinkScore.setText((Double) (score / total) + "/100");
+
+			break;
 		case 2:
 			// gets 1st time, figure out number of days from 1st time until now,
 			// and
 			// divide score by that number
 			List<DatabaseStore> exerciseList = db
-			.getAllVarValue("exercise_quality");
+					.getAllVarValue("exercise_quality");
 			if (exerciseList != null) {
 				for (int i = 0; i < exerciseList.size(); i++) {
 					String s = exerciseList.get(i).value;
 					totalScore = totalScore + Integer.parseInt(s);
 				}
-				exerciseScore.setText(((Double)(totalScore / (daysDifference + 1))).intValue()
-						+ "/100");
+				exerciseScore
+						.setText(((Double) (totalScore / (daysDifference + 1)))
+								.intValue() + "/100");
 
 			}
 			break;
 		case 3:
 			List<DatabaseStore> productiveList = db
-			.getAllVarValue("productive");
+					.getAllVarValue("productive");
 			List<DatabaseStore> performanceList = db
-			.getAllVarValue("performance");
-			List<DatabaseStore>  stressLevelList= db
-			.getAllVarValue("stress_level");
-			
+					.getAllVarValue("performance");
+			List<DatabaseStore> stressLevelList = db
+					.getAllVarValue("stress_level");
+
 			if (productiveList != null) {
 				for (int i = 0; i < productiveList.size(); i++) {
-					int productivityVal = Integer.parseInt(productiveList.get(i).value);
-					int performanceVal = Integer.parseInt(performanceList.get(i).value);
-					int stressVal = Integer.parseInt(stressLevelList.get(i).value);
-					
-					totalScore = totalScore + ((productivityVal+productivityVal+stressVal)/3);
+					int productivityVal = Integer.parseInt(productiveList
+							.get(i).value);
+					int performanceVal = Integer.parseInt(performanceList
+							.get(i).value);
+					int stressVal = 100 - Integer.parseInt(stressLevelList
+							.get(i).value);
+
+					totalScore = totalScore
+							+ ((productivityVal + productivityVal + stressVal) / 3);
 				}
-				productivityScore.setText(((Double)(totalScore / (daysDifference + 1))).intValue()
-						+ "/100");
+				productivityScore
+						.setText(((Double) (totalScore / (daysDifference + 1)))
+								.intValue() + "/100");
 
 			}
 			break;
 		case 4:
-			List<DatabaseStore> moodList = db
-			.getAllVarValue("moodScore");
-			int numberOfMoods=0;
-			if(db.getAllVarValue("wordle")!=null)
+			List<DatabaseStore> moodList = db.getAllVarValue("moodScore");
+			int numberOfMoods = 0;
+			if (db.getAllVarValue("wordle") != null)
 				numberOfMoods = db.getAllVarValue("wordle").size();
-			
+
 			if (moodList != null) {
 				for (int i = 0; i < moodList.size(); i++) {
 					int moodVal = Integer.parseInt(moodList.get(i).value);
-					
+
 					totalScore = totalScore + moodVal;
 				}
-				if (totalScore<0)
-					totalScore=0.0;
-				moodScore.setText(((Double)(totalScore/(numberOfMoods)*100)).intValue()+ "/100");
+				if (totalScore < 0)
+					totalScore = 0.0;
+				moodScore
+						.setText(((Double) (totalScore / (numberOfMoods) * 100))
+								.intValue() + "/100");
 
 			}
 			break;
@@ -175,6 +233,7 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		}
 
 	}
+
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

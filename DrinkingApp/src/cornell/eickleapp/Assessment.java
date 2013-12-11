@@ -26,9 +26,9 @@ public class Assessment extends Activity {
 	ArrayList<String> surveys = new ArrayList<String>();
 	ArrayList<String> surveys_classes = new ArrayList<String>();
 	String surveyList[] = { 
-			"DailySurvey4","DailySurvey2",
+			"DailySurvey2",
 			"DailySurveyExercise", "DailySurveyProductivity"};
-	String surveyNames[] = {"Context","Overall Experience","Exercise","Productivity"};
+	String surveyNames[] = {"Overall Experience","Exercise","Productivity"};
 	String placement;
 	Boolean sleepSelected, exerciseSelected, productivitySelected,
 			socialSelected;

@@ -10,12 +10,19 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.view.View;
+import android.widget.CheckBox;
 
 public class WordleGraphics extends View {
 
 	Context mContext;
 	ArrayList<String[]> nestArrayDrinkList = new ArrayList<String[]>();
 	ArrayList<String[]> nestArrayNoDrinkList = new ArrayList<String[]>();
+	
+	ArrayList<CheckValue>checkboxes= new ArrayList<CheckValue>();
+	ArrayList<Integer>moodValue= new ArrayList<Integer>();
+	ArrayList<String>posList= new ArrayList<String>();
+	ArrayList<String>negList= new ArrayList<String>();
+	
 	String word, title;
 	int count;
 	ArrayList<Rect> wordRectList = new ArrayList<Rect>();
@@ -28,6 +35,7 @@ public class WordleGraphics extends View {
 		nestArrayDrinkList = d;
 		nestArrayNoDrinkList = nd;
 		title = t;
+		organizeMoodList();
 	}
 
 	@Override
@@ -105,10 +113,14 @@ public class WordleGraphics extends View {
 
 				Paint textPainter = new Paint();
 				textPainter.setTextSize(16);
-				if (drink)
-					textPainter.setColor(Color.rgb(247, 144, 30));
-				else if (!drink)
+				//if word is in positivelist color green
+				if(posList.indexOf(word)!=-1){
 					textPainter.setColor(Color.rgb(14, 109, 97));
+				}
+				else
+					textPainter.setColor(Color.rgb(247, 144, 30));
+					
+					
 
 				// The sizes should be relative to the total amount
 				int total_cnt = getTotalCount(arrayList);
@@ -290,6 +302,123 @@ public class WordleGraphics extends View {
 			} else {
 				return false;
 			}
+		}
+	}
+
+	private void organizeMoodList() {
+		checkboxes.add(new CheckValue("happy",
+				(CheckBox) findViewById(R.id.wordle_happy)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("productive",
+				(CheckBox) findViewById(R.id.wordle_productive)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("lazy",
+				(CheckBox) findViewById(R.id.wordle_lazy)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("foggy",
+				(CheckBox) findViewById(R.id.wordle_foggy)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("sick",
+				(CheckBox) findViewById(R.id.wordle_sick)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("strong",
+				(CheckBox) findViewById(R.id.wordle_strong)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("excited",
+				(CheckBox) findViewById(R.id.wordle_excited)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("angry",
+				(CheckBox) findViewById(R.id.wordle_angry)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("unhappy",
+				(CheckBox) findViewById(R.id.wordle_unhappy)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("sad",
+				(CheckBox) findViewById(R.id.wordle_sad)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("defeated",
+				(CheckBox) findViewById(R.id.wordle_defeated)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("social",
+				(CheckBox) findViewById(R.id.wordle_social)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("fun",
+				(CheckBox) findViewById(R.id.wordle_fun)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("sad",
+				(CheckBox) findViewById(R.id.wordle_sad)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("energetic",
+				(CheckBox) findViewById(R.id.wordle_energetic)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("healthy",
+				(CheckBox) findViewById(R.id.wordle_healthy)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("lonely",
+				(CheckBox) findViewById(R.id.wordle_lonely)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("successful",
+				(CheckBox) findViewById(R.id.wordle_successful)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("apathetic",
+				(CheckBox) findViewById(R.id.wordle_apathetic)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("optimistic",
+				(CheckBox) findViewById(R.id.wordle_optimistic)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("loved",
+				(CheckBox) findViewById(R.id.wordle_loved)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("embarrassed",
+				(CheckBox) findViewById(R.id.wordle_embarrassed)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("sloppy",
+				(CheckBox) findViewById(R.id.wordle_sloppy)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("out of control",
+				(CheckBox) findViewById(R.id.wordle_out_control)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("relaxed",
+				(CheckBox) findViewById(R.id.wordle_relaxed)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("uncomfortable",
+				(CheckBox) findViewById(R.id.wordle_uncomfortable)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("advernturous",
+				(CheckBox) findViewById(R.id.wordle_adventurous)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("stressed",
+				(CheckBox) findViewById(R.id.wordle_stressed)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("anxious",
+				(CheckBox) findViewById(R.id.wordle_anxious)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("depressed",
+				(CheckBox) findViewById(R.id.wordle_depressed)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("humorous",
+				(CheckBox) findViewById(R.id.wordle_humorous)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("regretful",
+				(CheckBox) findViewById(R.id.wordle_regretful)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("hopeful",
+				(CheckBox) findViewById(R.id.wordle_hopeful)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("outgoing",
+				(CheckBox) findViewById(R.id.wordle_outgoing)));
+		moodValue.add(1);
+		checkboxes.add(new CheckValue("busy",
+				(CheckBox) findViewById(R.id.wordle_busy)));
+		moodValue.add(0);
+		checkboxes.add(new CheckValue("tired",
+				(CheckBox) findViewById(R.id.wordle_tired)));
+		moodValue.add(0);
+		for (int i=0;i<moodValue.size();i++){
+			if (moodValue.get(i)==1)
+				posList.add(checkboxes.get(i).value);
+			else
+				negList.add(checkboxes.get(i).value);
 		}
 	}
 }

@@ -42,7 +42,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 				int number = Integer.parseInt(object.get(0).value);
 
 				int num_Checked = 0;
-				String surveyList[] = { "DailySurvey4", "DailySurvey2",
+				String surveyList[] = { "DailySurvey2",
 						"DailySurveyExercise", "DailySurveyProductivity" };
 				for (int i = 0; i < surveyList.length; i++) {
 					Boolean checked = db.variableExist(surveyList[i]

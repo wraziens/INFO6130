@@ -70,8 +70,6 @@ public class ProductivityVisualization extends Activity {
 				.getDefaultSharedPreferences(getBaseContext());
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		if (checkSurveyed) {
-			Intent openHint = new Intent(this, ProductivityVisualizationTutorial.class);
-			startActivity(openHint);
 		}
 	}
 

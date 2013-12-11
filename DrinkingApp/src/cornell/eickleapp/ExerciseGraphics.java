@@ -121,7 +121,7 @@ public class ExerciseGraphics extends View {
 		gradeLegendPaint.setTextSize(20);
 		gradeLegendPaint.setTextAlign(Align.CENTER);
 		gradeLegendPaint.setColor(Color.RED);
-		String gradeLegend="A-D";
+		String gradeLegend="A-F";
 		gradeLegendPaint.getTextBounds(gradeLegend, 0, gradeLegend.length(), gradeLegendBound);
 		canvas.drawText(gradeLegend, legendsRect.centerX(), legendsRect.centerY()+legendsRect.height()/2+gradeLegendBound.height()+5,
 				gradeLegendPaint);
@@ -166,8 +166,10 @@ public class ExerciseGraphics extends View {
 					grade="B";
 				else if (rawGrade>=70&&rawGrade<80)
 					grade="C";
-				else 
+				else if (rawGrade>=60&&rawGrade<70)
 					grade="D";
+				else 
+					grade="F";
 
 				// draws days drank
 				Rect alcBarRect = new Rect();

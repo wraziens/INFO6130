@@ -61,7 +61,7 @@ public class AssessmentAdapter extends BaseAdapter implements OnClickListener{
 		view.setHeight(20);
 		String classTarget=classList.get(position);
 		Boolean checked = db.variableExist(classList.get(position) + "CheckList");
-		switch (position){
+		switch (position+1){
 		
 		//context
 		case 0:
@@ -102,7 +102,7 @@ public class AssessmentAdapter extends BaseAdapter implements OnClickListener{
 
 			@Override
 			public void onClick(View v) {
-				switch (position){
+				switch (position+1){
 				
 				//context
 				case 0:

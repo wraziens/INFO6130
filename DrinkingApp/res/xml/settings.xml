@@ -26,7 +26,15 @@
             android:entries="@array/notificationTimes"
             android:entryValues="@array/notificationTimesValue"
             android:key="notificationTime"
-            android:summary="Notification Time" />
+            android:summary="Set Notification Time" />
+    </PreferenceCategory>
+        <PreferenceCategory android:title="Goal" >
+        <ListPreference
+            android:defaultValue="2"
+            android:entries="@array/goal"
+            android:entryValues="@array/goalVal"
+            android:key="goal"
+            android:summary="Set Drinking Moderation Goal" />
     </PreferenceCategory>
 
 </PreferenceScreen>

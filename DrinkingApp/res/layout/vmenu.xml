@@ -7,13 +7,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1" >
 
         <ImageButton
             android:id="@+id/bDrink"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="#c7baa7"
             android:contentDescription="Button"
             android:src="@drawable/drinkingvisualization" />
@@ -30,13 +30,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1" >
 
         <ImageButton
             android:id="@+id/bExercise"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="#dd5f27"
             android:contentDescription="Button"
             android:src="@drawable/exercisevisualization" />
@@ -53,13 +53,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1" >
 
         <ImageButton
             android:id="@+id/bProductivity"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="#f7901e"
             android:contentDescription="Button"
             android:src="@drawable/productivityvisualization" />
@@ -76,13 +76,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1" >
 
         <ImageButton
             android:id="@+id/bMood"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:background="#0099CC"
             android:contentDescription="Button"
             android:src="@drawable/moodsvisualization" />
