@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -30,11 +31,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
-	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount, drinkEst, dogCount;
+	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount, drinkEst, dogCount,goalText;
 	RelativeLayout drink_img, dog_img;
 	ImageButton back, next;
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
+	int goal;
+	LinearLayout click;
 	
 	private ArrayList<Integer> drinkingDays;
 	private ArrayList<Double> maxBac;
@@ -58,7 +61,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
 		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
 		drinkCount = (TextView) findViewById(R.id.drink_count);
-		//drinkEst = (TextView) findViewById(R.id.drink_est);
+		click= (LinearLayout) findViewById(R.id.clickAppear);
+		
+		goalText = (TextView) findViewById(R.id.goalStatement);
 		back = (ImageButton) findViewById(R.id.bPreviousMonth);
 		next = (ImageButton) findViewById(R.id.bNextMonth);
 		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
@@ -66,7 +71,10 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		dogCount = (TextView) findViewById(R.id.hot_dog_count);
 		back.setOnClickListener(this);
 		next.setOnClickListener(this);
-
+		SharedPreferences getPrefs = PreferenceManager
+				.getDefaultSharedPreferences(getBaseContext());
+		goal = Integer.parseInt(getPrefs.getString("goal", "2"));
+		
 		drinkingDays = new ArrayList<Integer>();
 		maxBac = new ArrayList<Double>();
 		bacColors = new ArrayList<Integer>();
@@ -86,8 +94,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				selectedYear, drinkingDays, maxBac, bacColors);
 		drinkCalendar.setAdapter(adapter);
 		drinkBacButtons = adapter.getButtonView();
-		SharedPreferences getPrefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		if (checkSurveyed) {
 			Intent openHint = new Intent(this, DrinkCalendarTutorial.class);
@@ -233,12 +239,25 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			est = "";
 			cnt="";
 			dogs ="";
+			goalText.setText("");
+			click.setVisibility(View.GONE);
+			
 		}else{
 			if(index != -1){
 				if(day_counts.get(index)==1){
 					cnt = String.valueOf(day_counts.get(index)) + " Drink Tracked.";
+					goalText.setVisibility(View.VISIBLE);
+					if(day_counts.get(index)<=goal)
+						goalText.setText("GOAL ACHIEVED!");
+					else
+						goalText.setText("GOAL NOT MET!");
 				}else{
 					cnt = String.valueOf(day_counts.get(index)) + " Drinks Tracked.";
+					click.setVisibility(View.VISIBLE);
+					if(day_counts.get(index)<=goal)
+						goalText.setText("GOAL ACHIEVED!");
+					else
+						goalText.setText("GOAL NOT MET!");
 				}
 				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
 				if(num_dogs ==1){
@@ -336,6 +355,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			drink_img.removeAllViews();
 			dog_img.removeAllViews();
 		}
+		
+		
 	}
 	@SuppressLint("NewApi")
 	@Override

@@ -1,5 +1,6 @@
 package cornell.eickleapp;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -55,7 +56,7 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		// set up the scores for each category
 
 		// exercise
-
+		//setAverage(1);
 		setAverage(4);
 
 		Boolean checkExercise = getPrefs.getBoolean("exerciseInEvaluation",
@@ -106,7 +107,7 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		switch (category) {
 		case 1:
 			// list of total drinks in a day
-			List<DatabaseStore> clickDrinkCountList = null;
+			ArrayList<DatabaseStore> clickDrinkCountList =null;
 			List<DatabaseStore> estimateDrinkCountList = db
 					.getAllVarValue("drink_guess");
 			SharedPreferences getPrefs = PreferenceManager
