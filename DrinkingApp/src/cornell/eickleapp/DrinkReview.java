@@ -1,4 +1,5 @@
 package cornell.eickleapp;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -41,7 +42,9 @@ public class DrinkReview extends Activity implements OnClickListener {
 		getMaxBac();
 		
 		drinks.setText("You recorderd having " + drinkCount + " drinks last night.");
-		bac.setText("Your maximum Estimated Blood Alcohol Level for the night was " + maxBac.toString());
+		DecimalFormat formatter = new DecimalFormat("#.###");
+		
+		bac.setText("Your maximum Estimated Blood Alcohol Level for the night was " + formatter.format(maxBac));
 		
 		finish = (Button) findViewById(R.id.review_finish);
 		finish.setOnClickListener(this);
