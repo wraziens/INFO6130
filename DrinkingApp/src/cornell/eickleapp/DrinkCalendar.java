@@ -240,9 +240,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				}else{
 					cnt = String.valueOf(day_counts.get(index)) + " Drinks Tracked.";
 				}
-				if(day_guess!=null){
-					est = day_guess.get(index).value;
-				}
 				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
 				if(num_dogs ==1){
 					dogs = "Which is calorically equivalent to 1 hot dog.";
@@ -287,7 +284,15 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			int num_dogs = Integer.parseInt(hotdogs.get(index).value);
 			dog_img.removeAllViews();
 			drink_img.removeAllViews();
-			
+			/*int c = dog_img.getChildCount();
+			for(int i=c; c>0; c--){
+				dog_img.removeViewAt(0);
+			}
+			int t = drink_img.getChildCount();
+			for(int i=t; t>0; t--){
+				drink_img.removeViewAt(0);
+			}
+			*/
 			for(int i=0; i<=num_dogs; i++){
 				count+=1;
 				ImageView iv = new ImageView(this);
@@ -309,7 +314,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			}
 			count = 0;
 			for(int i=0; i<=day_counts.get(index); i++){
-				
 				count+=1;
 				ImageView iv = new ImageView(this);
 				iv.setBackgroundResource(R.drawable.beer_icon);
@@ -317,9 +321,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(60,60);
 				if(i>0){
 					ImageView last = (ImageView)drink_img.findViewById(i-1);
-					if(count >15){
-						p.addRule(RelativeLayout.BELOW, i-15);
-						p.addRule(RelativeLayout.ALIGN_START, i-15);
+					if(count >10){
+						p.addRule(RelativeLayout.BELOW, i-10);
+						p.addRule(RelativeLayout.ALIGN_START, i-10);
 					}else{
 						p.addRule(RelativeLayout.RIGHT_OF, last.getId());	
 					}
