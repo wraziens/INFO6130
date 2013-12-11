@@ -23,7 +23,7 @@
             android:ems="6"
             android:layout_marginTop="100sp"
             android:inputType="number"
-            android:textSize="20sp" 
+            android:textSize="40sp" 
             android:gravity="center"
             />
            <RelativeLayout

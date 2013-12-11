@@ -7,28 +7,35 @@ import java.util.List;
 
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.drawable;
+import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	private Context mContext;
-	DatabaseHandler db;
 	int monthSelected, yearSelected;
 	ArrayList<Integer> drinkingDays;
 	private ArrayList<Integer> bacColors;
 	ArrayList<Double> maxbac;
 	int daysSetBack = 0;
-	int daysInMonth = 0;
+	static int daysInMonth = 0;
 	static ArrayList<Button> buttonStore = new ArrayList<Button>();
 	static int focused = 0;
 	TextView test;
-	static List<DatabaseStore> estRelavantMonthList;
+	DatabaseHandler db;
+	static ArrayList<Integer> estimateStore = new ArrayList<Integer>();
+	static int timesTouched=0;
+	static List<DatabaseStore> estRelavantMonthList = new ArrayList<DatabaseStore>();
 
 	public ColorAdapter(Context c, int m, int y, ArrayList<Integer> d,
 			ArrayList<Double> mb, ArrayList<Integer> colors) {
@@ -39,16 +46,17 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		maxbac = mb;
 		bacColors = colors;
 		db = new DatabaseHandler(mContext);
-		estRelavantMonthList = new ArrayList<DatabaseStore>();
 
 		List<DatabaseStore> everyEstList = db.getAllVarValue("drink_guess");
-		for (int i = 0; i < everyEstList.size(); i++) {
-			int something = everyEstList.get(i).month;
-			if ((everyEstList.get(i).month) - 1 == monthSelected
-					&& everyEstList.get(i).year == yearSelected)
-				estRelavantMonthList.add(everyEstList.get(i));
+
+		if (everyEstList != null) {
+			for (int i = 0; i < everyEstList.size(); i++) {
+				int something = everyEstList.get(i).month;
+				if ((everyEstList.get(i).month) - 1 == monthSelected
+						&& everyEstList.get(i).year == yearSelected)
+					estRelavantMonthList.add(everyEstList.get(i));
+			}
 		}
-		bacColors = colors;
 	}
 
 	// given month and year, it detects the 1st day of the month and see what
@@ -81,101 +89,110 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 			final ViewGroup parent) {
 
 		final Button view = new Button(mContext);
-
-		view.setBackgroundResource(android.R.drawable.btn_default);
 		double bacLevel;
 
-		if (position > (7 + daysSetBack)) {
 			final int dayOfMonth = position - daysSetBack - 7 + 1;
-
 			Boolean specialPaint = false;
-			for (int i = 0; i < estRelavantMonthList.size(); i++) {
-				if (estRelavantMonthList.get(i).day == dayOfMonth) {
-					specialPaint = true;
-					view.setBackgroundColor(Color.rgb(0, 218, 123));
+			if (estRelavantMonthList != null) {
+				if (position > (7 + daysSetBack)
+						&& estRelavantMonthList.size() > 0) {
+					for (int i = 0; i < estRelavantMonthList.size(); i++) {
+						if (estRelavantMonthList.get(i).day == dayOfMonth
+								&& estRelavantMonthList.get(i).month - 1 == monthSelected
+								&& estRelavantMonthList.get(i).year == yearSelected) {
+							specialPaint = true;
+							view.setBackgroundColor(Color.rgb(255, 251, 188));
+							estimateStore.add(position);
+						}
+					}
 				}
 			}
 
-			if (!drinkingDays.contains(dayOfMonth) && specialPaint == true) {
+			if (!drinkingDays.contains(position - 6 - daysSetBack)) {
 				view.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+
+						timesTouched++;
 						((DrinkCalendar) mContext).changeBottomDisplay("", 0,
-								-1);
+								-1, 0);
 						if (focused > 0) {
 							View child = parent.getChildAt(focused);
-							if (drinkingDays.contains((Integer) focused)) {
-								child.setBackgroundColor(bacColors.get(focused));
+							if (drinkingDays.contains((Integer) focused - 6
+									- daysSetBack)) {
+								int i = drinkingDays.indexOf(focused - 6
+										- daysSetBack);
+								child.setBackgroundColor(bacColors.get(i));
+							} else if (estimateStore.contains(focused)) {
+								child.setBackgroundColor(Color.rgb(255, 251,
+										188));
 							} else {
-								view.setBackgroundColor(Color.rgb(0, 218, 123));
 
-							}
-						}
-						focused = position;
-						v.setSelected(true);
-						view.setBackgroundResource(R.drawable.border);
-					}
-
-				});
-			}
-
-			if (!drinkingDays.contains(dayOfMonth) && specialPaint == false) {
-				view.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						((DrinkCalendar) mContext).changeBottomDisplay("", 0,
-								-1);
-						if (focused > 0) {
-							View child = parent.getChildAt(focused);
-							if (drinkingDays.contains((Integer) focused)) {
-								child.setBackgroundColor(bacColors.get(focused));
-							} else {
 								child.setBackgroundResource(android.R.drawable.btn_default);
-
 							}
 						}
 						focused = position;
 						v.setSelected(true);
+						if (estimateStore.contains(focused)) {
+							int estNo = 0;
+							int s = focused - daysSetBack - 7 + 1;
+							for (int i = 0; i < estRelavantMonthList.size(); i++) {
+								if (estRelavantMonthList.get(i).day == s) {
+									estNo = Integer
+											.parseInt(estRelavantMonthList
+													.get(i).value);
+									int dummy = 0;
+								}
+							}
+							((DrinkCalendar) mContext).changeBottomDisplay("",
+									0, -1, estNo);
+						}
 						view.setBackgroundResource(R.drawable.border);
+
 					}
 
 				});
 			}
-			if (drinkingDays.contains(dayOfMonth)) {
-				for (int n = 0; n < drinkingDays.size(); n++) {
-					if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
-						view.setBackgroundColor(bacColors.get(n));
-						bacLevel = maxbac.get(n);
-						final double bac_lev = bacLevel;
-						final int i = n;
-						view.setOnClickListener(new OnClickListener() {
+			for (int n = 0; n < drinkingDays.size(); n++) {
+				if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
+					view.setBackgroundColor(bacColors.get(n));
+					bacLevel = maxbac.get(n);
+					final double bac_lev = bacLevel;
+					final int i = n;
+					view.setOnClickListener(new OnClickListener() {
 
-							@Override
-							public void onClick(View v) {
-								DecimalFormat formatter = new DecimalFormat(
-										"#.###");
-								((DrinkCalendar) mContext).changeBottomDisplay(
-										formatter.format(bac_lev), bac_lev, i);
-								if (focused > 0) {
-									View child = parent.getChildAt(focused);
-									if (drinkingDays
-											.contains((Integer) focused)) {
-										child.setBackgroundColor(bacColors
-												.get(focused));
-									} else {
-										child.setBackgroundResource(android.R.drawable.btn_default);
-									}
+						@Override
+						public void onClick(View v) {
+							timesTouched++;
+
+							DecimalFormat formatter = new DecimalFormat("#.###");
+							((DrinkCalendar) mContext).changeBottomDisplay(
+									formatter.format(bac_lev), bac_lev, i, 0);
+							if (focused > 0) {
+								View child = parent.getChildAt(focused);
+								if (drinkingDays.contains((Integer) focused - 6
+										- daysSetBack)) {
+									int i = drinkingDays.indexOf(focused - 6
+											- daysSetBack);
+									child.setBackgroundColor(bacColors.get(i));
+								} else if (estimateStore.contains(focused)) {
+									child.setBackgroundColor(Color.rgb(255,
+											251, 188));
+								} else {
+
+									child.setBackgroundResource(android.R.drawable.btn_default);
 								}
-								focused = position;
-								v.setSelected(true);
-								view.setBackgroundResource(R.drawable.border);
 							}
+							focused = position;
+							v.setSelected(true);
+							view.setBackgroundResource(R.drawable.border);
+						}
 
-						});
-					}
+					});
 				}
+
 			}
-		}
+		
 		if (position > 6 && position < 7 + daysSetBack) {
 			view.setVisibility(8);
 		} else {
@@ -188,30 +205,37 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 0:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("Su");
+			view.setEnabled(false);
 			break;
 		case 1:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("M");
+			view.setEnabled(false);
 			break;
 		case 2:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("T");
+			view.setEnabled(false);
 			break;
 		case 3:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("W");
+			view.setEnabled(false);
 			break;
 		case 4:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("Th");
+			view.setEnabled(false);
 			break;
 		case 5:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("F");
+			view.setEnabled(false);
 			break;
 		case 6:
 			view.setBackgroundColor(Color.WHITE);
 			view.setText("Sa");
+			view.setEnabled(false);
 			break;
 		}
 

@@ -46,7 +46,7 @@ public class DrinkAssessment extends Activity implements OnClickListener {
 	private void saveToDB(){
 		//Add the users guess for num drinks to db
 		if(drink_num.getText() != null){
-			db.addValue("drink_guess", Integer.parseInt(drink_num.getText().toString()));
+			db.addValueYesterday("drink_guess", Integer.parseInt(drink_num.getText().toString()));
 		}
 		//Add the value for the excess slider to db
 		db.addValue("drink_assess", "True");

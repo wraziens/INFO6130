@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -47,16 +48,25 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		// food=(Button)findViewById(R.id.bFood);
 		productivity = (ImageButton) findViewById(R.id.bProductivity);
 		mood = (ImageButton) findViewById(R.id.bMood);
-
+		Typeface tf = Typeface.createFromAsset(getBaseContext().getAssets(),
+				"fonts/dust.ttf");
+		
+		
 		drinkScore = (TextView) findViewById(R.id.tvVMenuDrink);
 		exerciseScore = (TextView) findViewById(R.id.tvVMenuExercise);
 		productivityScore = (TextView) findViewById(R.id.tvVMenuProductivity);
 		moodScore = (TextView) findViewById(R.id.tvVMenuMood);
-
+		
+		drinkScore.setTypeface(tf);
+		exerciseScore.setTypeface(tf);
+		productivityScore.setTypeface(tf);
+		moodScore.setTypeface(tf);
+		
+		
 		// set up the scores for each category
 
 		// exercise
-		// setAverage(1);
+		setAverage(1);
 		setAverage(4);
 
 		Boolean checkExercise = getPrefs.getBoolean("exerciseInEvaluation",
@@ -107,31 +117,34 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		switch (category) {
 		case 1:
 			// list of total drinks in a day
-			ArrayList<DatabaseStore> clickDrinkCountList = null;
+			ArrayList<DatabaseStore> clickDrinkCountList = db.getDrinkCountForAllDays();
 			List<DatabaseStore> estimateDrinkCountList = db
 					.getAllVarValue("drink_guess");
 			SharedPreferences getPrefs = PreferenceManager
 					.getDefaultSharedPreferences(getBaseContext());
 			int goal = Integer.parseInt(getPrefs.getString("goal", "2"));
-			int total = clickDrinkCountList.size()
-					+ estimateDrinkCountList.size();
+			int total=0;
+			if (clickDrinkCountList!=null)
+				total=total+clickDrinkCountList.size();
+			if (estimateDrinkCountList!=null)
+				total=total+estimateDrinkCountList.size();
 			if (total < 1)
-				total = 1;
+				total = 0;
 			double score = 0;
 
 			if (estimateDrinkCountList != null) {
 				for (int i = 0; i < estimateDrinkCountList.size(); i++) {
 					if (Integer.parseInt(estimateDrinkCountList.get(i).value) <= goal)
-						score++;
+						score=score+1;
 				}
 			}
 			if (estimateDrinkCountList != null) {
 				for (int i = 0; i < estimateDrinkCountList.size(); i++) {
 					if (Integer.parseInt(estimateDrinkCountList.get(i).value) <= goal)
-						score++;
+						score=score+1;
 				}
 			}
-			drinkScore.setText((Double) (score / total) + "/100");
+			drinkScore.setText(getGradeFromDouble((Double)((score / total)*100)));
 
 			break;
 		case 2:
@@ -146,10 +159,12 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 					totalScore = totalScore + Integer.parseInt(s);
 				}
 				exerciseScore
-						.setText(((Double) (totalScore / (daysDifference + 1)))
-								.intValue() + "/100");
+						.setText(getGradeFromDouble((Double) (totalScore / (daysDifference + 1)))
+								);
 
 			}
+			else
+				exerciseScore.setText("N/A");
 			break;
 		case 3:
 			List<DatabaseStore> productiveList = db
@@ -172,10 +187,12 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 							+ ((productivityVal + productivityVal + stressVal) / 3);
 				}
 				productivityScore
-						.setText(((Double) (totalScore / (daysDifference + 1)))
-								.intValue() + "/100");
+						.setText(getGradeFromDouble((Double) (totalScore / (daysDifference + 1)))
+								);
 
 			}
+			else
+				productivityScore.setText("N/A");
 			break;
 		case 4:
 			List<DatabaseStore> moodList = db.getAllVarValue("moodScore");
@@ -192,10 +209,12 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 				if (totalScore < 0)
 					totalScore = 0.0;
 				moodScore
-						.setText(((Double) (totalScore / (numberOfMoods) * 100))
-								.intValue() + "/100");
+						.setText(getGradeFromDouble(((Double) (totalScore / (numberOfMoods) * 100))
+								));
 
 			}
+			else
+				moodScore.setText("N/A");
 			break;
 		}
 
@@ -278,5 +297,24 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onPause();
 	}
+	private String getGradeFromDouble(Double rawGrade) {
+		String grade = "N/A";
+		
+		
+			if (rawGrade >= 90)
+				grade = "A";
+			else if (rawGrade >= 80 && rawGrade < 90)
+				grade = "B";
+			else if (rawGrade >= 70 && rawGrade < 80)
+				grade = "C";
+			else if (rawGrade >= 60 && rawGrade < 70)
+				grade = "D";
+			else if (rawGrade < 60)
+				grade = "F";
+
+
+		return grade;
+	}
+
 
 }

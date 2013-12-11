@@ -25,20 +25,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DrinkCalendar extends Activity implements OnClickListener {
 
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
-	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount, drinkEst, dogCount,goalText;
+	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount,
+			drinkEst, dogCount, goalText;
 	RelativeLayout drink_img, dog_img;
 	ImageButton back, next;
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
 	int goal;
 	LinearLayout click;
-	
+	static int achievement=0;
 	private ArrayList<Integer> drinkingDays;
 	private ArrayList<Double> maxBac;
 	private ArrayList<Integer> bacColors;
@@ -61,28 +63,28 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
 		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
 		drinkCount = (TextView) findViewById(R.id.drink_count);
-		click= (LinearLayout) findViewById(R.id.clickAppear);
-		
+		click = (LinearLayout) findViewById(R.id.clickAppear);
+
 		goalText = (TextView) findViewById(R.id.goalStatement);
 		back = (ImageButton) findViewById(R.id.bPreviousMonth);
 		next = (ImageButton) findViewById(R.id.bNextMonth);
 		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
-		dog_img = (RelativeLayout)findViewById(R.id.hot_dog_img);
+		dog_img = (RelativeLayout) findViewById(R.id.hot_dog_img);
 		dogCount = (TextView) findViewById(R.id.hot_dog_count);
 		back.setOnClickListener(this);
 		next.setOnClickListener(this);
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		goal = Integer.parseInt(getPrefs.getString("goal", "2"));
-		
+
 		drinkingDays = new ArrayList<Integer>();
 		maxBac = new ArrayList<Double>();
 		bacColors = new ArrayList<Integer>();
 
-		day_guess = new ArrayList<DatabaseStore>(); 
+		day_guess = new ArrayList<DatabaseStore>();
 		hotdogs = new ArrayList<DatabaseStore>();
-		
-		//Get the values from the DB
+
+		// Get the values from the DB
 		Date date = new Date();
 		calculateValues(date);
 
@@ -96,98 +98,104 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		drinkBacButtons = adapter.getButtonView();
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		if (checkSurveyed) {
-			Intent openHint = new Intent(this, DrinkCalendarTutorial.class);
-			startActivity(openHint);
 		}
-		
+
 	}
 
 	/*
 	 * Construct necessary Lists for the DB
 	 */
-	private void convertToLists(ArrayList<DatabaseStore> color, ArrayList<DatabaseStore> values){
-		for(int i=0; i<values.size(); i++){
+	private void convertToLists(ArrayList<DatabaseStore> color,
+			ArrayList<DatabaseStore> values) {
+		for (int i = 0; i < values.size(); i++) {
 			DatabaseStore ds = values.get(i);
 			drinkingDays.add(ds.day);
 			maxBac.add(Double.valueOf(ds.value));
 			bacColors.add(Integer.parseInt(color.get(i).value));
 		}
 	}
-	
+
 	/*
 	 * Must sort both color and values by time before calling.
 	 */
-	private void getMaxForDays(ArrayList<DatabaseStore> colors, ArrayList<DatabaseStore> values){
-		assert(colors.size() == values.size());
-		
+	private void getMaxForDays(ArrayList<DatabaseStore> colors,
+			ArrayList<DatabaseStore> values) {
+		assert (colors.size() == values.size());
+
 		day_colors = new ArrayList<DatabaseStore>();
 		day_values = new ArrayList<DatabaseStore>();
 		day_counts = new ArrayList<Integer>();
-		
-		DatabaseStore max_day=null;
-		DatabaseStore max_color=null;
-		if(values!=null){
+
+		DatabaseStore max_day = null;
+		DatabaseStore max_color = null;
+		if (values != null) {
 			int cnt = 0;
-			for(int i=0; i< values.size(); i++){
-				cnt+=1;
+			for (int i = 0; i < values.size(); i++) {
+				cnt += 1;
 				DatabaseStore s = values.get(i);
-				if(max_day == null){
+				if (max_day == null) {
 					max_day = s;
 					max_color = colors.get(i);
-				}else{
-					if(max_day.day < s.day){
+				} else {
+					if (max_day.day < s.day) {
 						day_colors.add(max_color);
 						day_values.add(max_day);
 						day_counts.add(cnt);
-						cnt=0;
+						cnt = 0;
 						max_day = s;
 						max_color = colors.get(i);
-					} else if(Double.valueOf(max_day.value)< Double.valueOf(s.value)){
+					} else if (Double.valueOf(max_day.value) < Double
+							.valueOf(s.value)) {
 						max_day = s;
 						max_color = colors.get(i);
 					}
 				}
 			}
-			//add final values
+			// add final values
 			day_values.add(max_day);
 			day_colors.add(max_color);
 			day_counts.add(cnt);
 		}
 	}
-	private void calculateValues(Date date){
+
+	private void calculateValues(Date date) {
 		maxBac.clear();
 		bacColors.clear();
 		drinkingDays.clear();
-		
+
 		ArrayList<DatabaseStore> bac_colors = (ArrayList<DatabaseStore>) db
 				.getVarValuesForMonth("bac_color", date);
-		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
-		day_guess = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drink_guess", date);
-		hotdogs = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("hot_dogs",date);
-		
-		if(bac_colors != null && bac_vals != null && hotdogs != null){
+		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>) db
+				.getVarValuesForMonth("bac", date);
+		day_guess = (ArrayList<DatabaseStore>) db.getVarValuesForMonth(
+				"drink_guess", date);
+		hotdogs = (ArrayList<DatabaseStore>) db.getVarValuesForMonth(
+				"hot_dogs", date);
+
+		if (bac_colors != null && bac_vals != null && hotdogs != null) {
 			bac_colors = DatabaseStore.sortByTime(bac_colors);
 			bac_vals = DatabaseStore.sortByTime(bac_vals);
 			hotdogs = DatabaseStore.sortByTime(hotdogs);
-			if(day_guess!=null){
-				day_guess =DatabaseStore.sortByTime(day_guess);
+			if (day_guess != null) {
+				day_guess = DatabaseStore.sortByTime(day_guess);
 			}
 			getMaxForDays(bac_colors, bac_vals);
 			convertToLists(day_colors, day_values);
 		}
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 
-		GregorianCalendar gc = new GregorianCalendar(selectedYear, selectedMonth, 1);
+		GregorianCalendar gc = new GregorianCalendar(selectedYear,
+				selectedMonth, 1);
 		Date date = new Date();
 		switch (v.getId()) {
-		case R.id.bNextMonth:		
-			
+		case R.id.bNextMonth:
+
 			gc.add(Calendar.MONTH, 1);
 			date = gc.getTime();
-			
+
 			if (selectedMonth + 1 > 11) {
 				selectedMonth = 0;
 				selectedYear++;
@@ -197,10 +205,10 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			setMonthFromInt(selectedMonth);
 			break;
 		case R.id.bPreviousMonth:
-			
+
 			gc.add(Calendar.MONTH, -1);
 			date = gc.getTime();
-			
+
 			if (selectedMonth - 1 < 0) {
 				selectedMonth = 11;
 				selectedYear--;
@@ -225,139 +233,172 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		month = months[num];
 		monthDisplay.setText(month);
 	}
-	
-	public void changeBottomDisplay(String entry, double bac, int index) {
-		//bottomDisplay.setText(entry);
-		int info_color = 0;
-		String info_txt="";
-		String est = "";
-		String cnt = "";
-		String dogs = "";
-		if (bac == 0){
-			info_color = 0xFF0099CC;
-			info_txt = "Click on a colored date for more information.";
-			est = "";
-			cnt="";
-			dogs ="";
-			goalText.setText("");
-			click.setVisibility(View.GONE);
-			
-		}else{
-			if(index != -1){
-				if(day_counts.get(index)==1){
-					cnt = String.valueOf(day_counts.get(index)) + " Drink Tracked.";
-					click.setVisibility(View.VISIBLE);
-					if(day_counts.get(index)<=goal)
-						goalText.setText("GOAL ACHIEVED!");
-					else
-						goalText.setText("GOAL NOT MET!");
-				}else{
-					cnt = String.valueOf(day_counts.get(index)) + " Drinks Tracked.";
-					click.setVisibility(View.VISIBLE);
-					if(day_counts.get(index)<=goal)
-						goalText.setText("GOAL ACHIEVED!");
-					else
-						goalText.setText("GOAL NOT MET!");
-				}
-				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
-				if(num_dogs ==1){
-					dogs = "Which is calorically equivalent to 1 hot dog.";
-				}else{
-					dogs = "Which is calorically equivalent to " + num_dogs + " hot dogs."; 
-				}
-			}
-			info_txt ="BAC: " + entry+ "\n\n";
-			if (bac < 0.06) {
-				info_color = 0x884D944D;
-				if(bac < 0.02){
-					info_txt += "-Begin to feel relaxed.\n-Reaction time slows.\n";
-				} else {
-					info_txt += "-Euphoria, \"the buzz\"\n-Sociability.\n-Decrease in judgement and reasoning.\n";
-				}
-			} else if (bac < 0.15) {
-				info_color = 0X88E68A2E;
-				if(bac <=0.08) {
-					info_txt +="-Legally Intoxicated.\n-Balance and Coordination impaired.\n-Less self-control.";
-				}else{
-					info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n";
-				}
-			} else if (bac < 0.24) {
-				info_color = 0X88A30000;
-				info_txt +="-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n";
+
+	public void changeBottomDisplay(String entry, double bac, int index,
+			int estimatedDrinks) {
+
+		if (estimatedDrinks <= 0) {
+			// bottomDisplay.setText(entry);
+			int info_color = 0;
+			String info_txt = "";
+			String est = "";
+			String cnt = "";
+			String dogs = "";
+			if (bac == 0) {
+				info_color = 0xFF0099CC;
+				info_txt = "Click on a colored date for more information.";
+				est = "";
+				cnt = "";
+				dogs = "";
+				goalText.setText("");
+				click.setVisibility(View.GONE);
+
 			} else {
-				if(bac < .35){ 
-					info_txt += "-May be unable to walk.\n-May pass out or lose conciousness.\n-Seek medical attention.\n";
-				}else{
-					info_txt += "-High risk for coma or death.\n";
-				}
-				info_color = 0XCC000000;
-			}
-		}
-		infoDisplay.setText(info_txt);
-		infoDisplay.setBackgroundColor(info_color);
-		drinkCount.setText(cnt);
-		dogCount.setText(dogs);
-		
-		int count = 0;
-		if(index!=-1){
-			int num_dogs = Integer.parseInt(hotdogs.get(index).value);
-			dog_img.removeAllViews();
-			drink_img.removeAllViews();
-			/*int c = dog_img.getChildCount();
-			for(int i=c; c>0; c--){
-				dog_img.removeViewAt(0);
-			}
-			int t = drink_img.getChildCount();
-			for(int i=t; t>0; t--){
-				drink_img.removeViewAt(0);
-			}
-			*/
-			for(int i=0; i<=num_dogs; i++){
-				count+=1;
-				ImageView iv = new ImageView(this);
-				iv.setBackgroundResource(R.drawable.hot_dog);
-				iv.setId(i);
-				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(80,80);
-				if(i>0){
-					ImageView last = (ImageView)dog_img.findViewById(i-1);
-					if(count >10){
-						p.addRule(RelativeLayout.BELOW, i-10);
-						p.addRule(RelativeLayout.ALIGN_START, i-10);
-					}else{
-						p.addRule(RelativeLayout.RIGHT_OF, last.getId());	
+				if (index != -1) {
+					if (day_counts.get(index) == 1) {
+						cnt = String.valueOf(day_counts.get(index))
+								+ " Drink Tracked.";
+						click.setVisibility(View.VISIBLE);
+						if (day_counts.get(index) <= goal)
+							goalText.setText("GOAL ACHIEVED!");
+							
+						else{
+							goalText.setText("GOAL NOT MET!");
+							achievement++;
+							if (achievement%3==0)
+								Toast.makeText(getApplicationContext(),
+										"You can change your goal in the settings menu", Toast.LENGTH_SHORT).show();
+						}
+					} else {
+						cnt = String.valueOf(day_counts.get(index))
+								+ " Drinks Tracked.";
+						click.setVisibility(View.VISIBLE);
+						if (day_counts.get(index) <= goal)
+							goalText.setText("GOAL ACHIEVED!");
+						else{
+							goalText.setText("GOAL NOT MET!");
+							achievement++;
+							if (achievement%3==0)
+								Toast.makeText(getApplicationContext(),
+										"You can change your goal in the settings menu", Toast.LENGTH_SHORT).show();
+						}
+					}
+					int num_dogs = Integer.parseInt(hotdogs.get(index).value);
+					if (num_dogs == 1) {
+						dogs = "Which is calorically equivalent to 1 hot dog.";
+					} else {
+						dogs = "Which is calorically equivalent to " + num_dogs
+								+ " hot dogs.";
 					}
 				}
-			
-				iv.setLayoutParams(p);
-				dog_img.addView(iv, p);
-			}
-			count = 0;
-			for(int i=0; i<=day_counts.get(index); i++){
-				count+=1;
-				ImageView iv = new ImageView(this);
-				iv.setBackgroundResource(R.drawable.beer_icon);
-				iv.setId(i);
-				RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(60,60);
-				if(i>0){
-					ImageView last = (ImageView)drink_img.findViewById(i-1);
-					if(count >10){
-						p.addRule(RelativeLayout.BELOW, i-10);
-						p.addRule(RelativeLayout.ALIGN_START, i-10);
-					}else{
-						p.addRule(RelativeLayout.RIGHT_OF, last.getId());	
+				info_txt = "BAC: " + entry + "\n\n";
+				if (bac < 0.06) {
+					info_color = 0x884D944D;
+					if (bac < 0.02) {
+						info_txt += "-Begin to feel relaxed.\n-Reaction time slows.\n";
+					} else {
+						info_txt += "-Euphoria, \"the buzz\"\n-Sociability.\n-Decrease in judgement and reasoning.\n";
 					}
+				} else if (bac < 0.15) {
+					info_color = 0X88E68A2E;
+					if (bac <= 0.08) {
+						info_txt += "-Legally Intoxicated.\n-Balance and Coordination impaired.\n-Less self-control.";
+					} else {
+						info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n";
+					}
+				} else if (bac < 0.24) {
+					info_color = 0X88A30000;
+					info_txt += "-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n";
+				} else {
+					if (bac < .35) {
+						info_txt += "-May be unable to walk.\n-May pass out or lose conciousness.\n-Seek medical attention.\n";
+					} else {
+						info_txt += "-High risk for coma or death.\n";
+					}
+					info_color = 0XCC000000;
 				}
-			
-				iv.setLayoutParams(p);
-				drink_img.addView(iv, p);
 			}
-		}else if(index==-1){
-			drink_img.removeAllViews();
-			dog_img.removeAllViews();
+			infoDisplay.setText(info_txt);
+			infoDisplay.setBackgroundColor(info_color);
+			drinkCount.setText(cnt);
+			dogCount.setText(dogs);
+
+			int count = 0;
+			if (index != -1) {
+				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
+				dog_img.removeAllViews();
+				drink_img.removeAllViews();
+				/*
+				 * int c = dog_img.getChildCount(); for(int i=c; c>0; c--){
+				 * dog_img.removeViewAt(0); } int t = drink_img.getChildCount();
+				 * for(int i=t; t>0; t--){ drink_img.removeViewAt(0); }
+				 */
+				for (int i = 0; i <= num_dogs; i++) {
+					count += 1;
+					ImageView iv = new ImageView(this);
+					iv.setBackgroundResource(R.drawable.hot_dog);
+					iv.setId(i);
+					RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+							80, 80);
+					if (i > 0) {
+						ImageView last = (ImageView) dog_img
+								.findViewById(i - 1);
+						if (count > 10) {
+							p.addRule(RelativeLayout.BELOW, i - 10);
+							p.addRule(RelativeLayout.ALIGN_START, i - 10);
+						} else {
+							p.addRule(RelativeLayout.RIGHT_OF, last.getId());
+						}
+					}
+
+					iv.setLayoutParams(p);
+					dog_img.addView(iv, p);
+				}
+				count = 0;
+				for (int i = 0; i <= day_counts.get(index); i++) {
+					count += 1;
+					ImageView iv = new ImageView(this);
+					iv.setBackgroundResource(R.drawable.beer_icon);
+					iv.setId(i);
+					RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
+							60, 60);
+					if (i > 0) {
+						ImageView last = (ImageView) drink_img
+								.findViewById(i - 1);
+						if (count > 10) {
+							p.addRule(RelativeLayout.BELOW, i - 10);
+							p.addRule(RelativeLayout.ALIGN_START, i - 10);
+						} else {
+							p.addRule(RelativeLayout.RIGHT_OF, last.getId());
+						}
+					}
+
+					iv.setLayoutParams(p);
+					drink_img.addView(iv, p);
+				}
+			} else if (index == -1) {
+				drink_img.removeAllViews();
+				dog_img.removeAllViews();
+			}
+
+		} else {
+			click.setVisibility(View.VISIBLE);
+			if (estimatedDrinks <= goal)
+				goalText.setText("GOAL ACHIEVED!");
+			else{
+				goalText.setText("GOAL NOT MET!");
+				achievement++;
+				if (achievement%3==0)
+					Toast.makeText(getApplicationContext(),
+							"You can change your goal in the settings menu", Toast.LENGTH_SHORT).show();
+			}
+			if (estimatedDrinks == 1)
+				drinkCount.setText("One Drink Estimated");
+			else
+				drinkCount.setText(estimatedDrinks + " Drinks Estimated");
 		}
-		
-		
 	}
+
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -399,7 +440,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		}
 		return true;
 	}
-	
+
 	@Override
 	protected void onPause() {
 		// TODO Auto-generated method stub
@@ -412,6 +453,5 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		super.onStop();
 		finish();
 	}
-
 
 }

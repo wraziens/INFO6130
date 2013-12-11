@@ -89,7 +89,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				int_value.toString(), date);
 		addQuestion(ds);
 	}
-
+	// Adds an integer value to the database
+	
+	public void addValueYesterday(String variable, Integer int_value) {
+		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -24);
+		date = gc.getTime();
+		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
+				int_value.toString(), date);
+		addQuestion(ds);
+	}
 	// Adds an integer value to the database
 	public void addValue(String variable, String str_value) {
 		Date date = new Date();

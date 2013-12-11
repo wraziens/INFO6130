@@ -89,7 +89,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
+					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1,0);
 					if (focused > 0) {
 						View child = parent.getChildAt(focused);
 						if (drinkingDays.contains((Integer) focused)) {
@@ -111,7 +111,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
+					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1,0);
 					if (focused > 0) {
 						View child = parent.getChildAt(focused);
 						if (drinkingDays.contains((Integer) focused)) {
@@ -140,7 +140,7 @@ public class DrinkCalendarAdapter extends BaseAdapter implements
 					public void onClick(View v) {
 						DecimalFormat formatter = new DecimalFormat("#.###");
 						((DrinkCalendar) mContext).changeBottomDisplay(
-								formatter.format(bac_lev), bac_lev, i);
+								formatter.format(bac_lev), bac_lev, i,0);
 						if (focused > 0) {
 							View child = parent.getChildAt(focused);
 							if (drinkingDays.contains((Integer) focused)) {

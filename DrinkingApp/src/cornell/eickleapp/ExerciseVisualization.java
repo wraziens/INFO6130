@@ -92,8 +92,6 @@ public class ExerciseVisualization extends Activity implements
 				.getDefaultSharedPreferences(getBaseContext());
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		if (checkSurveyed) {
-			Intent openHint = new Intent(this, ExerciseVisualizationTutorial.class);
-			startActivity(openHint);
 		}
 		
 	}

@@ -12,7 +12,7 @@
 
         android:layout_centerVertical="true"
         
-        android:background="@drawable/mainmenututorial" />
+        android:background="@drawable/tutorialmain" />
         <TextView
         android:id="@+id/tvMainMenuTutorial2"
         android:layout_width="250sp"
@@ -21,7 +21,7 @@
 
         android:layout_centerVertical="true"
         android:visibility="invisible"
-        android:background="@drawable/visualizationmenututorial" />
+        android:background="@drawable/tutorialmain" />
 
     <Button
         android:id="@+id/bMainMenuPrevious"
@@ -31,6 +31,7 @@
         android:layout_toLeftOf="@+id/cbMainMenuTutorial"
                 android:layout_below="@+id/tvMainMenuTutorial1"
                 android:textSize="5sp"
+                android:visibility="gone"
         android:text="[--" />
 
     <Button
@@ -41,6 +42,7 @@
                 android:layout_below="@+id/tvMainMenuTutorial1"
         android:layout_toRightOf="@+id/cbMainMenuTutorial"
         android:textSize="5sp"
+                        android:visibility="gone"
         android:text="--]" />
 
     <CheckBox
@@ -50,7 +52,7 @@
         android:layout_below="@+id/tvMainMenuTutorial1"
         android:layout_centerHorizontal="true"
         android:checked="true"
-        android:text="Hints?"
+        android:text="START"
         android:layout_marginTop="50sp"
         android:textColor="#ffffff" />
 

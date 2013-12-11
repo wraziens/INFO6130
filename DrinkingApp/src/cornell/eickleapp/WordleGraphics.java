@@ -82,7 +82,7 @@ public class WordleGraphics extends View {
 		Paint titlePaint = new Paint();
 		titlePaint.setTextSize(60);
 		titlePaint.setTextAlign(Align.CENTER);
-		titlePaint.setColor(Color.rgb(0, 153, 204));
+		titlePaint.setColor(Color.BLACK);
 		if (drink) {
 			canvas.drawText("Drinking", canvas.getWidth() / 2, 50, titlePaint);
 			topEdge = 50;
@@ -93,6 +93,7 @@ public class WordleGraphics extends View {
 		}
 		if (arrayList == null) {
 
+			titlePaint.setColor(Color.GRAY);
 			if (drink) {
 				canvas.drawText("N/A", canvas.getWidth() / 2,
 						canvas.getHeight() / 4, titlePaint);
@@ -125,7 +126,7 @@ public class WordleGraphics extends View {
 				// The sizes should be relative to the total amount
 				int total_cnt = getTotalCount(arrayList);
 
-				double size = 400 * (count / Double.valueOf(total_cnt));
+				double size = 300 * (count / Double.valueOf(total_cnt));
 				if ((int) size > 50) {
 					size = 30.0;
 				}

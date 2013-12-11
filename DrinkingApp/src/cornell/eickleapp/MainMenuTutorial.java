@@ -77,15 +77,13 @@ public class MainMenuTutorial extends Activity implements OnCheckedChangeListene
 		switch(arg0.getId()){
 		case R.id.bMainMenuPrevious:
 			if (currentBackgroundCount-1>-1){
-				backgroundList.get(currentBackgroundCount).setVisibility(4);
-				backgroundList.get(currentBackgroundCount-1).setVisibility(0);
+
 				currentBackgroundCount--;
 			}
 			break;
 		case R.id.bMainMenuNext:
 			if (backgroundList.size()>currentBackgroundCount+1){
-				backgroundList.get(currentBackgroundCount).setVisibility(4);
-				backgroundList.get(currentBackgroundCount+1).setVisibility(0);
+
 				currentBackgroundCount++;
 			}
 			break;

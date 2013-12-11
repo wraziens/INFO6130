@@ -2,33 +2,39 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >        
+    android:orientation="vertical" >
+
     <TextView
         android:id="@+id/review_drinks"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:padding="10dp" />
-  
+        android:padding="10dp"
+        android:textSize="30sp" />
+
     <TextView
         android:id="@+id/review_bac"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/excess_drinks"
-        android:textSize="30sp"
+        android:layout_marginTop="100dp"
         android:padding="10dp"
-        android:layout_marginTop="100dp"/>
-   	<LinearLayout
+        android:text="@string/excess_drinks"
+        android:textSize="30sp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" 
-        android:layout_marginTop="25dp">
+        android:layout_marginTop="25dp"
+        android:orientation="vertical" >
 
         <Button
             android:id="@+id/review_finish"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
             android:layout_gravity="center"
-            android:text="@string/close" />
-    </LinearLayout>	
+            android:background="@drawable/colorbutton"
+            android:text="@string/close"
+            android:textColor="#ffffff"
+            android:textSize="30sp" />
+    </LinearLayout>
+
 </LinearLayout>
