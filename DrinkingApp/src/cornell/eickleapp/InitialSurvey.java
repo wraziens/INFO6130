@@ -25,10 +25,10 @@ import android.widget.TextView;
 
 public class InitialSurvey extends Activity implements OnClickListener,OnCheckedChangeListener {
 
-	TextView ageTV,weightTV;
-	Button finish,plusAge,plusWeight,minusAge,minusWeight;
+	TextView ageTV,weightTV,goalTV;
+	Button finish,plusAge,plusWeight,plusGoal,minusAge,minusWeight,minusGoal;
 	CheckBox sleep, exercise, productivity, social;
-	int age,weight;
+	int age,weight,goal;
 	RadioGroup sex,alcoholFrequency,alcoholQuantity;
 	String sexResult,alcoholFrequencyResult,alcoholQuantityResult;
 	AlarmManager alarmManager;
@@ -45,8 +45,10 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		//test = (TextView) findViewById(R.id.test);
 		ageTV=(TextView) findViewById(R.id.tvISAge);
 		weightTV=(TextView) findViewById(R.id.tvISWeight);
+		goalTV=(TextView) findViewById(R.id.tvISGoal);
 		age=Integer.parseInt(ageTV.getText().toString());
 		weight=Integer.parseInt(weightTV.getText().toString());
+		goal=Integer.parseInt(goalTV.getText().toString());
 		//sleep = (CheckBox) findViewById(R.id.cbISSleep);
 		exercise = (CheckBox) findViewById(R.id.cbISExercise);
 		productivity = (CheckBox) findViewById(R.id.cbISProductivity);
@@ -54,19 +56,23 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		finish = (Button) findViewById(R.id.bISFinish);
 		plusAge = (Button) findViewById(R.id.bISPlus1);
 		plusWeight = (Button) findViewById(R.id.bISPlus2);
+		plusGoal = (Button) findViewById(R.id.bISPlus3);
 		minusAge = (Button) findViewById(R.id.bISMinus1);
 		minusWeight = (Button) findViewById(R.id.bISMinus2);
+		minusGoal = (Button) findViewById(R.id.bISMinus3);
 		sex = (RadioGroup) findViewById(R.id.rgISSex);
-		alcoholFrequency=(RadioGroup) findViewById(R.id.rgISAlcoholFrequency);
-		alcoholQuantity=(RadioGroup) findViewById(R.id.rgISAlcoholQuantity);
+		//alcoholFrequency=(RadioGroup) findViewById(R.id.rgISAlcoholFrequency);
+		//alcoholQuantity=(RadioGroup) findViewById(R.id.rgISAlcoholQuantity);
 		finish.setOnClickListener(this);
 		plusAge.setOnClickListener(this);
 		plusWeight.setOnClickListener(this);
+		plusGoal.setOnClickListener(this);
 		minusAge.setOnClickListener(this);
 		minusWeight.setOnClickListener(this);
+		minusGoal.setOnClickListener(this);
 		sex.setOnCheckedChangeListener(this);
-		alcoholFrequency.setOnCheckedChangeListener(this);
-		alcoholQuantity.setOnCheckedChangeListener(this);
+		//alcoholFrequency.setOnCheckedChangeListener(this);
+		//alcoholQuantity.setOnCheckedChangeListener(this);
 		
 		
 		//sets the mark for 1st time use
@@ -97,6 +103,7 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 				SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 				SharedPreferences.Editor editPrefs=getPrefs.edit();
 				editPrefs.putBoolean("initialSurvey", true);
+				editPrefs.putString("goal", ""+goal);
 				editPrefs.commit();
 				preferenceCheck();
 				Intent goToMenu=new Intent(this,MainMenu.class);
@@ -108,6 +115,8 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 				break;
 			case R.id.bISMinus1:
 				age--;
+				if (age<0)
+					age=0;
 				ageTV.setText(""+age);
 				break;
 			case R.id.bISPlus2:
@@ -115,10 +124,26 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 				weightTV.setText(""+weight);
 				break;
 			case R.id.bISMinus2:
-				weight-=5;
+
+				weight-=5;				
+				if (weight<0)
+					weight=0;
 				weightTV.setText(""+weight);
 				break;
+			case R.id.bISPlus3:
+				goal++;
+				if (goal>15)
+					goal=15;
+				goalTV.setText(""+goal);
+				break;
+			case R.id.bISMinus3:
+				goal-=1;
+				if (goal<0)
+					goal=0;
+				goalTV.setText(""+goal);
+				break;
 		}
+		
 		
 		
 	}
@@ -169,6 +194,7 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 					break;
 			}
 		}
+		/*
 		if (group.getId()==R.id.rgISAlcoholFrequency){//don't need the if statement, but inserted for coder's visual structure
 			switch(checkedId){
 				case R.id.rbISAlcoholF1:
@@ -206,7 +232,8 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 					
 					
 			}
-		}
+	
+		}		*/
 		
 	}
 	//currently reminds the user 24 hours since 1st use

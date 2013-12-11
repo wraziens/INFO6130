@@ -126,11 +126,15 @@ public class ProductivityAdapter extends BaseAdapter {
 				grade = "B";
 			else if (rawGrade >= 70 && rawGrade < 80)
 				grade = "C";
-			else if (rawGrade < 70)
+			else if (rawGrade >= 60 && rawGrade < 70)
 				grade = "D";
+			else if (rawGrade < 60)
+				grade = "F";
 
 		} else {
-			if (rawGrade >= 60)
+			if (rawGrade >= 80)
+				grade = "F";
+			else if (rawGrade >= 60 && rawGrade < 80)
 				grade = "D";
 			else if (rawGrade >= 40 && rawGrade < 60)
 				grade = "C";

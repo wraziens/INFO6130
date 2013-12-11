@@ -110,7 +110,7 @@ public class VisualizeMenu extends Activity implements OnClickListener {
 				for (int i = 0; i < productiveList.size(); i++) {
 					int productivityVal = Integer.parseInt(productiveList.get(i).value);
 					int performanceVal = Integer.parseInt(performanceList.get(i).value);
-					int stressVal = Integer.parseInt(stressLevelList.get(i).value);
+					int stressVal = 100-Integer.parseInt(stressLevelList.get(i).value);
 					
 					totalScore = totalScore + ((productivityVal+productivityVal+stressVal)/3);
 				}
