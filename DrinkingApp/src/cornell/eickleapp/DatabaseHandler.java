@@ -339,7 +339,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public ArrayList<DatabaseStore> getDrinkCountForAllDays(){
 		SQLiteDatabase db = this.getWritableDatabase();
 		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + QUES_KEY_VAR
-				+ "= drink_count";
+				+ "='drink_count'";
 		Cursor cursor = db.rawQuery(query, null);
 		if (cursor.getCount() == 0) {
 			return null;
