@@ -3,24 +3,22 @@ package cornell.eickleapp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.drawable;
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	private Context mContext;
+	DatabaseHandler db;
 	int monthSelected, yearSelected;
 	ArrayList<Integer> drinkingDays;
 	private ArrayList<Integer> bacColors;
@@ -30,6 +28,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	static ArrayList<Button> buttonStore = new ArrayList<Button>();
 	static int focused = 0;
 	TextView test;
+	static List<DatabaseStore> estRelavantMonthList;
 
 	public ColorAdapter(Context c, int m, int y, ArrayList<Integer> d,
 			ArrayList<Double> mb, ArrayList<Integer> colors) {
@@ -39,7 +38,17 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		drinkingDays = d;
 		maxbac = mb;
 		bacColors = colors;
+		db = new DatabaseHandler(mContext);
+		estRelavantMonthList = new ArrayList<DatabaseStore>();
 
+		List<DatabaseStore> everyEstList = db.getAllVarValue("drink_guess");
+		for (int i = 0; i < everyEstList.size(); i++) {
+			int something = everyEstList.get(i).month;
+			if ((everyEstList.get(i).month) - 1 == monthSelected
+					&& everyEstList.get(i).year == yearSelected)
+				estRelavantMonthList.add(everyEstList.get(i));
+		}
+		bacColors = colors;
 	}
 
 	// given month and year, it detects the 1st day of the month and see what
@@ -70,53 +79,36 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public View getView(final int position, View convertView,
 			final ViewGroup parent) {
-		
+
 		final Button view = new Button(mContext);
+
+		view.setBackgroundResource(android.R.drawable.btn_default);
 		double bacLevel;
-		
-		
-		if (!drinkingDays.contains(position-6-daysSetBack)){
-			view.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					((DrinkCalendar) mContext)
-							.changeBottomDisplay("", 0,-1);
-					if (focused > 0) {
-						View child = parent.getChildAt(focused);
-						if(drinkingDays.contains((Integer)focused -6 - daysSetBack)){
-							int i = drinkingDays.indexOf(focused - 6 -daysSetBack);
-							child.setBackgroundColor(bacColors.get(i));
-						}else{
-							child.setBackgroundResource(android.R.drawable.btn_default);
-						}
-					}
-					focused = position;
-					v.setSelected(true);
-					view.setBackgroundResource(R.drawable.border);
+
+		if (position > (7 + daysSetBack)) {
+			final int dayOfMonth = position - daysSetBack - 7 + 1;
+
+			Boolean specialPaint = false;
+			for (int i = 0; i < estRelavantMonthList.size(); i++) {
+				if (estRelavantMonthList.get(i).day == dayOfMonth) {
+					specialPaint = true;
+					view.setBackgroundColor(Color.rgb(0, 218, 123));
 				}
+			}
 
-			});
-		}
-		for (int n = 0; n < drinkingDays.size(); n++) {
-			if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
-				view.setBackgroundColor(bacColors.get(n));
-				bacLevel = maxbac.get(n);
-				final double bac_lev = bacLevel;
-				final int i = n;
+			if (!drinkingDays.contains(dayOfMonth) && specialPaint == true) {
 				view.setOnClickListener(new OnClickListener() {
-
 					@Override
 					public void onClick(View v) {
-						DecimalFormat formatter = new DecimalFormat("#.###");
-						((DrinkCalendar) mContext)
-								.changeBottomDisplay(formatter.format(bac_lev), bac_lev,i);
+						((DrinkCalendar) mContext).changeBottomDisplay("", 0,
+								-1);
 						if (focused > 0) {
 							View child = parent.getChildAt(focused);
-							if(drinkingDays.contains((Integer)focused-6-daysSetBack)){
-								int i = drinkingDays.indexOf(focused - 6 -daysSetBack);
-								child.setBackgroundColor(bacColors.get(i));
-							}else{
-								child.setBackgroundResource(android.R.drawable.btn_default);
+							if (drinkingDays.contains((Integer) focused)) {
+								child.setBackgroundColor(bacColors.get(focused));
+							} else {
+								view.setBackgroundColor(Color.rgb(0, 218, 123));
+
 							}
 						}
 						focused = position;
@@ -126,7 +118,63 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 
 				});
 			}
-			
+
+			if (!drinkingDays.contains(dayOfMonth) && specialPaint == false) {
+				view.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						((DrinkCalendar) mContext).changeBottomDisplay("", 0,
+								-1);
+						if (focused > 0) {
+							View child = parent.getChildAt(focused);
+							if (drinkingDays.contains((Integer) focused)) {
+								child.setBackgroundColor(bacColors.get(focused));
+							} else {
+								child.setBackgroundResource(android.R.drawable.btn_default);
+
+							}
+						}
+						focused = position;
+						v.setSelected(true);
+						view.setBackgroundResource(R.drawable.border);
+					}
+
+				});
+			}
+			if (drinkingDays.contains(dayOfMonth)) {
+				for (int n = 0; n < drinkingDays.size(); n++) {
+					if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
+						view.setBackgroundColor(bacColors.get(n));
+						bacLevel = maxbac.get(n);
+						final double bac_lev = bacLevel;
+						final int i = n;
+						view.setOnClickListener(new OnClickListener() {
+
+							@Override
+							public void onClick(View v) {
+								DecimalFormat formatter = new DecimalFormat(
+										"#.###");
+								((DrinkCalendar) mContext).changeBottomDisplay(
+										formatter.format(bac_lev), bac_lev, i);
+								if (focused > 0) {
+									View child = parent.getChildAt(focused);
+									if (drinkingDays
+											.contains((Integer) focused)) {
+										child.setBackgroundColor(bacColors
+												.get(focused));
+									} else {
+										child.setBackgroundResource(android.R.drawable.btn_default);
+									}
+								}
+								focused = position;
+								v.setSelected(true);
+								view.setBackgroundResource(R.drawable.border);
+							}
+
+						});
+					}
+				}
+			}
 		}
 		if (position > 6 && position < 7 + daysSetBack) {
 			view.setVisibility(8);

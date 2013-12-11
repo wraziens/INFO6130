@@ -42,11 +42,8 @@ public class DrinkReview extends Activity implements OnClickListener {
 		getMaxBac();
 		
 		drinks.setText("You recorderd having " + drinkCount + " drinks last night.");
-<<<<<<< HEAD
 		bac.setText("Your maximum Estimated Blood Alcohol Level for the night was " + (maxBac.toString().substring(0, 4)));
 
-=======
->>>>>>> 003423c94ccdc5a8ed5c1fa9c20f9345f0c96a16
 		DecimalFormat formatter = new DecimalFormat("#.###");
 		
 		bac.setText("Your maximum Estimated Blood Alcohol Level for the night was " + formatter.format(maxBac));

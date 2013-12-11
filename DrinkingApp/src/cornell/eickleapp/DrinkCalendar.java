@@ -246,7 +246,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			if(index != -1){
 				if(day_counts.get(index)==1){
 					cnt = String.valueOf(day_counts.get(index)) + " Drink Tracked.";
-					goalText.setVisibility(View.VISIBLE);
+					click.setVisibility(View.VISIBLE);
 					if(day_counts.get(index)<=goal)
 						goalText.setText("GOAL ACHIEVED!");
 					else
