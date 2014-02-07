@@ -141,7 +141,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						day_colors.add(max_color);
 						day_values.add(max_day);
 						day_counts.add(cnt);
-						cnt = 0;
+						cnt = 1;
 						max_day = s;
 						max_color = colors.get(i);
 					} else if (Double.valueOf(max_day.value) < Double

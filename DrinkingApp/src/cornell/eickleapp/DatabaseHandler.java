@@ -296,7 +296,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery(query, null);
 		return handleCursor(cursor);
 	}
-	
 	public List<DatabaseStore> getAllVarValue(String variable) {
 		// Get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();

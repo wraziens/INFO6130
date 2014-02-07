@@ -69,6 +69,9 @@ public class DrinkCounter extends Activity {
 			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
 			startActivity(openTutorial);
 		}
+
+		
+		
 	}
 
 	@Override
