@@ -2,15 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:orientation="vertical" >
     
+    
+    <RelativeLayout
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp"
+        android:background="@android:color/white"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+              
     <ImageButton
         android:id="@+id/plus_drink_button"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
         android:src="@drawable/drink_plus_button"
         android:contentDescription="@string/add_desc"
-        android:background="@android:color/white"/>
+        android:background="@android:color/white"
+  
+        android:hapticFeedbackEnabled="true"/>
 
+      <ImageButton
+        android:id="@+id/inject_drink_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/drink_inject"
+        android:contentDescription="@string/add_desc"
+        android:background="@android:color/white"
+        android:layout_alignTop="@id/plus_drink_button"
+        android:layout_toRightOf="@id/plus_drink_button"
+        android:hapticFeedbackEnabled="true"/>
+    </RelativeLayout>
+    
 </RelativeLayout>
