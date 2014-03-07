@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape android:shape="oval"
+            android:id="@+id/face_color">
+            <size android:width="80dp"
+                  android:height="80dp"/>
+    		<solid android:color="#70BF41"/> 
+		</shape>
+   	</item>
+    <item
+        android:drawable="@drawable/ic_tracker_smile"
+        android:id="@+id/face_icon"
+        android:top="12dp"
+        android:left="12dp"
+        android:bottom="10dp"
+        android:right="12dp"/>
+    
+</layer-list>
