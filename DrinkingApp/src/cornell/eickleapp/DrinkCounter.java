@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,8 +48,34 @@ public class DrinkCounter extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
+		//setContentView(new CounterCircles(this));
+		
+		RelativeLayout layout = new RelativeLayout(this);
+		
+		//delcare the params for the relative layout
+		RelativeLayout.LayoutParams rel_params = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.MATCH_PARENT,
+				RelativeLayout.LayoutParams.MATCH_PARENT);
+		
+		//declare the layout parameters
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				RelativeLayout.LayoutParams.WRAP_CONTENT,
+				RelativeLayout.LayoutParams.WRAP_CONTENT);
+		
+		params.addRule(RelativeLayout.CENTER_IN_PARENT);
+		
+		CounterCircles counter = new CounterCircles(this);
+		counter.setLayoutParams(params);
+	
+		layout.addView(counter);
+		setContentView(layout, rel_params);
+		
+		setContentView(R.layout.drink_tracker);
+		
+	}
+		/*
 		setContentView(R.layout.drink_tracking);
-
+		 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			// getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
@@ -69,7 +96,7 @@ public class DrinkCounter extends Activity {
 			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
 			startActivity(openTutorial);
 		}
-
+	
 		
 		
 	}
@@ -248,8 +275,9 @@ public class DrinkCounter extends Activity {
 		 * check.setTextColor(Color.parseColor("#FFFFFF"));
 		 * ((FrameLayout)parent_view).addView(check);
 		 */
+		/*
 	}
-
+	
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -291,4 +319,5 @@ public class DrinkCounter extends Activity {
 		}
 		return true;
 	}
+	*/
 }
