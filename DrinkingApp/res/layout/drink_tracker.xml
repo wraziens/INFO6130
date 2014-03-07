@@ -3,35 +3,51 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    
-    <RelativeLayout
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="220dp"
-        android:background="@android:color/white"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
-              
-    <ImageButton
-        android:id="@+id/plus_drink_button"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:src="@drawable/drink_plus_button"
-        android:contentDescription="@string/add_desc"
-        android:background="@android:color/white"
-  
-        android:hapticFeedbackEnabled="true"/>
 
-      <ImageButton
-        android:id="@+id/inject_drink_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:src="@drawable/drink_inject"
-        android:contentDescription="@string/add_desc"
-        android:background="@android:color/white"
-        android:layout_alignTop="@id/plus_drink_button"
-        android:layout_toRightOf="@id/plus_drink_button"
-        android:hapticFeedbackEnabled="true"/>
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="220dp" >
+
+        <ImageButton
+            android:id="@+id/plus_drink_button"
+            android:layout_width="210dp"
+            android:layout_height="210dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add_desc"
+            android:hapticFeedbackEnabled="true"
+            android:src="@drawable/drink_plus_button" />
+
+        <ImageButton
+            android:id="@+id/inject_drink_button"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignTop="@id/plus_drink_button"
+            android:layout_toRightOf="@id/plus_drink_button"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add_desc"
+            android:hapticFeedbackEnabled="true"
+            android:src="@drawable/drink_inject_button" />
     </RelativeLayout>
-    
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/relativeLayout1"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="81dp" >
+
+        <ImageButton
+            android:id="@+id/minus_drink_button"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/add_desc"
+            android:hapticFeedbackEnabled="true"
+            android:src="@drawable/drink_minus_button" />
+    </RelativeLayout>
+
 </RelativeLayout>
