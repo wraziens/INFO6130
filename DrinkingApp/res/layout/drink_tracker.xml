@@ -13,8 +13,8 @@
 
         <ImageButton
             android:id="@+id/plus_drink_button"
-            android:layout_width="210dp"
-            android:layout_height="210dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:background="@android:color/transparent"
             android:contentDescription="@string/add_desc"
             android:hapticFeedbackEnabled="true"
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="75dp" >
+        android:layout_marginTop="60dp" >
  
         <!-- android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/relativeLayout1"
@@ -52,7 +52,6 @@
 	        android:contentDescription="@string/add_desc"
 	        android:src="@drawable/drink_smile_tracker_icon"
 	        android:layout_alignBottom="@+id/minus_drink_button" 
-	        android:paddingBottom="15dp"
 	        />
 
         <ImageButton

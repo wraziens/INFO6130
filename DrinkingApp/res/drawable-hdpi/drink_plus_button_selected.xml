@@ -2,17 +2,17 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
     <item>
         <shape android:shape="oval">
-            <size android:width="200dp"
-                  android:height="200dp"/>
+            <size android:width="170dp"
+                  android:height="170dp"/>
     		<solid android:color="#C05800"/>
 		</shape>
    	</item>
     <item
         android:drawable="@drawable/increase_drink"
         android:id="@+id/plus_drink"
-        android:top="35dp"
-        android:left="35dp"
-        android:bottom="35dp"
-        android:right="35dp"/>
+        android:top="75dp"
+        android:left="75dp"
+        android:bottom="75dp"
+        android:right="75dp"/>
     
 </layer-list>
