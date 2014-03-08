@@ -19,6 +19,7 @@
 
     <!-- Strings for Drink Counter -->
     <string name="remove_drink">Remove Last Drink</string>
+    <string name="add_desc">Add another Drink</string>
        
     
     <!-- Strings for Location Question -->
