@@ -18,7 +18,8 @@
             android:background="@android:color/transparent"
             android:contentDescription="@string/add_desc"
             android:hapticFeedbackEnabled="true"
-            android:src="@drawable/drink_plus_button" />
+            android:src="@drawable/drink_plus_button"
+            android:onClick="addDrinkHandler" />
 
         <ImageButton
             android:id="@+id/inject_drink_button"
@@ -30,6 +31,8 @@
             android:contentDescription="@string/add_desc"
             android:hapticFeedbackEnabled="true"
             android:src="@drawable/drink_inject_button" />
+        
+ 
     </RelativeLayout>
 
     <RelativeLayout
