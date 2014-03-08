@@ -5,110 +5,82 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import cornell.eickleapp.R;
-import cornell.eickleapp.R.id;
-import cornell.eickleapp.R.layout;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class DrinkCounter extends Activity {
 	private int drink_count = 0;
-	int start_color = 0x884D944D;
-	int offset = 10;
 	private DatabaseHandler db;
+	
 	private double hours;
-	private int color;
 	private double bac;
-	private Button remove;
+	
+	private Vibrator click_vibe;
+	
+	private int face_color;
+	private int face_icon;
 
-	// TODO:Temporary, move to a class that makes more sense
 	private final Double CALORIES_PER_DRINK = 120.0;
-	private final Double CALORIES_PER_CHICKEN = 264.0;
-	private final Double CALORIES_PER_PIZZA = 285.0;
 	private final Double CALORIES_HOT_DOG = 250.0;
+	private final int START_COLOR = Color.rgb(112,191, 65);
 
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
-		//setContentView(new CounterCircles(this));
-		
-		RelativeLayout layout = new RelativeLayout(this);
-		
-		//delcare the params for the relative layout
-		RelativeLayout.LayoutParams rel_params = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.MATCH_PARENT,
-				RelativeLayout.LayoutParams.MATCH_PARENT);
-		
-		//declare the layout parameters
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				RelativeLayout.LayoutParams.WRAP_CONTENT,
-				RelativeLayout.LayoutParams.WRAP_CONTENT);
-		
-		params.addRule(RelativeLayout.CENTER_IN_PARENT);
-		
-		CounterCircles counter = new CounterCircles(this);
-		counter.setLayoutParams(params);
-	
-		layout.addView(counter);
-		setContentView(layout, rel_params);
-		
+
+		click_vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 		setContentView(R.layout.drink_tracker);
-		
-	}
-		/*
-		setContentView(R.layout.drink_tracking);
-		 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 
 		db = new DatabaseHandler(this);
-		View view = findViewById(R.id.drink_layout);
 		calculateBac();
 		calculateColor();
-		view.setBackgroundColor(color);
-		setContentView(view);
-		remove = (Button) findViewById(R.id.removeDrink);
-		remove.setVisibility(View.INVISIBLE);
-
+		
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
+		
 		if (checkSurveyed) {
 			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
 			startActivity(openTutorial);
 		}
-	
-		
-		
 	}
 
+	
+	private void update_face(){
+		ImageView face = (ImageView)findViewById(R.id.drink_smile);
+		
+		//Update the face color
+		((GradientDrawable)((LayerDrawable) face.getDrawable()).getDrawable(0)
+				).setColor(face_color);	
+		
+		//Update the face icon
+		((LayerDrawable) face.getDrawable()).setDrawableByLayerId(
+				R.id.face_icon, getResources().getDrawable(face_icon));
+		face.invalidate();	
+	}
+		
+	
 	@Override
 	protected void onResume() {
 		super.onResume();
-		View view = findViewById(R.id.drink_layout);
 		calculateBac();
 		calculateColor();
-		view.setBackgroundColor(color);
+		update_face();
 	}
+
 
 	private void calculateHours() {
 		Date date = new Date();
@@ -121,10 +93,12 @@ public class DrinkCounter extends Activity {
 		date = gc.getTime();
 		DatabaseStore current = new DatabaseStore("", "", date, "Integer");
 
-		color = start_color;
+		face_color = START_COLOR;
+		
 		if (drink_count_vals != null) {
 			drink_count = drink_count_vals.size();
 			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
+ 			
 			// calculate the hours drinking
 			if (drink_count_vals.size() > 0) {
 				DatabaseStore start = drink_count_vals.get(0);
@@ -135,13 +109,10 @@ public class DrinkCounter extends Activity {
 		}
 	}
 
-	public void doneDrinking(View view) {
-		finish();
-	}
-
+	//TODO: Refactor to ask before removing and checking whether or not the
+	// Drink was recently recorded.
 	public void removeLast(View view) {
 		drink_count--;
-		remove.setVisibility(View.INVISIBLE);
 		Date date = new Date();
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
 				.getVarValuesDelay("drink_count", date);
@@ -149,17 +120,19 @@ public class DrinkCounter extends Activity {
 		drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
 
 		ArrayList<String> variables = new ArrayList<String>();
-		variables
-				.add(drink_count_vals.get(drink_count_vals.size() - 1).variable);
+		variables.add(drink_count_vals.get(
+				drink_count_vals.size() - 1).variable);
 		variables.add("bac");
 		variables.add("bac_color");
 		variables.add("hotdog");
 		
-		ArrayList<DatabaseStore> hd_val = (ArrayList<DatabaseStore>)db.getVarValuesForDay("hotdog",date);
+		ArrayList<DatabaseStore> hd_val = ((ArrayList<DatabaseStore>)db
+				.getVarValuesForDay("hotdog",date));
 		if(hd_val!=null){
 			if(hd_val.size() ==1){
 					if(Integer.valueOf(hd_val.get(0).value) >0){
-						db.updateOrAdd("hotdog", Integer.valueOf(hd_val.get(0).value) - 1);
+						db.updateOrAdd("hotdog", 
+								Integer.valueOf(hd_val.get(0).value) - 1);
 					}
 			}
 		}
@@ -178,21 +151,25 @@ public class DrinkCounter extends Activity {
 		calculateBac();
 		calculateColor();
 
-		View parent_view = findViewById(R.id.drink_layout);
-		parent_view.setBackgroundColor(color);
+		update_face();
 		Toast.makeText(getApplicationContext(),
 				"Your last drink has been removed", Toast.LENGTH_SHORT).show();
 	}
 
+	//TODO: Add icons for faces.
 	public void calculateColor() {
 		if (bac < 0.06) {
-			color = start_color;
+			face_color = START_COLOR;
+			face_icon = R.drawable.ic_tracker_smile;
 		} else if (bac < 0.15) {
-			color = 0X88E68A2E;
+			face_color = Color.rgb(245, 211,40);
+			face_icon = R.drawable.ic_tracker_neutral;
 		} else if (bac < 0.24) {
-			color = 0X88A30000;
+			face_color = Color.rgb(236, 93, 87);
+			face_icon = R.drawable.ic_tracker_frown;
 		} else {
-			color = 0XCC000000;
+			face_color = Color.DKGRAY;
+			face_icon = R.drawable.ic_tracker_dead;
 		}
 	}
 
@@ -241,7 +218,6 @@ public class DrinkCounter extends Activity {
 
 	@SuppressLint("NewApi")
 	public void hadDrink(View view) {
-		remove.setVisibility(View.VISIBLE);
 		drink_count++;
 		if (drink_count == 1) {
 			db.addValueTomorrow("drank_last_night", "True");
@@ -252,22 +228,27 @@ public class DrinkCounter extends Activity {
 		calculateBac();
 		db.addDelayValue("bac", String.valueOf(bac));
 		calculateColor();
-		db.addDelayValue("bac_color", String.valueOf(color));
-		View parent_view = findViewById(R.id.drink_layout);
-		parent_view.setBackgroundColor(color);
+		db.addDelayValue("bac_color", String.valueOf(face_color));
+		update_face();
 
-		// calculate number of chickens that equate the number of calories
+		// calculate number of hot dogs that equate the number of calories
 		Double drink_cals = drink_count * CALORIES_PER_DRINK;
-		int number_chickens = (int) Math
-				.ceil(drink_cals / CALORIES_PER_CHICKEN);
-		db.updateOrAdd("number_chickens", number_chickens);
 
-		// calculate the number of slices of pizza that equate to the
-		// number of drinks consumed that day.
-		int number_pizza = (int) Math.ceil(drink_cals / CALORIES_PER_PIZZA);
-		db.updateOrAdd("number_pizza", number_pizza);
 		int number_hot_dogs = (int) Math.ceil(drink_cals/ CALORIES_HOT_DOG);
 		db.updateOrAdd("hot_dogs", number_hot_dogs);
+	}
+	
+	public void addDrinkHandler(View view){
+		click_vibe.vibrate(75);
+		Toast t = Toast.makeText(getApplicationContext(), 
+				"Adding a drink. Count=" + drink_count, Toast.LENGTH_SHORT);
+		t.show();
+		
+		face_icon = R.drawable.ic_tracker_dead;
+		face_color = Color.GRAY;
+		update_face();
+		hadDrink(view);
+	}
 		/*
 		 * 
 		 * TextView check = new TextView(this);
