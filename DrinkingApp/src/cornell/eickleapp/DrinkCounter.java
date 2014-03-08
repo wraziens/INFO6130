@@ -7,7 +7,9 @@ import java.util.GregorianCalendar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -31,6 +33,7 @@ public class DrinkCounter extends Activity {
 	
 	private int face_color;
 	private int face_icon;
+	private boolean clicked;
 
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_HOT_DOG = 250.0;
@@ -43,7 +46,8 @@ public class DrinkCounter extends Activity {
 
 		click_vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 		setContentView(R.layout.drink_tracker);
-
+		clicked=false;
+		
 		db = new DatabaseHandler(this);
 		calculateBac();
 		calculateColor();
@@ -79,6 +83,7 @@ public class DrinkCounter extends Activity {
 		calculateBac();
 		calculateColor();
 		update_face();
+		clicked=false;
 	}
 
 
@@ -109,9 +114,7 @@ public class DrinkCounter extends Activity {
 		}
 	}
 
-	//TODO: Refactor to ask before removing and checking whether or not the
-	// Drink was recently recorded.
-	public void removeLast(View view) {
+	public void removeLast() {
 		drink_count--;
 		Date date = new Date();
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
@@ -156,7 +159,6 @@ public class DrinkCounter extends Activity {
 				"Your last drink has been removed", Toast.LENGTH_SHORT).show();
 	}
 
-	//TODO: Add icons for faces.
 	public void calculateColor() {
 		if (bac < 0.06) {
 			face_color = START_COLOR;
@@ -218,6 +220,7 @@ public class DrinkCounter extends Activity {
 
 	@SuppressLint("NewApi")
 	public void hadDrink(View view) {
+		clicked=true;
 		drink_count++;
 		if (drink_count == 1) {
 			db.addValueTomorrow("drank_last_night", "True");
@@ -249,6 +252,35 @@ public class DrinkCounter extends Activity {
 		update_face();
 		hadDrink(view);
 	}
+	
+	public void removeLastHandler(View view){
+		click_vibe.vibrate(20);
+		if (clicked == true){
+			new AlertDialog.Builder(this)
+				.setTitle("Remove Last Drink")
+				.setMessage("Are you sure you would like to remove your last recorded drink?")
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						clicked=false;
+						removeLast();
+					}
+				})
+				.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				})
+				.show();	
+		}else{
+			new AlertDialog.Builder(this)
+				.setTitle("Remove Last Drink")
+				.setMessage("Your last drink was already removed or you did not record any drinks recently.")
+				.setPositiveButton(android.R.string.yes, null).show();
+		}
+
+	}
+	
 		/*
 		 * 
 		 * TextView check = new TextView(this);
