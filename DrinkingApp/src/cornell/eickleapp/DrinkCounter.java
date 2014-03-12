@@ -63,7 +63,7 @@ public class DrinkCounter extends Activity {
 	}
 
 	
-	private void update_face(){
+	private void updateFace(){
 		ImageView face = (ImageView)findViewById(R.id.drink_smile);
 		
 		//Update the face color
@@ -82,7 +82,7 @@ public class DrinkCounter extends Activity {
 		super.onResume();
 		calculateBac();
 		calculateColor();
-		update_face();
+		updateFace();
 		clicked=false;
 	}
 
@@ -154,7 +154,7 @@ public class DrinkCounter extends Activity {
 		calculateBac();
 		calculateColor();
 
-		update_face();
+		updateFace();
 		Toast.makeText(getApplicationContext(),
 				"Your last drink has been removed", Toast.LENGTH_SHORT).show();
 	}
@@ -232,7 +232,7 @@ public class DrinkCounter extends Activity {
 		db.addDelayValue("bac", String.valueOf(bac));
 		calculateColor();
 		db.addDelayValue("bac_color", String.valueOf(face_color));
-		update_face();
+		updateFace();
 
 		// calculate number of hot dogs that equate the number of calories
 		Double drink_cals = drink_count * CALORIES_PER_DRINK;
@@ -249,7 +249,7 @@ public class DrinkCounter extends Activity {
 		
 		face_icon = R.drawable.ic_tracker_dead;
 		face_color = Color.GRAY;
-		update_face();
+		updateFace();
 		hadDrink(view);
 	}
 	
@@ -278,7 +278,60 @@ public class DrinkCounter extends Activity {
 				.setMessage("Your last drink was already removed or you did not record any drinks recently.")
 				.setPositiveButton(android.R.string.yes, null).show();
 		}
-
+	}
+	
+	public void injectDrinkHandler(View view){
+		click_vibe.vibrate(20);
+		
+		final String options[] = new String[] {"3 Hours Ago", "2.5 Hours Ago", 
+				"2 Hours Ago", "1.5 Hours Ago", "1 Hour Ago", "45 Minutes Ago",
+				"30 Minutes Ago", "15 Minutes Ago"};
+		final int values[] = new int[] {180, 150, 120, 90, 60, 45, 30, 15};
+		/*
+		final Map<String,Integer> options = new HashMap<String, Integer>();
+		options.put("2.5 Hours Ago", 150);
+		options.put("2 Hours Ago", 120);
+		options.put("1.5 Hours Ago", 90);
+		options.put("1 Hour Ago", 60);
+		options.put("45 Minutes Ago", 45);
+		options.put("30 Minutes Ago", 30);
+		options.put("15 Minutes Ago", 15);
+		*/
+		final Context context = this;
+		new AlertDialog.Builder(this)
+		.setTitle("Record a Drink I had: ")
+		.setItems(options, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				final int v = values[which];
+	
+				new AlertDialog.Builder(context)
+				.setTitle("Add Drink in Past")
+				.setMessage("Are you sure you would like to record a drink you had "+options[which] +"?")
+				.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						drink_count++;
+						db.injectDelayValue("drink_count", drink_count, v);
+						calculateHours();
+						calculateBac();
+						calculateColor();
+						updateFace();
+					}
+				})
+				.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				})
+				.show();	
+				
+				
+				
+			}
+		})
+		.setNegativeButton(android.R.string.no, null).show();
 	}
 	
 		/*

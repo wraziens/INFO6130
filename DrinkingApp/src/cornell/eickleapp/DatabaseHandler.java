@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -156,7 +157,50 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
 				String.valueOf(int_value), date);
 		addQuestion(ds);
-	}	
+	}
+	
+	public void injectDelayValue(String variable, int value, int interval_delay){
+		int negate_delay = interval_delay * -1;
+		
+		Date date = new Date();
+		//Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		gc.add(Calendar.MINUTE, negate_delay);
+		
+		date = gc.getTime();
+		ArrayList<DatabaseStore> existing = (ArrayList<DatabaseStore>)getVarValuesForDay(variable,
+				date);
+		if(existing != null){
+			ArrayList<DatabaseStore> exist_sorted = DatabaseStore.sortByTime(
+					existing);
+			
+			int last_value = 0;
+			boolean placed = false;
+			
+			Iterator<DatabaseStore> iterator = exist_sorted.iterator();
+			
+			while (iterator.hasNext()){
+				last_value += 1;
+				DatabaseStore ds = iterator.next();
+				if(ds.date.after(date)){
+					if (!placed){
+						value = Integer.parseInt(ds.value);
+						placed=true;
+					}
+					Integer new_val = last_value + 1 ;
+					ds.value = new_val.toString();
+					updateQuestion(ds);
+				}
+			}
+		}
+		
+		DatabaseStore data_store = DatabaseStore.DatabaseIntegerStore(variable,
+				String.valueOf(value), date);
+		addQuestion(data_store);
+	}
+	
 	// Adds an integer value to the database
 	public void addValue(String variable, List<String> list_values) {
 		Date date = new Date();
