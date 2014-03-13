@@ -7,6 +7,7 @@ import java.util.List;
 
 import cornell.eickleapp.R;
 import cornell.eickleapp.R.drawable;
+import android.annotation.SuppressLint;
 import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
@@ -21,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+@SuppressLint("NewApi")
 public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	private Context mContext;
 	int monthSelected, yearSelected;
@@ -88,25 +90,30 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	public View getView(final int position, View convertView,
 			final ViewGroup parent) {
 
+		final Drawable circle = parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+		
 		final Button view = new Button(mContext);
+		view.setBackground(circle);
 		double bacLevel;
 
-			final int dayOfMonth = position - daysSetBack - 7 + 1;
-			Boolean specialPaint = false;
-			if (estRelavantMonthList != null) {
-				if (position > (7 + daysSetBack)
-						&& estRelavantMonthList.size() > 0) {
-					for (int i = 0; i < estRelavantMonthList.size(); i++) {
-						if (estRelavantMonthList.get(i).day == dayOfMonth
-								&& estRelavantMonthList.get(i).month - 1 == monthSelected
-								&& estRelavantMonthList.get(i).year == yearSelected) {
-							specialPaint = true;
-							view.setBackgroundColor(Color.rgb(255, 251, 188));
-							estimateStore.add(position);
-						}
+		final int dayOfMonth = position - daysSetBack - 7 + 1;
+		Boolean specialPaint = false;
+		
+		if (estRelavantMonthList != null) {
+			if (position > (7 + daysSetBack)
+					&& estRelavantMonthList.size() > 0) {
+				for (int i = 0; i < estRelavantMonthList.size(); i++) {
+					if (estRelavantMonthList.get(i).day == dayOfMonth
+							&& estRelavantMonthList.get(i).month - 1 == monthSelected
+							&& estRelavantMonthList.get(i).year == yearSelected) {
+						specialPaint = true;
+						view.setBackgroundColor(Color.rgb(255, 251, 188));
+						view.setBackground(circle);
+						estimateStore.add(position);
 					}
 				}
 			}
+		}
 
 			if (!drinkingDays.contains(position - 6 - daysSetBack)) {
 				view.setOnClickListener(new OnClickListener() {
@@ -123,12 +130,14 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 								int i = drinkingDays.indexOf(focused - 6
 										- daysSetBack);
 								child.setBackgroundColor(bacColors.get(i));
+								child.setBackground(circle);
 							} else if (estimateStore.contains(focused)) {
 								child.setBackgroundColor(Color.rgb(255, 251,
 										188));
+								child.setBackground(circle);
 							} else {
 
-								child.setBackgroundResource(android.R.drawable.btn_default);
+								child.setBackground(circle);
 							}
 						}
 						focused = position;
@@ -156,6 +165,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 			for (int n = 0; n < drinkingDays.size(); n++) {
 				if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
 					view.setBackgroundColor(bacColors.get(n));
+					view.setBackground(circle);
 					bacLevel = maxbac.get(n);
 					final double bac_lev = bacLevel;
 					final int i = n;
@@ -180,7 +190,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 											251, 188));
 								} else {
 
-									child.setBackgroundResource(android.R.drawable.btn_default);
+									child.setBackground(circle);
 								}
 							}
 							focused = position;
@@ -204,6 +214,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		switch (position) {
 		case 0:
 			view.setBackgroundColor(Color.WHITE);
+			view.setTextColor(mContext.getResources().getColor(android.R.color.holo_blue_bright));
 			view.setText("Su");
 			view.setEnabled(false);
 			break;
