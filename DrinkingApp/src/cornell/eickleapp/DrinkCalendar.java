@@ -37,7 +37,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount,
 			drinkEst, dogCount, goalText;
 	RelativeLayout drink_img, dog_img;
-	ImageButton back, next;
+
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
 	int goal;
@@ -77,13 +77,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		click = (LinearLayout) findViewById(R.id.clickAppear);
 
 		goalText = (TextView) findViewById(R.id.goalStatement);
-		back = (ImageButton) findViewById(R.id.bPreviousMonth);
-		next = (ImageButton) findViewById(R.id.bNextMonth);
 		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
 		dog_img = (RelativeLayout) findViewById(R.id.hot_dog_img);
 		dogCount = (TextView) findViewById(R.id.hot_dog_count);
-		back.setOnClickListener(this);
-		next.setOnClickListener(this);
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		goal = Integer.parseInt(getPrefs.getString("goal", "2"));
@@ -222,43 +218,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-
-		GregorianCalendar gc = new GregorianCalendar(selectedYear,
-				selectedMonth, 1);
-		Date date = new Date();
-		switch (v.getId()) {
-		case R.id.bNextMonth:
-
-			gc.add(Calendar.MONTH, 1);
-			date = gc.getTime();
-
-			if (selectedMonth + 1 > 11) {
-				selectedMonth = 0;
-				selectedYear++;
-				yearDisplay.setText(Integer.toString(selectedYear));
-			} else
-				selectedMonth++;
-			setMonthFromInt(selectedMonth);
-			break;
-		case R.id.bPreviousMonth:
-
-			gc.add(Calendar.MONTH, -1);
-			date = gc.getTime();
-
-			if (selectedMonth - 1 < 0) {
-				selectedMonth = 11;
-				selectedYear--;
-				yearDisplay.setText(Integer.toString(selectedYear));
-			} else
-				selectedMonth--;
-			setMonthFromInt(selectedMonth);
-			break;
-		}
-		calculateValues(date);
-		ColorAdapter adapter = new ColorAdapter(this, selectedMonth,
-				selectedYear, drinkingDays, maxBac, bacColors);
-		drinkCalendar.setAdapter(adapter);
-		drinkBacButtons = adapter.getButtonView();
 	}
 
 	// inputs the int value of month and outputs its corresponding name
@@ -435,7 +394,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	}
 
 	class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-		private static final int SWIPE_MIN_DISTANCE = 50;
+		private static final int SWIPE_MIN_DISTANCE = 75;
 		private static final int SWIPE_MAX_OFF_PATH = 150;
 		private static final int SWIPE_THRESHOLD_VELOCITY = 80;
 		
