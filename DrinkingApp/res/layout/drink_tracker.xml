@@ -42,11 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp" >
- 
-        <!-- android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/relativeLayout1"
-        android:layout_marginRight="45dp"
-        android:layout_marginTop="81dp" -->
 
      	<ImageView
         	android:id="@+id/drink_smile"
