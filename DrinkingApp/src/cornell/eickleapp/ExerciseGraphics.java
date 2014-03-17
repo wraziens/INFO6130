@@ -39,8 +39,8 @@ public class ExerciseGraphics extends View {
 	public float minusX, minusY;
 	public Bitmap plus = BitmapFactory.decodeResource(getResources(),
 			R.drawable.plus);
-	public Bitmap minus = BitmapFactory.decodeResource(getResources(),
-			R.drawable.minus);
+//	public Bitmap minus = BitmapFactory.decodeResource(getResources(),
+//			R.drawable.minus);
 	// Bitmap BufferBitmap = Bitmap.createBitmap(1000, 1000,
 	// Bitmap.Config.ARGB_8888);
 	// Canvas BufferCanvas = new Canvas(BufferBitmap);
@@ -216,8 +216,8 @@ public class ExerciseGraphics extends View {
 
 		plusX = canvas.getWidth() - plus.getWidth() - 50;
 		plusY = canvas.getHeight() - plus.getHeight();
-		minusX = canvas.getWidth() - minus.getWidth();
-		minusY = canvas.getHeight() - minus.getHeight();
+		//minusX = canvas.getWidth() - minus.getWidth();
+		//minusY = canvas.getHeight() - minus.getHeight();
 
 		canvas.restore();
 		// canvas.drawBitmap(BufferBitmap, (float) -posX, (float) -posY, null);
