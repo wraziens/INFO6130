@@ -135,8 +135,13 @@ public class Assessment extends Activity {
 		Intent openPage;
 		switch (item.getItemId()) {
 
+		/*
 		case R.id.tracking_menu:
 			openPage = new Intent(this, DrinkCounter.class);
+			startActivity(openPage);
+			break;
+		case R.id.assess_menu:
+			openPage = new Intent(this, Assessment.class);
 			startActivity(openPage);
 			break;
 		case R.id.visualize_menu:
@@ -151,6 +156,7 @@ public class Assessment extends Activity {
 			openPage = new Intent(this, MainMenu.class);
 			startActivity(openPage);
 			break;
+*/
 
 		}
 		return true;

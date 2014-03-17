@@ -54,7 +54,7 @@ public class FoodVisualization extends Activity {
 		// Handle presses on the action bar items
 		Intent openPage;
 		switch (item.getItemId()) {
-
+		/*
 		case R.id.tracking_menu:
 			openPage = new Intent(this, DrinkCounter.class);
 			startActivity(openPage);
@@ -75,6 +75,7 @@ public class FoodVisualization extends Activity {
 			openPage = new Intent(this, MainMenu.class);
 			startActivity(openPage);
 			break;
+*/
 
 		}
 		return true;

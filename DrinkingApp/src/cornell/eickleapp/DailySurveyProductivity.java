@@ -134,7 +134,7 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 		// Handle presses on the action bar items
 		Intent openPage;
 		switch (item.getItemId()) {
-
+		/*
 		case R.id.tracking_menu:
 			openPage = new Intent(this, DrinkCounter.class);
 			startActivity(openPage);
@@ -155,6 +155,7 @@ public class DailySurveyProductivity extends Activity implements OnClickListener
 			openPage = new Intent(this, MainMenu.class);
 			startActivity(openPage);
 			break;
+*/
 
 		}
 		return true;

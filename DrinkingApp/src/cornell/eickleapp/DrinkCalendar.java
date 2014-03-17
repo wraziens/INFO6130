@@ -416,6 +416,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		Intent openPage;
 		switch (item.getItemId()) {
 
+		/*
 		case R.id.tracking_menu:
 			openPage = new Intent(this, DrinkCounter.class);
 			startActivity(openPage);
@@ -436,6 +437,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			openPage = new Intent(this, MainMenu.class);
 			startActivity(openPage);
 			break;
+*/
 
 		}
 		return true;
