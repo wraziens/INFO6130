@@ -96,7 +96,7 @@ public class Settings extends PreferenceActivity {
 		// Handle presses on the action bar items
 		Intent openPage;
 		switch (item.getItemId()) {
-
+		/*
 		case R.id.tracking_menu:
 			openPage = new Intent(this, DrinkCounter.class);
 			startActivity(openPage);
@@ -109,10 +109,15 @@ public class Settings extends PreferenceActivity {
 			openPage = new Intent(this, VisualizeMenu.class);
 			startActivity(openPage);
 			break;
+		case R.id.setting_menu:
+			openPage = new Intent(this, Settings.class);
+			startActivity(openPage);
+			break;
 		case android.R.id.home:
 			openPage = new Intent(this, MainMenu.class);
 			startActivity(openPage);
 			break;
+*/
 
 		}
 		return true;

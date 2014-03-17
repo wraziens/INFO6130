@@ -37,7 +37,7 @@ import android.widget.Toast;
 public class MainMenu extends Activity implements OnClickListener {
 
 	private Button tracking, assessment, visualize, settings, resources,
-			sendData,badges;
+			sendData,badges,menu2;
 	private Intent goToThisPage;
 	private DatabaseHandler db;
 	AlarmManager alarmManager;
@@ -65,12 +65,14 @@ public class MainMenu extends Activity implements OnClickListener {
 		settings = (Button) findViewById(R.id.bMenuSettings);
 		sendData = (Button) findViewById(R.id.bSendData);
 		badges= (Button) findViewById(R.id.bMenuBadges);
+		menu2= (Button) findViewById(R.id.bMenu_2);
 		tracking.setOnClickListener(this);
 		assessment.setOnClickListener(this);
 		visualize.setOnClickListener(this);
 		settings.setOnClickListener(this);
 		sendData.setOnClickListener(this);
 		badges.setOnClickListener(this);
+		menu2.setOnClickListener(this);
 		// resources.setOnClickListener(this);
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
@@ -133,6 +135,10 @@ public class MainMenu extends Activity implements OnClickListener {
 			break;
 		case R.id.bMenuBadges:
 			goToThisPage = new Intent(MainMenu.this, Badges.class);
+			startActivity(goToThisPage);
+			break;
+		case R.id.bMenu_2:
+			goToThisPage = new Intent(MainMenu.this, MainMenu2.class);
 			startActivity(goToThisPage);
 			break;
 		/*
