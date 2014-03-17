@@ -73,6 +73,18 @@
        	
     </RelativeLayout>
 
+		<ImageButton
+		    android:id="@+id/track_money"
+		    android:layout_width="110dp"
+		    android:layout_height="110dp"
+		    android:layout_alignParentBottom="true"
+		    android:layout_alignParentRight="true"
+		    android:background="@android:color/transparent"
+		    android:contentDescription="@string/add_desc"
+		    android:hapticFeedbackEnabled="true"
+		    android:scaleType="fitCenter"
+		    android:src="@drawable/ic_money_tracker" 
+		    android:onClick="trackMoney"/>
 
 
 </RelativeLayout>

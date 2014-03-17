@@ -18,7 +18,9 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
+import android.text.InputType;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -332,6 +334,29 @@ public class DrinkCounter extends Activity {
 			}
 		})
 		.setNegativeButton(android.R.string.no, null).show();
+	}
+	
+	public void trackMoney(View view){
+		click_vibe.vibrate(20);
+		
+		final EditText input = new EditText(this);
+		input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+		
+		new AlertDialog.Builder(this).setTitle("Enter Amount you spent on Alcohol").setView(
+				input).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						double value = Double.parseDouble(input.getText().toString());
+					}
+				})
+				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				})
+				.show();
+		
+		
 	}
 	
 		/*
