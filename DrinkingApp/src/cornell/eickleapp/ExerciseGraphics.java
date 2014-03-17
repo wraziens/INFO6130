@@ -40,7 +40,7 @@ public class ExerciseGraphics extends View {
 	public Bitmap plus = BitmapFactory.decodeResource(getResources(),
 			R.drawable.plus);
 	public Bitmap minus = BitmapFactory.decodeResource(getResources(),
-			R.drawable.minus);
+			R.drawable.ic_drink_minus);
 	// Bitmap BufferBitmap = Bitmap.createBitmap(1000, 1000,
 	// Bitmap.Config.ARGB_8888);
 	// Canvas BufferCanvas = new Canvas(BufferBitmap);

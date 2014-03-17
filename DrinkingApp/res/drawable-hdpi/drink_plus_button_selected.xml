@@ -8,7 +8,7 @@
 		</shape>
    	</item>
     <item
-        android:drawable="@drawable/increase_drink"
+        android:drawable="@drawable/ic_add_count"
         android:id="@+id/plus_drink"
         android:top="75dp"
         android:left="75dp"
