@@ -82,12 +82,8 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public View getView(final int position, View convertView,
 			final ViewGroup parent) {
-
-		//Default button circle
-		//final LayerDrawable circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-		
 		final Button view = new Button(mContext);
-		//view.setBackground(circle);
+
 		LayerDrawable circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
 		((GradientDrawable)circle.getDrawable(1)).setColor(Color.TRANSPARENT);
 		view.setBackground(circle);
@@ -269,6 +265,8 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 
 	}
 
+	
+	
 	@Override
 	public void onClick(View v) {
 	}

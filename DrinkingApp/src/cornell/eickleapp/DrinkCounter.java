@@ -49,7 +49,6 @@ public class DrinkCounter extends Activity {
 		click_vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 		setContentView(R.layout.drink_tracker);
 		clicked=false;
-		
 		db = new DatabaseHandler(this);
 		calculateBac();
 		calculateColor();

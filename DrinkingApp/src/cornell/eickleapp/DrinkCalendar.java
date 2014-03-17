@@ -9,13 +9,15 @@ import java.util.GregorianCalendar;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GestureDetectorCompat;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -50,6 +52,14 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	private ArrayList<DatabaseStore> day_guess;
 	private ArrayList<Integer> day_counts;
 	private ArrayList<DatabaseStore> hotdogs;
+	
+	private Double month_max_bac; //the max BAC for the month
+	private Integer month_total_drink; //the total number of drinks the user had in a month
+	private Double month_total_time; //the total time the user spent drinking in the month
+	private Integer month_max_color; //the color that corresponds to the month max bac value
+	
+	private GestureDetectorCompat mDetector;
+	private DrinkCalendar dc;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		setContentView(R.layout.drinkcalendar);
 
 		db = new DatabaseHandler(this);
+		dc = this;
 		drinkCalendar = (GridView) findViewById(R.id.gvDrinkCalendar);
 		monthDisplay = (TextView) findViewById(R.id.tvMonth);
 		yearDisplay = (TextView) findViewById(R.id.tvYear);
@@ -84,6 +95,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		day_guess = new ArrayList<DatabaseStore>();
 		hotdogs = new ArrayList<DatabaseStore>();
 
+		//aggregate values for the month
+		month_max_bac=0.0;
+		month_total_drink=0;
+		month_total_time=0.0;
+		
 		// Get the values from the DB
 		Date date = new Date();
 		calculateValues(date);
@@ -97,11 +113,24 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		drinkCalendar.setAdapter(adapter);
 		drinkBacButtons = adapter.getButtonView();
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
-		if (checkSurveyed) {
-		}
+		
+		mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+	
 
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event){ 
+		this.mDetector.onTouchEvent(event);
+		return super.onTouchEvent(event);
+	}
+	
+	public boolean dispatchTouchEvent(MotionEvent event){
+		super.dispatchTouchEvent(event);
+		return this.mDetector.onTouchEvent(event);
+		
+	}
+	
 	/*
 	 * Construct necessary Lists for the DB
 	 */
@@ -125,7 +154,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		day_colors = new ArrayList<DatabaseStore>();
 		day_values = new ArrayList<DatabaseStore>();
 		day_counts = new ArrayList<Integer>();
-
+		
+		
+		
 		DatabaseStore max_day = null;
 		DatabaseStore max_color = null;
 		if (values != null) {
@@ -136,6 +167,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				if (max_day == null) {
 					max_day = s;
 					max_color = colors.get(i);
+					
 				} else {
 					if (max_day.day < s.day) {
 						day_colors.add(max_color);
@@ -149,6 +181,10 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						max_day = s;
 						max_color = colors.get(i);
 					}
+				}
+				if(Double.valueOf(max_day.value)>month_max_bac){
+					month_max_bac = Double.valueOf(max_day.value);
+					month_max_color = Integer.parseInt(max_color.value);
 				}
 			}
 			// add final values
@@ -259,29 +295,10 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						cnt = String.valueOf(day_counts.get(index))
 								+ " Drink Tracked.";
 						click.setVisibility(View.VISIBLE);
-						if (day_counts.get(index) <= goal)
-							goalText.setText("GOAL ACHIEVED!");
-							
-						else{
-							goalText.setText("GOAL NOT MET!");
-							achievement++;
-							if (achievement%3==0)
-								Toast.makeText(getApplicationContext(),
-										"You can change your goal in the settings menu", Toast.LENGTH_SHORT).show();
-						}
 					} else {
 						cnt = String.valueOf(day_counts.get(index))
 								+ " Drinks Tracked.";
 						click.setVisibility(View.VISIBLE);
-						if (day_counts.get(index) <= goal)
-							goalText.setText("GOAL ACHIEVED!");
-						else{
-							goalText.setText("GOAL NOT MET!");
-							achievement++;
-							if (achievement%3==0)
-								Toast.makeText(getApplicationContext(),
-										"You can change your goal in the settings menu", Toast.LENGTH_SHORT).show();
-						}
 					}
 					int num_dogs = Integer.parseInt(hotdogs.get(index).value);
 					if (num_dogs == 1) {
@@ -328,11 +345,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
 				dog_img.removeAllViews();
 				drink_img.removeAllViews();
-				/*
-				 * int c = dog_img.getChildCount(); for(int i=c; c>0; c--){
-				 * dog_img.removeViewAt(0); } int t = drink_img.getChildCount();
-				 * for(int i=t; t>0; t--){ drink_img.removeViewAt(0); }
-				 */
 				for (int i = 0; i <= num_dogs; i++) {
 					count += 1;
 					ImageView iv = new ImageView(this);
@@ -382,23 +394,18 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			}
 
 		} else {
-			click.setVisibility(View.VISIBLE);
-			if (estimatedDrinks <= goal)
-				goalText.setText("GOAL ACHIEVED!");
-			else{
-				goalText.setText("GOAL NOT MET!");
-				achievement++;
-				if (achievement%3==0)
-					Toast.makeText(getApplicationContext(),
-							"You can change your goal in the settings menu", Toast.LENGTH_SHORT).show();
-			}
+		
 			if (estimatedDrinks == 1)
 				drinkCount.setText("One Drink Estimated");
 			else
 				drinkCount.setText(estimatedDrinks + " Drinks Estimated");
 		}
 	}
-
+	/*
+	private void displayInfo(double bac, int index){
+		
+	}
+	*/
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -413,47 +420,81 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
-		Intent openPage;
-		switch (item.getItemId()) {
-
-		/*
-		case R.id.tracking_menu:
-			openPage = new Intent(this, DrinkCounter.class);
-			startActivity(openPage);
-			break;
-		case R.id.assess_menu:
-			openPage = new Intent(this, Assessment.class);
-			startActivity(openPage);
-			break;
-		case R.id.visualize_menu:
-			openPage = new Intent(this, VisualizeMenu.class);
-			startActivity(openPage);
-			break;
-		case R.id.setting_menu:
-			openPage = new Intent(this, Settings.class);
-			startActivity(openPage);
-			break;
-		case android.R.id.home:
-			openPage = new Intent(this, MainMenu.class);
-			startActivity(openPage);
-			break;
-*/
-
-		}
 		return true;
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 	}
 
 	@Override
 	protected void onStop() {
-		// TODO Auto-generated method stub
 		super.onStop();
 		finish();
 	}
 
+	class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+		private static final int SWIPE_MIN_DISTANCE = 50;
+		private static final int SWIPE_MAX_OFF_PATH = 150;
+		private static final int SWIPE_THRESHOLD_VELOCITY = 80;
+		
+		@Override 
+		public boolean onFling(MotionEvent event1, MotionEvent event2, 
+				float velocityX, float velocityY){
+			float dx = event2.getX() - event1.getX();
+			float dy = event1.getY() - event2.getY();
+			//Toast.makeText(getApplicationContext(), "FLING!",
+			//		Toast.LENGTH_SHORT).show();
+			
+			GregorianCalendar gc = new GregorianCalendar(selectedYear,
+					selectedMonth, 1);
+			Date date = new Date();
+			
+			if(Math.abs(dy) < SWIPE_MAX_OFF_PATH && 
+					Math.abs(velocityX) >= SWIPE_THRESHOLD_VELOCITY &&
+					Math.abs(dx) >= SWIPE_MIN_DISTANCE){
+				
+				if(dx >0){
+					Toast.makeText(getApplicationContext(), "RightSwipe",
+							Toast.LENGTH_SHORT).show();
+					
+					//Previous Month
+					gc.add(Calendar.MONTH, -1);
+					date = gc.getTime();
+
+					if (selectedMonth - 1 < 0) {
+						selectedMonth = 11;
+						selectedYear--;
+						yearDisplay.setText(Integer.toString(selectedYear));
+					} else
+						selectedMonth--;
+					setMonthFromInt(selectedMonth);
+				}else{
+					Toast.makeText(getApplicationContext(), "LeftSwipe",
+					Toast.LENGTH_SHORT).show();
+					gc.add(Calendar.MONTH, 1);
+					date = gc.getTime();
+					//Next Month
+					if (selectedMonth + 1 > 11) {
+						selectedMonth = 0;
+						selectedYear++;
+						yearDisplay.setText(Integer.toString(selectedYear));
+					} else
+						selectedMonth++;
+					setMonthFromInt(selectedMonth);
+				}
+				calculateValues(date);
+				ColorAdapter adapter = new ColorAdapter(dc, selectedMonth,
+						selectedYear, drinkingDays, maxBac, bacColors);
+				drinkCalendar.setAdapter(adapter);
+				drinkBacButtons = adapter.getButtonView();
+				
+				return true;
+			}
+			return true;
+		}
+
+	}
+	
 }
