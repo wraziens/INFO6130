@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -64,6 +66,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		setContentView(R.layout.drinkcalendar);
 
 		db = new DatabaseHandler(this);
@@ -360,27 +367,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				drinkCount.setText(estimatedDrinks + " Drinks Estimated");
 		}
 	}
-	/*
-	private void displayInfo(double bac, int index){
-		
-	}
-	*/
-	@SuppressLint("NewApi")
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setDisplayShowTitleEnabled(false);
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main, menu);
-		return super.onCreateOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle presses on the action bar items
-		return true;
-	}
 
 	@Override
 	protected void onPause() {
@@ -415,9 +401,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 					Math.abs(dx) >= SWIPE_MIN_DISTANCE){
 				
 				if(dx >0){
-					Toast.makeText(getApplicationContext(), "RightSwipe",
-							Toast.LENGTH_SHORT).show();
-					
 					//Previous Month
 					gc.add(Calendar.MONTH, -1);
 					date = gc.getTime();
@@ -430,8 +413,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						selectedMonth--;
 					setMonthFromInt(selectedMonth);
 				}else{
-					Toast.makeText(getApplicationContext(), "LeftSwipe",
-					Toast.LENGTH_SHORT).show();
 					gc.add(Calendar.MONTH, 1);
 					date = gc.getTime();
 					//Next Month

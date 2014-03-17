@@ -20,6 +20,8 @@ import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -45,9 +47,13 @@ public class DrinkCounter extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		click_vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setContentView(R.layout.drink_tracker);
+		
+		click_vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 		clicked=false;
 		db = new DatabaseHandler(this);
 		calculateBac();
