@@ -5,39 +5,33 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import cornell.eickleapp.R;
-import cornell.eickleapp.R.drawable;
 import android.annotation.SuppressLint;
-import android.app.ActionBar.LayoutParams;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	private Context mContext;
 	int monthSelected, yearSelected;
-	ArrayList<Integer> drinkingDays;
+	private ArrayList<Integer> drinkingDays;
 	private ArrayList<Integer> bacColors;
-	ArrayList<Double> maxbac;
+	private ArrayList<Double> maxbac;
 	int daysSetBack = 0;
 	static int daysInMonth = 0;
 	static ArrayList<Button> buttonStore = new ArrayList<Button>();
 	static int focused = 0;
-	TextView test;
-	DatabaseHandler db;
+	private DatabaseHandler db;
 	static ArrayList<Integer> estimateStore = new ArrayList<Integer>();
-	static int timesTouched=0;
 	static List<DatabaseStore> estRelavantMonthList = new ArrayList<DatabaseStore>();
+	
+	private static final Integer SHIFT=6;
 
 	public ColorAdapter(Context c, int m, int y, ArrayList<Integer> d,
 			ArrayList<Double> mb, ArrayList<Integer> colors) {
@@ -53,7 +47,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 
 		if (everyEstList != null) {
 			for (int i = 0; i < everyEstList.size(); i++) {
-				int something = everyEstList.get(i).month;
 				if ((everyEstList.get(i).month) - 1 == monthSelected
 						&& everyEstList.get(i).year == yearSelected)
 					estRelavantMonthList.add(everyEstList.get(i));
@@ -90,163 +83,181 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	public View getView(final int position, View convertView,
 			final ViewGroup parent) {
 
-		final Drawable circle = parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+		//Default button circle
+		//final LayerDrawable circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
 		
 		final Button view = new Button(mContext);
+		//view.setBackground(circle);
+		LayerDrawable circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+		((GradientDrawable)circle.getDrawable(1)).setColor(Color.TRANSPARENT);
 		view.setBackground(circle);
+		view.setEnabled(false);
+		view.setTextColor(Color.BLACK);
+		
 		double bacLevel;
 
 		final int dayOfMonth = position - daysSetBack - 7 + 1;
-		Boolean specialPaint = false;
 		
 		if (estRelavantMonthList != null) {
-			if (position > (7 + daysSetBack)
-					&& estRelavantMonthList.size() > 0) {
+			if (position > (7 + daysSetBack) && estRelavantMonthList.size() > 0) {
 				for (int i = 0; i < estRelavantMonthList.size(); i++) {
 					if (estRelavantMonthList.get(i).day == dayOfMonth
 							&& estRelavantMonthList.get(i).month - 1 == monthSelected
 							&& estRelavantMonthList.get(i).year == yearSelected) {
-						specialPaint = true;
-						view.setBackgroundColor(Color.rgb(255, 251, 188));
-						view.setBackground(circle);
 						estimateStore.add(position);
 					}
 				}
 			}
-		}
+		}	
+		
+		if (!drinkingDays.contains(position - SHIFT - daysSetBack)) {
+			view.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					((Button)v).setTextSize(14f);
+					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1, 0);
+					if (focused > 0) {
+						View child = parent.getChildAt(focused);
+						if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
+							//Set the color of the circle background for the drinking days
+							int i = drinkingDays.indexOf(focused - SHIFT - daysSetBack);
+							LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+							((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(i));
+							child.setBackground(color_circle);
+							((Button)child).setTextColor(Color.BLACK);
+									
+						}else if (estimateStore.contains(focused)) {
+							((Button)child).setTextColor(Color.WHITE);
+							((Button)child).setEnabled(true);
+						}else{
+							//set background of circle with no data
+							LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+							((GradientDrawable)color_circle.getDrawable(1)).setColor(Color.TRANSPARENT);
+							child.setBackground(color_circle);
+							((Button)child).setTextColor(Color.BLACK);
+						}
+					}
+					focused = position;
+					v.setSelected(true);
+					if (estimateStore.contains(focused)) {
+						int estNo = 0;
+						int s = focused - daysSetBack - 7 + 1;
+						for (int i = 0; i < estRelavantMonthList.size(); i++) {
+							if (estRelavantMonthList.get(i).day == s) {
+								estNo = Integer.parseInt(estRelavantMonthList.get(i).value);
+							}
+						}
+						((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1, estNo);
+					}
+					((Button)v).setTextColor(Color.WHITE);
+					
+				}
 
-			if (!drinkingDays.contains(position - 6 - daysSetBack)) {
+			});
+		}
+		
+		for (int n = 0; n < drinkingDays.size(); n++) {
+			if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
+				LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+				((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(n));
+				view.setBackground(color_circle);
+				view.setEnabled(true);
+				bacLevel = maxbac.get(n);
+				final double bac_lev = bacLevel;
+				final int i = n;
 				view.setOnClickListener(new OnClickListener() {
+
 					@Override
 					public void onClick(View v) {
-
-						timesTouched++;
-						((DrinkCalendar) mContext).changeBottomDisplay("", 0,
-								-1, 0);
+						DecimalFormat formatter = new DecimalFormat("#.###");
+						((DrinkCalendar) mContext).changeBottomDisplay(formatter.format(bac_lev), bac_lev, i, 0);
 						if (focused > 0) {
 							View child = parent.getChildAt(focused);
-							if (drinkingDays.contains((Integer) focused - 6
-									- daysSetBack)) {
-								int i = drinkingDays.indexOf(focused - 6
-										- daysSetBack);
-								child.setBackgroundColor(bacColors.get(i));
-								child.setBackground(circle);
-							} else if (estimateStore.contains(focused)) {
-								child.setBackgroundColor(Color.rgb(255, 251,
-										188));
-								child.setBackground(circle);
-							} else {
-
-								child.setBackground(circle);
+							if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
+								int i = drinkingDays.indexOf(focused - SHIFT - daysSetBack);
+								LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(i));
+								child.setBackground(color_circle);
+								((Button)child).setTextColor(Color.BLACK);
+							}else if (estimateStore.contains(focused)) {
+								LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(i));
+								child.setBackground(color_circle);
+								((Button)child).setTextColor(Color.WHITE);
+								
+							}else {
+								LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								((GradientDrawable)color_circle.getDrawable(1)).setColor(Color.TRANSPARENT);
+								child.setBackground(color_circle);
+								((Button)child).setTextColor(Color.BLACK);
 							}
 						}
 						focused = position;
 						v.setSelected(true);
-						if (estimateStore.contains(focused)) {
-							int estNo = 0;
-							int s = focused - daysSetBack - 7 + 1;
-							for (int i = 0; i < estRelavantMonthList.size(); i++) {
-								if (estRelavantMonthList.get(i).day == s) {
-									estNo = Integer
-											.parseInt(estRelavantMonthList
-													.get(i).value);
-									int dummy = 0;
-								}
-							}
-							((DrinkCalendar) mContext).changeBottomDisplay("",
-									0, -1, estNo);
-						}
-						view.setBackgroundResource(R.drawable.border);
-
+						((Button)v).setTextColor(Color.WHITE);
+						
 					}
-
 				});
 			}
-			for (int n = 0; n < drinkingDays.size(); n++) {
-				if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
-					view.setBackgroundColor(bacColors.get(n));
-					view.setBackground(circle);
-					bacLevel = maxbac.get(n);
-					final double bac_lev = bacLevel;
-					final int i = n;
-					view.setOnClickListener(new OnClickListener() {
-
-						@Override
-						public void onClick(View v) {
-							timesTouched++;
-
-							DecimalFormat formatter = new DecimalFormat("#.###");
-							((DrinkCalendar) mContext).changeBottomDisplay(
-									formatter.format(bac_lev), bac_lev, i, 0);
-							if (focused > 0) {
-								View child = parent.getChildAt(focused);
-								if (drinkingDays.contains((Integer) focused - 6
-										- daysSetBack)) {
-									int i = drinkingDays.indexOf(focused - 6
-											- daysSetBack);
-									child.setBackgroundColor(bacColors.get(i));
-								} else if (estimateStore.contains(focused)) {
-									child.setBackgroundColor(Color.rgb(255,
-											251, 188));
-								} else {
-
-									child.setBackground(circle);
-								}
-							}
-							focused = position;
-							v.setSelected(true);
-							view.setBackgroundResource(R.drawable.border);
-						}
-
-					});
-				}
-
-			}
+		}
 		
 		if (position > 6 && position < 7 + daysSetBack) {
 			view.setVisibility(8);
 		} else {
 
 			view.setText("" + (position + 1 - daysSetBack - 7));
-			view.setTextSize(10f);
-			// sets up the Days of the week display
+			view.setTextSize(14f);
 		}
+		//Set the Week Titles for the Calendar
 		switch (position) {
 		case 0:
-			view.setBackgroundColor(Color.WHITE);
-			view.setTextColor(mContext.getResources().getColor(android.R.color.holo_blue_bright));
-			view.setText("Su");
+			view.setText("Sun");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		case 1:
-			view.setBackgroundColor(Color.WHITE);
-			view.setText("M");
+			view.setText("Mon");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		case 2:
-			view.setBackgroundColor(Color.WHITE);
-			view.setText("T");
+			view.setText("Tue");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		case 3:
-			view.setBackgroundColor(Color.WHITE);
-			view.setText("W");
+			view.setText("Wed");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		case 4:
-			view.setBackgroundColor(Color.WHITE);
-			view.setText("Th");
+			view.setText("Thu");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		case 5:
-			view.setBackgroundColor(Color.WHITE);
-			view.setText("F");
+			view.setText("Fri");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		case 6:
-			view.setBackgroundColor(Color.WHITE);
-			view.setText("Sa");
+			view.setText("Sat");
+			view.setBackground(null);
+			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
+			view.setTextSize(16f);
 			break;
 		}
 
