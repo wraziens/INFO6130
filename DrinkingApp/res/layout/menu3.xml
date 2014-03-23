@@ -43,8 +43,8 @@
 
                 <Button
                     android:id="@+id/bToggleMenu"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_drawer"
                     android:onClick="toggleMenu" />
@@ -64,16 +64,16 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:text="Monday"
-                    android:textStyle="bold"
-                    android:textSize="20dp"  />
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tvDateDisplayBot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:visibility="invisible"
-                    android:text="Februrary 10" />
+                    android:text="Februrary 10"
+                    android:visibility="invisible" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,8 +86,8 @@
 
                 <Button
                     android:id="@+id/bGoalMenu"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_goals" />
             </LinearLayout>
@@ -98,12 +98,68 @@
             android:layout_height="0dp"
             android:layout_weight="0.85"
             android:background="#ffffff"
+            android:gravity="center"
             android:orientation="vertical" >
 
-            <TextView
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SOMETHING" />
+                android:background="#ffffff"
+                android:gravity="bottom"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/bDrinkCounterMenu"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/ic_home1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:gravity="top"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="right"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/bSurveyMenu"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/ic_survey"
+                        android:gravity="center"
+                        android:text="Survey"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#ffffff"
+                    android:gravity="left"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/bDataMenu"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="10dp"
+                        android:padding="5dp"
+                        android:background="@drawable/ic_data"
+                        android:gravity="center"
+                        android:text="Data"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
