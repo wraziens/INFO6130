@@ -1,6 +1,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:drawable="@drawable/ic_home">
+    <item android:drawable="@drawable/ic_trickle">
         <shape android:shape="oval" >
             <size
                 android:height="100dp"

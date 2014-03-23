@@ -77,6 +77,7 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		
 		this.menu = (ListView) this.getChildAt(0);
 		this.content = this.getChildAt(1);
+		/*
 		day=(TextView)findViewById(R.id.tvDateDisplayTop);
 
 		monthDate=(TextView)findViewById(R.id.tvDateDisplayBot);
@@ -89,7 +90,7 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		int month = today.get(Calendar.MONTH);
 		day.setText(dayOfTheWeek);
 		monthDate.setText(month+"/"+dayOfMonth);
-		
+		*/
 		
 		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
