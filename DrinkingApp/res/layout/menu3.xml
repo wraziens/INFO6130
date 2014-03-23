@@ -1,6 +1,7 @@
 <cornell.eickleapp.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="@drawable/circle_gradient" >
 
     <ListView
         android:id="@+id/list_slidermenu"
@@ -20,7 +21,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f7f3f7"
         android:orientation="vertical"
         android:weightSum="1" >
 
@@ -28,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.15"
-            android:background="#ffffff"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="1" >
@@ -37,7 +36,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.15"
-                android:background="#ffffff"
                 android:gravity="left"
                 android:orientation="horizontal" >
 
@@ -54,7 +52,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:background="#ffffff"
                 android:gravity="center"
                 android:orientation="vertical" >
 
@@ -80,7 +77,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.15"
-                android:background="#ffffff"
                 android:gravity="right"
                 android:orientation="horizontal" >
 
@@ -97,14 +93,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.85"
-            android:background="#ffffff"
             android:gravity="center"
             android:orientation="vertical" >
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
                 android:gravity="bottom"
                 android:orientation="vertical" >
 
@@ -119,14 +113,12 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#ffffff"
                 android:gravity="top"
                 android:orientation="horizontal" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#ffffff"
                     android:gravity="right"
                     android:orientation="horizontal" >
 
@@ -144,7 +136,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#ffffff"
                     android:gravity="left"
                     android:orientation="horizontal" >
 
@@ -153,9 +144,9 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:layout_margin="10dp"
-                        android:padding="5dp"
                         android:background="@drawable/ic_data"
                         android:gravity="center"
+                        android:padding="5dp"
                         android:text="Data"
                         android:textColor="#ffffff" />
                 </LinearLayout>
