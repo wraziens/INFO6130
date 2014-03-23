@@ -118,8 +118,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		
 		mDetector = new GestureDetectorCompat(this, new MyGestureListener());
-	
-
 	}
 
 	@Override
@@ -429,8 +427,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						selectedYear, drinkingDays, maxBac, bacColors);
 				drinkCalendar.setAdapter(adapter);
 				drinkBacButtons = adapter.getButtonView();
-				
-				return true;
 			}
 			return true;
 		}

@@ -244,6 +244,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return pid;
 	}
 
+	public void updateQuestionList(ArrayList<DatabaseStore> stores){
+		for(int i=0; i<stores.size(); i++){
+			updateQuestion(stores.get(i));
+		}
+	}
+	
 	public void updateQuestion(DatabaseStore store) {
 		// get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -503,7 +509,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	}
 	
 	public List<DatabaseStore> getVarValuesDelay(String variable, Date date) {
-		//subtract a day from our date
+		//subtract 6 hours from the date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
