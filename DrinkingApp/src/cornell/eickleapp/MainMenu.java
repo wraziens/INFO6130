@@ -138,7 +138,7 @@ public class MainMenu extends Activity implements OnClickListener {
 			startActivity(goToThisPage);
 			break;
 		case R.id.bMenu_2:
-			goToThisPage = new Intent(MainMenu.this, MainMenu2.class);
+			goToThisPage = new Intent(MainMenu.this, MainMenu3.class);
 			startActivity(goToThisPage);
 			break;
 		/*

@@ -148,7 +148,7 @@ public class MainMenu2 extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
 		//gets the date and converts it into image which is eventually printed onto the menu
-		MenuItem menuItem=menu.findItem(R.id.date_menu);
+		MenuItem menuItem=null;
 		Calendar today = Calendar.getInstance();
 		int dayOfWeek = today.get(Calendar.DAY_OF_WEEK);
 		SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
@@ -198,7 +198,7 @@ public class MainMenu2 extends Activity {
 		}
 		// Handle action bar actions click
 		switch (item.getItemId()) {
-		case R.id.home_menu:
+		case R.id.bar_radio:
 			displayView(0);
 			return true;
 		default:
