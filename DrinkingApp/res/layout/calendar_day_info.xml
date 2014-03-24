@@ -1,61 +1,108 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@android:color/white" >
+                
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+			    	android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:orientation="horizontal"
+            		android:gravity="center_horizontal">
+                	
+                	<ImageView
+            			android:layout_width="40dp"
+	            		android:layout_height="40dp"
+	            		android:background="@android:color/white"
+	            		android:src="@drawable/ic_calendar_beer" />
+	 
+	                <TextView
+	                    android:id="@+id/day_drink_count"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:gravity="center"
+	                    android:text=""
+	                    android:textColor="#51A7F9"
+	                    android:textSize="18sp"
+	                    android:layout_marginTop="5dp" />
 
-    <ImageView
-        android:id="@+id/drink_img"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:contentDescription="@string/drink_image"
-        android:orientation="horizontal"
-        android:src="@drawable/beer_icon" />
-	<TextView
-        android:id="@+id/drink_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/drink_img"
-        android:textSize="15sp"
-        android:text="Testing 1, 2, 3" />
-    <!-- 
-    <TextView
-        android:id="@+id/tvInfoDisplay"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/drink_count"
-        android:layout_marginTop="72dp"
-        android:background="#0099CC"
-        android:padding="10dp"
-        android:text="@string/color_click"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+				</LinearLayout>
+				<LinearLayout
+			    	android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:orientation="horizontal"
+ 					android:gravity="center_horizontal">
+                	
+                	<ImageView
+            			android:layout_width="35dp"
+	            		android:layout_height="35dp"
+	            		android:background="@android:color/white"
+	            		android:src="@drawable/ic_time_drinking" 
+	            		android:paddingRight="5dp"/>
+	 
+	                <TextView
+	                    android:id="@+id/day_drink_time"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:gravity="center"
+	                    android:text=""
+	                    android:textColor="#51A7F9"
+	                    android:textSize="18sp"
+	                    android:layout_marginTop="5dp" />
+				</LinearLayout>
+				
+					<LinearLayout
+			    	android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:orientation="horizontal"
+ 					android:gravity="center_horizontal">
+					<ImageView
+			        	android:layout_width="35dp"
+				        android:layout_height="35dp"
+				        android:background="@android:color/transparent"
+				        android:src="@drawable/ic_money_calendar"/>
+	        
+	                <TextView
+	                    android:id="@+id/day_money"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:gravity="center"
+	                    android:text=""
+	                    android:textColor="#51A7F9"
+	                    android:textSize="18sp"
+	                    android:layout_marginTop="5dp" />
 
-    <TextView
-        android:id="@+id/tvInfoDisplay"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvInfoDisplay"
-        android:layout_marginTop="69dp"
-        android:background="#0099CC"
-        android:padding="10dp"
-        android:text="@string/color_click"
-        android:textColor="#FFFFFF"
-        android:textSize="15sp" />
+				</LinearLayout>
+				
+				<LinearLayout
+			    	android:layout_width="match_parent"
+            		android:layout_height="wrap_content"
+            		android:orientation="horizontal"
+ 					android:gravity="center_horizontal">
+					
+					<ImageView
+			        	android:id="@+id/drink_smile_calendar"
+			        	android:layout_width="35dp"
+				        android:layout_height="35dp"
+				        android:background="@android:color/transparent"
+				        android:src="@drawable/drink_smile_tracker_icon"
+				        android:paddingRight="5dp"/>
+	        
+	                <TextView
+	                    android:id="@+id/day_bac"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:gravity="center"
+	                    android:text=""
+	                    android:textColor="#51A7F9"
+	                    android:textSize="18sp"
+	                    android:layout_marginTop="5dp" />
 
-    <TextView
-        android:id="@+id/drink_count"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="88dp"
-        android:layout_marginTop="28dp"
-        android:text="Testing Text"
-        android:textSize="15sp" />
--->
-</RelativeLayout>
+			</LinearLayout>
+		
+</LinearLayout>

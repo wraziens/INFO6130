@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -39,18 +40,16 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
-	int goal;
 	LinearLayout click;
-	static int achievement=0;
 	private ArrayList<Integer> drinkingDays;
 	private ArrayList<Double> maxBac;
 	private ArrayList<Integer> bacColors;
 	private DatabaseHandler db;
 	private ArrayList<DatabaseStore> day_colors;
 	private ArrayList<DatabaseStore> day_values;
+	private ArrayList<Double> day_times;
 	private ArrayList<Double> day_money;
 	private ArrayList<Integer> day_counts;
-	private ArrayList<DatabaseStore> hotdogs;
 	
 	private Double month_max_bac; //the max BAC for the month
 	private Integer month_total_drink; //the total number of drinks the user had in a month
@@ -86,17 +85,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		
 		click = (LinearLayout) findViewById(R.id.clickAppear);
 
-		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
-		goal = Integer.parseInt(getPrefs.getString("goal", "2"));
 
 		drinkingDays = new ArrayList<Integer>();
 		maxBac = new ArrayList<Double>();
 		bacColors = new ArrayList<Integer>();
 		day_money = new ArrayList<Double>();
-		
-		hotdogs = new ArrayList<DatabaseStore>();
 
 		//aggregate values for the month
 		month_max_bac=0.0;
@@ -158,6 +153,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		day_colors = new ArrayList<DatabaseStore>();
 		day_values = new ArrayList<DatabaseStore>();
 		day_counts = new ArrayList<Integer>();
+		day_times = new ArrayList<Double>();
 		
 		
 		
@@ -189,7 +185,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						//monthly aggregate values
 						month_total_drink += cnt;
 						end = max_day.date;
-						month_total_time += (end.getTime() - start.getTime()) / (1000 * 60 * 60) + 1;
+						double time = (end.getTime() - start.getTime()) / (1000 * 60 * 60) + 1;
+						month_total_time += time;
+						day_times.add(time);
 						cnt = 1;
 						max_day = s;
 						max_color = colors.get(i);
@@ -210,8 +208,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			day_values.add(max_day);
 			day_colors.add(max_color);
 			day_counts.add(cnt);
+			
 			month_total_drink += cnt;
-			month_total_time += (end.getTime() - start.getTime())/(1000 * 60 * 60) + 1;
+			double time = (end.getTime() - start.getTime())/(1000 * 60 * 60) + 1;
+			month_total_time += time;
+			day_times.add(time);
 			
 			if(Double.valueOf(max_day.value) > month_max_bac){
 				month_max_bac = Double.valueOf(max_day.value);
@@ -226,11 +227,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		maxBac.clear();
 		bacColors.clear();
 		drinkingDays.clear();
+		day_money.clear();
 		
 		month_total_drink = 0;
 		month_total_time = 0.0;
 		month_max_bac = 0.0;
 		month_max_color = DrinkCounter.getBacColor(month_max_bac);
+		month_money =0.0;
 		
 		ArrayList<DatabaseStore> month_bac = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
 		ArrayList<DatabaseStore> month_drinks = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drink_count", date);
@@ -241,6 +244,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			month_colors = DatabaseStore.sortByTime(month_colors);
 			month_bac = DatabaseStore.sortByTime(month_bac);
 			month_drinks = DatabaseStore.sortByTime(month_drinks);
+			month_money = DatabaseStore.sortByTime(month_money);
 			
 			getMaxForDays(month_colors, month_bac);
 			
@@ -254,25 +258,25 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	public void setMoneyValues(ArrayList<DatabaseStore> money_list){
 		if (money_list == null){
 			return;
-		}
-		
-		DatabaseStore first_date = money_list.get(0);
-		double count = 0;
-		month_money = 0.0;
-		
-		for (int i=0; i<money_list.size(); i++){
-			DatabaseStore current = money_list.get(i);
-			if(first_date.day<current.day){
-				day_money.add(count);
-				month_money += count; 
-				count = Double.parseDouble(current.value);
-			}else{
-				count += Double.parseDouble(current.value);
+		}else{
+			
+			DatabaseStore first_date = money_list.get(0);
+			double count = 0;
+			month_money = 0.0;
+			
+			for (int i=0; i<money_list.size(); i++){
+				DatabaseStore current = money_list.get(i);
+				if(first_date.day<current.day){
+					day_money.add(count);
+					month_money += count; 
+					count = Double.parseDouble(current.value);
+				}else{
+					count += Double.parseDouble(current.value);
+				}
 			}
-		}
-		day_money.add(count);
-		month_money += count;
-		
+			day_money.add(count);
+			month_money += count;
+		}	
 	}
 	
 	@Override
@@ -293,9 +297,32 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		return month;
 	}
 	
+	public void showDayInfo(double bac, int index){
+		String title = getMonthFromInt(selectedMonth) + " " + String.valueOf(index +1) + ", " + selectedYear;  
+		final Dialog dialog = new Dialog(this);
+		dialog.setContentView(R.layout.calendar_day_info);
+		dialog.setTitle(title);
+		
+		DecimalFormat formatter = new DecimalFormat("#.###");
+		
+		// set the custom dialog components - text, image and button
+		TextView bac_text = (TextView) dialog.findViewById(R.id.day_bac);
+		bac_text.setText(formatter.format(bac) + " max BAC value");
+		TextView count_text = (TextView) dialog.findViewById(R.id.day_drink_count);
+		count_text.setText(day_counts.get(index) + " drinks recorded");
+		TextView money_text = (TextView) dialog.findViewById(R.id.day_money);
+		money_text.setText(String.valueOf(day_counts.get(index)/day_times.get(index)) + " spent on drinks");
+		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
+		time_text.setText(day_times.get(index) + " hours drinking");
+		//dialog.
+		dialog.show();
+	}
 	
 	public void changeBottomDisplay(String entry, double bac, int index) {
 			// bottomDisplay.setText(entry);
+			
+			showDayInfo(bac, index);
+			/*
 			int info_color = 0;
 			String info_txt = "";
 			String est = "";
@@ -350,6 +377,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			infoDisplay.setText(info_txt);
 			infoDisplay.setBackgroundColor(info_color);
 			drinkCount.setText(cnt);
+		*/
 
 	
 	}
@@ -405,11 +433,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		String overview_text = getMonthFromInt(selectedMonth) + " Overview";
 		monthOverview.setText(overview_text);
 		
-		if(!month_money.equals(0.0)){
 		
-			String money_text = money_formatter.format(month_money) + " spent on drinks";
-			monthMoney.setText(money_text);
-		}
+		String money_text = money_formatter.format(month_money) + " spent on drinks";
+		monthMoney.setText(money_text);
 		
 	}
 	

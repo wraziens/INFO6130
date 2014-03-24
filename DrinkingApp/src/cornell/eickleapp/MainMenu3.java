@@ -18,7 +18,7 @@ public class MainMenu3 extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		getActionBar().hide();
+		//getActionBar().hide();
 
 		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
 				R.layout.menu3, null);
@@ -56,6 +56,8 @@ public class MainMenu3 extends Activity implements OnClickListener {
 			*/
 			break;
 		case R.id.bDataMenu:
+			goToThisPage = new Intent(MainMenu3.this, DrinkCalendar.class);
+			startActivity(goToThisPage);
 			/*
 			goToThisPage = new Intent(MainMenu3.this, DataMenu.class);
 			startActivity(goToThisPage);
