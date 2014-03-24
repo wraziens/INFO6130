@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/type_drink_prompt"
-        android:textSize="14sp" />
+        android:textSize="18sp" 
+        android:textColor="#52555a"/>
 
 	<LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +28,7 @@
             android:layout_weight="1"
             android:textColor="#9D60C7"
             android:text="@string/beer_checkbox"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/type_wine"
@@ -36,7 +37,7 @@
             android:layout_weight="1"
             android:textColor="#9D60C7"
             android:text="@string/wine_checkbox"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/type_liquor"
@@ -45,7 +46,7 @@
             android:layout_weight="1"
             android:textColor="#9D60C7"
             android:text="@string/liquor_checkbox"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 	
     <RelativeLayout
@@ -59,7 +60,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/recall_prompt"
-            android:textSize="14sp" />
+            android:textSize="18sp"
+            android:textColor="#52555a" />
 
         <SeekBar
             android:id="@+id/recall_bar"
@@ -96,8 +98,9 @@
     	android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/vomit_prompt"
-       	android:textSize="14sp"
-       	android:layout_marginTop="10dp" />
+       	android:textSize="18sp"
+       	android:layout_marginTop="10dp"
+       	android:textColor="#52555a" />
 
     <RadioGroup
    		android:id="@+id/vomit_group"
@@ -141,7 +144,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/regret_prompt"
-            android:textSize="14sp" />
+            android:textSize="18sp"
+            android:textColor="#52555a" />
 
         <SeekBar
             android:id="@+id/regret_bar"
@@ -178,8 +182,9 @@
     	android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/symptoms_prompt"
-        android:textSize="14sp" 
-        android:layout_marginTop="10dp"/>
+        android:textSize="18sp" 
+        android:layout_marginTop="10dp"
+        android:textColor="#52555a"/>
 
 	<LinearLayout
         android:layout_width="match_parent"
@@ -194,7 +199,7 @@
 	        android:layout_height="wrap_content"
 	        android:textColor="#9D60C7"
 	        android:text="@string/symptoms_fatigue"
-	        android:textSize="12sp"
+	        android:textSize="14sp"
 	        android:layout_weight="1" />
 	
 		<CheckBox
@@ -203,7 +208,7 @@
 	        android:layout_height="wrap_content"
 	        android:textColor="#9D60C7"
 	        android:text="@string/symptoms_nausea"
-	        android:textSize="12sp"
+	        android:textSize="14sp"
 	        android:layout_weight="1" />
 	</LinearLayout>
         
@@ -221,7 +226,7 @@
             android:layout_height="wrap_content"
             android:textColor="#9D60C7"
             android:text="@string/symptoms_headache"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_weight="1" />
 
         <CheckBox
@@ -230,13 +235,13 @@
             android:layout_height="wrap_content"
             android:textColor="#9D60C7"
             android:text="@string/symptoms_vomit"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_weight="1" />
     </LinearLayout>
     
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dip"
         android:layout_weight="1"
         android:orientation="horizontal" >
 
