@@ -1,6 +1,7 @@
 package cornell.eickleapp;
 
 import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,6 +9,9 @@ import java.util.GregorianCalendar;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
@@ -29,7 +33,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
-	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount,
+	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount,drinkTime,drinkBac,
 			dogCount;
 	RelativeLayout drink_img, dog_img;
 
@@ -73,11 +77,12 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
 		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
 		drinkCount = (TextView) findViewById(R.id.drink_count);
+		drinkTime = (TextView) findViewById(R.id.drink_time);
+		drinkBac = (TextView) findViewById(R.id.month_bac);
+		
 		click = (LinearLayout) findViewById(R.id.clickAppear);
 
 		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
-		dog_img = (RelativeLayout) findViewById(R.id.hot_dog_img);
-		dogCount = (TextView) findViewById(R.id.hot_dog_count);
 		SharedPreferences getPrefs = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		goal = Integer.parseInt(getPrefs.getString("goal", "2"));
@@ -92,6 +97,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		month_max_bac=0.0;
 		month_total_drink=0;
 		month_total_time=0.0;
+		month_max_color = DrinkCounter.getBacColor(0);
 		
 		// Get the values from the DB
 		Date date = DatabaseStore.getDelayedDate();
@@ -147,8 +153,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		day_values = new ArrayList<DatabaseStore>();
 		day_counts = new ArrayList<Integer>();
 		
-		month_total_drink = 0;
-		month_total_time = 0.0;
+		
 		
 		DatabaseStore max_day = null;
 		DatabaseStore max_color = null;
@@ -182,8 +187,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						cnt = 1;
 						max_day = s;
 						max_color = colors.get(i);
-						if(Double.valueOf(max_color.value) > month_max_bac){
-							month_max_bac = Double.valueOf(max_color.value);
+						if(Double.valueOf(max_day.value) > month_max_bac){
+							month_max_bac = Double.valueOf(max_day.value);
 							month_max_color = Integer.parseInt(max_color.value);
 						}
 						start = s.date;
@@ -202,8 +207,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			month_total_drink += cnt;
 			month_total_time += (end.getTime() - start.getTime())/(1000 * 60 * 60) + 1;
 			
-			if(Double.valueOf(max_color.value) > month_max_bac){
-				month_max_bac = Double.valueOf(max_color.value);
+			if(Double.valueOf(max_day.value) > month_max_bac){
+				month_max_bac = Double.valueOf(max_day.value);
 				month_max_color = Integer.parseInt(max_color.value);
 			}
 			
@@ -215,6 +220,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		maxBac.clear();
 		bacColors.clear();
 		drinkingDays.clear();
+		
+		month_total_drink = 0;
+		month_total_time = 0.0;
+		month_max_bac = 0.0;
+		month_max_color = DrinkCounter.getBacColor(month_max_bac);
 		
 		ArrayList<DatabaseStore> month_bac = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
 		ArrayList<DatabaseStore> month_drinks = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drink_count", date);
@@ -256,7 +266,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				info_txt = "Click on a colored date for more information." + month_total_time;
 				cnt = "";
 				dogs = "";
-				click.setVisibility(View.GONE);
+				click.setVisibility(View.VISIBLE);
 
 			} else {
 				if (index != -1) {
@@ -303,10 +313,54 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 
 	
 	}
+	
+	public int getFaceIcon(double bac_value){
+		if (bac_value < 0.06) {
+			return R.drawable.ic_tracker_smile;
+		} else if (bac_value < 0.15) {
+			return R.drawable.ic_tracker_neutral;
+		} else if (bac_value < 0.24) {
+			return R.drawable.ic_tracker_frown;
+		} else {
+			return R.drawable.ic_tracker_dead;
+		}
+	}
 
+
+	
 	protected void setCalendarBottom(){
-		String drink_text = month_total_drink + " total drinks";
+		String drink_text = month_total_drink + " total drinks recorded";
 		drinkCount.setText(drink_text);
+		drinkCount.setVisibility(View.VISIBLE);
+		
+		String time_text = month_total_time + " hours spent drinking";
+		drinkTime.setText(time_text);
+		drinkTime.setVisibility(View.VISIBLE);
+		
+		int icon_face = getFaceIcon(month_max_bac);
+		
+		ImageView face = (ImageView)findViewById(R.id.drink_smile_calendar);
+		
+		
+		//Update the face color
+		((GradientDrawable)((LayerDrawable) face.getDrawable()).getDrawable(0)
+				).setColor(month_max_color);	
+		
+		//Update the face icon
+		Drawable to_replace = getResources().getDrawable(icon_face);	
+		((LayerDrawable) face.getDrawable()).setDrawableByLayerId(
+				R.id.face_icon, to_replace);
+		face.invalidate();
+		face.refreshDrawableState();
+		
+		DecimalFormat formatter = new DecimalFormat("#.###");
+		
+		
+		String bac_text = formatter.format(month_max_bac) + " max BAC value";
+		drinkBac.setText(bac_text);
+		drinkBac.setVisibility(View.VISIBLE);
+		
+		
 	}
 	
 	@Override
@@ -372,6 +426,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				drinkBacButtons = adapter.getButtonView();
 				setCalendarBottom();
 			}
+			setCalendarBottom();
 			return true;
 		}
 

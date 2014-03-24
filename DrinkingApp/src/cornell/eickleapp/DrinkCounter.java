@@ -45,7 +45,6 @@ public class DrinkCounter extends Activity {
 
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_HOT_DOG = 250.0;
-	private final int START_COLOR = Color.rgb(112,191, 65);
 
 	@SuppressLint("NewApi")
 	@Override
@@ -153,9 +152,9 @@ public class DrinkCounter extends Activity {
 				"Your last drink has been removed", Toast.LENGTH_SHORT).show();
 	}
 
-	private int getBacColor(double bac_value) {
+	public static int getBacColor(double bac_value) {
 		if (bac_value < 0.06) {
-			return START_COLOR;
+			return Color.rgb(112,191, 65);
 		} else if (bac_value < 0.15) {
 			return Color.rgb(245, 211,40);
 		} else if (bac_value < 0.24) {
@@ -165,12 +164,12 @@ public class DrinkCounter extends Activity {
 		}
 	}
 	
-	private void setFaceIcon(double bac_value){
-		if (bac < 0.06) {
+	public void setFaceIcon(double bac_value){
+		if (bac_value < 0.06) {
 			face_icon = R.drawable.ic_tracker_smile;
-		} else if (bac < 0.15) {
+		} else if (bac_value < 0.15) {
 			face_icon = R.drawable.ic_tracker_neutral;
-		} else if (bac < 0.24) {
+		} else if (bac_value < 0.24) {
 			face_icon = R.drawable.ic_tracker_frown;
 		} else {
 			face_icon = R.drawable.ic_tracker_dead;

@@ -63,8 +63,16 @@
                 android:layout_height="wrap_content"
                 android:text="" />
 
-
-                
+			<LinearLayout
+			    android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+                <ImageView
+            		android:layout_width="40dp"
+            		android:layout_height="40dp"
+            		android:background="@android:color/white"
+            		android:src="@drawable/ic_calendar_beer" />
+ 
                 <TextView
                     android:id="@+id/drink_count"
                     android:layout_width="wrap_content"
@@ -72,10 +80,12 @@
                     android:gravity="center"
                     android:text=""
                     android:textColor="#51A7F9"
-                    android:textSize="15sp"
-                    android:drawableLeft="@drawable/ic_calendar_beer" />
+                    android:textSize="18sp"
+                    android:layout_marginTop="5dp" />
 
-                <TextView
+			</LinearLayout>
+               
+			<TextView
                     android:id="@+id/tvInfoDisplay"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"

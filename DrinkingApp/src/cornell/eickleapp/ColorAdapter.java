@@ -183,7 +183,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 					@Override
 					public void onClick(View v) {
 						DecimalFormat formatter = new DecimalFormat("#.###");
-						((DrinkCalendar) mContext).changeBottomDisplay(formatter.format(bac_lev), bac_lev, i);
 						if (focused > 0) {
 							Button child = (Button)parent.getChildAt(focused);
 							if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
