@@ -72,8 +72,8 @@
 
 		<ImageButton
 		    android:id="@+id/track_money"
-		    android:layout_width="110dp"
-		    android:layout_height="110dp"
+		    android:layout_width="80dp"
+		    android:layout_height="80dp"
 		    android:layout_alignParentBottom="true"
 		    android:layout_alignParentRight="true"
 		    android:background="@android:color/transparent"
