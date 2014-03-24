@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item>
+        <shape android:shape="oval">
+            <size android:width="30dp"
+                  android:height="30dp"/>
+    		<solid android:color="#70BF41"/> 
+		</shape>
+   	</item>
+    <item
+        android:drawable="@drawable/ic_money_tracker"
+        android:id="@+id/face_icon"
+        android:top="12dp"
+        android:left="12dp"
+        android:bottom="10dp"
+        android:right="12dp"/>
+    
+</layer-list>

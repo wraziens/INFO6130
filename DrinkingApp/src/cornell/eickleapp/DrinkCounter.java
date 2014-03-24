@@ -1,5 +1,6 @@
 package cornell.eickleapp;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -440,13 +440,15 @@ public class DrinkCounter extends Activity {
 		click_vibe.vibrate(20);
 		
 		final EditText input = new EditText(this);
-		input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-		
+		input.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+
 		new AlertDialog.Builder(this).setTitle("Enter Amount you spent on Alcohol").setView(
 				input).setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener(){
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						double value = Double.parseDouble(input.getText().toString());
+						DecimalFormat formatter = new DecimalFormat("#.##");
+						db.addDelayValue("money", formatter.format(value));
 					}
 				})
 				.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

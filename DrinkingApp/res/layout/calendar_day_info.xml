@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/drink_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:contentDescription="@string/drink_image"
+        android:orientation="horizontal"
+        android:src="@drawable/beer_icon" />
+	<TextView
+        android:id="@+id/drink_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/drink_img"
+        android:textSize="15sp"
+        android:text="Testing 1, 2, 3" />
+    <!-- 
+    <TextView
+        android:id="@+id/tvInfoDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/drink_count"
+        android:layout_marginTop="72dp"
+        android:background="#0099CC"
+        android:padding="10dp"
+        android:text="@string/color_click"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tvInfoDisplay"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvInfoDisplay"
+        android:layout_marginTop="69dp"
+        android:background="#0099CC"
+        android:padding="10dp"
+        android:text="@string/color_click"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/drink_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="28dp"
+        android:text="Testing Text"
+        android:textSize="15sp" />
+-->
+</RelativeLayout>

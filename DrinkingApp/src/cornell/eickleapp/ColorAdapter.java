@@ -57,6 +57,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 					estRelavantMonthList.add(everyEstList.get(i));
 			}
 		}
+		db.close();
 	}
 
 	// given month and year, it detects the 1st day of the month and see what
