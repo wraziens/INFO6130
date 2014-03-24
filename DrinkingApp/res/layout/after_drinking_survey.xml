@@ -104,9 +104,11 @@
        	android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal" >
 
      	<RadioButton
+     	    android:id="@+id/yes_vomit"
         	android:layout_width="wrap_content"
             android:layout_height="wrap_content"
           	android:gravity="center"
@@ -114,11 +116,10 @@
             android:textColor="#9D60C7"
             android:layout_marginRight="10dp"
             android:background="@drawable/survey_checkbox"
-            android:button="@null"
-           />
-     	
+            android:button="@null"/>
 
         <RadioButton
+            android:id="@+id/no_vomit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/no"
@@ -139,7 +140,7 @@
             android:id="@+id/regret_prompt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recall_prompt"
+            android:text="@string/regret_prompt"
             android:textSize="14sp" />
 
         <SeekBar
@@ -162,7 +163,7 @@
                 android:textSize="12sp" />
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="40dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:paddingRight="10dp"

@@ -139,7 +139,7 @@
     <string name="recall_yes">Everything</string>
     <string name="recall_no">Nothing</string>
     
-    <string name="regret_prompt">How regretful do you feel about events last night?</string>
+    <string name="regret_prompt">How regretful are you about events from last night?</string>
     <string name="regret_yes">Very</string>
     <string name="regret_no">Not at all</string>
     

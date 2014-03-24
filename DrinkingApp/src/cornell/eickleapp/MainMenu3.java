@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +18,9 @@ public class MainMenu3 extends Activity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		//getActionBar().hide();
 
@@ -40,28 +44,20 @@ public class MainMenu3 extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		Intent goToThisPage;
 		switch(v.getId()){
 		
 		case R.id.bDrinkCounterMenu:
 			goToThisPage = new Intent(MainMenu3.this, DrinkCounter.class);
 			startActivity(goToThisPage);
-			
 			break;
 		case R.id.bSurveyMenu:
-			/*
-			goToThisPage = new Intent(MainMenu3.this, SurveyMenu.class);
+			goToThisPage = new Intent(MainMenu3.this, AfterDrinkSurvey.class);
 			startActivity(goToThisPage);
-			*/
 			break;
 		case R.id.bDataMenu:
 			goToThisPage = new Intent(MainMenu3.this, DrinkCalendar.class);
 			startActivity(goToThisPage);
-			/*
-			goToThisPage = new Intent(MainMenu3.this, DataMenu.class);
-			startActivity(goToThisPage);
-			*/
 		break;
 		}
 		
