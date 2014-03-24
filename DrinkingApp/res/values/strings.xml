@@ -126,6 +126,19 @@
     <string name="drawer_close">Slider Menu Closed</string>
     <string name="drink_image">Drink Image</string>
 
+    <!-- after_drinking_durvey -->
+    <string name="type_drink_prompt">What did you drink last night?</string>
+    <string name="beer_checkbox">Beer</string>
+    <string name="wine_checkbox">Wine</string>
+    <string name="liquor_checkbox">Liquor</string>
+    
+    
+    <string name="vomit_prompt">Did you vomit last night or this morning?</string>
+    <string name="recall_prompt">How much of last night\'s events do you recall?</string>
+    <string name="regret_prompt">How regretful do you feel about events last night?</string>
+    <string name="symptoms_prompt">Do you feel any of the following symptoms today?</string>
+    
+    
     <!-- Nav Drawer Menu Items -->
 
     <string-array name="nav_drawer_items">
