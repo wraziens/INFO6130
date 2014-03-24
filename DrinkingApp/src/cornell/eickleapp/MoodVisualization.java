@@ -22,11 +22,6 @@ public class MoodVisualization extends Activity {
 		super.onCreate(savedInstanceState);
 		db = new DatabaseHandler(this);
 		
-		//get data from the database
-		ArrayList<String[]> drink = db.getWordleDrink();
-		ArrayList<String[]> no_drink = db.getWordleNoDrink();
-	
-		visual = new WordleGraphics(this,drink,no_drink,"Mood");
 		
 		setContentView(visual);
 	

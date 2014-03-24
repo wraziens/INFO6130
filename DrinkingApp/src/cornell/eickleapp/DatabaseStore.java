@@ -3,7 +3,9 @@ package cornell.eickleapp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -70,6 +72,15 @@ public class DatabaseStore {
 			return (ArrayList<DatabaseStore>)store;
 		}
 		return sorted;
+	}
+	
+	public static Date getDelayedDate(){
+		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
+		return date;
 	}
 	
 	public static DatabaseStore DatabaseSliderStore(String variable, String value, Date date){

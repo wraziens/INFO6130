@@ -6,17 +6,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,12 +19,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DrinkCalendar extends Activity implements OnClickListener {
 
@@ -37,7 +30,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
 	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount,
-			drinkEst, dogCount, goalText;
+			dogCount;
 	RelativeLayout drink_img, dog_img;
 
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
@@ -51,7 +44,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	private DatabaseHandler db;
 	private ArrayList<DatabaseStore> day_colors;
 	private ArrayList<DatabaseStore> day_values;
-	private ArrayList<DatabaseStore> day_guess;
 	private ArrayList<Integer> day_counts;
 	private ArrayList<DatabaseStore> hotdogs;
 	
@@ -83,7 +75,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		drinkCount = (TextView) findViewById(R.id.drink_count);
 		click = (LinearLayout) findViewById(R.id.clickAppear);
 
-		goalText = (TextView) findViewById(R.id.goalStatement);
 		drink_img = (RelativeLayout) findViewById(R.id.drink_img);
 		dog_img = (RelativeLayout) findViewById(R.id.hot_dog_img);
 		dogCount = (TextView) findViewById(R.id.hot_dog_count);
@@ -95,7 +86,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		maxBac = new ArrayList<Double>();
 		bacColors = new ArrayList<Integer>();
 
-		day_guess = new ArrayList<DatabaseStore>();
 		hotdogs = new ArrayList<DatabaseStore>();
 
 		//aggregate values for the month
@@ -104,7 +94,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		month_total_time=0.0;
 		
 		// Get the values from the DB
-		Date date = new Date();
+		Date date = DatabaseStore.getDelayedDate();
 		calculateValues(date);
 
 		selectedMonth = calendar.get(Calendar.MONTH);
@@ -118,8 +108,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		
 		mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+		setCalendarBottom();
 	}
-
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event){ 
 		this.mDetector.onTouchEvent(event);
@@ -156,15 +147,24 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		day_values = new ArrayList<DatabaseStore>();
 		day_counts = new ArrayList<Integer>();
 		
-		
+		month_total_drink = 0;
+		month_total_time = 0.0;
 		
 		DatabaseStore max_day = null;
 		DatabaseStore max_color = null;
+		
+		Date start = null;
+		Date end = null;
 		if (values != null) {
 			int cnt = 0;
 			for (int i = 0; i < values.size(); i++) {
 				cnt += 1;
 				DatabaseStore s = values.get(i);
+				
+				if(start == null){
+					start = s.date; 
+				}
+				
 				if (max_day == null) {
 					max_day = s;
 					max_color = colors.get(i);
@@ -174,24 +174,40 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						day_colors.add(max_color);
 						day_values.add(max_day);
 						day_counts.add(cnt);
+						
+						//monthly aggregate values
+						month_total_drink += cnt;
+						end = max_day.date;
+						month_total_time += (end.getTime() - start.getTime()) / (1000 * 60 * 60) + 1;
 						cnt = 1;
 						max_day = s;
 						max_color = colors.get(i);
+						if(Double.valueOf(max_color.value) > month_max_bac){
+							month_max_bac = Double.valueOf(max_color.value);
+							month_max_color = Integer.parseInt(max_color.value);
+						}
+						start = s.date;
 					} else if (Double.valueOf(max_day.value) < Double
 							.valueOf(s.value)) {
 						max_day = s;
 						max_color = colors.get(i);
 					}
 				}
-				if(Double.valueOf(max_day.value)>month_max_bac){
-					month_max_bac = Double.valueOf(max_day.value);
-					month_max_color = Integer.parseInt(max_color.value);
-				}
 			}
-			// add final values
+			end = values.get(values.size()-1).date;
+			// add values for each day
 			day_values.add(max_day);
 			day_colors.add(max_color);
 			day_counts.add(cnt);
+			month_total_drink += cnt;
+			month_total_time += (end.getTime() - start.getTime())/(1000 * 60 * 60) + 1;
+			
+			if(Double.valueOf(max_color.value) > month_max_bac){
+				month_max_bac = Double.valueOf(max_color.value);
+				month_max_color = Integer.parseInt(max_color.value);
+			}
+			
+			
 		}
 	}
 
@@ -199,24 +215,18 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		maxBac.clear();
 		bacColors.clear();
 		drinkingDays.clear();
+		
+		ArrayList<DatabaseStore> month_bac = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac", date);
+		ArrayList<DatabaseStore> month_drinks = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drink_count", date);
+		ArrayList<DatabaseStore> month_colors = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac_color", date);
 
-		ArrayList<DatabaseStore> bac_colors = (ArrayList<DatabaseStore>) db
-				.getVarValuesForMonth("bac_color", date);
-		ArrayList<DatabaseStore> bac_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesForMonth("bac", date);
-		day_guess = (ArrayList<DatabaseStore>) db.getVarValuesForMonth(
-				"drink_guess", date);
-		hotdogs = (ArrayList<DatabaseStore>) db.getVarValuesForMonth(
-				"hot_dogs", date);
-
-		if (bac_colors != null && bac_vals != null && hotdogs != null) {
-			bac_colors = DatabaseStore.sortByTime(bac_colors);
-			bac_vals = DatabaseStore.sortByTime(bac_vals);
-			hotdogs = DatabaseStore.sortByTime(hotdogs);
-			if (day_guess != null) {
-				day_guess = DatabaseStore.sortByTime(day_guess);
-			}
-			getMaxForDays(bac_colors, bac_vals);
+		if (month_bac!=null && month_drinks!=null && month_colors != null) {
+			month_colors = DatabaseStore.sortByTime(month_colors);
+			month_bac = DatabaseStore.sortByTime(month_bac);
+			month_drinks = DatabaseStore.sortByTime(month_drinks);
+			
+			getMaxForDays(month_colors, month_bac);
+			
 			convertToLists(day_colors, day_values);
 		}
 	}
@@ -234,10 +244,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		monthDisplay.setText(month);
 	}
 
-	public void changeBottomDisplay(String entry, double bac, int index,
-			int estimatedDrinks) {
-
-		if (estimatedDrinks <= 0) {
+	public void changeBottomDisplay(String entry, double bac, int index) {
 			// bottomDisplay.setText(entry);
 			int info_color = 0;
 			String info_txt = "";
@@ -246,11 +253,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			String dogs = "";
 			if (bac == 0) {
 				info_color = 0xFF0099CC;
-				info_txt = "Click on a colored date for more information.";
-				est = "";
+				info_txt = "Click on a colored date for more information." + month_total_time;
 				cnt = "";
 				dogs = "";
-				goalText.setText("");
 				click.setVisibility(View.GONE);
 
 			} else {
@@ -264,37 +269,30 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 								+ " Drinks Tracked.";
 						click.setVisibility(View.VISIBLE);
 					}
-					int num_dogs = Integer.parseInt(hotdogs.get(index).value);
-					if (num_dogs == 1) {
-						dogs = "Which is calorically equivalent to 1 hot dog.";
-					} else {
-						dogs = "Which is calorically equivalent to " + num_dogs
-								+ " hot dogs.";
-					}
 				}
 				info_txt = "BAC: " + entry + "\n\n";
 				if (bac < 0.06) {
 					info_color = 0x884D944D;
 					if (bac < 0.02) {
-						info_txt += "-Begin to feel relaxed.\n-Reaction time slows.\n";
+						info_txt += "-Begin to feel relaxed.\n-Reaction time slows.\n"+ month_total_time;
 					} else {
-						info_txt += "-Euphoria, \"the buzz\"\n-Sociability.\n-Decrease in judgement and reasoning.\n";
+						info_txt += "-Euphoria, \"the buzz\"\n-Sociability.\n-Decrease in judgement and reasoning.\n"+ month_total_time;
 					}
 				} else if (bac < 0.15) {
 					info_color = 0X88E68A2E;
 					if (bac <= 0.08) {
-						info_txt += "-Legally Intoxicated.\n-Balance and Coordination impaired.\n-Less self-control.";
+						info_txt += "-Legally Intoxicated.\n-Balance and Coordination impaired.\n-Less self-control."+ month_total_time;
 					} else {
-						info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n";
+						info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n"+ month_total_time;
 					}
 				} else if (bac < 0.24) {
 					info_color = 0X88A30000;
-					info_txt += "-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n";
+					info_txt += "-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n"+ month_total_time;
 				} else {
 					if (bac < .35) {
 						info_txt += "-May be unable to walk.\n-May pass out or lose conciousness.\n-Seek medical attention.\n";
 					} else {
-						info_txt += "-High risk for coma or death.\n";
+						info_txt += "-High risk for coma or death.\n"+ month_total_time;
 					}
 					info_color = 0XCC000000;
 				}
@@ -302,70 +300,15 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			infoDisplay.setText(info_txt);
 			infoDisplay.setBackgroundColor(info_color);
 			drinkCount.setText(cnt);
-			dogCount.setText(dogs);
 
-			int count = 0;
-			if (index != -1) {
-				int num_dogs = Integer.parseInt(hotdogs.get(index).value);
-				dog_img.removeAllViews();
-				drink_img.removeAllViews();
-				for (int i = 0; i <= num_dogs; i++) {
-					count += 1;
-					ImageView iv = new ImageView(this);
-					iv.setBackgroundResource(R.drawable.hot_dog);
-					iv.setId(i);
-					RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-							80, 80);
-					if (i > 0) {
-						ImageView last = (ImageView) dog_img
-								.findViewById(i - 1);
-						if (count > 10) {
-							p.addRule(RelativeLayout.BELOW, i - 10);
-							p.addRule(RelativeLayout.ALIGN_START, i - 10);
-						} else {
-							p.addRule(RelativeLayout.RIGHT_OF, last.getId());
-						}
-					}
-
-					iv.setLayoutParams(p);
-					dog_img.addView(iv, p);
-				}
-				count = 0;
-				for (int i = 0; i <= day_counts.get(index); i++) {
-					count += 1;
-					ImageView iv = new ImageView(this);
-					iv.setBackgroundResource(R.drawable.beer_icon);
-					iv.setId(i);
-					RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(
-							60, 60);
-					if (i > 0) {
-						ImageView last = (ImageView) drink_img
-								.findViewById(i - 1);
-						if (count > 10) {
-							p.addRule(RelativeLayout.BELOW, i - 10);
-							p.addRule(RelativeLayout.ALIGN_START, i - 10);
-						} else {
-							p.addRule(RelativeLayout.RIGHT_OF, last.getId());
-						}
-					}
-
-					iv.setLayoutParams(p);
-					drink_img.addView(iv, p);
-				}
-			} else if (index == -1) {
-				drink_img.removeAllViews();
-				dog_img.removeAllViews();
-			}
-
-		} else {
-		
-			if (estimatedDrinks == 1)
-				drinkCount.setText("One Drink Estimated");
-			else
-				drinkCount.setText(estimatedDrinks + " Drinks Estimated");
-		}
+	
 	}
 
+	protected void setCalendarBottom(){
+		String drink_text = month_total_drink + " total drinks";
+		drinkCount.setText(drink_text);
+	}
+	
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -427,6 +370,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						selectedYear, drinkingDays, maxBac, bacColors);
 				drinkCalendar.setAdapter(adapter);
 				drinkBacButtons = adapter.getButtonView();
+				setCalendarBottom();
 			}
 			return true;
 		}

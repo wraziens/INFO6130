@@ -607,37 +607,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				variable_str + ";";
 		db.execSQL(query);
 		db.close();
-	}
-	
-	
-	public ArrayList<String []> getWordleDrink(){
-		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "Select a.value, COUNT(a.value) FROM " + TABLE_QUES + " a INNER JOIN " + TABLE_QUES +
-				" b ON a." + QUES_KEY_MONTH +"=b." + QUES_KEY_MONTH + 
-				" AND a." + QUES_KEY_DAY  + "=b." + QUES_KEY_DAY +
-				" AND a." + QUES_KEY_YEAR + "=b." + QUES_KEY_YEAR +
-				" WHERE a.variable='wordle' AND b.variable='drank_last_night'" +
-				" AND b.value='True' GROUP BY a.value;";
-		Cursor cursor = db.rawQuery(query, null);
-		return handleWordle(cursor);	
-	}
-	
-	public ArrayList<String []> getWordleNoDrink(){
-		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "Select c.value, COUNT(c.value) FROM " + TABLE_QUES + " c WHERE c.variable=\"wordle\" " +
-				"AND c.id NOT IN " +
-				"(Select a.id FROM " + TABLE_QUES + " a INNER JOIN " + TABLE_QUES +
-				" b ON a." + QUES_KEY_MONTH +"=b." + QUES_KEY_MONTH + 
-				" AND a." + QUES_KEY_DAY  + "=b." + QUES_KEY_DAY +
-				" AND a." + QUES_KEY_YEAR + "=b." + QUES_KEY_YEAR +
-				" WHERE a.variable='wordle' AND b.variable='drank_last_night'" +
-				" AND b.value='True') GROUP BY c.value;";
-		
-		Cursor cursor = db.rawQuery(query, null);
-		return handleWordle(cursor);
-	}
-	
-	
+	}	
 	
 	public List<DatabaseStore> getVarValuesForMonth(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);

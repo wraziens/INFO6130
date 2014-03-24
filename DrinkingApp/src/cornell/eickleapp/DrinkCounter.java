@@ -90,17 +90,9 @@ public class DrinkCounter extends Activity {
 		finish();
 	}
 
-	private Date getDelayedDate(){
-		Date date = new Date();
-		GregorianCalendar gc = new GregorianCalendar();
-		gc.setTime(date);
-		gc.add(Calendar.HOUR_OF_DAY, -6);
-		date = gc.getTime();
-		return date;
-	}
 
 	private void start(){
-		Date date = getDelayedDate();
+		Date date = DatabaseStore.getDelayedDate();
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
 				.getVarValuesDelay("drink_count", date);
@@ -116,10 +108,6 @@ public class DrinkCounter extends Activity {
 		}
 	}
 
-	private void recalculateBac(){
-		Date date = getDelayedDate();
-		bac = calculateBac(start_date, date, drink_count);
-	}
 	
 	public void removeLast() {
 		drink_count--;
@@ -209,7 +197,11 @@ public class DrinkCounter extends Activity {
 		face.refreshDrawableState();
 		
 	}
-	
+
+	private void recalculateBac(){
+		Date date = DatabaseStore.getDelayedDate();
+		bac = calculateBac(start_date, date, drink_count);
+	}
 	
 	private double calculateBac(Date start, Date end, int number_drinks) {
 		

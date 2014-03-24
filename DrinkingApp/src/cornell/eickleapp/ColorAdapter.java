@@ -125,7 +125,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 				@Override
 				public void onClick(View v) {
 					((Button)v).setTextSize(14f);
-					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1, 0);
+					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
 					if (focused > 0) {
 						Button child = (Button)parent.getChildAt(focused);
 						if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
@@ -159,7 +159,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 								estNo = Integer.parseInt(estRelavantMonthList.get(i).value);
 							}
 						}
-						((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1, estNo);
+						((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
 					}
 					((Button)v).setTextColor(Color.WHITE);
 					
@@ -183,7 +183,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 					@Override
 					public void onClick(View v) {
 						DecimalFormat formatter = new DecimalFormat("#.###");
-						((DrinkCalendar) mContext).changeBottomDisplay(formatter.format(bac_lev), bac_lev, i, 0);
+						((DrinkCalendar) mContext).changeBottomDisplay(formatter.format(bac_lev), bac_lev, i);
 						if (focused > 0) {
 							Button child = (Button)parent.getChildAt(focused);
 							if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
@@ -229,7 +229,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 0:
 			view.setText("Sun");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
@@ -237,7 +236,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 1:
 			view.setText("Mon");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
@@ -245,7 +243,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 2:
 			view.setText("Tue");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
@@ -253,7 +250,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 3:
 			view.setText("Wed");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
@@ -261,7 +257,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 4:
 			view.setText("Thu");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
@@ -269,7 +264,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 5:
 			view.setText("Fri");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
@@ -277,7 +271,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		case 6:
 			view.setText("Sat");
 			view = setBackground(view, null);
-			//view.setBackground(null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
 			view.setTextSize(16f);
