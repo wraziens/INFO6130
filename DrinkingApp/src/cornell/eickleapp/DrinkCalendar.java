@@ -193,12 +193,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						month_total_time += time;
 						day_times.add(time);
 						cnt = 1;
-						max_day = s;
-						max_color = colors.get(i);
+						
 						if(Double.valueOf(max_day.value) > month_max_bac){
 							month_max_bac = Double.valueOf(max_day.value);
 							month_max_color = Integer.parseInt(max_color.value);
 						}
+						max_day = s;
+						max_color = colors.get(i);
 						start = s.date;
 					} else if (Double.valueOf(max_day.value) < Double
 							.valueOf(s.value)) {
@@ -336,6 +337,22 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		money_text.setText(formatter.format(day_counts.get(index)/day_times.get(index)) + " drinks per hour");
 		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
 		time_text.setText(day_times.get(index) + " hours drinking");
+		/*
+		//Update Bac Face icon
+		int icon_face = getFaceIcon(bac);
+		ImageView face = (ImageView)findViewById(R.id.drink_calendar_day);
+		
+		//Update the face color
+		((GradientDrawable)((LayerDrawable) face.getDrawable()).getDrawable(0)
+				).setColor(DrinkCounter.getBacColor(bac));	
+		
+		//Update the face icon
+		Drawable to_replace = getResources().getDrawable(icon_face);	
+		((LayerDrawable) face.getDrawable()).setDrawableByLayerId(
+				R.id.face_icon, to_replace);
+		face.invalidate();
+		face.refreshDrawableState();
+		*/
 		dialog.show();
 	}
 	
