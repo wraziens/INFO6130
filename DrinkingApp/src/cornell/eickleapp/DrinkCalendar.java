@@ -6,10 +6,14 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -298,12 +302,30 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	}
 	
 	public void showDayInfo(double bac, int index){
-		String title = getMonthFromInt(selectedMonth) + " " + String.valueOf(index +1) + ", " + selectedYear;  
+		String day_day = day_values.get(index).day_week;
+		String date_string = getMonthFromInt(selectedMonth) + " " + day_values.get(index).day + ", " + selectedYear;  
 		final Dialog dialog = new Dialog(this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		dialog.setContentView(R.layout.calendar_day_info);
-		dialog.setTitle(title);
+		
+		//dialog.setTitle(title);
+		
+		Map<String, String> week_days = new HashMap<String, String>();
+		week_days.put("Sun", "Sunday");
+		week_days.put("Mon", "Monday");
+		week_days.put("Tue", "Tuesday");
+		week_days.put("Wed", "Wednesday");
+		week_days.put("Thu", "Thursday");
+		week_days.put("Fri", "Friday");
+		week_days.put("Sat", "Saturday");
 		
 		DecimalFormat formatter = new DecimalFormat("#.###");
+		
+		TextView day_text = (TextView) dialog.findViewById(R.id.day_of_week);
+		day_text.setText(week_days.get(day_day));
+		TextView date_text = (TextView) dialog.findViewById(R.id.day_date);
+		date_text.setText(date_string);
 		
 		// set the custom dialog components - text, image and button
 		TextView bac_text = (TextView) dialog.findViewById(R.id.day_bac);
@@ -311,75 +333,14 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		TextView count_text = (TextView) dialog.findViewById(R.id.day_drink_count);
 		count_text.setText(day_counts.get(index) + " drinks recorded");
 		TextView money_text = (TextView) dialog.findViewById(R.id.day_money);
-		money_text.setText(String.valueOf(day_counts.get(index)/day_times.get(index)) + " spent on drinks");
+		money_text.setText(formatter.format(day_counts.get(index)/day_times.get(index)) + " drinks per hour");
 		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
 		time_text.setText(day_times.get(index) + " hours drinking");
-		//dialog.
 		dialog.show();
 	}
 	
-	public void changeBottomDisplay(String entry, double bac, int index) {
-			// bottomDisplay.setText(entry);
-			
+	public void changeBottomDisplay(String entry, double bac, int index){
 			showDayInfo(bac, index);
-			/*
-			int info_color = 0;
-			String info_txt = "";
-			String est = "";
-			String cnt = "";
-			String dogs = "";
-			if (bac == 0) {
-				info_color = 0xFF0099CC;
-				info_txt = "Click on a colored date for more information." + month_total_time;
-				cnt = "";
-				dogs = "";
-				click.setVisibility(View.VISIBLE);
-
-			} else {
-				if (index != -1) {
-					if (day_counts.get(index) == 1) {
-						cnt = String.valueOf(day_counts.get(index))
-								+ " Drink Tracked.";
-						click.setVisibility(View.VISIBLE);
-					} else {
-						cnt = String.valueOf(day_counts.get(index))
-								+ " Drinks Tracked.";
-						click.setVisibility(View.VISIBLE);
-					}
-				}
-				info_txt = "BAC: " + entry + "\n\n";
-				if (bac < 0.06) {
-					info_color = 0x884D944D;
-					if (bac < 0.02) {
-						info_txt += "-Begin to feel relaxed.\n-Reaction time slows.\n"+ month_total_time;
-					} else {
-						info_txt += "-Euphoria, \"the buzz\"\n-Sociability.\n-Decrease in judgement and reasoning.\n"+ month_total_time;
-					}
-				} else if (bac < 0.15) {
-					info_color = 0X88E68A2E;
-					if (bac <= 0.08) {
-						info_txt += "-Legally Intoxicated.\n-Balance and Coordination impaired.\n-Less self-control."+ month_total_time;
-					} else {
-						info_txt += "-Clear deterioration of cognitive judgement and motor coordination.\n-Speech may be slurred.\n"+ month_total_time;
-					}
-				} else if (bac < 0.24) {
-					info_color = 0X88A30000;
-					info_txt += "-At risk for blackout.\n-Nausea.\n-Risk of stumbling and falling.\n"+ month_total_time;
-				} else {
-					if (bac < .35) {
-						info_txt += "-May be unable to walk.\n-May pass out or lose conciousness.\n-Seek medical attention.\n";
-					} else {
-						info_txt += "-High risk for coma or death.\n"+ month_total_time;
-					}
-					info_color = 0XCC000000;
-				}
-			}
-			infoDisplay.setText(info_txt);
-			infoDisplay.setBackgroundColor(info_color);
-			drinkCount.setText(cnt);
-		*/
-
-	
 	}
 	
 	public int getFaceIcon(double bac_value){
