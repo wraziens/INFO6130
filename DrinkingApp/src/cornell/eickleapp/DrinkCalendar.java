@@ -430,7 +430,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	}
 
 	class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-		private static final int SWIPE_MIN_DISTANCE = 40;
+		private static final int SWIPE_MIN_DISTANCE = 20;
 		private static final int SWIPE_MAX_OFF_PATH = 150;
 		private static final int SWIPE_THRESHOLD_VELOCITY = 50;
 		
