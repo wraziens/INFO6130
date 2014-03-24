@@ -133,11 +133,23 @@
     <string name="liquor_checkbox">Liquor</string>
     
     
-    <string name="vomit_prompt">Did you vomit last night or this morning?</string>
-    <string name="recall_prompt">How much of last night\'s events do you recall?</string>
-    <string name="regret_prompt">How regretful do you feel about events last night?</string>
-    <string name="symptoms_prompt">Do you feel any of the following symptoms today?</string>
+    <string name="vomit_prompt">Did you vomit last night?</string>
     
+    <string name="recall_prompt">How much of last night\'s events do you recall?</string>
+    <string name="recall_yes">Everything</string>
+    <string name="recall_no">Nothing</string>
+    
+    <string name="regret_prompt">How regretful do you feel about events last night?</string>
+    <string name="regret_yes">Very</string>
+    <string name="regret_no">Not at all</string>
+    
+    <string name="symptoms_prompt">Do you feel any of the following symptoms?</string>
+    <string name="symptoms_fatigue">Fatigue</string>
+    <string name="symptoms_nausea">Nausea</string>
+    <string name="symptoms_headache">Headache</string>
+    <string name="symptoms_vomit">Vomitting</string>
+    
+    <string name="save">Save</string>
     
     <!-- Nav Drawer Menu Items -->
 
