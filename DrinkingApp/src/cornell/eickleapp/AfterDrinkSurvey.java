@@ -53,6 +53,7 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 		
 		regret_result = "";
 		recall_result = "";
+		vomit_result = "";
 		
 		save_btn.setOnClickListener(this);
 	
