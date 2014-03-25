@@ -1,11 +1,10 @@
 package cornell.eickleapp;
 
-import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.view.Menu;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -16,8 +15,8 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);//full screen
-		//getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);//full screen
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 		boolean checkSurveyed=getPrefs.getBoolean("initialSurvey", false);
 		
@@ -28,7 +27,7 @@ public class MainActivity extends Activity {
 		}
 		else{
 		
-			Intent goToMenu=new Intent(this,MainMenu.class);
+			Intent goToMenu=new Intent(this,MainMenu3.class);
 			startActivity(goToMenu);
 		}
 		
@@ -36,7 +35,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		finish();
 	}

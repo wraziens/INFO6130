@@ -102,8 +102,6 @@ public class MainMenu extends Activity implements OnClickListener {
 			// goToThisPage = new Intent(MainMenu.this, Assessment.class);
 			// startActivity(goToThisPage);
 			if (drank == null) {
-				Intent drink_ques = new Intent(this, DailySurvey1.class);
-				startActivityForResult(drink_ques, 2);
 			} else {
 				ArrayList<DatabaseStore> assess = (ArrayList<DatabaseStore>) db
 						.getVarValuesForDay("drink_assess", date);

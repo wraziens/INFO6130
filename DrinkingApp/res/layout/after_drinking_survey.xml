@@ -190,6 +190,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
+        android:layout_marginTop="10dp"
         android:weightSum="2" >
 	    
 	    <CheckBox
@@ -198,6 +199,7 @@
 	        android:layout_height="wrap_content"
 	        android:textColor="#9D60C7"
 	        android:text="@string/symptoms_fatigue"
+	        android:layout_marginLeft="30dp"
 	        android:textSize="14sp"
 	        android:layout_weight="1" />
 	
@@ -217,8 +219,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_marginTop="-10dp">
+        android:weightSum="2">
         <CheckBox
             android:id="@+id/symptom_headache"
             android:layout_width="wrap_content"
@@ -226,6 +227,7 @@
             android:textColor="#9D60C7"
             android:text="@string/symptoms_headache"
             android:textSize="14sp"
+            android:layout_marginLeft="30dp"
             android:layout_weight="1" />
 
         <CheckBox
