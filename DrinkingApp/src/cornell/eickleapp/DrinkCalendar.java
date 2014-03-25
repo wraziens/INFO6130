@@ -78,7 +78,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		dc = this;
 		drinkCalendar = (GridView) findViewById(R.id.gvDrinkCalendar);
 		monthDisplay = (TextView) findViewById(R.id.tvMonth);
-		yearDisplay = (TextView) findViewById(R.id.tvYear);
 		bottomDisplay = (TextView) findViewById(R.id.tvCalendarBottomDisplay);
 		infoDisplay = (TextView) findViewById(R.id.tvInfoDisplay);
 		drinkCount = (TextView) findViewById(R.id.drink_count);
@@ -110,13 +109,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 
 		selectedMonth = calendar.get(Calendar.MONTH);
 		selectedYear = calendar.get(Calendar.YEAR);
-		setMonthFromInt(selectedMonth);
-		yearDisplay.setText(Integer.toString(selectedYear));
+		String month_text =  getMonthFromInt(selectedMonth) + " " + selectedYear;
+		monthDisplay.setText(month_text);
+		
 		ColorAdapter adapter = new ColorAdapter(this, selectedMonth,
 				selectedYear, drinkingDays, maxBac, bacColors);
 		drinkCalendar.setAdapter(adapter);
 		drinkBacButtons = adapter.getButtonView();
-		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
 		
 		mDetector = new GestureDetectorCompat(this, new MyGestureListener());
 		setCalendarBottom();
@@ -289,12 +288,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	public void onClick(View v) {
 	}
 
-	// inputs the int value of month and outputs its corresponding name
-	private void setMonthFromInt(int num) {
-		String month = getMonthFromInt(num);
-		monthDisplay.setText(month);
-	}
-
 	private String getMonthFromInt(int num){
 		String month = "";
 		DateFormatSymbols dfs = new DateFormatSymbols();
@@ -305,7 +298,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	
 	public void showDayInfo(double bac, int index){
 		String day_day = day_values.get(index).day_week;
-		String date_string = getMonthFromInt(selectedMonth) + " " + day_values.get(index).day + ", " + selectedYear;  
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
@@ -447,9 +439,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				float velocityX, float velocityY){
 			float dx = event2.getX() - event1.getX();
 			float dy = event1.getY() - event2.getY();
-			//Toast.makeText(getApplicationContext(), "FLING!",
-			//		Toast.LENGTH_SHORT).show();
-			
+
 			GregorianCalendar gc = new GregorianCalendar(selectedYear,
 					selectedMonth, 1);
 			Date date = new Date();
@@ -466,10 +456,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 					if (selectedMonth - 1 < 0) {
 						selectedMonth = 11;
 						selectedYear--;
-						yearDisplay.setText(Integer.toString(selectedYear));
-					} else
+					}else{
 						selectedMonth--;
-					setMonthFromInt(selectedMonth);
+					}
+					String month_text = getMonthFromInt(selectedMonth) + " " + selectedYear;
+					monthDisplay.setText(month_text);
 				}else{
 					gc.add(Calendar.MONTH, 1);
 					date = gc.getTime();
@@ -477,10 +468,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 					if (selectedMonth + 1 > 11) {
 						selectedMonth = 0;
 						selectedYear++;
-						yearDisplay.setText(Integer.toString(selectedYear));
-					} else
+					}else{
 						selectedMonth++;
-					setMonthFromInt(selectedMonth);
+					}
+					String month_text = getMonthFromInt(selectedMonth) + " " + selectedYear;
+					monthDisplay.setText(month_text);
 				}
 				calculateValues(date);
 				ColorAdapter adapter = new ColorAdapter(dc, selectedMonth,

@@ -15,24 +15,19 @@
         android:layout_height="wrap_content" >
 
         <TextView
-            android:id="@+id/tvYear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:text="2000"
-            android:textSize="20sp"
-            android:textColor="#51A7F9" />
-        <TextView
             android:id="@+id/tvMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvYear"
             android:layout_centerHorizontal="true"
             android:text="Month"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#51A7F9" />
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/calendar_background" />
     </RelativeLayout>
 
     <ScrollView
@@ -67,21 +62,24 @@
 
 			<TextView
                     android:id="@+id/month_overview"
-                    android:layout_width="fill_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="5dp"
+         			android:paddingBottom="5dp"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="#51A7F9"
+                    android:textColor="#ffffff"
                     android:text=""
                     android:gravity="center_horizontal"
-                   
-                    android:textStyle="bold"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:background="@drawable/calendar_background"  />
                 
 	<RelativeLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
-		android:layout_marginTop="10dp">
+		android:layout_marginTop="15dp">
 			
 		<LinearLayout
 		    android:id="@+id/info_bac"
