@@ -159,7 +159,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name="AfterDrinkSurvey"
+            android:name=".AfterDrinkSurvey"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
         </activity>

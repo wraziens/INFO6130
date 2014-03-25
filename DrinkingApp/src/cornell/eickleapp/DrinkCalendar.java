@@ -249,8 +249,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			month_colors = DatabaseStore.sortByTime(month_colors);
 			month_bac = DatabaseStore.sortByTime(month_bac);
 			month_drinks = DatabaseStore.sortByTime(month_drinks);
-			month_money = DatabaseStore.sortByTime(month_money);
-			
+			if (month_money!= null){
+				month_money = DatabaseStore.sortByTime(month_money);
+			}
 			getMaxForDays(month_colors, month_bac);
 			
 			convertToLists(day_colors, day_values);
