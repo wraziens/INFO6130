@@ -325,17 +325,16 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		DecimalFormat formatter = new DecimalFormat("#.###");
 		
 		TextView day_text = (TextView) dialog.findViewById(R.id.day_of_week);
-		day_text.setText(week_days.get(day_day));
-		TextView date_text = (TextView) dialog.findViewById(R.id.day_date);
-		date_text.setText(date_string);
+		day_text.setText(week_days.get(day_day)+ " "  + selectedMonth +"/" + day_values.get(index).day);
+		//date_text.setText(date_string);
 		
 		// set the custom dialog components - text, image and button
 		TextView bac_text = (TextView) dialog.findViewById(R.id.day_bac);
-		bac_text.setText(formatter.format(bac) + " max BAC value");
-		TextView count_text = (TextView) dialog.findViewById(R.id.day_drink_count);
+		bac_text.setText(formatter.format(bac) + " max BAC");
+		TextView count_text = (TextView) dialog.findViewById(R.id.day_cal_drink_count);
 		count_text.setText(day_counts.get(index) + " drinks recorded");
-		TextView money_text = (TextView) dialog.findViewById(R.id.day_money);
-		money_text.setText(formatter.format(day_counts.get(index)/day_times.get(index)) + " drinks per hour");
+		TextView rate_text = (TextView) dialog.findViewById(R.id.day_rate);
+		rate_text.setText(formatter.format(day_counts.get(index)/day_times.get(index)) + " drinks / hour");
 		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
 		time_text.setText(day_times.get(index) + " hours drinking");
 		/*
@@ -376,11 +375,11 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 
 	
 	protected void setCalendarBottom(){
-		String drink_text = month_total_drink + " total drinks recorded";
+		String drink_text = month_total_drink + " drinks";
 		drinkCount.setText(drink_text);
 		drinkCount.setVisibility(View.VISIBLE);
 		
-		String time_text = month_total_time + " hours spent drinking";
+		String time_text = month_total_time + " hours drinking";
 		drinkTime.setText(time_text);
 		drinkTime.setVisibility(View.VISIBLE);
 		
@@ -403,17 +402,17 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		DecimalFormat formatter = new DecimalFormat("#.###");
 		
 		
-		String bac_text = formatter.format(month_max_bac) + " max BAC value";
+		String bac_text = formatter.format(month_max_bac) + " max BAC";
 		drinkBac.setText(bac_text);
 		drinkBac.setVisibility(View.VISIBLE);
 		
 		DecimalFormat money_formatter = new DecimalFormat("#.##");
 		
-		String overview_text = getMonthFromInt(selectedMonth) + " Overview";
+		String overview_text = "Summary";
 		monthOverview.setText(overview_text);
 		
 		
-		String money_text = money_formatter.format(month_money) + " spent on drinks";
+		String money_text = "$" + money_formatter.format(month_money);
 		monthMoney.setText(money_text);
 		
 	}
