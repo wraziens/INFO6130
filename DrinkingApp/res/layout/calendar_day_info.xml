@@ -118,7 +118,7 @@
 	                    android:layout_height="wrap_content"
 	                    android:gravity="center"
 	                    android:text=""
-	                    android:textColor="#51A7F9"
+	                    android:textColor="@color/calendar_info"
 	                    android:textSize="18sp"
 	                    android:layout_marginTop="5dp" />
 

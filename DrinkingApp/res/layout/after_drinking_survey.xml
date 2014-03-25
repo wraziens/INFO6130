@@ -1,259 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f7f3f7" >
+
+<LinearLayout 
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_margin="10dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
 
-	<TextView
-    	android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/type_drink_prompt"
-        android:textSize="18sp" 
-        android:textColor="#52555a"/>
+    android:orientation="vertical" >
 
-	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:weightSum="3" >
 
-        <CheckBox
-            android:id="@+id/type_beer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#9D60C7"
-            android:text="@string/beer_checkbox"
-            android:textSize="14sp" />
-
-        <CheckBox
-            android:id="@+id/type_wine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#9D60C7"
-            android:text="@string/wine_checkbox"
-            android:textSize="14sp" />
-
-        <CheckBox
-            android:id="@+id/type_liquor"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="#9D60C7"
-            android:text="@string/liquor_checkbox"
-            android:textSize="14sp" />
-    </LinearLayout>
+		<TextView
+	    	android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:text="@string/type_drink_prompt"
+	        android:textSize="18sp" 
+	        android:textColor="#585858"/>
 	
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="10dp" >
-
-        <TextView
-            android:id="@+id/recall_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/recall_prompt"
-            android:textSize="18sp"
-            android:textColor="#52555a" />
-
-        <SeekBar
-            android:id="@+id/recall_bar"
-            android:layout_marginTop="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:progressDrawable="@drawable/apptheme_scrubber_progress_horizontal_holo_light"
-            android:thumb="@drawable/apptheme_scrubber_control_selector_holo_light"
-            android:layout_below="@id/recall_prompt"/>
-
-        <TextView
-           	android:layout_width="800dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:paddingLeft="10dp"
-            android:text="@string/recall_no"
-            android:textColor="#9D60C7"
-            android:textSize="12sp"
-            android:layout_below="@id/recall_bar" />
-
-        <TextView
-        	android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:paddingRight="10dp"
-            android:text="@string/recall_yes"
-            android:textSize="12sp"
-            android:textColor="#9D60C7"
-            android:layout_below="@id/recall_bar"/>
-	</RelativeLayout>
-    
-    
-    <TextView
-    	android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/vomit_prompt"
-       	android:textSize="18sp"
-       	android:layout_marginTop="10dp"
-       	android:textColor="#52555a" />
-
-    <RadioGroup
-   		android:id="@+id/vomit_group"
-       	android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal" >
-
-     	<RadioButton
-     	    android:id="@+id/yes_vomit"
-        	android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-          	android:gravity="center"
-          	android:text="@string/yes"
-            android:textColor="#9D60C7"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/survey_checkbox"
-            android:button="@null"/>
-
-        <RadioButton
-            android:id="@+id/no_vomit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no"
-            android:gravity="center"
-            android:textColor="#9D60C7"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/survey_checkbox"
-            android:button="@null"/>
-   	</RadioGroup>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp" >
-
-        <TextView
-            android:id="@+id/regret_prompt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/regret_prompt"
-            android:textSize="18sp"
-            android:textColor="#52555a" />
-
-        <SeekBar
-            android:id="@+id/regret_bar"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:progressDrawable="@drawable/apptheme_scrubber_progress_horizontal_holo_light"
-            android:thumb="@drawable/apptheme_scrubber_control_selector_holo_light"
-            android:layout_below="@id/regret_prompt"/>
-
-        <TextView
-                android:layout_width="800dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:paddingLeft="10dp"
-                android:text="@string/regret_no"
-                android:textColor="#9D60C7"
-                android:layout_below="@id/regret_bar"
-                android:textSize="12sp" />
-
-            <TextView
-                android:layout_width="40dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingRight="10dp"
-                android:text="@string/regret_yes"
-                android:textColor="#9D60C7"
-                android:layout_below="@id/regret_bar"
-                android:textSize="12sp"/>
-        </RelativeLayout>
-    
-	<TextView
-    	android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/symptoms_prompt"
-        android:textSize="18sp" 
-        android:layout_marginTop="10dp"
-        android:textColor="#52555a"/>
-
-	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:weightSum="2" >
+		<LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_marginTop="5dp"
+	        android:layout_marginBottom="10dp"
+	        android:weightSum="3" >
+	
+	        <CheckBox
+	            android:id="@+id/type_beer"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textColor="#9D60C7"
+	            android:text="@string/beer_checkbox"
+	            android:textSize="14sp" />
+	
+	        <CheckBox
+	            android:id="@+id/type_wine"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textColor="#9D60C7"
+	            android:text="@string/wine_checkbox"
+	            android:textSize="14sp" />
+	
+	        <CheckBox
+	            android:id="@+id/type_liquor"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:textColor="#9D60C7"
+	            android:text="@string/liquor_checkbox"
+	            android:textSize="14sp" />
+	    </LinearLayout>
+		
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_marginBottom="10dp" >
+	
+	        <TextView
+	            android:id="@+id/recall_prompt"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/recall_prompt"
+	            android:textSize="18sp"
+	            android:textColor="#585858" />
+	
+	        <SeekBar
+	            android:id="@+id/recall_bar"
+	            android:layout_marginTop="10dp"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:progressDrawable="@drawable/apptheme_scrubber_progress_horizontal_holo_light"
+	            android:thumb="@drawable/apptheme_scrubber_control_selector_holo_light"
+	            android:layout_below="@id/recall_prompt"/>
+	
+	        <TextView
+	           	android:layout_width="800dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:paddingLeft="10dp"
+	            android:text="@string/recall_no"
+	            android:textColor="#9D60C7"
+	            android:textSize="12sp"
+	            android:layout_below="@id/recall_bar" />
+	
+	        <TextView
+	        	android:layout_width="80dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentRight="true"
+	            android:paddingRight="10dp"
+	            android:text="@string/recall_yes"
+	            android:textSize="12sp"
+	            android:textColor="#9D60C7"
+	            android:layout_below="@id/recall_bar"/>
+		</RelativeLayout>
 	    
-	    <CheckBox
-	    	android:id="@+id/symptom_fatigue"
-	        android:layout_width="wrap_content"
+	    
+	    <TextView
+	    	android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:textColor="#9D60C7"
-	        android:text="@string/symptoms_fatigue"
-	        android:layout_marginLeft="30dp"
-	        android:textSize="14sp"
-	        android:layout_weight="1" />
+	        android:text="@string/vomit_prompt"
+	       	android:textSize="18sp"
+	       	android:layout_marginTop="10dp"
+	       	android:textColor="#585858" />
 	
-		<CheckBox
-	    	android:id="@+id/symptom_nausea"
-	        android:layout_width="wrap_content"
+	    <RadioGroup
+	   		android:id="@+id/vomit_group"
+	       	android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:textColor="#9D60C7"
-	        android:text="@string/symptoms_nausea"
-	        android:textSize="14sp"
-	        android:layout_weight="1" />
-	</LinearLayout>
-        
-        
-	<LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
-        <CheckBox
-            android:id="@+id/symptom_headache"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#9D60C7"
-            android:text="@string/symptoms_headache"
-            android:textSize="14sp"
-            android:layout_marginLeft="30dp"
-            android:layout_weight="1" />
+	        android:layout_gravity="center"
+	        android:layout_marginTop="5dp"
+	        android:orientation="horizontal" >
+	
+	     	<RadioButton
+	     	    android:id="@+id/yes_vomit"
+	        	android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	          	android:gravity="center"
+	          	android:text="@string/yes"
+	            android:textColor="#9D60C7"
+	            android:layout_marginRight="10dp"
+	            android:background="@drawable/survey_checkbox"
+	            android:button="@null"/>
+	
+	        <RadioButton
+	            android:id="@+id/no_vomit"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/no"
+	            android:gravity="center"
+	            android:textColor="#9D60C7"
+	            android:layout_marginLeft="10dp"
+	            android:background="@drawable/survey_checkbox"
+	            android:button="@null"/>
+	   	</RadioGroup>
+	    
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical"
+	        android:layout_marginTop="10dp" >
+	
+	        <TextView
+	            android:id="@+id/regret_prompt"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/regret_prompt"
+	            android:textSize="18sp"
+	            android:textColor="#52555a" />
+	
+	        <SeekBar
+	            android:id="@+id/regret_bar"
+	            android:layout_width="match_parent"
+	            android:layout_marginTop="10dp"
+	            android:layout_height="wrap_content"
+	            android:progressDrawable="@drawable/apptheme_scrubber_progress_horizontal_holo_light"
+	            android:thumb="@drawable/apptheme_scrubber_control_selector_holo_light"
+	            android:layout_below="@id/regret_prompt"/>
+	
+	        <TextView
+	                android:layout_width="800dp"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:paddingLeft="10dp"
+	                android:text="@string/regret_no"
+	                android:textColor="#9D60C7"
+	                android:layout_below="@id/regret_bar"
+	                android:textSize="12sp" />
+	
+	            <TextView
+	                android:layout_width="40dp"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:paddingRight="10dp"
+	                android:text="@string/regret_yes"
+	                android:textColor="#9D60C7"
+	                android:layout_below="@id/regret_bar"
+	                android:textSize="12sp"/>
+	        </RelativeLayout>
+	    
+		<TextView
+	    	android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/symptoms_prompt"
+	        android:textSize="18sp" 
+	        android:layout_marginTop="10dp"
+	        android:textColor="#52555a"/>
+	
+		<LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:gravity="center"
+	        android:layout_marginTop="10dp"
+	        android:weightSum="2" >
+		    
+		    <CheckBox
+		    	android:id="@+id/symptom_fatigue"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#9D60C7"
+		        android:text="@string/symptoms_fatigue"
+		        android:layout_marginLeft="30dp"
+		        android:textSize="14sp"
+		        android:layout_weight="1" />
+		
+			<CheckBox
+		    	android:id="@+id/symptom_nausea"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="#9D60C7"
+		        android:text="@string/symptoms_nausea"
+		        android:textSize="14sp"
+		        android:layout_weight="1" />
+		</LinearLayout>
+	        
+	        
+		<LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center"
+	        android:orientation="horizontal"
+	        android:weightSum="2">
+	        <CheckBox
+	            android:id="@+id/symptom_headache"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#9D60C7"
+	            android:text="@string/symptoms_headache"
+	            android:textSize="14sp"
+	            android:layout_marginLeft="30dp"
+	            android:layout_weight="1" />
+	
+	        <CheckBox
+	            android:id="@+id/symptom_vomit"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textColor="#9D60C7"
+	            android:text="@string/symptoms_vomit"
+	            android:textSize="14sp"
+	            android:layout_weight="1" />
+	    </LinearLayout>
+	    
+	    <RelativeLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="0dip"
+	        android:layout_weight="1"
+	        android:orientation="horizontal" >
+	
+	        <Button
+	            android:id="@+id/save_survey"
+	            android:layout_width="100dp"
+	            android:layout_height="35dp"
+	            android:layout_centerInParent="true"
+	            android:text="@string/save"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/survey_save_button" />
+	    </RelativeLayout>
 
-        <CheckBox
-            android:id="@+id/symptom_vomit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#9D60C7"
-            android:text="@string/symptoms_vomit"
-            android:textSize="14sp"
-            android:layout_weight="1" />
-    </LinearLayout>
-    
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dip"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/save_survey"
-            android:layout_width="100dp"
-            android:layout_height="35dp"
-            android:layout_centerInParent="true"
-            android:text="@string/save"
-            android:textColor="#ffffff"
-            android:background="@drawable/survey_save_button" />
-    </RelativeLayout>
-    
 </LinearLayout>
+    </ScrollView>
