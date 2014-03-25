@@ -5,7 +5,7 @@
 
     <ListView
         android:id="@+id/list_slidermenu"
-        android:layout_width="60dp"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="#52555a"
@@ -41,8 +41,8 @@
 
                 <Button
                     android:id="@+id/bToggleMenu"
-                    android:layout_width="20dp"
-                    android:layout_height="22dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_margin="10dp"
                     android:background="@drawable/ic_drawer"
                     android:onClick="toggleMenu" />
@@ -52,18 +52,18 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
-                android:gravity="center"
+                android:gravity="top"
                 android:orientation="vertical" >
 
                 <TextView
                     android:id="@+id/tvDateDisplayTop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="Trickle"
-                    android:textSize="20dp"
                     android:textColor="#a5aaad"
-                    android:textStyle="bold" />
+                    android:textSize="30dp" />
 
                 <TextView
                     android:id="@+id/tvDateDisplayBot"
@@ -80,13 +80,6 @@
                 android:layout_weight="0.15"
                 android:gravity="right"
                 android:orientation="horizontal" >
-
-                <Button
-                    android:id="@+id/bGoalMenu"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/ic_goals" />
             </LinearLayout>
         </LinearLayout>
 
@@ -94,62 +87,131 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.85"
-            android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="bottom"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.40"
+                android:gravity="center_horizontal"
                 android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/bDrinkCounterMenu"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/ic_trickle1" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="bottom"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/bTrendsMenu"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ic_trends"
+                        android:text="Trends"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="top"
-                android:orientation="horizontal" >
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.4"
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:orientation="horizontal" >
+                    android:layout_weight="0.65"
+                    android:gravity="bottom"
+                    android:orientation="vertical" >
 
                     <Button
-                        android:id="@+id/bSurveyMenu"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/ic_survey"
-                        android:gravity="center"
-                        android:text="Survey"
-                        android:textColor="#ffffff" />
+                        android:id="@+id/bDrinkCounterMenu"
+                        android:layout_width="160dp"
+                        android:layout_height="160dp"
+                        android:layout_gravity="right"
+                        android:background="@drawable/ic_trickle1" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="0.35"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:weightSum="1" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.6"
+                        android:gravity="top"
+                        android:orientation="vertical" >
+
+                        <Button
+                            android:id="@+id/bCalendarMenu"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ic_calendar"
+                            android:text="Calendar"
+                            android:textColor="#ffffff" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.4"
+                        android:gravity="bottom"
+                        android:orientation="vertical" >
+
+                        <Button
+                            android:id="@+id/bSurveyMenu"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_gravity="bottom"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/ic_survey"
+                            android:text="Survey"
+                            android:textColor="#ffffff"
+                            android:textSize="14dp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.20"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal" >
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
                     android:gravity="left"
                     android:orientation="horizontal" >
 
                     <Button
-                        android:id="@+id/bDataMenu"
-                        android:layout_width="90dp"
-                        android:layout_height="90dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/ic_data"
-                        android:gravity="center"
-                        android:padding="5dp"
-                        android:text="Data"
-                        android:textColor="#ffffff" />
+                        android:id="@+id/bGoalsMenu"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/ic_goals"
+                        android:text="Goals"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

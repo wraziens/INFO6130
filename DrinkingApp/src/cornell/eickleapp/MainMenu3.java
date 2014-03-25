@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MainMenu3 extends Activity implements OnClickListener {
 
-	Button drinkCounterMenu, surveyMenu, dataMenu;
+	Button drinkCounterMenu, surveyMenu, calendarMenu, trendsMenu, goalsMenu;
 
 	FlyOutContainer root;
 
@@ -22,7 +22,7 @@ public class MainMenu3 extends Activity implements OnClickListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		//getActionBar().hide();
+		// getActionBar().hide();
 
 		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
 				R.layout.menu3, null);
@@ -31,10 +31,14 @@ public class MainMenu3 extends Activity implements OnClickListener {
 
 		drinkCounterMenu = (Button) findViewById(R.id.bDrinkCounterMenu);
 		surveyMenu = (Button) findViewById(R.id.bSurveyMenu);
-		dataMenu = (Button) findViewById(R.id.bDataMenu);
+		calendarMenu = (Button) findViewById(R.id.bCalendarMenu);
+		trendsMenu = (Button) findViewById(R.id.bTrendsMenu);
+		goalsMenu = (Button) findViewById(R.id.bGoalsMenu);
 		drinkCounterMenu.setOnClickListener(this);
 		surveyMenu.setOnClickListener(this);
-		dataMenu.setOnClickListener(this);
+		calendarMenu.setOnClickListener(this);
+		trendsMenu.setOnClickListener(this);
+		goalsMenu.setOnClickListener(this);
 
 	}
 
@@ -45,21 +49,25 @@ public class MainMenu3 extends Activity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		Intent goToThisPage;
-		switch(v.getId()){
-		
+		switch (v.getId()) {
+
 		case R.id.bDrinkCounterMenu:
 			goToThisPage = new Intent(MainMenu3.this, DrinkCounter.class);
+			startActivity(goToThisPage);
+			break;
+		case R.id.bTrendsMenu:
+			break;
+		case R.id.bCalendarMenu:
+			goToThisPage = new Intent(MainMenu3.this, DrinkCalendar.class);
 			startActivity(goToThisPage);
 			break;
 		case R.id.bSurveyMenu:
 			goToThisPage = new Intent(MainMenu3.this, AfterDrinkSurvey.class);
 			startActivity(goToThisPage);
 			break;
-		case R.id.bDataMenu:
-			goToThisPage = new Intent(MainMenu3.this, DrinkCalendar.class);
-			startActivity(goToThisPage);
-		break;
+		case R.id.bGoalsMenu:
+			break;
 		}
-		
+
 	}
 }

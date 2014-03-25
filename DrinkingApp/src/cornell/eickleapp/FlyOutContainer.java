@@ -46,7 +46,7 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	private ListView mDrawerList;
 
 	// Constants
-	protected static final int menuSize = 80;
+	private static int menuSize = 80;
 	private static int menuMargin = 0;
 
 	public enum MenuState {
@@ -57,9 +57,6 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	protected int currentContentOffset = 0;
 	protected MenuState menuCurrentState = MenuState.CLOSED;
 
-	public FlyOutContainer(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-	}
 
 	public FlyOutContainer(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -94,6 +91,7 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		
 		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
+		menuSize=display.getWidth()/5;
 		menuMargin=(display.getWidth())-menuSize; 
 		
 		this.menu.setVisibility(View.GONE);
