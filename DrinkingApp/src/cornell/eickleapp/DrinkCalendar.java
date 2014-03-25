@@ -325,7 +325,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		DecimalFormat formatter = new DecimalFormat("#.###");
 		
 		TextView day_text = (TextView) dialog.findViewById(R.id.day_of_week);
-		day_text.setText(week_days.get(day_day)+ " "  + selectedMonth +"/" + day_values.get(index).day);
+		day_text.setText(week_days.get(day_day)+ " "  + (selectedMonth+1) +"/" + day_values.get(index).day);
 		//date_text.setText(date_string);
 		
 		// set the custom dialog components - text, image and button
@@ -337,6 +337,14 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		rate_text.setText(formatter.format(day_counts.get(index)/day_times.get(index)) + " drinks / hour");
 		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
 		time_text.setText(day_times.get(index) + " hours drinking");
+		
+		Button close = (Button)dialog.findViewById(R.id.close_info);
+		close.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v){
+				dialog.dismiss();
+			}
+		});
 		/*
 		//Update Bac Face icon
 		int icon_face = getFaceIcon(bac);

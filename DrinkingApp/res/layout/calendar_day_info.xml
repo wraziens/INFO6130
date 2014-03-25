@@ -109,4 +109,18 @@
             android:textSize="14sp"
             android:layout_marginTop="5dp" />
 	</LinearLayout>
+			
+			<LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:gravity="center"
+			    android:layout_marginTop="30dp">
+			<Button
+	            android:id="@+id/close_info"
+	            android:layout_width="100dp"
+	            android:layout_height="35dp"
+	            android:text="@string/okay"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/calendar_button" />
+			</LinearLayout>
 </LinearLayout>
