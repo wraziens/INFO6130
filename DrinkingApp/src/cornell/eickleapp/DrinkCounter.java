@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -362,7 +363,8 @@ public class DrinkCounter extends Activity {
 	public void addDrinkHandler(View view){
 		click_vibe.vibrate(75);
 		Toast t = Toast.makeText(getApplicationContext(), 
-				"Adding a drink. Count=" + drink_count, Toast.LENGTH_SHORT);
+				"Adding a drink." , Toast.LENGTH_SHORT);
+		t.setGravity(Gravity.TOP, 0, 100);
 		t.show();
 		updateFace();
 		hadDrink(view);
