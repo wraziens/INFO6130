@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -52,6 +53,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	private ArrayList<DatabaseStore> day_colors;
 	private ArrayList<DatabaseStore> day_values;
 	private ArrayList<Double> day_times;
+	private ArrayList<Double> day_time_counts;
 	private ArrayList<Double> day_money;
 	private ArrayList<Integer> day_counts;
 	
@@ -95,6 +97,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		maxBac = new ArrayList<Double>();
 		bacColors = new ArrayList<Integer>();
 		day_money = new ArrayList<Double>();
+		day_times = new ArrayList<Double>();
 
 		//aggregate values for the month
 		month_max_bac=0.0;
@@ -156,20 +159,19 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		day_colors = new ArrayList<DatabaseStore>();
 		day_values = new ArrayList<DatabaseStore>();
 		day_counts = new ArrayList<Integer>();
-		day_times = new ArrayList<Double>();
-		
-		
+		day_time_counts = new ArrayList<Double>();
 		
 		DatabaseStore max_day = null;
 		DatabaseStore max_color = null;
 		
 		Date start = null;
 		Date end = null;
+		
 		if (values != null) {
 			int cnt = 0;
 			for (int i = 0; i < values.size(); i++) {
 				cnt += 1;
-				DatabaseStore s = values.get(i);
+				DatabaseStore s = values.get(i);	
 				
 				if(start == null){
 					start = s.date; 
@@ -185,12 +187,13 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						day_values.add(max_day);
 						day_counts.add(cnt);
 						
-						//monthly aggregate values
 						month_total_drink += cnt;
 						end = max_day.date;
 						double time = (end.getTime() - start.getTime()) / (1000 * 60 * 60) + 1;
-						month_total_time += time;
-						day_times.add(time);
+						
+						//monthly aggregate values
+						month_total_drink += cnt;
+						day_time_counts.add(time);
 						cnt = 1;
 						
 						if(Double.valueOf(max_day.value) > month_max_bac){
@@ -215,23 +218,69 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			
 			month_total_drink += cnt;
 			double time = (end.getTime() - start.getTime())/(1000 * 60 * 60) + 1;
-			month_total_time += time;
-			day_times.add(time);
+			day_time_counts.add(time);
+
 			
 			if(Double.valueOf(max_day.value) > month_max_bac){
 				month_max_bac = Double.valueOf(max_day.value);
 				month_max_color = Integer.parseInt(max_color.value);
 			}
-			
-			
 		}
 	}
+	
+	//Calculate the amount of time the person is intoxicated
+	private void calculate_times(){		
+		day_times.clear();
+		month_total_time=0.0;
+		if(day_counts == null){
+			return;
+		}else{
+			for(int i=0; i<day_counts.size(); i++){
+				int number_drinks = day_counts.get(i);
+			
+				// get the users gender
+				ArrayList<DatabaseStore> stored_gender = (ArrayList<DatabaseStore>) db
+						.getAllVarValue("gender");
+				// If user did not set gender use "Female" as default
+				String gender = "Female";
+				if (stored_gender != null) {
+					gender = stored_gender.get(0).value;
+				}
+		
+				// fetch the users weight
+				ArrayList<DatabaseStore> stored_weight = (ArrayList<DatabaseStore>) db
+						.getAllVarValue("weight");
+				Integer weight_lbs = 120;
+				if (stored_weight != null) {
+					weight_lbs = Integer.parseInt(stored_weight.get(0).value);
+				}
+		
+				double metabolism_constant = 0;
+				double gender_constant = 0;
+				double weight_kilograms = weight_lbs * 0.453592;
+		
+				if (gender.equals("Male")) {
+					metabolism_constant = 0.015;
+					gender_constant = 0.58;
+				} else {
+					metabolism_constant = 0.017;
+					gender_constant = 0.49;
+				}
+				
+				double time = ((0.806 * number_drinks * 1.2) / (gender_constant * weight_kilograms))/(metabolism_constant);
+				day_times.add(time); 
+				month_total_time += time;
+			}
+		}
+	}
+	
 
 	private void calculateValues(Date date) {
 		maxBac.clear();
 		bacColors.clear();
 		drinkingDays.clear();
 		day_money.clear();
+		day_times.clear();
 		
 		month_total_drink = 0;
 		month_total_time = 0.0;
@@ -255,9 +304,9 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			
 			convertToLists(day_colors, day_values);
 			setMoneyValues(month_money);
-			
-			
+			calculate_times();
 		}
+		
 	}
 
 	public void setMoneyValues(ArrayList<DatabaseStore> money_list){
@@ -325,10 +374,14 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		bac_text.setText(formatter.format(bac) + " max BAC");
 		TextView count_text = (TextView) dialog.findViewById(R.id.day_cal_drink_count);
 		count_text.setText(day_counts.get(index) + " drinks recorded");
+		
+		
 		TextView rate_text = (TextView) dialog.findViewById(R.id.day_rate);
-		rate_text.setText(formatter.format(day_counts.get(index)/day_times.get(index)) + " drinks / hour");
+		rate_text.setText(formatter.format(day_counts.get(index)/day_time_counts.get(index)) + " drinks / hour");
+		
+		DecimalFormat time_formatter = new DecimalFormat("#.##");
 		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
-		time_text.setText(day_times.get(index) + " hours drinking");
+		time_text.setText(time_formatter.format(day_times.get(index)) + " hours intoxicated");
 		
 		Button close = (Button)dialog.findViewById(R.id.close_info);
 		close.setOnClickListener(new View.OnClickListener() {
@@ -337,22 +390,22 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				dialog.dismiss();
 			}
 		});
-		/*
-		//Update Bac Face icon
-		int icon_face = getFaceIcon(bac);
-		ImageView face = (ImageView)findViewById(R.id.drink_calendar_day);
 		
+		
+		
+		ImageView face = (ImageView)dialog.findViewById(R.id.drink_calendar_day);
 		//Update the face color
 		((GradientDrawable)((LayerDrawable) face.getDrawable()).getDrawable(0)
 				).setColor(DrinkCounter.getBacColor(bac));	
 		
+		int icon_face = getFaceIcon(bac);
 		//Update the face icon
 		Drawable to_replace = getResources().getDrawable(icon_face);	
 		((LayerDrawable) face.getDrawable()).setDrawableByLayerId(
 				R.id.face_icon, to_replace);
 		face.invalidate();
 		face.refreshDrawableState();
-		*/
+		
 		dialog.show();
 	}
 	
@@ -379,7 +432,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		drinkCount.setText(drink_text);
 		drinkCount.setVisibility(View.VISIBLE);
 		
-		String time_text = month_total_time + " hours drinking";
+		DecimalFormat time_formatter = new DecimalFormat("#.##");
+		String time_text = time_formatter.format(month_total_time) + " hours intoxicated";
 		drinkTime.setText(time_text);
 		drinkTime.setVisibility(View.VISIBLE);
 		

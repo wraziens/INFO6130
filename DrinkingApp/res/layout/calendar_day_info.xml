@@ -27,8 +27,8 @@
 		android:id="@+id/drink_calendar_day"
 	    android:layout_width="35dp"
 		android:layout_height="35dp"
-		android:background="@android:color/transparent"
 		android:src="@drawable/drink_smile_tracker_icon"
+		android:background="@android:color/transparent"
 		android:paddingRight="5dp"/>
        
        <TextView

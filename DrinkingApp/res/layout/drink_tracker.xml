@@ -35,8 +35,6 @@
             android:hapticFeedbackEnabled="true"
             android:src="@drawable/drink_inject_button"
             android:onClick= "injectDrinkHandler" />
-        
- 
     </RelativeLayout>
 
     <RelativeLayout

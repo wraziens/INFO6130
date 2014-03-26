@@ -99,7 +99,7 @@
 	        
 	                <TextView
 	                    android:id="@+id/month_bac"
-	                    android:layout_width="wrap_content"
+	                    android:layout_width="80dp"
 	                    android:layout_height="wrap_content"
 	                    android:text=""
 	                    android:gravity="center"
@@ -115,7 +115,7 @@
 			    	android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
             		android:orientation="horizontal"
-            		android:layout_marginLeft="50dp">
+            		android:layout_marginLeft="60dp">
                 	
                 	<ImageView
             			android:layout_width="40dp"
@@ -152,19 +152,18 @@
 	 
 	                <TextView
 	                    android:id="@+id/drink_time"
-	                    android:layout_width="wrap_content"
+	                    android:layout_width="80dp"
 	                    android:layout_height="wrap_content"
-	                    android:gravity="center"
 	                    android:text=""
 	                    android:textColor="#85888D"
 	                    android:textSize="14sp"
-	                    android:layout_marginTop="8dp" />
+	                    android:layout_marginTop="5dp" />
 				</LinearLayout>
 				
 					<LinearLayout
 					android:layout_toRightOf="@id/info_time"
 					android:layout_below="@id/info_drinks"
-					android:layout_marginLeft="30dp"
+					android:layout_marginLeft="60dp"
 			    	android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
             		android:orientation="horizontal">

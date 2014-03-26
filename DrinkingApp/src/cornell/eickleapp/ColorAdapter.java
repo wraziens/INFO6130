@@ -29,8 +29,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	static ArrayList<Button> buttonStore = new ArrayList<Button>();
 	static int focused = 0;
 	private DatabaseHandler db;
-	static ArrayList<Integer> estimateStore = new ArrayList<Integer>();
-	static List<DatabaseStore> estRelavantMonthList = new ArrayList<DatabaseStore>();
 	
 	private int sdk;
 	
@@ -47,16 +45,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		db = new DatabaseHandler(mContext);
 
 		sdk = android.os.Build.VERSION.SDK_INT;
-		
-		List<DatabaseStore> everyEstList = db.getAllVarValue("drink_guess");
 
-		if (everyEstList != null) {
-			for (int i = 0; i < everyEstList.size(); i++) {
-				if ((everyEstList.get(i).month) - 1 == monthSelected
-						&& everyEstList.get(i).year == yearSelected)
-					estRelavantMonthList.add(everyEstList.get(i));
-			}
-		}
 		db.close();
 	}
 
@@ -132,16 +121,6 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 					}
 					focused = position;
 					v.setSelected(true);
-					if (estimateStore.contains(focused)) {
-						int estNo = 0;
-						int s = focused - daysSetBack - 7 + 1;
-						for (int i = 0; i < estRelavantMonthList.size(); i++) {
-							if (estRelavantMonthList.get(i).day == s) {
-								estNo = Integer.parseInt(estRelavantMonthList.get(i).value);
-							}
-						}
-						((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
-					}
 					((Button)v).setTextColor(Color.WHITE);
 					
 				}
