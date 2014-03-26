@@ -250,7 +250,7 @@
 	    
 	    <RelativeLayout
 	        android:layout_width="match_parent"
-	        android:layout_height="0dip"
+	        android:layout_height="match_parent"
 	        android:layout_weight="1"
 	        android:orientation="horizontal" 
 	        android:layout_marginTop="20dp">
@@ -265,5 +265,5 @@
 	            android:background="@drawable/survey_save_button" />
 	    </RelativeLayout>
 
-</LinearLayout>
-    </ScrollView>
+	</LinearLayout>
+</ScrollView>
