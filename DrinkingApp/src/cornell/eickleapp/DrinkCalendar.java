@@ -186,8 +186,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						day_colors.add(max_color);
 						day_values.add(max_day);
 						day_counts.add(cnt);
-						
-						month_total_drink += cnt;
+
 						end = max_day.date;
 						double time = (end.getTime() - start.getTime()) / (1000 * 60 * 60) + 1;
 						
