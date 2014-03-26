@@ -31,14 +31,16 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FlyOutContainer extends LinearLayout implements OnItemClickListener{
+import android.view.View.OnClickListener;
+
+public class FlyOutContainer extends LinearLayout implements OnItemClickListener,OnClickListener{
 
 	// References to groups contained in this view.
 	private ListView menu;
 	private View content;
 	private TextView day;
 	private TextView monthDate;
-	
+	Button menuDrawer;
 	
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private String[] navMenuTitles;
@@ -115,7 +117,9 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		
 		menu.setAdapter(adapter);
 		menu.setOnItemClickListener(new SlideMenuClickListener());
-
+		
+		menuDrawer=(Button)findViewById(R.id.bToggleMenu);
+		menuDrawer.setOnClickListener(this);
 	}
 
 	@Override
@@ -176,8 +180,6 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		// update the main content by replacing fragment
 		switch (position) {
 		default:
-			Toast.makeText(this.getContext(), "Something Here",
-					Toast.LENGTH_SHORT).show();
 			break;
 		}
 	}
@@ -186,6 +188,12 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
 		// TODO Auto-generated method stub
 		displayView(position);
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		// TODO Auto-generated method stub
+		toggleMenu();
 	}
 
 }
