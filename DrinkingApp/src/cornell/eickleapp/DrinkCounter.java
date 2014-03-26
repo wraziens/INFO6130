@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class DrinkCounter extends Activity {
+	private static FlyOutContainer root;
 	private int drink_count = 0;
 	private DatabaseHandler db;
 	
@@ -55,7 +56,10 @@ public class DrinkCounter extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.drink_tracker);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.drink_tracker, null);
+
+		this.setContentView(root);
 		
 		click_vibe = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 		clicked=false;
@@ -461,5 +465,8 @@ public class DrinkCounter extends Activity {
 				.show();
 		
 		
+	}
+	public void toggleMenu(View v) {
+		this.root.toggleMenu();
 	}
 }

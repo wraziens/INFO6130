@@ -15,6 +15,7 @@ import cornell.eickleapp.model.NavDrawerItem;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Point;
 import android.util.AttributeSet;
@@ -30,7 +31,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import android.view.View.OnClickListener;
 
 public class FlyOutContainer extends LinearLayout implements OnItemClickListener,OnClickListener{
@@ -179,6 +179,9 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	private void displayView(int position) {
 		// update the main content by replacing fragment
 		switch (position) {
+		case 0:
+			Intent goToThisPage = new Intent("cornell.eickleapp.MAINMENU3");
+			getContext().startActivity(goToThisPage);
 		default:
 			break;
 		}

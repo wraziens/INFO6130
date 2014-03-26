@@ -14,6 +14,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class AfterDrinkSurvey extends Activity implements OnClickListener{
 
+	FlyOutContainer root;
 	private CheckBox beer_chk, wine_chk, liquor_chk; 
 	private SeekBar recall_bar, regret_bar;
 	private RadioGroup vomit_group;
@@ -31,7 +32,11 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.after_drinking_survey);
+		
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.after_drinking_survey, null);
+
+		this.setContentView(root);
 		
 		db = new DatabaseHandler(this);
 		

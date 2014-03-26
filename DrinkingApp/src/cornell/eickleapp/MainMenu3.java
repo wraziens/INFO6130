@@ -70,4 +70,28 @@ public class MainMenu3 extends Activity implements OnClickListener {
 		}
 
 	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.menu3, null);
+
+		this.setContentView(root);
+
+		drinkCounterMenu = (Button) findViewById(R.id.bDrinkCounterMenu);
+		surveyMenu = (Button) findViewById(R.id.bSurveyMenu);
+		calendarMenu = (Button) findViewById(R.id.bCalendarMenu);
+		trendsMenu = (Button) findViewById(R.id.bTrendsMenu);
+		goalsMenu = (Button) findViewById(R.id.bGoalsMenu);
+		drinkCounterMenu.setOnClickListener(this);
+		surveyMenu.setOnClickListener(this);
+		calendarMenu.setOnClickListener(this);
+		trendsMenu.setOnClickListener(this);
+		goalsMenu.setOnClickListener(this);
+	}
+	
+	
+	
 }
