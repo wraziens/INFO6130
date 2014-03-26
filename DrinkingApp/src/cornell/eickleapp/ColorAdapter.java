@@ -3,14 +3,13 @@ package cornell.eickleapp;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -29,6 +28,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	static ArrayList<Button> buttonStore = new ArrayList<Button>();
 	static int focused = 0;
 	private DatabaseHandler db;
+	private LayoutInflater inflater;
 	
 	private int sdk;
 	
@@ -43,6 +43,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		maxbac = mb;
 		bacColors = colors;
 		db = new DatabaseHandler(mContext);
+		inflater = LayoutInflater.from(c);
 
 		sdk = android.os.Build.VERSION.SDK_INT;
 
@@ -86,12 +87,19 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public View getView(final int position, View convertView,
 			final ViewGroup parent) {
-		Button view = new Button(mContext);
+		
+		Button view = (Button)inflater.inflate(R.layout.calendar_day_button, parent, false);
 
-		LayerDrawable circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-		((GradientDrawable)circle.getDrawable(1)).setColor(Color.TRANSPARENT);
+		//LayerDrawable circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+		//((GradientDrawable)circle.getDrawable(0)).setColor(Color.TRANSPARENT);
+		GradientDrawable circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+		circle.setColor(Color.TRANSPARENT);
+		circle.setSize(10, 10);
 		view = setBackground(view, circle);
 		view.setEnabled(false);
+		view.bringToFront();
+		view.setHeight(20);
+		view.setWidth(20);
 		view.setTextColor(Color.BLACK);
 		
 		double bacLevel;
@@ -102,20 +110,26 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 			view.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					((Button)v).setTextSize(14f);
+					((Button)v).setTextSize(14);
 					((DrinkCalendar) mContext).changeBottomDisplay("", 0, -1);
 					if (focused > 0) {
 						Button child = (Button)parent.getChildAt(focused);
 						if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
 							//Set the color of the circle background for the drinking days
 							int i = drinkingDays.indexOf(focused - SHIFT - daysSetBack);
-							LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-							((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(i));
+							GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+							color_circle.setColor(bacColors.get(i));
+							color_circle.setSize(10, 10);
+							//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+							//((GradientDrawable)color_circle.getDrawable(0)).setColor(bacColors.get(i));
 							child = setBackground(child, color_circle);
 						}else{
 							//set background of circle with no data
-							LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-							((GradientDrawable)color_circle.getDrawable(1)).setColor(Color.TRANSPARENT);
+							GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+							color_circle.setColor(Color.TRANSPARENT);
+							color_circle.setSize(20, 20);
+							//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+							//((GradientDrawable)color_circle.getDrawable(0)).setColor(Color.TRANSPARENT);
 							child = setBackground(child, color_circle);
 						}
 					}
@@ -131,8 +145,10 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		for (int n = 0; n < drinkingDays.size(); n++) {
 			if (drinkingDays.get(n) + daysSetBack + 7 == position + 1) {
 				
-				LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-				((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(n));
+				GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+				color_circle.setColor(bacColors.get(n));
+				color_circle.setSize(10, 10);
+		
 				
 				view = setBackground(view, color_circle);
 				view.setEnabled(true);
@@ -151,13 +167,19 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 							Button child = (Button)parent.getChildAt(focused);
 							if (drinkingDays.contains((Integer) focused - SHIFT - daysSetBack)) {
 								int i = drinkingDays.indexOf(focused - SHIFT - daysSetBack);
-								LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-								((GradientDrawable)color_circle.getDrawable(1)).setColor(bacColors.get(i));
+								GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								color_circle.setColor(bacColors.get(i));
+								color_circle.setSize(20, 20);
+								//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								//((GradientDrawable)color_circle.getDrawable(0)).setColor(bacColors.get(i));
 								//child.setBackground(color_circle);
 								child = setBackground(child, color_circle);
 							}else {
-								LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-								((GradientDrawable)color_circle.getDrawable(1)).setColor(Color.TRANSPARENT);
+								GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								color_circle.setColor(Color.TRANSPARENT);
+								color_circle.setSize(20, 20);
+								//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+								//((GradientDrawable)color_circle.getDrawable(0)).setColor(Color.TRANSPARENT);
 								//child.setBackground(color_circle);
 								child = setBackground(child, color_circle);
 							}
@@ -175,7 +197,7 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 		} else {
 
 			view.setText("" + (position + 1 - daysSetBack - 7));
-			view.setTextSize(14f);
+			view.setTextSize(14);
 		}
 		//Set the Week Titles for the Calendar
 		switch (position) {
@@ -184,49 +206,49 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		case 1:
 			view.setText("Mon");
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		case 2:
 			view.setText("Tue");
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		case 3:
 			view.setText("Wed");
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		case 4:
 			view.setText("Thu");
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		case 5:
 			view.setText("Fri");
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		case 6:
 			view.setText("Sat");
 			view = setBackground(view, null);
 			view.setTextColor(Color.rgb(81, 167, 249));	
 			view.setEnabled(false);
-			view.setTextSize(16f);
+			view.setTextSize(14);
 			break;
 		}
 

@@ -43,15 +43,15 @@
             <GridView
                 android:id="@+id/gvDrinkCalendar"
                 android:layout_width="fill_parent"
-                android:layout_height="360dp"
+                android:layout_height="320dp"
                 android:clipChildren="false"
-                android:clipToPadding="true"
                 android:columnWidth="40dp"
+                android:clipToPadding="true"
                 android:gravity="center"
                 android:listSelector="#00ff8c"
                 android:numColumns="7"
                 android:stretchMode="columnWidth"
-                android:verticalSpacing="2dp" >
+                android:verticalSpacing="12dp" >
             </GridView>
 
             <LinearLayout
