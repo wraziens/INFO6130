@@ -21,8 +21,10 @@ public class MainActivity extends Activity {
 		boolean checkSurveyed=getPrefs.getBoolean("initialSurvey", false);
 		
 		if (checkSurveyed==false){
-			Intent openStartingPoint=new Intent(this,InitialSurvey.class);
-			startActivity(openStartingPoint);//start activity initialsurvey
+			Intent goToMenu=new Intent(this,MainMenu3.class);
+			startActivity(goToMenu);
+			//Intent openStartingPoint=new Intent(this,InitialSurvey.class);
+			//startActivity(openStartingPoint);//start activity initialsurvey
 		
 		}
 		else{
