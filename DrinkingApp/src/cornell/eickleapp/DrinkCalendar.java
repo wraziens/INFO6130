@@ -73,8 +73,10 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		
-		setContentView(R.layout.drinkcalendar);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.drinkcalendar, null);
+
+		this.setContentView(root);
 
 		db = new DatabaseHandler(this);
 		dc = this;
