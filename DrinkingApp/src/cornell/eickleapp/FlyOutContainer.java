@@ -182,6 +182,11 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		case 0:
 			Intent goToThisPage = new Intent("cornell.eickleapp.MAINMENU3");
 			getContext().startActivity(goToThisPage);
+			break;
+		case 2:
+			goToThisPage = new Intent("cornell.eickleapp.INITIALSURVEY");
+			getContext().startActivity(goToThisPage);
+			break;
 		default:
 			break;
 		}
