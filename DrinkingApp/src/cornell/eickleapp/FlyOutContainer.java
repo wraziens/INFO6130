@@ -75,17 +75,6 @@ public class FlyOutContainer extends LinearLayout implements
 
 		this.menu = (ListView) this.getChildAt(0);
 		this.content = this.getChildAt(1);
-		this.content.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				if(menuCurrentState==MenuState.OPEN){
-					toggleMenu();
-				}
-			}
-			
-		});
 		
 		/*
 		 * day=(TextView)findViewById(R.id.tvDateDisplayTop);
