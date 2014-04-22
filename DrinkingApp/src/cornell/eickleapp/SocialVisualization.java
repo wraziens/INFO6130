@@ -93,9 +93,14 @@ public class SocialVisualization extends Activity implements OnClickListener {
 			ArrayList<Double> drinkBAC) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < drinkSecRaw.size(); i++) {
-			if (i + 1 == drinkSecRaw.size())
-				sliceArray.add(new TrendsSliceItem(drinkSecRaw.get(i),
-						drinkSecRaw.get(i + 1) + 3600, drinkBAC.get(i)));
+			if (i + 1 == drinkSecRaw.size()){
+				int one=drinkSecRaw.get(i);
+				int two=drinkSecRaw.get(i) + 3600;
+				double three=drinkBAC.get(i);
+				sliceArray.add(new TrendsSliceItem(one,two
+						,three ));
+				int n=0+1;
+			}
 			else
 				sliceArray.add(new TrendsSliceItem(drinkSecRaw.get(i),
 						drinkSecRaw.get(i + 1), drinkBAC.get(i)));
