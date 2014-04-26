@@ -21,7 +21,7 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbDaysPerWeek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -63,19 +63,19 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/editText1"
+            <Button
+                android:id="@+id/bDaysPerWeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_red_clear"
                 android:gravity="center"
-                android:hint="0"
                 android:inputType="number"
                 android:padding="8dp"
+                android:text="0"
                 android:textSize="14dp" >
 
                 <requestFocus />
-            </EditText>
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -94,7 +94,7 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbDrinksPerOuting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -136,19 +136,19 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/editText1"
+            <Button
+                android:id="@+id/bDrinksPerOuting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_red_clear"
                 android:gravity="center"
-                android:hint="0"
                 android:inputType="number"
                 android:padding="8dp"
+                android:text="0"
                 android:textSize="14dp" >
 
                 <requestFocus />
-            </EditText>
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -167,7 +167,7 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbBAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -209,37 +209,18 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <Button
+                android:id="@+id/bGreenBAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_green_filled"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="8dp" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="&lt;0.0"
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/editText1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:paddingBottom="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="8dp"
-                    android:text="6"
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" >
-                </EditText>
-            </LinearLayout>
+                android:inputType="number"
+                android:padding="8dp"
+                android:text="&lt;0.06"
+                android:textColor="#ffffff"
+                android:textSize="14dp" >
+            </Button>
         </LinearLayout>
 
         <LinearLayout
@@ -249,37 +230,18 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <Button
+                android:id="@+id/bYellowBAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_yellow_filled"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="8dp" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="&lt;0."
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/editText1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:paddingBottom="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="8dp"
-                    android:text="15"
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" >
-                </EditText>
-            </LinearLayout>
+                android:inputType="number"
+                android:padding="8dp"
+                android:text="&lt;0.15"
+                android:textColor="#ffffff"
+                android:textSize="14dp" >
+            </Button>
         </LinearLayout>
 
         <LinearLayout
@@ -289,37 +251,18 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <LinearLayout
+            <Button
+                android:id="@+id/bRedBAC"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_red_filled"
                 android:gravity="center"
-                android:orientation="horizontal"
-                android:paddingLeft="8dp" >
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="&lt;0."
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" />
-
-                <EditText
-                    android:id="@+id/editText1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00000000"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:paddingBottom="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="8dp"
-                    android:text="24"
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" >
-                </EditText>
-            </LinearLayout>
+                android:inputType="number"
+                android:padding="8dp"
+                android:text="&lt;0.24"
+                android:textColor="#ffffff"
+                android:textSize="14dp" >
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -338,7 +281,7 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbDaysPerMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -380,19 +323,19 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/editText1"
+            <Button
+                android:id="@+id/bDaysPerMonth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_red_clear"
                 android:gravity="center"
-                android:hint="0"
                 android:inputType="number"
                 android:padding="8dp"
+                android:text="0"
                 android:textSize="14dp" >
 
                 <requestFocus />
-            </EditText>
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -411,7 +354,7 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbDrinksPerMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -453,19 +396,19 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/editText1"
+            <Button
+                android:id="@+id/bDrinksPerMonth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_red_clear"
                 android:gravity="center"
-                android:hint="0"
                 android:inputType="number"
                 android:padding="8dp"
+                android:text="0"
                 android:textSize="14dp" >
 
                 <requestFocus />
-            </EditText>
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -484,7 +427,7 @@
             android:orientation="vertical" >
 
             <CheckBox
-                android:id="@+id/checkBox1"
+                android:id="@+id/cbDollarsPerMonth"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -526,19 +469,19 @@
             android:gravity="center"
             android:orientation="vertical" >
 
-            <EditText
-                android:id="@+id/editText1"
+            <Button
+                android:id="@+id/bDollarsPerMonth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/goals_input_border_red_clear"
                 android:gravity="center"
-                android:hint="0"
                 android:inputType="number"
                 android:padding="8dp"
+                android:text="0"
                 android:textSize="14dp" >
 
                 <requestFocus />
-            </EditText>
+            </Button>
         </LinearLayout>
     </LinearLayout>
 
@@ -550,10 +493,10 @@
         android:orientation="vertical" >
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/bFinish"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:background="@drawable/goals_input_border_red_filled"
+            android:background="@drawable/goals_save_input_border_red_filled"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:text="Save"

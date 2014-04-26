@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
-
-    <item>
-        <shape>
-            <solid
-                android:color="#b5db9c" />
-            <stroke
-                android:width="2dp"
-                android:color="#6bbe42" />
-
-            <padding
-                android:bottom="1dp"
-                android:left="1dp"
-                android:right="1dp"
-                android:top="1dp" />
-
-            <corners
-                android:bottomLeftRadius="5dp"
-                android:bottomRightRadius="5dp"
-                android:topLeftRadius="5dp"
-                android:topRightRadius="5dp" />
-        </shape>
-    </item>
-
-</layer-list>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_selected="true" android:drawable="@drawable/goals_input_border_green_filled_selected"></item>
+	<item android:state_hovered="false" android:state_selected="false" android:state_window_focused="false" android:state_pressed="false" android:drawable="@drawable/goals_input_border_green_filled_unselected"></item>
+</selector>
