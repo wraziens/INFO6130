@@ -1,5 +1,5 @@
 
-<cornell.eickleapp.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
+<cornell.trickleapp.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f7f3f7" >
@@ -163,4 +163,4 @@
         </RelativeLayout>
     </LinearLayout>
 
-</cornell.eickleapp.FlyOutContainer>
+</cornell.trickleapp.FlyOutContainer>

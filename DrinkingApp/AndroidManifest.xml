@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cornell.eickleapp"
+    package="cornell.trickleapp"
     android:versionCode="9"
     android:versionName="9" >
 
@@ -200,7 +200,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
-                <action android:name="cornell.drinkingapp.DRINKCOUNTERTUTORIAL" />
+                <action android:name="cornell.trickleapp.DRINKCOUNTERTUTORIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -210,14 +210,14 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" >
-            <intent-filcornell.eickleapp.DrinkCalendarTutorial>
-                <action android:name="cornell.drinkingapp.VISUALIZATIONMENUTUTORIAL" />
+            <intent-filcornell.trickleapp.DrinkCalendarTutorial>
+                <action android:name="cornell.trickleapp.VISUALIZATIONMENUTUTORIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <intent-filter>
                 </intent-filter>
-            </intent-filcornell.eickleapp.DrinkCalendarTutorial>
+            </intent-filcornell.trickleapp.DrinkCalendarTutorial>
         </activity>
         <activity
             android:name=".DrinkCalendarTutorial"
@@ -225,7 +225,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
-                <action android:name="cornell.drinkingapp.DRINKCALENDARTUTORIAL" />
+                <action android:name="cornell.trickleapp.DRINKCALENDARTUTORIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -237,7 +237,7 @@
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
                 <intent-filter>
-                    <action android:name="cornell.drinkingapp.EXERCISEVISUALIZATIONTUTORIAL" />
+                    <action android:name="cornell.trickleapp.EXERCISEVISUALIZATIONTUTORIAL" />
 
                     <category android:name="android.intent.category.DEFAULT" />
                 </intent-filter>
@@ -249,7 +249,7 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
-                <action android:name="cornell.drinkingapp.PRODUCTIVITYVISUALIZATIONTUTORIAL" />
+                <action android:name="cornell.trickleapp.PRODUCTIVITYVISUALIZATIONTUTORIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -260,7 +260,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
-                <action android:name="cornell.drinkingapp.MOODVISUALIZATIONTUTORIAL" />
+                <action android:name="cornell.trickleapp.MOODVISUALIZATIONTUTORIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -271,7 +271,7 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog" >
             <intent-filter>
-                <action android:name="cornell.drinkingapp.MAINMENUTUTORIAL" />
+                <action android:name="cornell.trickleapp.MAINMENUTUTORIAL" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -319,7 +319,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
                         <intent-filter>
-                <action android:name="cornell.eickleapp.MAINMENU3" />
+                <action android:name="cornell.trickleapp.MAINMENU3" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

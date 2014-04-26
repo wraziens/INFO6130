@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Eickle</string>
+    <string name="app_name">Trickle</string>
     <string name="drink_counter_desc">Drink Counter</string>
     <string name="hello_world">Hello World</string>
     <string name="done_drinking">Finished Drinking</string>
