@@ -3,6 +3,7 @@ package cornell.eickleapp;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnDismissListener;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -22,7 +23,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 	Button greenBACButton, yellowBACButton, redBACButton, DaysPerWeek,
 			DrinksPerOuting, DaysPerMonth, DrinksPerMonth, DollarsPerMonth,
-			finish;
+			finish, track;
 
 	CheckBox cbDaysPerWeek, cbDrinksPerOuting, cbBAC, cbDaysPerMonth,
 			cbDrinksPerMonth, cbDollarsPerMonth;
@@ -46,7 +47,8 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		DrinksPerMonth = (Button) findViewById(R.id.bDrinksPerMonth);
 		DollarsPerMonth = (Button) findViewById(R.id.bDollarsPerMonth);
 		finish = (Button) findViewById(R.id.bFinish);
-
+		track = (Button) findViewById(R.id.bTrack);
+		
 		cbDaysPerWeek = (CheckBox) findViewById(R.id.cbDaysPerWeek);
 		cbDrinksPerOuting = (CheckBox) findViewById(R.id.cbDrinksPerOuting);
 		cbBAC = (CheckBox) findViewById(R.id.cbBAC);
@@ -55,7 +57,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		cbDollarsPerMonth = (CheckBox) findViewById(R.id.cbDollarsPerMonth);
 
 		greenBACButton.setOnClickListener(this);
-		//initialize with green BAC level selected
+		// initialize with green BAC level selected
 		greenBACButton.setSelected(true);
 		yellowBACButton.setOnClickListener(this);
 		redBACButton.setOnClickListener(this);
@@ -65,7 +67,8 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		DrinksPerMonth.setOnClickListener(this);
 		DollarsPerMonth.setOnClickListener(this);
 		finish.setOnClickListener(this);
-
+		track.setOnClickListener(this);
+		
 		initialize();
 
 	}
@@ -112,6 +115,10 @@ public class GoalsLayout extends Activity implements OnClickListener {
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
+		case R.id.bTrack:
+			Intent goToThisPage = new Intent(GoalsLayout.this, GoalsTracking.class);
+			startActivity(goToThisPage);
+			break;
 		case R.id.bGreenBAC:
 			progressBarBAC(1);
 			greenBACButton.setSelected(true);
@@ -149,39 +156,39 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		case R.id.bFinish:
 			// if these are checked store them into the database
 			if (cbDaysPerWeek.isChecked()) {
-				//store
-				//=bDaysPerWeek.getText();
+				// store
+				// =bDaysPerWeek.getText();
 			}
 			if (cbDrinksPerOuting.isChecked()) {
-				//store
-				//=bDrinksPerOuting.getText();
+				// store
+				// =bDrinksPerOuting.getText();
 			}
 			if (cbBAC.isChecked()) {
-				if (greenBACButton.isSelected()){
-					//=bGreenBAC.getText();
-					//limit bac variable selected as 1
+				if (greenBACButton.isSelected()) {
+					// =bGreenBAC.getText();
+					// limit bac variable selected as 1
 				}
-				if (yellowBACButton.isSelected()){
-					//=bYellowBAC.getText();
-					//limit bac variable selected as 2
+				if (yellowBACButton.isSelected()) {
+					// =bYellowBAC.getText();
+					// limit bac variable selected as 2
 				}
-				if (redBACButton.isSelected()){
-					//=bRedBAC.getText();
-					//limit bac variable selected as 3
+				if (redBACButton.isSelected()) {
+					// =bRedBAC.getText();
+					// limit bac variable selected as 3
 				}
-				
+
 			}
 			if (cbDaysPerMonth.isChecked()) {
-				//store
-				//=bDaysPerMonth.getText();
+				// store
+				// =bDaysPerMonth.getText();
 			}
 			if (cbDrinksPerMonth.isChecked()) {
-				//store
-				//=bDrinksPerMonth.getText();
+				// store
+				// =bDrinksPerMonth.getText();
 			}
 			if (cbDollarsPerMonth.isChecked()) {
-				//store
-				//=bDollarsPerMonth.getText();
+				// store
+				// =bDollarsPerMonth.getText();
 			}
 			break;
 		}
@@ -344,5 +351,12 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		});
 		dialog.show();
 
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		finish();
 	}
 }
