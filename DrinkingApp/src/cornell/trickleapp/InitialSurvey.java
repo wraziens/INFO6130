@@ -15,22 +15,24 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class InitialSurvey extends Activity implements OnClickListener,OnCheckedChangeListener {
+public class InitialSurvey extends Activity implements OnClickListener {
 
-	TextView ageTV,weightTV,goalTV;
-	Button finish,plusAge,plusWeight,plusGoal,minusAge,minusWeight,minusGoal;
-	CheckBox sleep, exercise, productivity, social;
-	int age,weight,goal;
-	RadioGroup sex,alcoholFrequency,alcoholQuantity;
-	String sexResult,alcoholFrequencyResult,alcoholQuantityResult;
+	FlyOutContainer root;
+	Button save, male, female, kg, lb;
+	EditText weight;
+	int weightResult=100;
+	String sexResult="f", weightUnitResult="lb";
 	AlarmManager alarmManager;
 	DatabaseHandler db;
 
@@ -38,44 +40,30 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.settings, null);
+
+		this.setContentView(root);
+
 		db = new DatabaseHandler(this);
-		initiate();
-		setAlarm();
-		setContentView(R.layout.initialsurvey);
-		//test = (TextView) findViewById(R.id.test);
-		ageTV=(TextView) findViewById(R.id.tvISAge);
-		weightTV=(TextView) findViewById(R.id.tvISWeight);
-		goalTV=(TextView) findViewById(R.id.tvISGoal);
-		age=Integer.parseInt(ageTV.getText().toString());
-		weight=Integer.parseInt(weightTV.getText().toString());
-		goal=Integer.parseInt(goalTV.getText().toString());
-		//sleep = (CheckBox) findViewById(R.id.cbISSleep);
-		exercise = (CheckBox) findViewById(R.id.cbISExercise);
-		productivity = (CheckBox) findViewById(R.id.cbISProductivity);
-		//social = (CheckBox) findViewById(R.id.cbISSocial);
-		finish = (Button) findViewById(R.id.bISFinish);
-		plusAge = (Button) findViewById(R.id.bISPlus1);
-		plusWeight = (Button) findViewById(R.id.bISPlus2);
-		plusGoal = (Button) findViewById(R.id.bISPlus3);
-		minusAge = (Button) findViewById(R.id.bISMinus1);
-		minusWeight = (Button) findViewById(R.id.bISMinus2);
-		minusGoal = (Button) findViewById(R.id.bISMinus3);
-		sex = (RadioGroup) findViewById(R.id.rgISSex);
-		//alcoholFrequency=(RadioGroup) findViewById(R.id.rgISAlcoholFrequency);
-		//alcoholQuantity=(RadioGroup) findViewById(R.id.rgISAlcoholQuantity);
-		finish.setOnClickListener(this);
-		plusAge.setOnClickListener(this);
-		plusWeight.setOnClickListener(this);
-		plusGoal.setOnClickListener(this);
-		minusAge.setOnClickListener(this);
-		minusWeight.setOnClickListener(this);
-		minusGoal.setOnClickListener(this);
-		sex.setOnCheckedChangeListener(this);
-		//alcoholFrequency.setOnCheckedChangeListener(this);
-		//alcoholQuantity.setOnCheckedChangeListener(this);
-		
-		
-		//sets the mark for 1st time use
+		male = (Button) findViewById(R.id.bMale);
+		female = (Button) findViewById(R.id.bFemale);
+		save = (Button) findViewById(R.id.bSettingsSave);
+		lb = (Button) findViewById(R.id.bLb);
+		kg = (Button) findViewById(R.id.bKg);
+		weight=(EditText)findViewById(R.id.etWeight);
+		male.setOnClickListener(this);
+		female.setOnClickListener(this);
+		save.setOnClickListener(this);
+		lb.setOnClickListener(this);
+		kg.setOnClickListener(this);
+
+		// sets the mark for 1st time use
 		db.updateOrAdd("firstTime", "here");
 	}
 
@@ -87,89 +75,72 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		SharedPreferences getPreference = PreferenceManager
 				.getDefaultSharedPreferences(getBaseContext());
 		SharedPreferences.Editor preferenceEditor = getPreference.edit();
-		//preferenceEditor.putBoolean("sleepInEvaluation", false);
+		// preferenceEditor.putBoolean("sleepInEvaluation", false);
 		preferenceEditor.putBoolean("exerciseInEvaluation", false);
 		preferenceEditor.putBoolean("productivityInEvaluation", false);
-		//preferenceEditor.putBoolean("socialInEvaluation", false);
+		// preferenceEditor.putBoolean("socialInEvaluation", false);
 		preferenceEditor.commit();
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		// TODO Auto-generated method stub
-		switch (arg0.getId()){
-			case R.id.bISFinish:
-				//test.setText("TESTED");
-				SharedPreferences getPrefs=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-				SharedPreferences.Editor editPrefs=getPrefs.edit();
-				editPrefs.putBoolean("initialSurvey", true);
-				editPrefs.putString("goal", ""+goal);
-				editPrefs.commit();
-				preferenceCheck();
-				Intent goToMenu=new Intent(this,MainMenu.class);
-				startActivity(goToMenu);
-				break;
-			case R.id.bISPlus1:
-				age++;
-				ageTV.setText(""+age);
-				break;
-			case R.id.bISMinus1:
-				age--;
-				if (age<0)
-					age=0;
-				ageTV.setText(""+age);
-				break;
-			case R.id.bISPlus2:
-				weight+=5;
-				weightTV.setText(""+weight);
-				break;
-			case R.id.bISMinus2:
+		switch (arg0.getId()) {
+		case R.id.bMale:
+			sexResult="m";
+			male.setSelected(true);
+			female.setSelected(false);
+			break;
+		case R.id.bFemale:
+			sexResult="f";
+			female.setSelected(true);
+			male.setSelected(false);
+			break;
+		case R.id.bLb:
+			weightUnitResult="kg";
+			lb.setSelected(true);
+			kg.setSelected(false);
+			break;
+		case R.id.bKg:
+			weightUnitResult="lb";
+			kg.setSelected(true);
+			lb.setSelected(false);
+			break;
+		case R.id.bSettingsSave:
+			weightResult=Integer.getInteger(weight.getText().toString());
+			if (sexResult=="m"){
+				
+			}
+			if (sexResult=="f"){
+				
+			}
+			if (weightUnitResult=="kg"){
+				
+			}
+			if (weightUnitResult=="lb"){
+				
+			}
+			/** test.setText("TESTED");
+			SharedPreferences getPrefs = PreferenceManager
+					.getDefaultSharedPreferences(getBaseContext());
+			SharedPreferences.Editor editPrefs = getPrefs.edit();
+			editPrefs.putBoolean("initialSurvey", true);
+			editPrefs.putString("goal", "" + goal);
+			editPrefs.commit();
+			preferenceCheck();
+			Intent goToMenu = new Intent(this, MainMenu.class);
+			startActivity(goToMenu);
+			**/
+			break;
+			
 
-				weight-=5;				
-				if (weight<0)
-					weight=0;
-				weightTV.setText(""+weight);
-				break;
-			case R.id.bISPlus3:
-				goal++;
-				if (goal>15)
-					goal=15;
-				goalTV.setText(""+goal);
-				break;
-			case R.id.bISMinus3:
-				goal-=1;
-				if (goal<0)
-					goal=0;
-				goalTV.setText(""+goal);
-				break;
 		}
-		
-		
-		
+
 	}
-	//check if the categories for evaluations are checked, if yes: check it in settings.
-	private void preferenceCheck() {
-		// TODO Auto-generated method stub
-		SharedPreferences getPreference=PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-		SharedPreferences.Editor preferenceEditor=getPreference.edit();
-		//if (sleep.isChecked())
-		//	preferenceEditor.putBoolean("sleepInEvaluation", true);
-		//if (!sleep.isChecked())
-			//preferenceEditor.putBoolean("sleepInEvaluation", false);
-		if (exercise.isChecked())
-			preferenceEditor.putBoolean("exerciseInEvaluation", true);
-		if (!exercise.isChecked())
-			preferenceEditor.putBoolean("exerciseInEvaluation", false);
-		if (productivity.isChecked())
-			preferenceEditor.putBoolean("productivityInEvaluation", true);
-		if (!productivity.isChecked())
-			preferenceEditor.putBoolean("productivityInEvaluation", false);
-		//if (social.isChecked())
-		//	preferenceEditor.putBoolean("socialInEvaluation", true);
-		//if (!social.isChecked())
-		//	preferenceEditor.putBoolean("socialInEvaluation", false);
-		preferenceEditor.commit();
-	}
+
+	// check if the categories for evaluations are checked, if yes: check it in
+	// settings.
+	
 
 	@Override
 	protected void onPause() {
@@ -179,72 +150,15 @@ public class InitialSurvey extends Activity implements OnClickListener,OnChecked
 		finish();
 	}
 
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId) {
-		// TODO Auto-generated method stub
-		if (group.getId()==R.id.rgISSex){//don't need the if statement, but inserted for coder's visual structure
-			switch(checkedId){
-				case R.id.rbISMale:
-					//test.setText("Male");
-					sexResult=((RadioButton)findViewById(sex.getCheckedRadioButtonId())).getText().toString();
-					break;
-				case R.id.rbISFemale:
-					//test.setText("Female");
-					sexResult=((RadioButton)findViewById(sex.getCheckedRadioButtonId())).getText().toString();
-					break;
-			}
-		}
-		/*
-		if (group.getId()==R.id.rgISAlcoholFrequency){//don't need the if statement, but inserted for coder's visual structure
-			switch(checkedId){
-				case R.id.rbISAlcoholF1:
-					//test.setText("F1");
-					alcoholFrequencyResult=((RadioButton)findViewById(alcoholFrequency.getCheckedRadioButtonId())).getText().toString();
-					break;
-				case R.id.rbISAlcoholF2:
-					//test.setText("F2");
-					alcoholFrequencyResult=((RadioButton)findViewById(alcoholFrequency.getCheckedRadioButtonId())).getText().toString();
-					break;
-				case R.id.rbISAlcoholF3:
-					//test.setText("F3");
-					alcoholFrequencyResult=((RadioButton)findViewById(alcoholFrequency.getCheckedRadioButtonId())).getText().toString();
-					break;
-			}
-		}
-		if (group.getId()==R.id.rgISAlcoholQuantity){//don't need the if statement, but inserted for coder's visual structure
-			switch(checkedId){
-				case R.id.rbISAlcoholQ1:
-					//test.setText("Q1");
-					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
-					break;
-				case R.id.rbISAlcoholQ2:
-					//test.setText("Q2");
-					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
-					break;
-				case R.id.rbISAlcoholQ3:
-					//test.setText("Q3");
-					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
-					break;
-				case R.id.rbISAlcoholQ4:
-					//test.setText("Q4");
-					alcoholQuantityResult=((RadioButton)findViewById(alcoholQuantity.getCheckedRadioButtonId())).getText().toString();
-					break;
-					
-					
-			}
-	
-		}		*/
-		
-	}
-	//currently reminds the user 24 hours since 1st use
+	// currently reminds the user 24 hours since 1st use
 	public void setAlarm() {
-		  Intent intent = new Intent(this, ReminderAlarm.class);
-		  PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-		    intent, 0);
-		  
-		  alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, 
-		    System.currentTimeMillis(),(86400000), pendingIntent);
-		  //System.currentTimeMillis(), (5000), pendingIntent); 
+		Intent intent = new Intent(this, ReminderAlarm.class);
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+				intent, 0);
+
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
+				System.currentTimeMillis(), (86400000), pendingIntent);
+		// System.currentTimeMillis(), (5000), pendingIntent);
 	}
 
 }

@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.15"
+            android:layout_weight="0.10"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="1" >
@@ -86,7 +86,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.85"
+            android:layout_weight="0.9"
             android:orientation="vertical"
             android:weightSum="1" >
 
@@ -104,12 +104,12 @@
                     android:orientation="vertical" >
 
                     <Button
-                        android:id="@+id/bTrendsMenu"
+                        android:id="@+id/bSurveyMenu"
                         android:layout_width="130dp"
                         android:layout_height="130dp"
                         android:layout_marginRight="10dp"
-                        android:background="@drawable/ic_trends"
-                        android:text="Trends"
+                        android:background="@drawable/ic_survey"
+                        android:text="Survey"
                         android:textColor="#ffffff" />
                 </LinearLayout>
             </LinearLayout>
@@ -169,13 +169,13 @@
                         android:orientation="vertical" >
 
                         <Button
-                            android:id="@+id/bSurveyMenu"
+                            android:id="@+id/bTrendsMenu"
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_gravity="bottom"
                             android:layout_marginRight="20dp"
-                            android:background="@drawable/ic_survey"
-                            android:text="Survey"
+                            android:background="@drawable/ic_trends"
+                            android:text="Trends"
                             android:textColor="#ffffff"
                             android:textSize="14dp" />
                     </LinearLayout>

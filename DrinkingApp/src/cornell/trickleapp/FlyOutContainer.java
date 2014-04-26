@@ -33,7 +33,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
-public class FlyOutContainer extends LinearLayout implements OnItemClickListener,OnClickListener{
+public class FlyOutContainer extends LinearLayout implements
+		OnItemClickListener, OnClickListener {
 
 	// References to groups contained in this view.
 	private ListView menu;
@@ -41,7 +42,7 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	private TextView day;
 	private TextView monthDate;
 	Button menuDrawer;
-	
+
 	private ArrayList<NavDrawerItem> navDrawerItems;
 	private String[] navMenuTitles;
 	private TypedArray navMenuIcons;
@@ -59,7 +60,6 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	protected int currentContentOffset = 0;
 	protected MenuState menuCurrentState = MenuState.CLOSED;
 
-
 	public FlyOutContainer(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
@@ -73,29 +73,29 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
 
-		
 		this.menu = (ListView) this.getChildAt(0);
 		this.content = this.getChildAt(1);
+		
 		/*
-		day=(TextView)findViewById(R.id.tvDateDisplayTop);
+		 * day=(TextView)findViewById(R.id.tvDateDisplayTop);
+		 * 
+		 * monthDate=(TextView)findViewById(R.id.tvDateDisplayBot);
+		 * 
+		 * Calendar today = Calendar.getInstance(); int dayOfWeek =
+		 * today.get(Calendar.DAY_OF_WEEK); SimpleDateFormat sdf = new
+		 * SimpleDateFormat("EEEE"); String dayOfTheWeek =
+		 * sdf.format(dayOfWeek); int dayOfMonth =
+		 * today.get(Calendar.DAY_OF_MONTH); int month =
+		 * today.get(Calendar.MONTH); day.setText(dayOfTheWeek);
+		 * monthDate.setText(month+"/"+dayOfMonth);
+		 */
 
-		monthDate=(TextView)findViewById(R.id.tvDateDisplayBot);
-		
-		Calendar today = Calendar.getInstance();
-		int dayOfWeek = today.get(Calendar.DAY_OF_WEEK);
-		SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-		String dayOfTheWeek = sdf.format(dayOfWeek);
-		int dayOfMonth = today.get(Calendar.DAY_OF_MONTH);
-		int month = today.get(Calendar.MONTH);
-		day.setText(dayOfTheWeek);
-		monthDate.setText(month+"/"+dayOfMonth);
-		*/
-		
-		WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+		WindowManager wm = (WindowManager) getContext().getSystemService(
+				Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
-		menuSize=display.getWidth()/5;
-		menuMargin=(display.getWidth())-menuSize; 
-		
+		menuSize = display.getWidth() / 5;
+		menuMargin = (display.getWidth()) - menuSize;
+
 		this.menu.setVisibility(View.GONE);
 		navDrawerItems = new ArrayList<NavDrawerItem>();
 		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
@@ -114,11 +114,11 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 
 		ListAdapter adapter = new NavDrawerListAdapter(this.getContext(),
 				navDrawerItems);
-		
+
 		menu.setAdapter(adapter);
 		menu.setOnItemClickListener(new SlideMenuClickListener());
-		
-		menuDrawer=(Button)findViewById(R.id.bToggleMenu);
+
+		menuDrawer = (Button) findViewById(R.id.bToggleMenu);
 		menuDrawer.setOnClickListener(this);
 	}
 
@@ -175,20 +175,26 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 			displayView(position);
 		}
 	}
-	
+
 	private void displayView(int position) {
 		// update the main content by replacing fragment
 		switch (position) {
 		case 0:
 			Intent goToThisPage = new Intent("cornell.trickleapp.MAINMENU3");
 			getContext().startActivity(goToThisPage);
+			break;
+		case 2:
+			goToThisPage = new Intent("cornell.eickleapp.INITIALSURVEY");
+			getContext().startActivity(goToThisPage);
+			break;
 		default:
 			break;
 		}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> adapter, View view, int position, long arg3) {
+	public void onItemClick(AdapterView<?> adapter, View view, int position,
+			long arg3) {
 		// TODO Auto-generated method stub
 		displayView(position);
 	}
@@ -198,5 +204,4 @@ public class FlyOutContainer extends LinearLayout implements OnItemClickListener
 		// TODO Auto-generated method stub
 		toggleMenu();
 	}
-
 }
