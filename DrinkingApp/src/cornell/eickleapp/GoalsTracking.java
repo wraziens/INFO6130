@@ -70,6 +70,8 @@ public class GoalsTracking extends Activity implements OnClickListener {
 	// pulls the correct badges from database
 	private void initialize() {
 		// TODO Auto-generated method stub
+		
+		//DELETE EVERYTHING HERE + REPLACE WITH DATABASE STUFF
 		DaysPerWeek = false;
 		DrinksPerOuting = true;
 		BAC = false;
@@ -77,6 +79,9 @@ public class GoalsTracking extends Activity implements OnClickListener {
 		DrinksPerMonth = true;
 		SpendingPerMonth = false;
 
+		
+		
+		
 		// check if each of the badges are being tracked
 		if (DaysPerWeek)
 			badgeSetup(bDaysPerWeek_clear, bDaysPerWeek_star,
@@ -163,7 +168,7 @@ public class GoalsTracking extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 		switch (arg0.getId()) {
 		case R.id.bSet:
 			Intent goToThisPage = new Intent(GoalsTracking.this,

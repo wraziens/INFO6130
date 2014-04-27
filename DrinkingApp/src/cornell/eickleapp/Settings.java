@@ -63,7 +63,8 @@ public class Settings extends PreferenceActivity {
 		calendar.set(Calendar.HOUR_OF_DAY, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
-		calendar.setTimeInMillis(calendar.getTimeInMillis()+86400000);
+		//long dummy=calendar.getTimeInMillis();
+		//calendar.setTimeInMillis(dummy+86400000);
 		
 		
 		long miliUntilNextDay=calendar.getTimeInMillis();
