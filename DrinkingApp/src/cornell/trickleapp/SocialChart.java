@@ -29,7 +29,7 @@ public class SocialChart extends Activity{
 		bacLevel.add(0.2);
 		
 		
-		visual = new SocialGraphics(this,groupName,hangoutCount,bacLevel);
+		//visual = new SocialGraphics(this,groupName,hangoutCount,bacLevel);
 		setContentView(visual);
 
 	}

@@ -2,7 +2,7 @@ package cornell.trickleapp;
 
 import java.util.ArrayList;
 
-import cornell.eickleapp.model.TrendsSliceItem;
+import cornell.trickleapp.model.TrendsSliceItem;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Display;

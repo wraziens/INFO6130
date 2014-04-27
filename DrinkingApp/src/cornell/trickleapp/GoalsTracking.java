@@ -1,4 +1,4 @@
-package cornell.eickleapp;
+package cornell.trickleapp;
 
 import java.util.Calendar;
 import java.util.Date;

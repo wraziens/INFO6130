@@ -1,4 +1,4 @@
-package cornell.eickleapp;
+package cornell.trickleapp;
 
 import android.content.Context;
 import android.util.AttributeSet;

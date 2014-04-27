@@ -1,4 +1,4 @@
-package cornell.eickleapp;
+package cornell.trickleapp;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -211,13 +211,14 @@ public class GoalsLayout extends Activity implements OnClickListener {
 			// to whether or not checkboxes are checked
 			// resets all values in goals checklist entry to clear for new entry
 			if (db.variableExistAll("goal_checked"))
-				db.clearAllValues("goal_checked");
+				db.deleteAllVariables("goal_checked");
 
 			if (cbDaysPerWeek.isChecked()) {
 				// store
 				db.updateOrAdd("goal_DaysPerWeek", DaysPerWeek.getText()
 						.toString());
 				db.addValue("goal_checked", 1);
+				setAlarm(604800000,1);// 7 days
 			}
 			if (cbDrinksPerOuting.isChecked()) {
 				// store
@@ -278,7 +279,6 @@ public class GoalsLayout extends Activity implements OnClickListener {
 						.getText().toString());
 				db.addValue("goal_checked", 6);
 			}
-			setAlarm(604800000);// 7 days
 			break;
 		}
 
@@ -444,9 +444,11 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 	// if the checkbox is confirmed, set the alarm designated for that specific
 	// period
-	private void setAlarm(int miliSec) {
+	private void setAlarm(int miliSec, int id) {
 
 		Intent intent = new Intent(this, ReminderAlarm.class);
+		intent.putExtra("id", id);
+		
 		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
 				intent, 0);
 
@@ -459,6 +461,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 		long miliForAlarm = todayMili + miliSec;
 
+		alarmManager.cancel(pendingIntent);
 		alarmManager.set(AlarmManager.RTC_WAKEUP, miliForAlarm, pendingIntent);
 	}
 

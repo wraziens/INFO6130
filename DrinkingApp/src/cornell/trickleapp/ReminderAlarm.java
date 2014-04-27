@@ -20,6 +20,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 	private NotificationManager noteManager;
 	DatabaseHandler db;
 	Boolean ringAlarm = true;
+	int id;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -27,6 +28,10 @@ public class ReminderAlarm extends BroadcastReceiver {
 		// TODO Auto-generated method stub
 
 		db = new DatabaseHandler(context);
+		
+		id=arg1.getExtras().getInt("id");
+		
+		
 		// if everything
 		// db.variableExistAll("numberofcategories")
 		// 1st check: if the goal is still checked:
