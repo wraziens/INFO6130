@@ -189,7 +189,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 						db.addValue("star_DaysPerMonth", 1);
 					} else {
 						reward = false;
-						db.deleteAllVariables("star_DaysPerWeek");
+						db.deleteAllVariables("star_DaysPerMonth");
 					}
 				}
 			} else {
@@ -214,7 +214,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 						db.addValue("star_DrinksPerMonth", 1);
 					} else {
 						reward = false;
-						db.deleteAllVariables("star_DaysPerWeek");
+						db.deleteAllVariables("star_DrinksPerMonth");
 					}
 				}
 			} else {
@@ -242,7 +242,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 						db.addValue("star_DollarsPerMonth", 1);
 					} else {
 						reward = false;
-						db.deleteAllVariables("star_DaysPerWeek");
+						db.deleteAllVariables("star_DollarsPerMonth");
 					}
 				}
 			} else {
