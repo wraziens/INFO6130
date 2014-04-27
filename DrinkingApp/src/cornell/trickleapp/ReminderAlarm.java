@@ -23,6 +23,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 	Boolean ringAlarm = true;
 	int id;
 	CharSequence message;
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onReceive(Context context, Intent arg1) {
@@ -60,9 +61,9 @@ public class ReminderAlarm extends BroadcastReceiver {
 		// if the goal is met:
 		notificationEvaluation();
 		if (reward) {
-			message = message+"New goal achieved, collect reward!";
+			message = message + "New goal achieved, collect reward!";
 		} else {
-			message = message+ ":(";
+			message = message + ":(";
 		}
 		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 				homeIntent, 0);
@@ -85,105 +86,112 @@ public class ReminderAlarm extends BroadcastReceiver {
 				Date date = new Date();
 				List<DatabaseStore> value_list = db.getVarValuesForWeek(
 						"drink_count", date);
-				if (value_list==null) {
-					reward = true;
-					message = "1";
-					break;
+				if (value_list != null) {
+					// removes duplicate days using hash function
+					int valueCalculated = 0;
+					HashSet<String> hs = new HashSet<String>();
+					for (int i = 0; i < value_list.size(); i++) {
+						hs.add(value_list.get(i).day_week);
+					}
+					valueCalculated = hs.size();
+					int valueTracked = Integer.parseInt(db.getAllVarValue(
+							"goal_DaysPerWeek").get(0).value);
+					if (valueCalculated <= valueTracked) {
+						reward = true;
+						db.addValue("star_DaysPerWeek", 1);
+					} else {
+						reward = false;
+						db.deleteAllVariables("star_DaysPerWeek");
+					}
 				}
-				// removes duplicate days using hash function
-				int valueCalculated = 0;
-				HashSet<String> hs = new HashSet<String>();
-				for (int i = 0; i < value_list.size(); i++) {
-					hs.add(value_list.get(i).day_week);
-				}
-				valueCalculated = hs.size();
-				int valueTracked = Integer.parseInt(db.getAllVarValue(
-						"goal_DaysPerWeek").get(0).value);
-				if (valueCalculated <= valueTracked)
-					reward = true;
-				else
-					reward = false;
-			} else
+			} else {
 				reward = true;
-			message="1";
+				db.addValue("star_DaysPerWeek", 1);
+			}
+			message = "1";
 			break;
 		case 4:
 			if (db.variableExistAll("drink_count")) {
 				Date date = new Date();
 				List<DatabaseStore> value_list = db.getVarValuesForMonth(
 						"drink_count", date);
-				if (value_list==null) {
-					reward = true;
-					message = "4";
-					break;
+				if (value_list != null) {
+					// removes duplicate days using hash function
+					int valueCalculated = 0;
+					HashSet<String> hs = new HashSet<String>();
+					for (int i = 0; i < value_list.size(); i++) {
+						hs.add(value_list.get(i).day.toString());
+					}
+					valueCalculated = hs.size();
+					int valueTracked = Integer.parseInt(db.getAllVarValue(
+							"goal_DaysPerMonth").get(0).value);
+					if (valueCalculated <= valueTracked) {
+						reward = true;
+						db.addValue("star_DaysPerMonth", 1);
+					} else {
+						reward = false;
+						db.deleteAllVariables("star_DaysPerWeek");
+					}
 				}
-				// removes duplicate days using hash function
-				int valueCalculated = 0;
-				HashSet<String> hs = new HashSet<String>();
-				for (int i = 0; i < value_list.size(); i++) {
-					hs.add(value_list.get(i).day.toString());
-				}
-				valueCalculated = hs.size();
-				int valueTracked = Integer.parseInt(db.getAllVarValue(
-						"goal_DaysPerMonth").get(0).value);
-				if (valueCalculated <= valueTracked)
-					reward = true;
-				else
-					reward = false;
-			} else
+			} else {
 				reward = true;
+				db.addValue("star_DaysPerMonth", 1);
+			}
 
-			message="4";
+			message = "4";
 			break;
 		case 5:
 			if (db.variableExistAll("drink_count")) {
 				Date date = new Date();
 				List<DatabaseStore> value_list = db.getVarValuesForMonth(
 						"drink_count", date);
-				if (value_list==null) {
-					reward = true;
-					message = "5";
-					break;
+				if (value_list != null) {
+					int valueCalculated = 0;
+					valueCalculated = value_list.size();
+					int valueTracked = Integer.parseInt(db.getAllVarValue(
+							"goal_DrinksPerMonth").get(0).value);
+					if (valueCalculated <= valueTracked) {
+						reward = true;
+						db.addValue("star_DrinksPerMonth", 1);
+					} else {
+						reward = false;
+						db.deleteAllVariables("star_DaysPerWeek");
+					}
 				}
-				int valueCalculated = 0;
-				valueCalculated = value_list.size();
-				int valueTracked = Integer.parseInt(db.getAllVarValue(
-						"goal_DrinksPerMonth").get(0).value);
-				if (valueCalculated <= valueTracked)
-					reward = true;
-				else
-					reward = false;
-			} else
+			} else {
 				reward = true;
-
-			message="5";
+				db.addValue("star_DrinksPerMonth", 1);
+			}
+			message = "5";
 			break;
 		case 6:
 			if (db.variableExistAll("money")) {
 				Date date = new Date();
 				List<DatabaseStore> value_list = db.getVarValuesForMonth(
 						"money", date);
-				if (value_list==null) {
-					reward = true;
-					message = "6";
-					break;
+				if (value_list != null) {
+					// sum up all the money
+					double valueCalculated = 0;
+					for (int i = 0; i < value_list.size(); i++) {
+						valueCalculated = valueCalculated
+								+ Double.parseDouble(value_list.get(i).value);
+					}
+					double valueTracked = Integer.parseInt(db.getAllVarValue(
+							"goal_DollarsPerMonth").get(0).value);
+					if (valueCalculated <= valueTracked) {
+						reward = true;
+						db.addValue("star_DollarsPerMonth", 1);
+					} else {
+						reward = false;
+						db.deleteAllVariables("star_DaysPerWeek");
+					}
 				}
-				// sum up all the money
-				double valueCalculated = 0;
-				for (int i = 0; i < value_list.size(); i++) {
-					valueCalculated = valueCalculated
-							+ Double.parseDouble(value_list.get(i).value);
-				}
-				double valueTracked = Integer.parseInt(db.getAllVarValue(
-						"goal_DollarsPerMonth").get(0).value);
-				if (valueCalculated <= valueTracked)
-					reward = true;
-				else
-					reward = false;
-			} else
+			} else {
 				reward = true;
+				db.addValue("star_DollarsPerMonth", 1);
+			}
 
-			message="6";
+			message = "6";
 			break;
 		}
 

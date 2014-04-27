@@ -96,22 +96,22 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		// to show the checked static page for goals setting from previous
 		// sessions
 		if (db.variableExistAll("goal_checked")) {
-			List<DatabaseStore> goals_checked = db
+			List<DatabaseStore> goal_checked = db
 					.getAllVarValue("goal_checked");
-			if (!goals_checked.isEmpty()) {
-				for (int i = 0; i < goals_checked.size(); i++) {
-					String dummy = goals_checked.get(i).value;
-					if (goals_checked.get(i).value.equals("1")) {
+			if (!goal_checked.isEmpty()) {
+				for (int i = 0; i < goal_checked.size(); i++) {
+					String dummy = goal_checked.get(i).value;
+					if (goal_checked.get(i).value.equals("1")) {
 						cbDaysPerWeek.setChecked(true);
 						DaysPerWeek.setText(db.getAllVarValue(
 								"goal_DaysPerWeek").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("2")) {
+					if (goal_checked.get(i).value.equals("2")) {
 						cbDrinksPerOuting.setChecked(true);
 						DrinksPerOuting.setText(db.getAllVarValue(
 								"goal_DrinksPerOuting").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("3")) {
+					if (goal_checked.get(i).value.equals("3")) {
 						cbBAC.setChecked(true);
 
 						String colorSelected = db.getAllVarValue(
@@ -140,17 +140,17 @@ public class GoalsLayout extends Activity implements OnClickListener {
 									"goal_BAC_val").get(0).value);
 						}
 					}
-					if (goals_checked.get(i).value.equals("4")) {
+					if (goal_checked.get(i).value.equals("4")) {
 						cbDaysPerMonth.setChecked(true);
 						DaysPerMonth.setText(db.getAllVarValue(
 								"goal_DaysPerMonth").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("5")) {
+					if (goal_checked.get(i).value.equals("5")) {
 						cbDrinksPerMonth.setChecked(true);
 						DrinksPerMonth.setText(db.getAllVarValue(
 								"goal_DrinksPerMonth").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("6")) {
+					if (goal_checked.get(i).value.equals("6")) {
 						cbDollarsPerMonth.setChecked(true);
 						DollarsPerMonth.setText(db.getAllVarValue(
 								"goal_DollarsPerMonth").get(0).value);
@@ -222,6 +222,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 						.toString());
 				db.addValue("goal_checked", 1);
 				setAlarm(10000, 1);// 7 days
+				//db.addValue("star_DaysPerWeek", 0);
 			}
 			if (cbDrinksPerOuting.isChecked()) {
 				// store
@@ -232,7 +233,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 						.getText().toString());
 
 				db.addValue("goal_checked", 2);
-
+				//db.addValue("star_DrinksPerOuting", 0);
 				// setAlarm(604800000,1);// 7 days
 			}
 			// check if checkbox is checked, if yes store both color of
@@ -271,7 +272,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 					db.addValue("goal_checked", 3);
 				}
-
+				//db.addValue("star_BAC", 0);
 			}
 			if (cbDaysPerMonth.isChecked()) {
 				// store
@@ -282,6 +283,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 				db.addValue("goal_checked", 4);
 				setAlarm(10000, 4);// 25 days or a month
+				//db.addValue("star_DaysPerMonth", 0);
 			}
 			if (cbDrinksPerMonth.isChecked()) {
 				// store
@@ -292,8 +294,8 @@ public class GoalsLayout extends Activity implements OnClickListener {
 						.toString());
 
 				db.addValue("goal_checked", 5);
-
 				setAlarm(10000, 5);// 25 days or a month
+				//db.addValue("star_DrinksPerMonth", 0);
 			}
 			if (cbDollarsPerMonth.isChecked()) {
 				// store
@@ -305,6 +307,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 				db.addValue("goal_checked", 6);
 
 				setAlarm(10000, 6);// 25 days or a month
+				//db.addValue("star_DollarsPerMonth", 0);
 			}
 			break;
 		}

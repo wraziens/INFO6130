@@ -31,8 +31,9 @@ public class GoalsTracking extends Activity implements OnClickListener {
 	LinearLayout llDaysPerWeekText, lDrinksPerOutingText, llBACText,
 			llDaysPerMonthText, llDrinksPerMonthText, llSpendingPerMonthText;
 
-	Boolean DaysPerWeek, DrinksPerOuting, BAC, DaysPerMonth, DrinksPerMonth,
-			SpendingPerMonth;
+	Boolean DaysPerWeek = false, DrinksPerOuting = false, BAC = false,
+			DaysPerMonth = false, DrinksPerMonth = false,
+			SpendingPerMonth = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -82,60 +83,62 @@ public class GoalsTracking extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 
 		// iterate through list of goals being tracked
-		List<DatabaseStore> goals_list = db.getAllVarValue("goals_checked");
-		for (int i = 0; i < goals_list.size(); i++) {
-			if (goals_list.get(i).value.equals("1")) {
-				DaysPerWeek = true;
-			}
-			if (goals_list.get(i).value.equals("2")) {
-				DrinksPerOuting = true;
-			}
-			if (goals_list.get(i).value.equals("3")) {
-				BAC = true;
-			}
-			if (goals_list.get(i).value.equals("4")) {
-				DaysPerMonth = true;
-			}
-			if (goals_list.get(i).value.equals("5")) {
-				DrinksPerMonth = true;
-			}
-			if (goals_list.get(i).value.equals("6")) {
-				SpendingPerMonth = true;
+		if (db.getAllVarValue("goal_checked") != null) {
+			List<DatabaseStore> goals_list = db.getAllVarValue("goal_checked");
+			for (int i = 0; i < goals_list.size(); i++) {
+				if (goals_list.get(i).value.equals("1")) {
+					DaysPerWeek = true;
+				}
+				if (goals_list.get(i).value.equals("2")) {
+					DrinksPerOuting = true;
+				}
+				if (goals_list.get(i).value.equals("3")) {
+					BAC = true;
+				}
+				if (goals_list.get(i).value.equals("4")) {
+					DaysPerMonth = true;
+				}
+				if (goals_list.get(i).value.equals("5")) {
+					DrinksPerMonth = true;
+				}
+				if (goals_list.get(i).value.equals("6")) {
+					SpendingPerMonth = true;
+				}
 			}
 		}
 
 		// check if each of the badges are being tracked
 		if (DaysPerWeek)
 			badgeSetup(bDaysPerWeek_clear, bDaysPerWeek_star,
-					llDaysPerWeekText, 1, true);
+					llDaysPerWeekText, calcStars(1), true);
 		else
 			badgeSetup(bDaysPerWeek_clear, bDaysPerWeek_star,
 					llDaysPerWeekText, 5, false);
 		if (DrinksPerOuting)
 			badgeSetup(bDrinksPerOuting_clear, bDrinksPerOuting_star,
-					lDrinksPerOutingText, 2, true);
+					lDrinksPerOutingText, calcStars(2), true);
 		else
 			badgeSetup(bDrinksPerOuting_clear, bDrinksPerOuting_star,
 					lDrinksPerOutingText, 5, false);
 		if (BAC)
-			badgeSetup(bBAC_clear, bBAC_star, llBACText, 3, true);
+			badgeSetup(bBAC_clear, bBAC_star, llBACText, calcStars(3), true);
 		else
 			badgeSetup(bBAC_clear, bBAC_star, llBACText, 5, false);
 		if (DaysPerMonth)
 			badgeSetup(bDaysPerMonth_clear, bDaysPerMonth_star,
-					llDaysPerMonthText, 4, true);
+					llDaysPerMonthText, calcStars(4), true);
 		else
 			badgeSetup(bDaysPerMonth_clear, bDaysPerMonth_star,
 					llDaysPerMonthText, 5, false);
 		if (DrinksPerMonth)
 			badgeSetup(bDrinksPerMonth_clear, bDrinksPerMonth_star,
-					llDrinksPerMonthText, 6, true);
+					llDrinksPerMonthText, calcStars(5), true);
 		else
 			badgeSetup(bDrinksPerMonth_clear, bDrinksPerMonth_star,
 					llDrinksPerMonthText, 5, false);
 		if (SpendingPerMonth)
 			badgeSetup(bSpendingPerMonth_clear, bSpendingPerMonth_star,
-					llSpendingPerMonthText, 8, true);
+					llSpendingPerMonthText, calcStars(6), true);
 		else
 			badgeSetup(bSpendingPerMonth_clear, bSpendingPerMonth_star,
 					llSpendingPerMonthText, 5, false);
@@ -156,6 +159,9 @@ public class GoalsTracking extends Activity implements OnClickListener {
 			LinearLayout textBox, int star_num, boolean visibility) {
 		if (visibility) {
 			switch (star_num) {
+			case 0:
+				stars.setBackgroundResource(R.drawable.star_0);
+				break;
 			case 1:
 				stars.setBackgroundResource(R.drawable.star_1);
 				break;
@@ -180,6 +186,8 @@ public class GoalsTracking extends Activity implements OnClickListener {
 			case 8:
 				stars.setBackgroundResource(R.drawable.star_8);
 				break;
+			default:
+				stars.setBackgroundResource(R.drawable.star_8);
 			}
 		} else {
 			emptyCover.setVisibility(View.VISIBLE);
@@ -198,5 +206,38 @@ public class GoalsTracking extends Activity implements OnClickListener {
 			startActivity(goToThisPage);
 			break;
 		}
+	}
+
+	// takes goal variable name in database and outputs number of stars
+	// associated with that goal
+	private int calcStars(int goal) {
+		String variable = "";
+
+		switch (goal) {
+		case 1:
+			variable = "star_DaysPerWeek";
+			break;
+		case 2:
+			variable = "star_DrinksPerOuting";
+			break;
+		case 3:
+			variable = "star_BAC";
+			break;
+		case 4:
+			variable = "star_DaysPerMonth";
+			break;
+		case 5:
+			variable = "star_DrinksPerMonth";
+			break;
+		case 6:
+			variable = "star_DollarsPerMonth";
+			break;
+		}
+
+		List<DatabaseStore> list = db.getAllVarValue(variable);
+		if (list == null)
+			return 0;
+		else
+			return list.size();
 	}
 }
