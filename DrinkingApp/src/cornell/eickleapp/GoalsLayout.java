@@ -95,7 +95,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		// accordingly
 		// to show the checked static page for goals setting from previous
 		// sessions
-		if (db.variableExist("goal_checked")) {
+		if (db.variableExistAll("goal_checked")) {
 			List<DatabaseStore> goals_checked = db
 					.getAllVarValue("goal_checked");
 			if (!goals_checked.isEmpty()) {
@@ -210,8 +210,8 @@ public class GoalsLayout extends Activity implements OnClickListener {
 			// corresponding
 			// to whether or not checkboxes are checked
 			// resets all values in goals checklist entry to clear for new entry
-			if (db.variableExist("goal_checked"))
-				db.clearAllValuesDay("goal_checked");
+			if (db.variableExistAll("goal_checked"))
+				db.clearAllValues("goal_checked");
 
 			if (cbDaysPerWeek.isChecked()) {
 				// store
@@ -278,7 +278,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 						.getText().toString());
 				db.addValue("goal_checked", 6);
 			}
-			setAlarm(18000000);// 5 hours
+			setAlarm(604800000);// 7 days
 			break;
 		}
 

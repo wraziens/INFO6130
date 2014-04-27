@@ -2,6 +2,7 @@ package cornell.eickleapp;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import android.app.Activity;
@@ -27,7 +28,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 
 		db = new DatabaseHandler(context);
 		// if everything
-		// db.variableExist("numberofcategories")
+		// db.variableExistAll("numberofcategories")
 		// 1st check: if the goal is still checked:
 		if (true) {
 			/*
@@ -40,7 +41,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 			 * int num_Checked = 0; String surveyList[] = { "DailySurvey2",
 			 * "DailySurveyExercise", "DailySurveyProductivity" }; for (int i =
 			 * 0; i < surveyList.length; i++) { Boolean checked =
-			 * db.variableExist(surveyList[i] + "CheckList"); if (checked)
+			 * db.variableExistAll(surveyList[i] + "CheckList"); if (checked)
 			 * num_Checked++; }
 			 * 
 			 * // if number checked is less than to the number then ring alarm
@@ -54,23 +55,42 @@ public class ReminderAlarm extends BroadcastReceiver {
 				CharSequence from = "Trickle";
 				CharSequence message;
 				// if the goal is met:
-				if (true) {
-					message = "New goal achieved, collect reward!";
+				boolean reward=false;
+				if (db.variableExistAll("drink_count")) {
+					Date date = new Date();
+					List<DatabaseStore> drinkCount_list = db
+							.getVarValuesForWeek("drink_count", date);
+					// removes duplicate days using hash function
+					int daysDrank = 0;
+					HashSet<String> hs = new HashSet<String>();
+					for (int i = 0; i < drinkCount_list.size(); i++) {
+						hs.add(drinkCount_list.get(i).day_week);
+					}
+					daysDrank = hs.size();
+					int valueTracked = Integer.getInteger(db.getAllVarValue(
+							"goal_DaysPerWeek").get(0).value);
+					if(daysDrank <= valueTracked)
+						reward=true;
+					else reward=false;
 				}
-				else{
+				else
+					reward=true;
+				if (reward) {
+					message = "New goal achieved, collect reward!";
+				} else {
 					message = ":(";
 				}
 				PendingIntent contentIntent = PendingIntent.getActivity(
 						context, 0, homeIntent, 0);
 				@SuppressWarnings("deprecation")
 				Notification notif = new Notification(
-						R.drawable.trickleiconnote,
-						message,
+						R.drawable.trickleiconnote, message,
 						System.currentTimeMillis());
 				notif.setLatestEventInfo(context, from, message, contentIntent);
 
 				notif.defaults = Notification.DEFAULT_VIBRATE;
 				noteManager.notify(MainMenu.uniqueID, notif);
+
 			}
 		}
 	}

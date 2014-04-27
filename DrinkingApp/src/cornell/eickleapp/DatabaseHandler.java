@@ -22,7 +22,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	private static final String TABLE_MULTI = "multichoice";
 	private static final String TABLE_QUES = "questions";
-	
+
 	// Multi Choice column names
 	private static final String MULTI_KEY_QUES_ID = "question_id";
 	private static final String MULTI_KEY_VALUE = "value";
@@ -40,7 +40,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	public DatabaseHandler(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
-
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -62,27 +61,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(CREATE_QUES);
 	}
 
-	//Will update the value if it already exists in the db for the 
-	//current day. Otherwise it will add the value to the db
-	public void updateOrAdd(String variable, Integer int_value){
-		
-		if (!variableExist(variable)){
+	// Will update the value if it already exists in the db for the
+	// current day. Otherwise it will add the value to the db
+	public void updateOrAdd(String variable, Integer int_value) {
+
+		if (!variableExist(variable)) {
 			addValue(variable, int_value);
-		}else{
+		} else {
 			updateValue(variable, int_value);
 		}
 	}
-	
-	//Will update the value if it already exists in the db for the 
-	//current day. Otherwise it will add the value to the db
-	public void updateOrAdd(String variable, String str_value){
-		if (!variableExist(variable)){
+
+	// Will update the value if it already exists in the db for the
+	// current day. Otherwise it will add the value to the db
+	public void updateOrAdd(String variable, String str_value) {
+		if (!variableExist(variable)) {
 			addValue(variable, str_value);
-		}else{
+		} else {
 			updateValue(variable, str_value);
 		}
 	}
-	
+
 	// Adds an integer value to the database
 	public void addValue(String variable, Integer int_value) {
 		Date date = new Date();
@@ -90,8 +89,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				int_value.toString(), date);
 		addQuestion(ds);
 	}
+
 	// Adds an integer value to the database
-	
+
 	public void addValueYesterday(String variable, Integer int_value) {
 		Date date = new Date();
 		GregorianCalendar gc = new GregorianCalendar();
@@ -102,17 +102,18 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				int_value.toString(), date);
 		addQuestion(ds);
 	}
-	// Adds an integer value to the database
+
+	// Adds a string value to the database
 	public void addValue(String variable, String str_value) {
 		Date date = new Date();
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
 				str_value.toString(), date);
 		addQuestion(ds);
 	}
-	
+
 	public void addValueTomorrow(String variable, String str_value) {
 		Date date = new Date();
-		//Add a day to our date
+		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
@@ -125,7 +126,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	public void addDelayValue(String variable, String str_value) {
 		Date date = new Date();
-		//Add a day to our date
+		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
@@ -134,10 +135,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				str_value.toString(), date);
 		addQuestion(ds);
 	}
-	
-	public void addValueYesterday(String variable, String str_val){
+
+	public void addValueYesterday(String variable, String str_val) {
 		Date date = new Date();
-		//Add a day to our date
+		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.DAY_OF_YEAR, -1);
@@ -146,10 +147,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				str_val.toString(), date);
 		addQuestion(ds);
 	}
-	
+
 	public void addDelayValue(String variable, int int_value) {
 		Date date = new Date();
-		//Add a day to our date
+		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
@@ -158,49 +159,49 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				String.valueOf(int_value), date);
 		addQuestion(ds);
 	}
-	
-	public void injectDelayValue(String variable, int value, int interval_delay){
+
+	public void injectDelayValue(String variable, int value, int interval_delay) {
 		int negate_delay = interval_delay * -1;
-		
+
 		Date date = new Date();
-		//Add a day to our date
+		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
 		gc.add(Calendar.MINUTE, negate_delay);
-		
+
 		date = gc.getTime();
-		ArrayList<DatabaseStore> existing = (ArrayList<DatabaseStore>)getVarValuesForDay(variable,
-				date);
-		if(existing != null){
-			ArrayList<DatabaseStore> exist_sorted = DatabaseStore.sortByTime(
-					existing);
-			
+		ArrayList<DatabaseStore> existing = (ArrayList<DatabaseStore>) getVarValuesForDay(
+				variable, date);
+		if (existing != null) {
+			ArrayList<DatabaseStore> exist_sorted = DatabaseStore
+					.sortByTime(existing);
+
 			int last_value = 0;
 			boolean placed = false;
-			
+
 			Iterator<DatabaseStore> iterator = exist_sorted.iterator();
-			
-			while (iterator.hasNext()){
+
+			while (iterator.hasNext()) {
 				last_value += 1;
 				DatabaseStore ds = iterator.next();
-				if(ds.date.after(date)){
-					if (!placed){
+				if (ds.date.after(date)) {
+					if (!placed) {
 						value = Integer.parseInt(ds.value);
-						placed=true;
+						placed = true;
 					}
-					Integer new_val = last_value + 1 ;
+					Integer new_val = last_value + 1;
 					ds.value = new_val.toString();
 					updateQuestion(ds);
 				}
 			}
 		}
-		
+
 		DatabaseStore data_store = DatabaseStore.DatabaseIntegerStore(variable,
 				String.valueOf(value), date);
 		addQuestion(data_store);
 	}
-	
+
 	// Adds an integer value to the database
 	public void addValue(String variable, List<String> list_values) {
 		Date date = new Date();
@@ -244,12 +245,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return pid;
 	}
 
-	public void updateQuestionList(ArrayList<DatabaseStore> stores){
-		for(int i=0; i<stores.size(); i++){
+	public void updateQuestionList(ArrayList<DatabaseStore> stores) {
+		for (int i = 0; i < stores.size(); i++) {
 			updateQuestion(stores.get(i));
 		}
 	}
-	
+
 	public void updateQuestion(DatabaseStore store) {
 		// get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -267,22 +268,34 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
-	public void clearAllValuesDay(String variable){
+	public void clearAllValuesDay(String variable) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		Date date = new Date();
-		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
-				"", date);		
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable, "", date);
 		// Delete the variable for today from the DB
-		String delete_sql = "DELETE FROM " +  TABLE_QUES +
-				" WHERE " + QUES_KEY_VAR + "='" + ds.variable +
-				"' AND " + QUES_KEY_YEAR + "=" +  ds.year +
-				" AND " + QUES_KEY_MONTH + "=" + ds.month +
-				" AND " + QUES_KEY_DAY + "=" + ds.day + ";";
+		String delete_sql = "DELETE FROM " + TABLE_QUES + " WHERE "
+				+ QUES_KEY_VAR + "='" + ds.variable + "' AND " + QUES_KEY_YEAR
+				+ "=" + ds.year + " AND " + QUES_KEY_MONTH + "=" + ds.month
+				+ " AND " + QUES_KEY_DAY + "=" + ds.day + ";";
 		// execute the SQL
 		db.execSQL(delete_sql);
 		// close the database
 		db.close();
 	}
+
+	public void clearAllValues(String variable) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable, "", date);
+		// Delete the variable for today from the DB
+		String delete_sql = "DELETE FROM " + TABLE_QUES + " WHERE "
+				+ QUES_KEY_VAR + "='" + ds.variable + ";";
+		// execute the SQL
+		db.execSQL(delete_sql);
+		// close the database
+		db.close();
+	}
+
 	/*
 	 * Inserts a row into the table questions and returns the pid.
 	 */
@@ -307,7 +320,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 		return pid;
 	}
-	
+
 	private List<DatabaseStore> handleCursor(Cursor cursor) {
 		// check to see if our query returned values
 		try {
@@ -342,10 +355,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	public List<DatabaseStore> dataDump() {
 		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "SELECT * FROM "+ TABLE_QUES +";";
+		String query = "SELECT * FROM " + TABLE_QUES + ";";
 		Cursor cursor = db.rawQuery(query, null);
 		return handleCursor(cursor);
 	}
+
 	public List<DatabaseStore> getAllVarValue(String variable) {
 		// Get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -370,24 +384,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			return handleCursor(cursor);
 		}
 	}
-	
+
 	/*
 	 * Must sort both color and values by time before calling.
 	 */
-	private ArrayList<DatabaseStore> getDaysList(ArrayList<DatabaseStore> data){
+	private ArrayList<DatabaseStore> getDaysList(ArrayList<DatabaseStore> data) {
 		data = DatabaseStore.sortByTime(data);
 		ArrayList<DatabaseStore> day_data = new ArrayList<DatabaseStore>();
-		
-		DatabaseStore max_day=null;
-		for(int i=0; i< data.size(); i++){
+
+		DatabaseStore max_day = null;
+		for (int i = 0; i < data.size(); i++) {
 			DatabaseStore s = data.get(i);
-			if(max_day == null){
+			if (max_day == null) {
 				max_day = s;
-			}else{
-				if((max_day.day < s.day) || (s.month > max_day.month) || (s.year > max_day.year)){
+			} else {
+				if ((max_day.day < s.day) || (s.month > max_day.month)
+						|| (s.year > max_day.year)) {
 					day_data.add(max_day);
 					max_day = s;
-				} else if(Double.valueOf(max_day.value)< Double.valueOf(s.value)){
+				} else if (Double.valueOf(max_day.value) < Double
+						.valueOf(s.value)) {
 					max_day = s;
 				}
 			}
@@ -395,8 +411,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		day_data.add(max_day);
 		return day_data;
 	}
-	
-	public ArrayList<DatabaseStore> getDrinkCountForAllDays(){
+
+	public ArrayList<DatabaseStore> getDrinkCountForAllDays() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String query = "SELECT * FROM " + TABLE_QUES + " WHERE " + QUES_KEY_VAR
 				+ "='drink_count'";
@@ -404,16 +420,16 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		if (cursor.getCount() == 0) {
 			return null;
 		} else {
-			ArrayList<DatabaseStore> data = (ArrayList<DatabaseStore>)handleCursor(cursor);
-			if(data!=null){
+			ArrayList<DatabaseStore> data = (ArrayList<DatabaseStore>) handleCursor(cursor);
+			if (data != null) {
 				return getDaysList(data);
-			}else{
+			} else {
 				return null;
 			}
 		}
 	}
-	
-	public List<DatabaseStore> getVarValuesForWeek(String variable, Date date){		
+
+	public List<DatabaseStore> getVarValuesForWeek(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
 		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
@@ -423,61 +439,61 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		int month = Integer.parseInt(month_fmt.format(date));
 		int day = Integer.parseInt(day_fmt.format(date));
 		String week_day = day_week_ft.format(date);
-		
-		Integer week_val=null;
-		if (week_day.equals("Sun")){
+
+		Integer week_val = null;
+		if (week_day.equals("Sun")) {
 			week_val = 0;
-		} else if(week_day.equals("Mon")){
+		} else if (week_day.equals("Mon")) {
 			week_val = 1;
-		} else if(week_day.equals("Tue")){
+		} else if (week_day.equals("Tue")) {
 			week_val = 2;
-		} else if(week_day.equals("Wed")){
+		} else if (week_day.equals("Wed")) {
 			week_val = 3;
-		} else if(week_day.equals("Thu")){
+		} else if (week_day.equals("Thu")) {
 			week_val = 4;
-		} else if(week_day.equals("Fri")){
+		} else if (week_day.equals("Fri")) {
 			week_val = 5;
-		} else if(week_day.equals("Sat")){
+		} else if (week_day.equals("Sat")) {
 			week_val = 6;
 		}
-		return getVarValuesForWeek(variable, month, day, year,week_val);
+		return getVarValuesForWeek(variable, month, day, year, week_val);
 	}
-	
+
 	public List<DatabaseStore> getVarValuesForWeek(String variable,
 			Integer month, Integer day, Integer year, Integer week_day) {
 		// get reference to the database
 		SQLiteDatabase db = this.getWritableDatabase();
-		String day_str = QUES_KEY_VAR + "='" + variable + "' AND ( (" + QUES_KEY_DAY +"="+ day + " AND " +
-				QUES_KEY_MONTH + "="  + month + " AND " + 
-				QUES_KEY_YEAR + "=" + year + ")";	
-		
+		String day_str = QUES_KEY_VAR + "='" + variable + "' AND ( ("
+				+ QUES_KEY_DAY + "=" + day + " AND " + QUES_KEY_MONTH + "="
+				+ month + " AND " + QUES_KEY_YEAR + "=" + year + ")";
+
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
 		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
-		
-		for (int i=0; i<7; i++){	
+
+		for (int i = 0; i < 7; i++) {
 			Integer diff = null;
-			GregorianCalendar cal = new GregorianCalendar(year, month-1, day);
-			if(week_day < i){
-				diff = i-week_day;
+			GregorianCalendar cal = new GregorianCalendar(year, month - 1, day);
+			if (week_day < i) {
+				diff = i - week_day;
 				cal.add(Calendar.DAY_OF_YEAR, diff);
 				Date date = cal.getTime();
 				int y = Integer.parseInt(year_fmt.format(date));
 				int m = Integer.parseInt(month_fmt.format(date));
 				int d = Integer.parseInt(day_fmt.format(date));
-				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + 
-						" AND " + QUES_KEY_MONTH + "=" + m + " AND " +
-						QUES_KEY_YEAR + "=" + y + ")";
-			}else if(week_day>i){
-				diff = week_day-i;
+				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + " AND "
+						+ QUES_KEY_MONTH + "=" + m + " AND " + QUES_KEY_YEAR
+						+ "=" + y + ")";
+			} else if (week_day > i) {
+				diff = week_day - i;
 				cal.add(Calendar.DAY_OF_YEAR, -1 * diff);
 				Date date = cal.getTime();
 				int y = Integer.parseInt(year_fmt.format(date));
 				int m = Integer.parseInt(month_fmt.format(date));
 				int d = Integer.parseInt(day_fmt.format(date));
-				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + 
-						" AND " + QUES_KEY_MONTH + "=" + m + " AND " +
-						QUES_KEY_YEAR + "=" + y +")";
+				day_str = day_str + " OR (" + QUES_KEY_DAY + "=" + d + " AND "
+						+ QUES_KEY_MONTH + "=" + m + " AND " + QUES_KEY_YEAR
+						+ "=" + y + ")";
 			}
 		}
 		day_str += ")";
@@ -489,14 +505,15 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			return handleCursor(cursor);
 		}
 	}
-	
-	public List<DatabaseStore> getVarValuesForYesterday(String variable, Date date) {
-		//subtract a day from our date
+
+	public List<DatabaseStore> getVarValuesForYesterday(String variable,
+			Date date) {
+		// subtract a day from our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.DAY_OF_YEAR, -1);
 		date = gc.getTime();
-		
+
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
 		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
@@ -507,14 +524,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		return getVarValuesForDay(variable, month, day, year);
 	}
-	
+
 	public List<DatabaseStore> getVarValuesDelay(String variable, Date date) {
-		//subtract 6 hours from the date
+		// subtract 6 hours from the date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
 		date = gc.getTime();
-		
+
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
 		SimpleDateFormat day_fmt = new SimpleDateFormat("dd", Locale.US);
@@ -525,6 +542,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		return getVarValuesForDay(variable, month, day, year);
 	}
+
 	public List<DatabaseStore> getVarValuesForDay(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
@@ -548,67 +566,64 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		return handleCursor(cursor);
 	}
 
-	public ArrayList<String[]> handleWordle(Cursor cursor){
-	// check to see if our query returned values
-			ArrayList<String []> total_list = new ArrayList<String []>();
-			if (cursor.moveToFirst()) {
-				do {
-					String value = cursor.getString(0);
-					String cnt = String.valueOf(cursor.getInt(1));
-					String[] store_list = {value, cnt};
-					total_list.add(store_list);
-				} while (cursor.moveToNext());
-			} else {
-				cursor.close();
-				return null;
-			}
+	public ArrayList<String[]> handleWordle(Cursor cursor) {
+		// check to see if our query returned values
+		ArrayList<String[]> total_list = new ArrayList<String[]>();
+		if (cursor.moveToFirst()) {
+			do {
+				String value = cursor.getString(0);
+				String cnt = String.valueOf(cursor.getInt(1));
+				String[] store_list = { value, cnt };
+				total_list.add(store_list);
+			} while (cursor.moveToNext());
+		} else {
 			cursor.close();
-			return total_list;
-		
+			return null;
+		}
+		cursor.close();
+		return total_list;
+
 	}
-	
-	public void deleteValuesTomorrow(ArrayList<String> names){
+
+	public void deleteValuesTomorrow(ArrayList<String> names) {
 		Date date = new Date();
-		//Add a day to our date
+		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
 		gc.add(Calendar.DAY_OF_YEAR, 1);
 		date = gc.getTime();
-		DatabaseStore dbstore = DatabaseStore.DatabaseTextStore("",
-				"", date);
+		DatabaseStore dbstore = DatabaseStore.DatabaseTextStore("", "", date);
 		SQLiteDatabase db = this.getWritableDatabase();
-		String variable_str = "(" + QUES_KEY_VAR + "='" +names.get(0);
-		for(int i=1; i<names.size(); i++){
-			variable_str += "' OR " + QUES_KEY_VAR +"='" + names.get(i);
+		String variable_str = "(" + QUES_KEY_VAR + "='" + names.get(0);
+		for (int i = 1; i < names.size(); i++) {
+			variable_str += "' OR " + QUES_KEY_VAR + "='" + names.get(i);
 		}
 		variable_str += "')";
-		String query = "DELETE FROM " + TABLE_QUES + " WHERE " +
-				QUES_KEY_MONTH +"=" + dbstore.month + " AND "+
-				QUES_KEY_DAY + "=" + dbstore.day + " AND "+
-				QUES_KEY_YEAR + "=" + dbstore.year + " AND " +
-				variable_str + ";";
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " + QUES_KEY_MONTH
+				+ "=" + dbstore.month + " AND " + QUES_KEY_DAY + "="
+				+ dbstore.day + " AND " + QUES_KEY_YEAR + "=" + dbstore.year
+				+ " AND " + variable_str + ";";
 		db.execSQL(query);
 		db.close();
 	}
-	
-	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore){
+
+	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		String variable_str = "(" + QUES_KEY_VAR + "='" +names.get(0);
-		for(int i=1; i<names.size(); i++){
-			variable_str += "' OR " + QUES_KEY_VAR +"='" + names.get(i);
+		String variable_str = "(" + QUES_KEY_VAR + "='" + names.get(0);
+		for (int i = 1; i < names.size(); i++) {
+			variable_str += "' OR " + QUES_KEY_VAR + "='" + names.get(i);
 		}
 		variable_str += "')";
-		String query = "DELETE FROM " + TABLE_QUES + " WHERE " +
-				QUES_KEY_MONTH +"=" + dbstore.month + " AND "+
-				QUES_KEY_DAY + "=" + dbstore.day + " AND "+
-				QUES_KEY_YEAR + "=" + dbstore.year + " AND " +
-				QUES_KEY_TIME + "='" + dbstore.time + "' AND " +
-				variable_str + ";";
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " + QUES_KEY_MONTH
+				+ "=" + dbstore.month + " AND " + QUES_KEY_DAY + "="
+				+ dbstore.day + " AND " + QUES_KEY_YEAR + "=" + dbstore.year
+				+ " AND " + QUES_KEY_TIME + "='" + dbstore.time + "' AND "
+				+ variable_str + ";";
 		db.execSQL(query);
 		db.close();
-	}	
-	
+	}
+
 	public List<DatabaseStore> getVarValuesForMonth(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
@@ -618,17 +633,27 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 		return getVarValuesForMonth(variable, month, year);
 	}
-	
-	public Boolean variableExist(String variable){
+
+	public Boolean variableExist(String variable) {
 		Date date = new Date();
-		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>)getVarValuesForDay(variable, date);
-		
-		if (exist!=null)
+		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>) getVarValuesForDay(
+				variable, date);
+
+		if (exist != null)
 			return true;
 		else
 			return false;
 	}
-	
+//check the existence of all instance of a variable
+	public Boolean variableExistAll(String variable) {
+		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>) this
+				.getAllVarValue(variable);
+
+		if (exist != null)
+			return true;
+		else
+			return false;
+	}
 
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub

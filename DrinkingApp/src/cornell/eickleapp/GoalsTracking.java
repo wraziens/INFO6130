@@ -1,5 +1,9 @@
 package cornell.eickleapp;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +15,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 public class GoalsTracking extends Activity implements OnClickListener {
+
+	DatabaseHandler db;
+
+	int DaysPerWeek_val, DrinksPerOuting_val, BAC_val, DaysPerMonth_val,
+			DrinksPerMonth_val, SpendingPerMonth_val;
 
 	Button bDaysPerWeek_star, bDrinksPerOuting_star, bBAC_star,
 			bDaysPerMonth_star, bDrinksPerMonth_star, bSpendingPerMonth_star;
@@ -29,6 +38,7 @@ public class GoalsTracking extends Activity implements OnClickListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		db = new DatabaseHandler(getBaseContext());
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -70,18 +80,30 @@ public class GoalsTracking extends Activity implements OnClickListener {
 	// pulls the correct badges from database
 	private void initialize() {
 		// TODO Auto-generated method stub
-		
-		//DELETE EVERYTHING HERE + REPLACE WITH DATABASE STUFF
-		DaysPerWeek = false;
-		DrinksPerOuting = true;
-		BAC = false;
-		DaysPerMonth = false;
-		DrinksPerMonth = true;
-		SpendingPerMonth = false;
 
-		
-		
-		
+		// iterate through list of goals being tracked
+		List<DatabaseStore> goals_list = db.getAllVarValue("goals_checked");
+		for (int i = 0; i < goals_list.size(); i++) {
+			if (goals_list.get(i).value.equals("1")) {
+				DaysPerWeek = true;
+			}
+			if (goals_list.get(i).value.equals("2")) {
+				DrinksPerOuting = true;
+			}
+			if (goals_list.get(i).value.equals("3")) {
+				BAC = true;
+			}
+			if (goals_list.get(i).value.equals("4")) {
+				DaysPerMonth = true;
+			}
+			if (goals_list.get(i).value.equals("5")) {
+				DrinksPerMonth = true;
+			}
+			if (goals_list.get(i).value.equals("6")) {
+				SpendingPerMonth = true;
+			}
+		}
+
 		// check if each of the badges are being tracked
 		if (DaysPerWeek)
 			badgeSetup(bDaysPerWeek_clear, bDaysPerWeek_star,
@@ -168,7 +190,7 @@ public class GoalsTracking extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.bSet:
 			Intent goToThisPage = new Intent(GoalsTracking.this,

@@ -535,7 +535,7 @@
             android:background="@drawable/goals_save_input_border_red_filled"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:text="Save"
+            android:text="Set"
             android:textColor="#ffffff" />
     </LinearLayout>
 
