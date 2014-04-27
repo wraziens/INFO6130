@@ -592,6 +592,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 	
+	public void deleteAllVariables(String name){
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " +
+				QUES_KEY_VAR + "=" + name + ";";
+		db.execSQL(query);
+		db.close();
+	}
+	
 	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore){
 		SQLiteDatabase db = this.getWritableDatabase();
 		String variable_str = "(" + QUES_KEY_VAR + "='" +names.get(0);
