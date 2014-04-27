@@ -234,7 +234,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 				db.addValue("goal_checked", 2);
 				//db.addValue("star_DrinksPerOuting", 0);
-				// setAlarm(604800000,1);// 7 days
+				setAlarm(10000,2);// every day
 			}
 			// check if checkbox is checked, if yes store both color of
 			// bac+Value (1=green 2=yellow 3=red)
@@ -273,6 +273,7 @@ public class GoalsLayout extends Activity implements OnClickListener {
 					db.addValue("goal_checked", 3);
 				}
 				//db.addValue("star_BAC", 0);
+				setAlarm(10000, 3);// everyday
 			}
 			if (cbDaysPerMonth.isChecked()) {
 				// store

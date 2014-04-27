@@ -76,7 +76,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 		noteManager.notify(id, notif);
 
 	}
-
+	//evaluates the goals
 	private void notificationEvaluation() {
 		// TODO Auto-generated method stub
 
@@ -109,6 +109,65 @@ public class ReminderAlarm extends BroadcastReceiver {
 				db.addValue("star_DaysPerWeek", 1);
 			}
 			message = "1";
+			break;
+
+		case 2:
+			if (db.variableExistAll("drink_count")) {
+				Date date = new Date();
+				// evaluates from the day before
+				date.setTime(date.getTime() - 86400000);
+				List<DatabaseStore> value_list = db.getVarValuesForDay(
+						"drink_count", date);
+				if (value_list != null) {
+					int valueCalculated = value_list.size();
+					int valueTracked = Integer.parseInt(db.getAllVarValue(
+							"goal_DrinksPerOuting").get(0).value);
+					if (valueCalculated <= valueTracked) {
+						reward = true;
+						db.addValue("star_DrinksPerOuting", 1);
+					} else {
+						reward = false;
+						db.deleteAllVariables("star_DrinksPerOuting");
+					}
+				}
+			} else {
+				reward = true;
+				db.addValue("star_DrinksPerOuting", 1);
+			}
+			message = "2";
+			break;
+		case 3:
+			if (db.variableExistAll("bac")) {
+				Date date = new Date();
+				// evaluates from the day before
+				date.setTime(date.getTime() - 86400000);
+				List<DatabaseStore> value_list = db.getVarValuesForDay("bac",
+						date);
+				if (value_list != null) {
+					String dummy=db.getAllVarValue("goal_BAC_val").get(0).value.substring(1,5);
+					double valueTracked = Double.parseDouble(db.getAllVarValue(
+							"goal_BAC_val").get(0).value.substring(1,5));
+					double valueCalculated = 0;
+					int testedVal = 0;
+					for (int i = 0; i < value_list.size(); i++) {
+						valueCalculated = Double
+								.parseDouble(value_list.get(i).value);
+						if (valueCalculated > valueTracked)
+							testedVal++;
+					}
+					if (testedVal == 0) {
+						reward = true;
+						db.addValue("star_BAC", 1);
+					} else {
+						reward = false;
+						db.deleteAllVariables("star_BAC");
+					}
+				}
+			} else {
+				reward = true;
+				db.addValue("star_BAC", 1);
+			}
+			message = "3";
 			break;
 		case 4:
 			if (db.variableExistAll("drink_count")) {
