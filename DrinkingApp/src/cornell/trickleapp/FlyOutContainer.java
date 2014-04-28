@@ -264,44 +264,47 @@ public class FlyOutContainer extends LinearLayout implements
 		image_id_list = new ArrayList<Integer>();
 		switch (type) {
 		case 0:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
+			image_id_list.add(R.drawable.tutorial_001);
+			image_id_list.add(R.drawable.tutorial_002);
+			image_id_list.add(R.drawable.tutorial_003);
+			image_id_list.add(R.drawable.tutorial_004);
+			image_id_list.add(R.drawable.tutorial_005);
+			image_id_list.add(R.drawable.tutorial_006);
+			image_id_list.add(R.drawable.tutorial_007);
+			
 			break;
 		case 1:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
+			image_id_list.add(R.drawable.tutorial_011);
+			image_id_list.add(R.drawable.tutorial_012);
+			image_id_list.add(R.drawable.tutorial_013);
+			image_id_list.add(R.drawable.tutorial_014);
+			image_id_list.add(R.drawable.tutorial_015);
 			break;
 		case 2:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
 			break;
 		case 3:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
+			image_id_list.add(R.drawable.tutorial_016);
+			image_id_list.add(R.drawable.tutorial_017);
+			image_id_list.add(R.drawable.tutorial_018);
+			image_id_list.add(R.drawable.tutorial_019);
+			image_id_list.add(R.drawable.tutorial_020);
 			break;
 		case 4:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
+			image_id_list.add(R.drawable.tutorial_021);
+			image_id_list.add(R.drawable.tutorial_022);
+			image_id_list.add(R.drawable.tutorial_023);
 			break;
 		case 5:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
+			image_id_list.add(R.drawable.tutorial_008);
+			image_id_list.add(R.drawable.tutorial_009);
+			image_id_list.add(R.drawable.tutorial_010);
 			break;
 		case 6:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
+			image_id_list.add(R.drawable.tutorial_008);
+			image_id_list.add(R.drawable.tutorial_009);
+			image_id_list.add(R.drawable.tutorial_010);
 			break;
 		case 7:
-			image_id_list.add(R.drawable.ic_trickle);
-			image_id_list.add(R.drawable.drinkcounttutorial);
-			image_id_list.add(R.drawable.drinkicon);
 			break;
 		}
 		// initializes swiping left/right control
@@ -322,8 +325,11 @@ public class FlyOutContainer extends LinearLayout implements
 				}
 			}
 		});
-		tvImagePlaceholder
-				.setBackgroundResource(R.drawable.productivityvisualiationtutorial);
+		int content_width=this.content.getWidth();
+		tvImagePlaceholder.setWidth(content_width);
+		int content_height=(int)(content_width*1.5);
+		tvImagePlaceholder.setHeight(content_height);
+		tvImagePlaceholder.setBackgroundResource(image_id_list.get(0));
 
 		dialog.setOnDismissListener(new OnDismissListener() {
 
