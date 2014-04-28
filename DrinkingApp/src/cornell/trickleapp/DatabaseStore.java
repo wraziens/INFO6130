@@ -108,6 +108,15 @@ public class DatabaseStore {
 		return date;
 	}
 	
+	public static Date getYesterday(){
+		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -24);
+		date = gc.getTime();
+		return date;
+	}
+	
 	public static Date getDelayedDateYesterday(){
 		Date date = new Date();
 		GregorianCalendar gc = new GregorianCalendar();
@@ -143,7 +152,7 @@ public class DatabaseStore {
 	}
 	
 	public static DatabaseStore DatabaseDateStore(String variable, Date dateVal, Date date){
-		SimpleDateFormat date_ft = new SimpleDateFormat("dd/MM/YYYY E HH:mm:ss", Locale.US);
+		SimpleDateFormat date_ft = new SimpleDateFormat("dd/MM/yyyy E HH:mm:ss", Locale.US);
 		String dateStr = date_ft.format(dateVal);
 		return new DatabaseStore(variable, dateStr, date, "Date");				
 	}
@@ -153,13 +162,18 @@ public class DatabaseStore {
 		return new DatabaseStore(variable, value, date, type);
 	}
 	
-	public static Date retrieveDate(String dateStr) throws ParseException{
-		Date date = new SimpleDateFormat("dd/MM/YYYY E HH:mm:ss", Locale.US).parse(dateStr);
-		return date;
+	public static Date retrieveDate(String dateStr) {
+		try{
+			Date date = new SimpleDateFormat("dd/MM/yyyy E HH:mm:ss", Locale.US).parse(dateStr);
+			return date;
+		}catch(ParseException pe){
+			System.out.println("Cannot parse string.");
+			return null;
+		}
 	}
 	 
 	public static Date GetDate(Integer month, Integer day, 
-			Integer year, String time) throws ParseException{
+			Integer year, String time)throws ParseException {
 		String date_string = year.toString() + "-" + month.toString() + "-" +
 			day.toString() + " " + time;
 		Date date =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(date_string);

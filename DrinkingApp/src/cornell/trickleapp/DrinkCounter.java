@@ -99,12 +99,16 @@ public class DrinkCounter extends Activity {
 
 
 	private void start() {
-		Date date = DatabaseStore.getDelayedDate();
+		Date date = new Date();
+		Date delayedDate = DatabaseStore.getDelayedDate();
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesDelay("drink_count", date);
+				.getVarValuesDelay("drink_count", new Date());
 		
 		if(drink_count_vals != null){
+			Toast.makeText(this,
+					"not null ", Toast.LENGTH_SHORT).show(
+							);
 			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
 			
 			//Get the stored StartDates
@@ -114,19 +118,25 @@ public class DrinkCounter extends Activity {
 				startDates = DatabaseStore.sortByTime(startDates);
 				start_date = DatabaseStore.retrieveDate(startDates.get(startDates.size()-1).value);
 				if(start_date == null){
-					start_date = date;
+					start_date = delayedDate;
 				}
 			}else{
-				start_date = date;
+				start_date = delayedDate;
 				db.addDelayValue("start_date", start_date);
 			}
 			
 			drink_count = Integer.parseInt(drink_count_vals.get(
 					drink_count_vals.size()-1).value);
+			Toast.makeText(this,
+					"drink_count " + drink_count, Toast.LENGTH_SHORT).show();
+			recalculateBac();
+			Toast.makeText(this,
+					"bac" + bac, Toast.LENGTH_SHORT).show();
 		}else{
-			
+			Toast.makeText(this,
+					"null ", Toast.LENGTH_SHORT).show();
 			//Check to see if residual BAC value from day Prior
-			Date yesterday = DatabaseStore.getDelayedDateYesterday();
+			Date yesterday = DatabaseStore.getYesterday();
 			
 			ArrayList<DatabaseStore> yesterday_drink_count = (ArrayList<DatabaseStore>) db
 					.getVarValuesDelay("drink_count", yesterday);
@@ -140,17 +150,25 @@ public class DrinkCounter extends Activity {
 				if(startDates!= null){
 					startDates = DatabaseStore.sortByTime(startDates);
 					start_date = DatabaseStore.retrieveDate(startDates.get(startDates.size()-1).value);
+					Toast.makeText(this,
+							"num StartDates " + startDates.size(), Toast.LENGTH_SHORT).show();
 					if(start_date != null){
 						drink_count = Integer.parseInt(yesterday_drink_count.get(
 							yesterday_drink_count.size()-1).value);
+						Toast.makeText(this,
+								"drink_count" + drink_count, Toast.LENGTH_SHORT).show();
 					
-						double currentBAC = calculateBac(start_date, date, drink_count);
+						double currentBAC = calculateBac(start_date, delayedDate, drink_count);
 						if (currentBAC > 0){	
 							//Add the start value to the db.
 							db.addDelayValue("start_date", start_date);
 						
 							db.addDelayValue("drink_count", drink_count);
 							db.addDelayValue("bac", String.valueOf(currentBAC));
+							Toast.makeText(this,
+									"current_bac " + bac, Toast.LENGTH_SHORT).show();
+							updateFace();
+							db.addDelayValue("bac_color", String.valueOf(face_color));
 						}
 					}else{
 						//No remaining values from previous day - start fresh
@@ -313,29 +331,56 @@ public class DrinkCounter extends Activity {
 		
 		double bac_update = ((0.806 * number_drinks * 1.2) / (gender_constant * weight_kilograms))
 					- (metabolism_constant * time_elapsed);
-		//TODO move logic to another function!!
-		//Time elapsed is too great.
-		if (bac_update < 0){
-			bac_update = ((0.806 * 1 * 1.2) / (gender_constant * weight_kilograms))
-					- (metabolism_constant * 0);
-		}
+	
 		return bac_update;
 	}
 
 	@SuppressLint("NewApi")
 	public void hadDrink(View view) {
 		clicked=true;
+		
+		Date date = new Date();
+		Date delayedDate = DatabaseStore.getDelayedDate();
+		
+		//First drink of the session, add to db
+		if(start_date == null){
+			start_date = delayedDate;
+			db.addDelayValue("start_date", start_date);
+			
+		}
+		
+		if(drink_count > 0){
+			//Get last BAC at current Time
+			double lastBAC = calculateBac(start_date, delayedDate, drink_count);
+			
+			//If BAC is <=0 then it is a new 'drinking session' so reset values
+			if(lastBAC <= 0){
+				drink_count = 0;
+				Toast.makeText(this,
+						"reset " + lastBAC, Toast.LENGTH_SHORT).show();
+				start_date = delayedDate;
+				db.addDelayValue("start_date", start_date);
+			}
+		}
+		
 		drink_count++;
-		if (drink_count == 1) {
+		if (drink_count == 1 ) {
 			db.addValueTomorrow("drank_last_night", "True");
 			db.updateOrAdd("drank", "True");
 		}
+		
+		//Add the drink_count to the DB
 		db.addDelayValue("drink_count", drink_count);
 		
 		recalculateBac();
-		start();
+		Toast.makeText(this,
+				"bac " + bac, Toast.LENGTH_SHORT).show();
+		Toast.makeText(this,
+				"drink_count " + drink_count, Toast.LENGTH_SHORT).show();
+		//start();
 		updateFace();
 
+		//Add BAC value and BAC color to the database
 		db.addDelayValue("bac", String.valueOf(bac));
 		db.addDelayValue("bac_color", String.valueOf(face_color));
 		
