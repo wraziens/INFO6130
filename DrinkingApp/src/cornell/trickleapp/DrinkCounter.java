@@ -45,6 +45,9 @@ public class DrinkCounter extends Activity {
 	
 	private Date start_date;
 
+	private ArrayList<Date> drinkDates;
+	private ArrayList<DatabaseStore> startDates;
+	
 	private final Double CALORIES_PER_DRINK = 120.0;
 	private final Double CALORIES_HOT_DOG = 250.0;
 
@@ -103,12 +106,56 @@ public class DrinkCounter extends Activity {
 		
 		if(drink_count_vals != null){
 			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
-			start_date =  drink_count_vals.get(0).date;
+			
+			//Get the stored StartDates
+			startDates = (ArrayList<DatabaseStore>)db.getVarValuesDelay("start_date", date);
+			
+			if(startDates!= null){
+				startDates = DatabaseStore.sortByTime(startDates);
+				start_date = startDates.get(startDates.size()-1).date;
+			}else{
+				start_date = date;
+				db.addDelayValue("start_date", start_date);
+			}
+			
 			drink_count = Integer.parseInt(drink_count_vals.get(
 					drink_count_vals.size()-1).value);
 		}else{
-			start_date = date;
-			bac = calculateBac(start_date, date, drink_count);
+			
+			//Check to see if residual BAC value from day Prior
+			Date yesterday = DatabaseStore.getDelayedDateYesterday();
+			
+			ArrayList<DatabaseStore> yesterday_drink_count = (ArrayList<DatabaseStore>) db
+					.getVarValuesDelay("drink_count", yesterday);
+			
+			if(yesterday_drink_count != null){
+				yesterday_drink_count = DatabaseStore.sortByTime(yesterday_drink_count);
+			
+				//Get the stored StartDates for yesterday
+				startDates = (ArrayList<DatabaseStore>)db.getVarValuesDelay("start_date", yesterday);
+			
+				if(startDates!= null){
+					startDates = DatabaseStore.sortByTime(startDates);
+					start_date = startDates.get(startDates.size()-1).date;
+					
+					drink_count = Integer.parseInt(yesterday_drink_count.get(
+							yesterday_drink_count.size()-1).value);
+					
+					double currentBAC = calculateBac(start_date, date, drink_count);
+					if (currentBAC > 0){	
+						//Add the start value to the db.
+						db.addDelayValue("start_date", start_date);
+						
+						db.addDelayValue("drink_count", drink_count);
+						db.addDelayValue("bac", String.valueOf(currentBAC));
+					}
+				}
+			}else{
+				//No remaining values from previous day - start fresh
+				start_date = null;
+				drink_count = 0;
+				bac = 0;
+			}
 		}
 	}
 
@@ -207,6 +254,7 @@ public class DrinkCounter extends Activity {
 		bac = calculateBac(start_date, date, drink_count);
 	}
 	
+	//Should NOT save anything to DB in this function!
 	private double calculateBac(Date start, Date end, int number_drinks) {
 		
 		if(number_drinks <= 0){
@@ -215,8 +263,6 @@ public class DrinkCounter extends Activity {
 		if(start == null){
 			start();
 		}
-		
-		long time_elapsed  =  (end.getTime()-start.getTime()) / (1000 * 60 * 60);
 		
 		// get the users gender
 		ArrayList<DatabaseStore> stored_gender = (ArrayList<DatabaseStore>) db
@@ -246,8 +292,24 @@ public class DrinkCounter extends Activity {
 			metabolism_constant = 0.017;
 			gender_constant = 0.49;
 		}
+		
+		//getTime returns in milliseconds. Divide by 1000 to convert to seconds, 60 to convert
+				// to minutes and 60 to convert to hours.
+		long time_elapsed  =  (end.getTime()-start.getTime()) / (1000 * 60 * 60);
+		
+		if (number_drinks > 1){
+			double lastBac = ((0.806 * (number_drinks - 1) * 1.2) / (gender_constant * weight_kilograms))
+					- (metabolism_constant * time_elapsed);
+		}
+		
 		double bac_update = ((0.806 * number_drinks * 1.2) / (gender_constant * weight_kilograms))
 					- (metabolism_constant * time_elapsed);
+		//TODO move logic to another function!!
+		//Time elapsed is too great.
+		if (bac_update < 0){
+			bac_update = ((0.806 * 1 * 1.2) / (gender_constant * weight_kilograms))
+					- (metabolism_constant * 0);
+		}
 		return bac_update;
 	}
 
@@ -259,11 +321,12 @@ public class DrinkCounter extends Activity {
 			db.addValueTomorrow("drank_last_night", "True");
 			db.updateOrAdd("drank", "True");
 		}
-		
 		db.addDelayValue("drink_count", drink_count);
+		
 		recalculateBac();
 		start();
 		updateFace();
+
 		db.addDelayValue("bac", String.valueOf(bac));
 		db.addDelayValue("bac_color", String.valueOf(face_color));
 		
