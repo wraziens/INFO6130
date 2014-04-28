@@ -680,7 +680,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 				+ QUES_KEY_TIME + "='" + dbstore.time + "' AND " 
 				+ QUES_KEY_VALUE + "='"+dbstore.value +"' AND "
 				+ QUES_KEY_TYPE + "='"+dbstore.type +"' AND "
-				+QUES_KEY_VAR +"='" + dbstore.variable + "' AND"
+				+QUES_KEY_VAR +"='" + dbstore.variable + "' AND "
 				+ QUES_KEY_DAY_WEEK + "='" + dbstore.day_week + "';";
 		db.execSQL(query);
 		db.close();

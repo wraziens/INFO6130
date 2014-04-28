@@ -424,7 +424,7 @@ public class DrinkCounter extends Activity {
 			db.injectDelayValueDate("start_date", date, minutesDelay);
 		}
 		
-		
+		int last_value = -1;
 		if(counts_recent != null){
 			
 			//Sort all values by date
@@ -442,7 +442,7 @@ public class DrinkCounter extends Activity {
 			int index_val = 0;
 			DatabaseStore last = null;
 			
-			int last_value = -1;
+			
 			double last_count=0;
 			while (iterator.hasNext()){
 				
@@ -523,6 +523,7 @@ public class DrinkCounter extends Activity {
 			bac_inject = calculateBac(start_date, date, 1);
 			db.injectValueWithDate("start_date", start_date, date);
 			color_inject = getBacColor(bac_inject);
+			last_value = 1;
 		}
 	
 		//Add the injected question
@@ -535,7 +536,7 @@ public class DrinkCounter extends Activity {
 		data_store = DatabaseStore.DatabaseIntegerStore("bac_color",
 				String.valueOf(color_inject), date);
 		db.addQuestion(data_store);
-		
+		drink_count = last_value;
 		recalculateBac();
 		updateFace();
 	}
