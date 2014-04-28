@@ -119,8 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		gc.add(Calendar.HOUR_OF_DAY, -6);
 		date = gc.getTime();
 		
-		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
-				dateVal, date);
+		DatabaseStore ds = DatabaseStore.DatabaseDateStore(variable, dateVal, date);
 		addQuestion(ds);
 	}
 	
