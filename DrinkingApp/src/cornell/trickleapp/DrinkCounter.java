@@ -98,7 +98,7 @@ public class DrinkCounter extends Activity {
 	}
 
 
-	private void start(){
+	private void start() {
 		Date date = DatabaseStore.getDelayedDate();
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
@@ -112,7 +112,10 @@ public class DrinkCounter extends Activity {
 			
 			if(startDates!= null){
 				startDates = DatabaseStore.sortByTime(startDates);
-				start_date = startDates.get(startDates.size()-1).date;
+				start_date = DatabaseStore.retrieveDate(startDates.get(startDates.size()-1).value);
+				if(start_date == null){
+					start_date = date;
+				}
 			}else{
 				start_date = date;
 				db.addDelayValue("start_date", start_date);
@@ -136,18 +139,24 @@ public class DrinkCounter extends Activity {
 			
 				if(startDates!= null){
 					startDates = DatabaseStore.sortByTime(startDates);
-					start_date = startDates.get(startDates.size()-1).date;
-					
-					drink_count = Integer.parseInt(yesterday_drink_count.get(
+					start_date = DatabaseStore.retrieveDate(startDates.get(startDates.size()-1).value);
+					if(start_date != null){
+						drink_count = Integer.parseInt(yesterday_drink_count.get(
 							yesterday_drink_count.size()-1).value);
 					
-					double currentBAC = calculateBac(start_date, date, drink_count);
-					if (currentBAC > 0){	
-						//Add the start value to the db.
-						db.addDelayValue("start_date", start_date);
+						double currentBAC = calculateBac(start_date, date, drink_count);
+						if (currentBAC > 0){	
+							//Add the start value to the db.
+							db.addDelayValue("start_date", start_date);
 						
-						db.addDelayValue("drink_count", drink_count);
-						db.addDelayValue("bac", String.valueOf(currentBAC));
+							db.addDelayValue("drink_count", drink_count);
+							db.addDelayValue("bac", String.valueOf(currentBAC));
+						}
+					}else{
+						//No remaining values from previous day - start fresh
+						start_date = null;
+						drink_count = 0;
+						bac = 0;
 					}
 				}
 			}else{
