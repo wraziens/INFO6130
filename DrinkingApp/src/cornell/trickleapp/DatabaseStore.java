@@ -22,6 +22,7 @@ public class DatabaseStore {
 	public Integer minute;
 	public String time;
 	public String day_week;
+	public int time_seconds;
 	//Should not be explicitly used but rather should use the below static methods
 	//when creating a DatabaseStore to preserve consistency among the Question Types
 	public DatabaseStore(String variable, String value, 
@@ -38,6 +39,7 @@ public class DatabaseStore {
 		SimpleDateFormat day_week_ft = new SimpleDateFormat("E", Locale.US);
 		SimpleDateFormat hour_ft = new SimpleDateFormat("HH", Locale.US);
 		SimpleDateFormat minute_ft = new SimpleDateFormat("mm",Locale.US);
+		SimpleDateFormat second_ft = new SimpleDateFormat("ss", Locale.US);
 		SimpleDateFormat time_ft = new SimpleDateFormat("HH:mm:ss", Locale.US);
 		
 		this.day = Integer.parseInt(day_ft.format(date));
@@ -47,6 +49,29 @@ public class DatabaseStore {
 		this.time = time_ft.format(date);
 		this.hour = Integer.parseInt(hour_ft.format(date));
 		this.minute=Integer.parseInt(minute_ft.format(date));
+		this.time_seconds = this.hour * 3600 + this.minute * 60 + Integer.parseInt(second_ft.format(date));
+	}
+	
+	public void setDate(Date date){
+		//for easy access, convert the date attributes
+		SimpleDateFormat day_ft = new SimpleDateFormat("dd", Locale.US);
+		SimpleDateFormat month_ft = new SimpleDateFormat("MM", Locale.US);
+		SimpleDateFormat year_ft = new SimpleDateFormat("yyyy", Locale.US);
+		SimpleDateFormat day_week_ft = new SimpleDateFormat("E", Locale.US);
+		SimpleDateFormat hour_ft = new SimpleDateFormat("HH", Locale.US);
+		SimpleDateFormat minute_ft = new SimpleDateFormat("mm",Locale.US);
+		SimpleDateFormat second_ft = new SimpleDateFormat("ss", Locale.US);
+		SimpleDateFormat time_ft = new SimpleDateFormat("HH:mm:ss", Locale.US);
+		
+		this.date = date;
+		this.day = Integer.parseInt(day_ft.format(date));
+		this.month = Integer.parseInt(month_ft.format(date));
+		this.year = Integer.parseInt(year_ft.format(date));
+		this.day_week = day_week_ft.format(date);
+		this.time = time_ft.format(date);
+		this.hour = Integer.parseInt(hour_ft.format(date));
+		this.minute=Integer.parseInt(minute_ft.format(date));
+		this.time_seconds = this.hour * 3600 + this.minute * 60 + Integer.parseInt(second_ft.format(date));
 	}
 	
 	public static ArrayList<DatabaseStore> sortByTime(List<DatabaseStore> store){
@@ -83,6 +108,16 @@ public class DatabaseStore {
 		return date;
 	}
 	
+	public static Date getDelayedDateYesterday(){
+		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -24);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
+		return date;
+	}
+	
 	public static DatabaseStore DatabaseSliderStore(String variable, String value, Date date){
 		return new DatabaseStore(variable, value, date, "Slider" );
 	}
@@ -107,16 +142,27 @@ public class DatabaseStore {
 		return new DatabaseStore(variable, value, date, "Radio" );
 	}
 	
+	public static DatabaseStore DatabaseDateStore(String variable, Date dateVal, Date date){
+		SimpleDateFormat date_ft = new SimpleDateFormat("dd/MM/YYYY E HH:mm:ss", Locale.US);
+		String dateStr = date_ft.format(dateVal);
+		return new DatabaseStore(variable, dateStr, date, "Date");				
+	}
+	
 	public static DatabaseStore FromDatabase(String variable, String value, Date date, 
 			String type){
 		return new DatabaseStore(variable, value, date, type);
 	}
 	
+	public static Date retrieveDate(String dateStr) throws ParseException{
+		Date date = new SimpleDateFormat("dd/MM/YYYY E HH:mm:ss", Locale.US).parse(dateStr);
+		return date;
+	}
+	 
 	public static Date GetDate(Integer month, Integer day, 
 			Integer year, String time) throws ParseException{
 		String date_string = year.toString() + "-" + month.toString() + "-" +
 			day.toString() + " " + time;
-		Date date =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(date_string);
+		Date date =  new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).parse(date_string);
 		return date;
 	}
 }

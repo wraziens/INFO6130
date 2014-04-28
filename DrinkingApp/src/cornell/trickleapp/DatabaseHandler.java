@@ -111,6 +111,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		addQuestion(ds);
 	}
 
+	public void addDelayValue(String variable, Date dateVal) {
+		Date date = new Date();
+		// Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
+		
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
+				dateVal, date);
+		addQuestion(ds);
+	}
+	
 	public void addValueTomorrow(String variable, String str_value) {
 		Date date = new Date();
 		// Add a day to our date
