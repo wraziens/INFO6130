@@ -372,7 +372,15 @@ public class DrinkCounter extends Activity {
 	}
 	
 	private void injectDrink(int minutesDelay){
-		drink_count++;
+		Date delayedDate = DatabaseStore.getDelayedDate();
+		
+		//First drink of the session, add to db
+		if(start_date == null){
+			start_date = delayedDate;
+			db.addDelayValue("start_date", start_date);			
+		}
+		
+		//drink_count++;
 		Date date = new Date();
 		
 		//get the existing values from the DB
@@ -382,6 +390,9 @@ public class DrinkCounter extends Activity {
 				"bac", date);
 		ArrayList<DatabaseStore> colors_recent =  (ArrayList<DatabaseStore>)db.getVarValuesDelay(
 				"bac_color", date);
+		ArrayList<DatabaseStore> start_values = (ArrayList<DatabaseStore>)db.getVarValuesDelay(
+				"start_date", date);
+		
 		
 		
 		//Construct the time where we want to inject 
@@ -394,6 +405,25 @@ public class DrinkCounter extends Activity {
 		int value_inject = 0;
 		double bac_inject =0.0;
 		int color_inject = 0;
+		
+		if (start_values != null){
+			start_values = DatabaseStore.sortByTime(start_values);
+			ArrayList<Integer> afterIndexes = setStartDate(start_values, date);
+			//Check to see if we are inserting before the current startDate
+			if(afterIndexes.contains(0)){
+				start_date = date;
+				db.injectDelayValueDate("start_date", date, minutesDelay);
+			}
+			
+			//Delete all startValues after the insert Date
+			for(int i=0; i<afterIndexes.size(); i++){
+				db.deleteValue(start_values.get(afterIndexes.get(i)));
+			}
+		}else{
+			start_date = date;
+			db.injectDelayValueDate("start_date", date, minutesDelay);
+		}
+		
 		
 		if(counts_recent != null){
 			
@@ -410,38 +440,88 @@ public class DrinkCounter extends Activity {
 			Iterator<DatabaseStore> iterator = counts_recent.iterator();
 			Date start_date = counts_recent.get(0).date;
 			int index_val = 0;
+			DatabaseStore last = null;
+			
+			int last_value = -1;
+			double last_count=0;
 			while (iterator.hasNext()){
 				
 				DatabaseStore ds = iterator.next();
 				if(ds.date.after(date)){
 					if (!placed){
 						value_inject = Integer.parseInt(ds.value);
-						bac_inject = calculateBac(start_date, date, Integer.parseInt(
-								ds.value));
+						int recent_drink_count = Integer.parseInt(ds.value);
+						if(recent_drink_count > 1){
+							double test_bac = calculateBac(start_date, date, Integer.parseInt(
+								ds.value)-1);
+							if(test_bac <=0){
+								start_date = date; 
+								db.injectValueWithDate("start_date", start_date, date);
+								bac_inject = calculateBac(start_date, date, 1);
+							}else{
+								bac_inject = calculateBac(start_date, date, Integer.parseInt(
+										ds.value)-1);
+							}
+							
+						}else if(last!=null){
+							double test_bac = calculateBac(start_date, date, Integer.parseInt(
+									last.value));
+							if(test_bac <=0){
+								start_date = date; 
+								db.injectValueWithDate("start_date", start_date, date);
+								bac_inject = calculateBac(start_date, date, 1);
+							}else{
+								calculateBac(start_date, date, Integer.parseInt(
+										last.value)+1);
+							}
+						}else{
+							bac_inject = calculateBac(start_date, date, Integer.parseInt(
+									ds.value));
+						}
 						color_inject = getBacColor(bac_inject);
 						placed=true;
+						
 					}
+					
+					if (last_value == -1){
+						last_value = Integer.parseInt(ds.value);
+					}
+					//check to see if BAC <=0 to indicate new 'session'
+					double test_bac = calculateBac(start_date, ds.date, last_value);
+					double bac_new = 0.0;
+					if(test_bac <=0){
+						start_date = ds.date; 
+						db.injectValueWithDate("start_date", start_date, ds.date);
+						bac_new = calculateBac(start_date, ds.date, 1);
+						last_value = 1;
+					}else{
+						bac_new = calculateBac(start_date, ds.date, last_value + 1 );
+						last_value += 1;
+					}
+					
 					//update drink count
-					Integer new_count_val = Integer.parseInt(ds.value) + 1;
-					ds.value = new_count_val.toString();
+					ds.value = String.valueOf(last_value);
 					db.updateQuestion(ds);
+					
 					//update bac
-					double new_bac = calculateBac(start_date, ds.date, new_count_val);
 					DatabaseStore d = bac_recent.get(index_val);
-					d.value = String.valueOf(new_bac);
+					d.value = String.valueOf(bac_new);
 					db.updateQuestion(d);
 					//update Bac Color
-					int new_bac_color = getBacColor(new_bac);
+					int new_bac_color = getBacColor(bac_new);
 					d = colors_recent.get(index_val);
 					d.value =String.valueOf(new_bac_color);
 					db.updateQuestion(d);
 				}
+				last = ds;
 				index_val += 1;
 			}
 			
 		}else{
 			value_inject = 1;
+			start_date = date;
 			bac_inject = calculateBac(start_date, date, 1);
+			db.injectValueWithDate("start_date", start_date, date);
 			color_inject = getBacColor(bac_inject);
 		}
 	
@@ -458,6 +538,31 @@ public class DrinkCounter extends Activity {
 		
 		recalculateBac();
 		updateFace();
+	}
+	
+	/**
+	 *  Sets the start date for an inject operation and returns the index integers of all 
+	 *  start dates that are after the inject date. These values should be checked to 
+	 *  see if they need to be updated elsewhere
+	 * 
+	 * @param start_dates
+	 * 		A list of DatabaseStore objects containing the start_dates for the inject
+	 * @param itemDate
+	 * 		The date at which we are trying to inject the drink value
+	 */
+	private ArrayList<Integer> setStartDate(ArrayList<DatabaseStore> start_dates, Date itemDate){
+		
+		ArrayList<Integer> afterIndexes = new ArrayList<Integer>();
+		
+		for(int i=0; i<start_dates.size(); i++){
+			Date startVal = DatabaseStore.retrieveDate(start_dates.get(i).value);
+			if(itemDate.after(startVal)){
+				start_date = startVal;
+			}else{
+				afterIndexes.add(i);
+			}
+		}
+		return afterIndexes;
 	}
 	
 	

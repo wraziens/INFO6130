@@ -214,6 +214,32 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		addQuestion(data_store);
 	}
 
+	
+	public void injectDelayValueDate(String variable, Date dateVal, int interval_delay){
+		
+		int negate_delay = interval_delay * -1;
+
+		Date date = new Date();
+		// Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		gc.add(Calendar.MINUTE, negate_delay);
+
+		date = gc.getTime();
+
+		DatabaseStore data_store = DatabaseStore.DatabaseDateStore(variable,
+				dateVal, date);
+		addQuestion(data_store);
+	}
+	
+	public void injectValueWithDate(String variable, Date dateVal, Date date){
+		
+		DatabaseStore data_store = DatabaseStore.DatabaseDateStore(variable,
+				dateVal, date);
+		addQuestion(data_store);
+	}
+	
 	// Adds an integer value to the database
 	public void addValue(String variable, List<String> list_values) {
 		Date date = new Date();
@@ -644,6 +670,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.close();
 	}
 
+	public void deleteValue(DatabaseStore dbstore){		
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " 
+				+ QUES_KEY_MONTH + "=" + dbstore.month + " AND " 
+				+ QUES_KEY_DAY + "=" + dbstore.day + " AND " 
+				+ QUES_KEY_YEAR + "=" + dbstore.year + " AND " 
+				+ QUES_KEY_TIME + "='" + dbstore.time + "' AND " 
+				+ QUES_KEY_VALUE + "='"+dbstore.value +"' AND "
+				+ QUES_KEY_TYPE + "='"+dbstore.type +"' AND "
+				+QUES_KEY_VAR +"='" + dbstore.variable + "' AND"
+				+ QUES_KEY_DAY_WEEK + "='" + dbstore.day_week + "';";
+		db.execSQL(query);
+		db.close();
+	}
+	
 	public List<DatabaseStore> getVarValuesForMonth(String variable, Date date) {
 		SimpleDateFormat year_fmt = new SimpleDateFormat("yyyy", Locale.US);
 		SimpleDateFormat month_fmt = new SimpleDateFormat("MM", Locale.US);
