@@ -234,13 +234,22 @@
                 android:id="@+id/handle"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
-             android:background="#99000000"
+                android:background="#99000000"
                 android:gravity="right"
                 android:orientation="horizontal" >
-
+                <Button
+                    android:id="@+id/bYes"
+                    android:layout_width="75dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/goal_setup_notification"
+                    android:rotation="180"
+                    android:text="Y"
+                    android:visibility="gone"
+                    android:textColor="#ffffff" />
                 <TextView
                     android:id="@+id/tvAchievementMessage"
-                    android:layout_width="200dp"
+                    android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="horizontal"
@@ -249,8 +258,9 @@
                     android:textColor="#ffffff" />
 
                 <Button
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:id="@+id/bAchievementIcon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/star_exclamation"
                     android:rotation="180" />
@@ -265,6 +275,7 @@
                 android:rotation="180" >
             </LinearLayout>
         </SlidingDrawer>
+
     </FrameLayout>
 
 </cornell.trickleapp.FlyOutContainer>

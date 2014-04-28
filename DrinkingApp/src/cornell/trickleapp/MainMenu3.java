@@ -15,22 +15,30 @@ import android.widget.TextView;
 public class MainMenu3 extends Activity implements OnClickListener,
 		OnDrawerOpenListener {
 
-	Button drinkCounterMenu, surveyMenu, calendarMenu, trendsMenu, goalsMenu;
+	Button drinkCounterMenu, surveyMenu, calendarMenu, trendsMenu, goalsMenu,
+			bYes, bAchievementIcon;
 	DatabaseHandler db;
-	SlidingDrawer sdKiipRewards;
-	TextView tvAchievementMessage;
+	SlidingDrawer sdKiipRewards, sdSetGoals;
+	TextView tvAchievementMessage, tvSetupMessage;
 	FlyOutContainer root;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//initializes the database
+		// initializes the database
 		db = new DatabaseHandler(getBaseContext());
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		// getActionBar().hide();
+
+		initialize();
+
+	}
+
+	private void initialize() {
+		// TODO Auto-generated method stub
 
 		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
 				R.layout.menu3, null);
@@ -51,11 +59,21 @@ public class MainMenu3 extends Activity implements OnClickListener,
 		sdKiipRewards = (SlidingDrawer) findViewById(R.id.sdKiipRewards);
 		sdKiipRewards.setOnDrawerOpenListener(this);
 		tvAchievementMessage = (TextView) findViewById(R.id.tvAchievementMessage);
+		bAchievementIcon = (Button) findViewById(R.id.bAchievementIcon);
+		bYes = (Button) findViewById(R.id.bYes);
+
 		// bDaysPerWeek_star.setBackgroundResource(R.drawable.star_2);
+		// prompts setting of goals after initial survey
+		if (!db.variableExistAll("initialSurvey_goalsPrompt")&&!db.variableExistAll("reward_kiip_home")) {
+			db.addValue("initialSurvey_goalsPrompt", 1);
+			sdKiipRewards.setVisibility(View.VISIBLE);
+			tvAchievementMessage.setText("Set your goals now?");
+			bAchievementIcon.setBackgroundResource(R.drawable.ic_trickle_small);
+			bYes.setVisibility(View.VISIBLE);
+		}
 		if (db.variableExistAll("reward_kiip_home")) {
 			sdKiipRewards.setVisibility(View.VISIBLE);
 		}
-
 	}
 
 	public void toggleMenu(View v) {
@@ -90,6 +108,10 @@ public class MainMenu3 extends Activity implements OnClickListener,
 		case R.id.handle:
 			sdKiipRewards.toggle();
 			break;
+		case R.id.bYes:
+			goToThisPage = new Intent(MainMenu3.this, GoalsTracking.class);
+			startActivity(goToThisPage);
+			break;
 		}
 
 	}
@@ -98,29 +120,7 @@ public class MainMenu3 extends Activity implements OnClickListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		db = new DatabaseHandler(getBaseContext());
-		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
-				R.layout.menu3, null);
-
-		this.setContentView(root);
-
-		drinkCounterMenu = (Button) findViewById(R.id.bDrinkCounterMenu);
-		surveyMenu = (Button) findViewById(R.id.bSurveyMenu);
-		calendarMenu = (Button) findViewById(R.id.bCalendarMenu);
-		trendsMenu = (Button) findViewById(R.id.bTrendsMenu);
-		goalsMenu = (Button) findViewById(R.id.bGoalsMenu);
-		drinkCounterMenu.setOnClickListener(this);
-		surveyMenu.setOnClickListener(this);
-		calendarMenu.setOnClickListener(this);
-		trendsMenu.setOnClickListener(this);
-		goalsMenu.setOnClickListener(this);
-		
-		sdKiipRewards = (SlidingDrawer) findViewById(R.id.sdKiipRewards);
-		sdKiipRewards.setOnDrawerOpenListener(this);
-		tvAchievementMessage = (TextView) findViewById(R.id.tvAchievementMessage);
-		if (db.variableExistAll("reward_kiip_home")) {
-			sdKiipRewards.setVisibility(View.VISIBLE);
-		}
+		initialize();
 	}
 
 	@Override

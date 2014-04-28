@@ -16,7 +16,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-public class ReminderAlarm extends BroadcastReceiver{
+public class ReminderAlarm extends BroadcastReceiver {
 	private NotificationManager noteManager;
 	DatabaseHandler db;
 	boolean reward = false;
@@ -32,51 +32,54 @@ public class ReminderAlarm extends BroadcastReceiver{
 		db = new DatabaseHandler(context);
 
 		id = arg1.getExtras().getInt("id");
+		//if notification for goals
+		if (id != 666) {
+			Intent homeIntent = new Intent(context, GoalsTracking.class);
+			noteManager = (NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			CharSequence from = "Trickle";
 
-		// if everything
-		// db.variableExistAll("numberofcategories")
-		// 1st check: if the goal is still checked:
-		// if (true) {
-		/*
-		 * Calendar calendar = Calendar.getInstance(); int month = 12; int day =
-		 * 5; int year = 2013; Date date = new Date(); List<DatabaseStore>
-		 * object = db.getVarValuesForDay( "numberofcategories", date); int
-		 * number = Integer.parseInt(object.get(0).value);
-		 * 
-		 * int num_Checked = 0; String surveyList[] = { "DailySurvey2",
-		 * "DailySurveyExercise", "DailySurveyProductivity" }; for (int i = 0; i
-		 * < surveyList.length; i++) { Boolean checked =
-		 * db.variableExistAll(surveyList[i] + "CheckList"); if (checked)
-		 * num_Checked++; }
-		 * 
-		 * // if number checked is less than to the number then ring alarm if
-		 * (num_Checked < number) ringAlarm = true; // else dont ring alarm else
-		 * ringAlarm = false;
-		 */
-		Intent homeIntent = new Intent(context, GoalsTracking.class);
-		noteManager = (NotificationManager) context
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		CharSequence from = "Trickle";
+			// if the goal is met:
+			notificationEvaluation();
+			if (reward) {
+				message = "New goal achieved, collect reward!";
+			} else {
+				message = ":(";
+			}
+			PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+					homeIntent, 0);
+			@SuppressWarnings("deprecation")
+			Notification notif = new Notification(R.drawable.trickleiconnote,
+					message, System.currentTimeMillis());
+			notif.setLatestEventInfo(context, from, message, contentIntent);
 
-		// if the goal is met:
-		notificationEvaluation();
-		if (reward) {
-			message = message + "New goal achieved, collect reward!";
-		} else {
-			message = message + ":(";
+			notif.defaults = Notification.DEFAULT_VIBRATE;
+			noteManager.notify(id, notif);
 		}
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-				homeIntent, 0);
-		@SuppressWarnings("deprecation")
-		Notification notif = new Notification(R.drawable.trickleiconnote,
-				message, System.currentTimeMillis());
-		notif.setLatestEventInfo(context, from, message, contentIntent);
+		//else notification for morning after survey
+		else{
+			Intent homeIntent = new Intent(context, AfterDrinkSurvey.class);
+			noteManager = (NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+			CharSequence from = "Trickle";
 
-		notif.defaults = Notification.DEFAULT_VIBRATE;
-		noteManager.notify(id, notif);
+			// if the goal is met:
+			notificationEvaluation();
+			message="How are you feeling?";
+			PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
+					homeIntent, 0);
+			@SuppressWarnings("deprecation")
+			Notification notif = new Notification(R.drawable.trickleiconnote,
+					message, System.currentTimeMillis());
+			notif.setLatestEventInfo(context, from, message, contentIntent);
+
+			notif.defaults = Notification.DEFAULT_VIBRATE;
+			noteManager.notify(id, notif);
+		}
 
 	}
-	//evaluates the goals
+
+	// evaluates the goals
 	private void notificationEvaluation() {
 		// TODO Auto-generated method stub
 
@@ -138,7 +141,8 @@ public class ReminderAlarm extends BroadcastReceiver{
 						db.deleteAllVariables("star_DrinksPerOuting");
 					}
 				}
-			} else {
+			} 
+			/*else {
 				reward = true;
 				db.addValue("star_DrinksPerOuting", 1);
 				db.addValue("reward_kiip_home", 1);
@@ -146,6 +150,7 @@ public class ReminderAlarm extends BroadcastReceiver{
 				db.addValue("reward_kiip", 2);
 			}
 			message = "2";
+			*/
 			break;
 		case 3:
 			if (db.variableExistAll("bac")) {
@@ -155,9 +160,10 @@ public class ReminderAlarm extends BroadcastReceiver{
 				List<DatabaseStore> value_list = db.getVarValuesForDay("bac",
 						date);
 				if (value_list != null) {
-					String dummy=db.getAllVarValue("goal_BAC_val").get(0).value.substring(1,5);
+					String dummy = db.getAllVarValue("goal_BAC_val").get(0).value
+							.substring(1, 5);
 					double valueTracked = Double.parseDouble(db.getAllVarValue(
-							"goal_BAC_val").get(0).value.substring(1,5));
+							"goal_BAC_val").get(0).value.substring(1, 5));
 					double valueCalculated = 0;
 					int testedVal = 0;
 					for (int i = 0; i < value_list.size(); i++) {
@@ -176,12 +182,12 @@ public class ReminderAlarm extends BroadcastReceiver{
 						db.deleteAllVariables("star_BAC");
 					}
 				}
-			} else {
+			} /*else {
 				reward = true;
 				db.addValue("star_BAC", 1);
 				db.addValue("reward_kiip", 3);
 				db.addValue("reward_kiip_home", 1);
-			}
+			}*/
 			message = "3";
 			break;
 		case 4:
