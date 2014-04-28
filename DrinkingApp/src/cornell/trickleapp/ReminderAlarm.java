@@ -16,7 +16,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
-public class ReminderAlarm extends BroadcastReceiver {
+public class ReminderAlarm extends BroadcastReceiver{
 	private NotificationManager noteManager;
 	DatabaseHandler db;
 	boolean reward = false;
@@ -99,6 +99,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 					if (valueCalculated <= valueTracked) {
 						reward = true;
 						db.addValue("star_DaysPerWeek", 1);
+						db.addValue("reward_kiip", 1);
+						db.addValue("reward_kiip_home", 1);
 					} else {
 						reward = false;
 						db.deleteAllVariables("star_DaysPerWeek");
@@ -107,6 +109,9 @@ public class ReminderAlarm extends BroadcastReceiver {
 			} else {
 				reward = true;
 				db.addValue("star_DaysPerWeek", 1);
+
+				db.addValue("reward_kiip", 1);
+				db.addValue("reward_kiip_home", 1);
 			}
 			message = "1";
 			break;
@@ -125,6 +130,9 @@ public class ReminderAlarm extends BroadcastReceiver {
 					if (valueCalculated <= valueTracked) {
 						reward = true;
 						db.addValue("star_DrinksPerOuting", 1);
+						db.addValue("reward_kiip_home", 1);
+
+						db.addValue("reward_kiip", 2);
 					} else {
 						reward = false;
 						db.deleteAllVariables("star_DrinksPerOuting");
@@ -133,6 +141,9 @@ public class ReminderAlarm extends BroadcastReceiver {
 			} else {
 				reward = true;
 				db.addValue("star_DrinksPerOuting", 1);
+				db.addValue("reward_kiip_home", 1);
+
+				db.addValue("reward_kiip", 2);
 			}
 			message = "2";
 			break;
@@ -158,6 +169,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 					if (testedVal == 0) {
 						reward = true;
 						db.addValue("star_BAC", 1);
+						db.addValue("reward_kiip", 3);
+						db.addValue("reward_kiip_home", 1);
 					} else {
 						reward = false;
 						db.deleteAllVariables("star_BAC");
@@ -166,6 +179,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 			} else {
 				reward = true;
 				db.addValue("star_BAC", 1);
+				db.addValue("reward_kiip", 3);
+				db.addValue("reward_kiip_home", 1);
 			}
 			message = "3";
 			break;
@@ -187,6 +202,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 					if (valueCalculated <= valueTracked) {
 						reward = true;
 						db.addValue("star_DaysPerMonth", 1);
+						db.addValue("reward_kiip", 4);
+						db.addValue("reward_kiip_home", 1);
 					} else {
 						reward = false;
 						db.deleteAllVariables("star_DaysPerMonth");
@@ -195,6 +212,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 			} else {
 				reward = true;
 				db.addValue("star_DaysPerMonth", 1);
+				db.addValue("reward_kiip", 4);
+				db.addValue("reward_kiip_home", 1);
 			}
 
 			message = "4";
@@ -212,6 +231,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 					if (valueCalculated <= valueTracked) {
 						reward = true;
 						db.addValue("star_DrinksPerMonth", 1);
+						db.addValue("reward_kiip", 5);
+						db.addValue("reward_kiip_home", 1);
 					} else {
 						reward = false;
 						db.deleteAllVariables("star_DrinksPerMonth");
@@ -220,6 +241,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 			} else {
 				reward = true;
 				db.addValue("star_DrinksPerMonth", 1);
+				db.addValue("reward_kiip", 5);
+				db.addValue("reward_kiip_home", 1);
 			}
 			message = "5";
 			break;
@@ -240,6 +263,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 					if (valueCalculated <= valueTracked) {
 						reward = true;
 						db.addValue("star_DollarsPerMonth", 1);
+						db.addValue("reward_kiip", 6);
+						db.addValue("reward_kiip_home", 1);
 					} else {
 						reward = false;
 						db.deleteAllVariables("star_DollarsPerMonth");
@@ -248,6 +273,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 			} else {
 				reward = true;
 				db.addValue("star_DollarsPerMonth", 1);
+				db.addValue("reward_kiip", 6);
+				db.addValue("reward_kiip_home", 1);
 			}
 
 			message = "6";

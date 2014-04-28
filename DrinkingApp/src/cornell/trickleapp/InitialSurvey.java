@@ -28,7 +28,7 @@ import android.widget.TextView;
 
 public class InitialSurvey extends Activity implements OnClickListener {
 
-	FlyOutContainer root;
+	static FlyOutContainer root;
 	Button save, male, female, kg, lb;
 	EditText weight;
 	int weightResult=100;

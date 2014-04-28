@@ -4,6 +4,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import me.kiip.sdk.Kiip;
+import me.kiip.sdk.Poptart;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,11 +15,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.SlidingDrawer;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
+import android.widget.TextView;
 
-public class GoalsTracking extends Activity implements OnClickListener {
+public class GoalsTracking extends BaseActivity implements OnClickListener,
+		OnDrawerOpenListener {
 
+	Poptart mPoptart;
 	DatabaseHandler db;
-
+	SlidingDrawer sdKiipRewards;
+	TextView tvAchievementMessage;
+	
 	int DaysPerWeek_val, DrinksPerOuting_val, BAC_val, DaysPerMonth_val,
 			DrinksPerMonth_val, SpendingPerMonth_val;
 
@@ -73,8 +82,19 @@ public class GoalsTracking extends Activity implements OnClickListener {
 		track = (Button) findViewById(R.id.bSet);
 		track.setOnClickListener(this);
 
+		sdKiipRewards = (SlidingDrawer) findViewById(R.id.sdKiipRewards);
+		sdKiipRewards.setOnDrawerOpenListener(this);
+		tvAchievementMessage= (TextView) findViewById(R.id.tvAchievementMessage);
 		// bDaysPerWeek_star.setBackgroundResource(R.drawable.star_2);
-
+		if (db.variableExistAll("reward_kiip")){
+			sdKiipRewards.setVisibility(View.VISIBLE);
+			achievementMesage();
+		}
+		//deletes home page notification after coming to this page
+		if (db.variableExistAll("reward_kiip_home")){
+			db.deleteAllVariables("reward_kiip_home");
+		}
+		
 		initialize();
 	}
 
@@ -205,7 +225,11 @@ public class GoalsTracking extends Activity implements OnClickListener {
 					GoalsLayout.class);
 			startActivity(goToThisPage);
 			break;
+		case R.id.handle:
+			sdKiipRewards.toggle();
+			break;
 		}
+
 	}
 
 	// takes goal variable name in database and outputs number of stars
@@ -239,5 +263,69 @@ public class GoalsTracking extends Activity implements OnClickListener {
 			return 0;
 		else
 			return list.size();
+	}
+
+	@Override
+	public void onDrawerOpened() {
+		// TODO Auto-generated method stub
+		sdKiipRewards.setVisibility(View.INVISIBLE);
+		Kiip.getInstance()
+				.saveMoment(
+						"Goal Achievement!",
+						5, new Kiip.Callback() {
+							@Override
+							public void onFailed(Kiip kiip, Exception exception) {
+								// no-op
+							}
+
+							@Override
+							public void onFinished(Kiip kiip, Poptart poptart) {
+								if (poptart != null) {
+									// Display the notification information in
+									// your UI
+									// showIntegratedNotification(poptart.getNotification());
+
+									// Clear the notification in the poptart so
+									// it doesn't display later
+									// poptart.setNotification(null);
+									// poptart.show(getBaseContext());
+									onPoptart(poptart);
+									// Save the poptart to display later
+									// mPoptart = poptart;
+									// showRewards.setVisibility(View.VISIBLE);
+								}
+							}
+						});
+	}
+	//replaces the current message with correct one, then delete the database entry correlated to that value
+	private void achievementMesage(){
+		int category=Integer.parseInt(db.getAllVarValue("reward_kiip").get(0).value);
+		String message="";
+		switch(category){
+		case 1:
+			message="Congrats! You limited # of days you went drinking this week. Pull to unlock your rewards!";
+			break;
+		case 2:
+			message="Congrats! You kept your # of Drinks per outing to a minimum! Pull to unlock your rewards!";
+			break;
+		case 3:
+			message="Congrats! You kept your BAC in check!! Pull to unlock your rewards!";
+			break;
+		case 4:
+			message="Congrats! You limited # of days you went drinking this month! Pull to unlock your rewards!";
+			break;
+		case 5:
+			message="Congrats! You kept your # of Drinks per month to a minimum! Pull to unlock your rewards!";
+			break;
+		case 6:
+			message="Congrats! You kept your $ spent this month to a minimum! Pull to unlock your rewards!";
+			break;
+		}
+		
+		
+		tvAchievementMessage.setText(message);
+		//delete entry from database
+		db.deleteAllVariablesByValue("reward_kiip", ""+category);
+		int stupid=1;
 	}
 }

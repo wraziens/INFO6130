@@ -44,11 +44,11 @@ public class Badges extends BaseActivity implements OnClickListener{
 				    	//showIntegratedNotification(poptart.getNotification());
 
 				    	// Clear the notification in the poptart so it doesn't display later
-				    	poptart.setNotification(null);
-
+				    	//poptart.setNotification(null);
+			    		onPoptart(poptart);
 				    	// Save the poptart to display later
-				    	mPoptart = poptart;
-				    	showRewards.setVisibility(View.VISIBLE);
+				    	//mPoptart = poptart;
+				    	//showRewards.setVisibility(View.VISIBLE);
 				    }
 			    }
 			});

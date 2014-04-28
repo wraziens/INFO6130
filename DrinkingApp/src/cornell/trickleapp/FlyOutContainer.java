@@ -184,7 +184,7 @@ public class FlyOutContainer extends LinearLayout implements
 			getContext().startActivity(goToThisPage);
 			break;
 		case 2:
-			goToThisPage = new Intent("cornell.eickleapp.INITIALSURVEY");
+			goToThisPage = new Intent("cornell.trickleapp.INITIALSURVEY");
 			getContext().startActivity(goToThisPage);
 			break;
 		default:
