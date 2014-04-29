@@ -119,7 +119,10 @@ public class InitialSurvey extends Activity implements OnClickListener {
 			lb.setSelected(false);
 			break;
 		case R.id.bSettingsSave:
-			weightResult = Integer.parseInt(weight.getText().toString());
+			String weight_val=(weight.getText().toString());
+			//if the weight val is not empty
+			if (!weight_val.equals(""))
+				weightResult = Integer.parseInt( weight_val);
 			// adds the gender
 			if (db.variableExistAll("gender")) {
 				db.deleteAllVariables("gender");
