@@ -173,20 +173,22 @@ public class DrinkCalendar extends Activity implements OnClickListener{
 		
 		int month_drink = 0;
 		DatabaseStore last = null;
-		for(int i=0; i<drinks.size();i++){
-			DatabaseStore ds = drinks.get(i);
-			if(last != null){
-				if(ds.day > last.day){
-					if(Integer.parseInt(ds.value) == 1){
+		if(drinks!=null){
+			for(int i=0; i<drinks.size();i++){
+				DatabaseStore ds = drinks.get(i);
+				if(last != null){
+					if(ds.day > last.day){
+						if(Integer.parseInt(ds.value) == 1){
+							month_drink++;
+						}
+					}else{
 						month_drink++;
 					}
-				}else{
-					month_drink++;
 				}
+				last = ds;
 			}
-			last = ds;
+			month_drink++;
 		}
-		month_drink++;
 		return month_drink;
 	}
 	
