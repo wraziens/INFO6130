@@ -76,11 +76,8 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	}
 
 	private Button setBackground(Button view, Drawable drawable){
-		if(this.sdk < android.os.Build.VERSION_CODES.JELLY_BEAN){
-			view.setBackgroundDrawable(drawable);
-		}else{
-			view.setBackground(drawable);
-		}
+		view.setBackgroundDrawable(drawable);
+	
 		return view;
 	}
 	
