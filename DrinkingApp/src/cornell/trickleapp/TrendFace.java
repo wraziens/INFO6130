@@ -47,19 +47,23 @@ public class TrendFace extends Activity {
 		getDbValues();
 
 	}
-	private void addToSymptomHash(ArrayList<DatabaseStore> sym, String symptom_name){
+	private boolean addToSymptomHash(ArrayList<DatabaseStore> sym, String symptom_name){
+		boolean added = false;
 		for(int i=0; i<sym.size(); i++){
 			DatabaseStore d = sym.get(i);
 			if(Integer.parseInt(d.value)==1){
 				if(symptoms.containsKey(symptom_name)){
 					symptoms.get(symptom_name).add(d.date);
+					added=true;
 				}else{
 					ArrayList<Date> dates = new ArrayList<Date>(); 
 					dates.add(d.date);
 					symptoms.put(symptom_name,dates);
+					added=true;
 				}
 			}
 		}
+		return added;
 	}
 	
 	
@@ -76,39 +80,60 @@ public class TrendFace extends Activity {
 		if(month_regret == null){
 			regret.setImageResource(R.drawable.smiley_regret_blank);
 		}else{
-			addToSymptomHash(month_regret,"regret");
+			boolean added = addToSymptomHash(month_regret,"regret");
+			if(!added){
+				regret.setImageResource(R.drawable.smiley_regret_blank);
+			}
 		}
 		
 		if(month_dizzy == null){
 			dizzy.setImageResource(R.drawable.smiley_dizziness_blank);
 		}else{
-			addToSymptomHash(month_dizzy,"dizzy");
+			boolean added = addToSymptomHash(month_dizzy,"dizzy");
+			if(!added){
+				dizzy.setImageResource(R.drawable.smiley_dizziness_blank);
+			}
 		}
 		
 		if(month_nausea == null){
 			nausea.setImageResource(R.drawable.smiley_nausea_blank);
 		}else{
-			addToSymptomHash(month_nausea,"nausea");
+			boolean added = addToSymptomHash(month_nausea,"nausea");
+			if(!added){
+				nausea.setImageResource(R.drawable.smiley_nausea_blank);
+			}
 		}
 		if(month_vomit == null){
 			vomit.setImageResource(R.drawable.smiley_vomit_blank);
 		}else{
-			addToSymptomHash(month_vomit,"vomit");
+			boolean added = addToSymptomHash(month_vomit,"vomit");
+			if(!added){
+				vomit.setImageResource(R.drawable.smiley_vomit_blank);
+			}
 		}
 		if(month_headache == null){
 			headache.setImageResource(R.drawable.smiley_headache_blank);
 		}else{
-			addToSymptomHash(month_headache,"headache");
+			boolean added = addToSymptomHash(month_headache,"headache");
+			if(!added){
+				headache.setImageResource(R.drawable.smiley_headache_blank);
+			}
 		}
 		if(month_memory == null){
 			memory.setImageResource(R.drawable.smiley_memory_blank);
 		}else{
-			addToSymptomHash(month_memory,"memory");
+			boolean added = addToSymptomHash(month_memory,"memory");
+			if(!added){
+				memory.setImageResource(R.drawable.smiley_memory_blank);
+			}
 		}
 		if(month_fatigue == null){
 			fatigue.setImageResource(R.drawable.smiley_fatigue_blank);
 		}else{
-			addToSymptomHash(month_fatigue,"fatigue");
+			boolean added = addToSymptomHash(month_fatigue,"fatigue");
+			if(!added){
+				fatigue.setImageResource(R.drawable.smiley_fatigue_blank);
+			}
 		}
 		
 	}
@@ -155,7 +180,7 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "regret", Toast.LENGTH_SHORT).show();
+				Toast.makeText(TrendFace.this, "vomit", Toast.LENGTH_SHORT).show();
 				
 			}
 		});
@@ -163,19 +188,19 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "poopoo", Toast.LENGTH_SHORT).show();
-				final Dialog dialog = new Dialog(TrendFace.this);
+				Toast.makeText(TrendFace.this, "headache", Toast.LENGTH_SHORT).show();
+				/*final Dialog dialog = new Dialog(TrendFace.this);
 				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 				dialog.setContentView(R.layout.trend_info);
-				dialog.show();
+				dialog.show();*/
 			}
 		});
 		memory.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "regret", Toast.LENGTH_SHORT).show();
+				Toast.makeText(TrendFace.this, "memory", Toast.LENGTH_SHORT).show();
 				
 			}
 		});
@@ -183,7 +208,7 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "regret", Toast.LENGTH_SHORT).show();
+				Toast.makeText(TrendFace.this, "fatigue", Toast.LENGTH_SHORT).show();
 				
 			}
 		});

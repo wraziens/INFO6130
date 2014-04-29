@@ -90,8 +90,8 @@ public class MainMenu3 extends Activity implements OnClickListener,
 			startActivity(goToThisPage);
 			break;
 		case R.id.bTrendsMenu:
-			//goToThisPage = new Intent(MainMenu3.this, TrendFace.class);
-			//startActivity(goToThisPage);
+			goToThisPage = new Intent(MainMenu3.this, TrendFace.class);
+			startActivity(goToThisPage);
 			break;
 		case R.id.bCalendarMenu:
 			goToThisPage = new Intent(MainMenu3.this, DrinkCalendar.class);
