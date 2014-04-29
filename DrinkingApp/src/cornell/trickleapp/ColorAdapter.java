@@ -76,8 +76,11 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 	}
 
 	private Button setBackground(Button view, Drawable drawable){
-		view.setBackgroundDrawable(drawable);
-	
+		if(this.sdk < android.os.Build.VERSION_CODES.JELLY_BEAN){
+			view.setBackgroundDrawable(drawable);
+		}else{
+			view.setBackground(drawable);
+		}
 		return view;
 	}
 	
@@ -177,8 +180,8 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 								color_circle.setSize(20, 20);
 								//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
 								//((GradientDrawable)color_circle.getDrawable(0)).setColor(Color.TRANSPARENT);
-								//child.setBackground(color_circle);
-								child = setBackground(child, color_circle);
+								child.setBackground(color_circle);
+								//child = setBackground(child, color_circle);
 							}
 						}
 						focused = position;
