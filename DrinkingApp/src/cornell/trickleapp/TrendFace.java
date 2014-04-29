@@ -39,14 +39,6 @@ public class TrendFace extends Activity {
 
 		db = new DatabaseHandler(this);
 		symptoms = new HashMap<String, ArrayList<Date>>();
-		SharedPreferences getPrefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
-		
-		if (checkSurveyed) {
-			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
-			startActivity(openTutorial);
-		}
 		setupFaces();
 		getDbValues();
 
