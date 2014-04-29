@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.Toast;
 
 @SuppressLint("NewApi")
 public class ColorAdapter extends BaseAdapter implements OnClickListener {
@@ -170,18 +171,14 @@ public class ColorAdapter extends BaseAdapter implements OnClickListener {
 								GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
 								color_circle.setColor(bacColors.get(i));
 								color_circle.setSize(20, 20);
-								//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-								//((GradientDrawable)color_circle.getDrawable(0)).setColor(bacColors.get(i));
-								//child.setBackground(color_circle);
 								child = setBackground(child, color_circle);
 							}else {
-								GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-								color_circle.setColor(Color.TRANSPARENT);
-								color_circle.setSize(20, 20);
-								//LayerDrawable color_circle = (LayerDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
-								//((GradientDrawable)color_circle.getDrawable(0)).setColor(Color.TRANSPARENT);
-								child.setBackground(color_circle);
-								//child = setBackground(child, color_circle);
+								if(child!=null){
+									GradientDrawable color_circle = (GradientDrawable)parent.getContext().getResources().getDrawable(R.drawable.calendar_day); 
+									color_circle.setColor(Color.TRANSPARENT);
+									color_circle.setSize(20, 20);
+									child = setBackground(child, color_circle);
+								}
 							}
 						}
 						focused = position;
