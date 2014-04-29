@@ -166,7 +166,7 @@
     <!-- Nav Drawer List Item Icons -->
     <!-- Keep them in order as the titles are in -->
     <array name="nav_drawer_icons">
-        <item>@drawable/ic_trickle</item>
+        <item>@drawable/ic_trickle_medium</item>
         <item>@drawable/ic_help</item>
         <item>@drawable/ic_settings</item>
     </array>

@@ -33,7 +33,7 @@ public class MainMenu3 extends Activity implements OnClickListener,
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		// getActionBar().hide();
 
-		initialize();
+		//initialize();
 
 	}
 
@@ -90,8 +90,8 @@ public class MainMenu3 extends Activity implements OnClickListener,
 			startActivity(goToThisPage);
 			break;
 		case R.id.bTrendsMenu:
-			goToThisPage = new Intent(MainMenu3.this, TrendFace.class);
-			startActivity(goToThisPage);
+			//goToThisPage = new Intent(MainMenu3.this, TrendFace.class);
+			//startActivity(goToThisPage);
 			break;
 		case R.id.bCalendarMenu:
 			goToThisPage = new Intent(MainMenu3.this, DrinkCalendar.class);
@@ -109,7 +109,7 @@ public class MainMenu3 extends Activity implements OnClickListener,
 			sdKiipRewards.toggle();
 			break;
 		case R.id.bYes:
-			goToThisPage = new Intent(MainMenu3.this, GoalsTracking.class);
+			goToThisPage = new Intent(MainMenu3.this, GoalsLayout.class);
 			startActivity(goToThisPage);
 			break;
 		}
@@ -127,7 +127,7 @@ public class MainMenu3 extends Activity implements OnClickListener,
 	public void onDrawerOpened() {
 		// TODO Auto-generated method stub
 		sdKiipRewards.setVisibility(View.INVISIBLE);
-		Intent goToThisPage = new Intent(MainMenu3.this, GoalsTracking.class);
+		Intent goToThisPage = new Intent(MainMenu3.this, GoalsLayout.class);
 		startActivity(goToThisPage);
 	}
 

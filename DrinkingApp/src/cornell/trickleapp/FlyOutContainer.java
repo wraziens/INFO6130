@@ -69,6 +69,7 @@ public class FlyOutContainer extends LinearLayout implements
 	private static ArrayList<Integer> image_id_list = new ArrayList<Integer>();
 	private static TextView tvImagePlaceholder;
 	private static String classTitle;
+
 	public enum MenuState {
 		CLOSED, OPEN
 	};
@@ -97,27 +98,15 @@ public class FlyOutContainer extends LinearLayout implements
 		classTitle = this.content.getContext().getClass().toString()
 				.substring(25);
 		db = new DatabaseHandler(this.content.getContext());
-		//1st time tutorial
-		if (!db.variableExistAll("initial_tutorial")){
+		// 1st time tutorial
+		boolean dummy=(db.variableExistAll("initial_tutorial"));
+		if ((db.variableExistAll("initial_tutorial"))==false
+				&& (classTitle.equals("InitialSurvey"))==false) {
 			db.addValue("initial_tutorial", 1);
 			tutorialDetector(classTitle);
 		}
-			
-		// set up the tutorials accordingly
 
-		/*
-		 * day=(TextView)findViewById(R.id.tvDateDisplayTop);
-		 * 
-		 * monthDate=(TextView)findViewById(R.id.tvDateDisplayBot);
-		 * 
-		 * Calendar today = Calendar.getInstance(); int dayOfWeek =
-		 * today.get(Calendar.DAY_OF_WEEK); SimpleDateFormat sdf = new
-		 * SimpleDateFormat("EEEE"); String dayOfTheWeek =
-		 * sdf.format(dayOfWeek); int dayOfMonth =
-		 * today.get(Calendar.DAY_OF_MONTH); int month =
-		 * today.get(Calendar.MONTH); day.setText(dayOfTheWeek);
-		 * monthDate.setText(month+"/"+dayOfMonth);
-		 */
+		// set up the tutorials accordingly
 
 		WindowManager wm = (WindowManager) getContext().getSystemService(
 				Context.WINDOW_SERVICE);
@@ -138,14 +127,16 @@ public class FlyOutContainer extends LinearLayout implements
 				.getResourceId(1, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
 				.getResourceId(2, -1)));
-		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
-				.getResourceId(3, -1)));
-*/
+		/*
+		 * navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
+		 * .getResourceId(3, -1)));
+		 */
 		ListAdapter adapter = new NavDrawerListAdapter(this.getContext(),
 				navDrawerItems);
 
 		menu.setAdapter(adapter);
 		menu.setOnItemClickListener(new SlideMenuClickListener());
+		// toggle menu
 
 		menuDrawer = (Button) findViewById(R.id.bToggleMenu);
 		menuDrawer.setOnClickListener(this);
@@ -165,22 +156,30 @@ public class FlyOutContainer extends LinearLayout implements
 	}
 
 	public void toggleMenu() {
-		switch (this.menuCurrentState) {
-		case CLOSED:
-			this.menu.setVisibility(View.VISIBLE);
-			this.currentContentOffset = this.getMenuWidth();
-			this.content.offsetLeftAndRight(currentContentOffset);
-			this.menuCurrentState = MenuState.OPEN;
-			break;
-		case OPEN:
-			this.content.offsetLeftAndRight(-currentContentOffset);
-			this.currentContentOffset = 0;
-			this.menuCurrentState = MenuState.CLOSED;
-			this.menu.setVisibility(View.GONE);
-			break;
-		}
 
-		this.invalidate();
+		// prevents the access to other functionality until initial survey is
+		// finished
+		boolean shit=db.variableExistAll("initial_tutorial");
+		boolean shit2=classTitle.equals("InitialSurvey");
+		if ((db.variableExistAll("initial_tutorial"))==true) {
+			switch (this.menuCurrentState) {
+			case CLOSED:
+				this.menu.setVisibility(View.VISIBLE);
+				this.currentContentOffset = this.getMenuWidth();
+				this.content.offsetLeftAndRight(currentContentOffset);
+				this.menuCurrentState = MenuState.OPEN;
+				break;
+			case OPEN:
+				this.content.offsetLeftAndRight(-currentContentOffset);
+				this.currentContentOffset = 0;
+				this.menuCurrentState = MenuState.CLOSED;
+				this.menu.setVisibility(View.GONE);
+				break;
+			}
+
+			this.invalidate();
+
+		}
 	}
 
 	private int getMenuWidth() {
@@ -267,7 +266,7 @@ public class FlyOutContainer extends LinearLayout implements
 			image_id_list.add(R.drawable.tutorial_005);
 			image_id_list.add(R.drawable.tutorial_006);
 			image_id_list.add(R.drawable.tutorial_007);
-			
+
 			break;
 		case 1:
 			image_id_list.add(R.drawable.tutorial_011);
@@ -315,15 +314,14 @@ public class FlyOutContainer extends LinearLayout implements
 					tvImagePlaceholder.setBackgroundResource(image_id_list
 							.get(image_no));
 					image_no++;
-				}
-				else{
+				} else {
 					dialog.dismiss();
 				}
 			}
 		});
-		int content_width=this.content.getWidth();
+		int content_width = this.content.getWidth();
 		tvImagePlaceholder.setWidth(content_width);
-		int content_height=(int)(content_width*1.5);
+		int content_height = (int) (content_width * 1.5);
 		tvImagePlaceholder.setHeight(content_height);
 		tvImagePlaceholder.setBackgroundResource(image_id_list.get(0));
 
@@ -347,7 +345,6 @@ public class FlyOutContainer extends LinearLayout implements
 			tutorialInitialization(1);
 		}
 		if (classTitle.equals("AfterDrinkSurvey")) {
-			tutorialInitialization(2);
 		}
 		if (classTitle.equals("DrinkCalendar")) {
 			tutorialInitialization(3);
@@ -361,8 +358,7 @@ public class FlyOutContainer extends LinearLayout implements
 		if (classTitle.equals("GoalsTracking")) {
 			tutorialInitialization(6);
 		}
-		if (classTitle.equals("Settings")) {
-			tutorialInitialization(7);
+		if (classTitle.equals("InitialSurvey")) {
 		}
 
 	}
