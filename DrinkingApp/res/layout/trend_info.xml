@@ -1,0 +1,263 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="20dp"
+    android:paddingBottom="10dp"
+    android:background="#DCDEE0" >
+  
+       <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.20"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/trends_left_arrow"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="left"
+                android:background="@drawable/trends_arrow_left" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/trendsDate"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/trends_tab"
+                android:gravity="center"
+                android:text="02/01/2014"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llTrends_bottom"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/trends_right_arrow"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="right"
+                android:background="@drawable/trends_arrow_right" />
+        </LinearLayout>
+    </LinearLayout>
+       	
+ 	    
+	<LinearLayout
+		android:layout_marginTop="5dp"
+    	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:id="@+id/nausea_icon"
+         	android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_nausea_filled"
+          	android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/headache_icon"
+            android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_headache_filled"
+          	android:layout_weight="1"/>
+        <ImageView
+             android:id="@+id/dizzy_icon"
+            android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_dizziness_filled"
+          	android:layout_weight="1"/>
+        
+        <ImageView
+             android:id="@+id/memory_icon"
+            android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_memory_filled"
+          	android:layout_weight="1"/>
+        
+         <ImageView
+             android:id="@+id/fatigue_icon"
+          	android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_fatigue_filled"
+          	android:layout_weight="1"/>
+          <ImageView
+             android:id="@+id/regret_icon"
+            android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_regret_filled"
+          	android:layout_weight="1"/>
+           <ImageView
+             android:id="@+id/vomit_icon"
+            android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/smiley_vomit_filled"
+          	android:layout_weight="1"/>
+        
+        <TextView
+           	android:id="@+id/day_cal_drink_count"
+            android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#85888D"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp" />
+	</LinearLayout>
+   <LinearLayout
+		android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+			
+	<ImageView
+		android:id="@+id/drink_calendar_day"
+	    android:layout_width="35dp"
+		android:layout_height="35dp"
+		android:src="@drawable/drink_smile_tracker_icon"
+		android:background="@android:color/transparent"
+		android:paddingRight="5dp"/>
+   
+	
+	
+       <TextView
+       		android:id="@+id/day_bac"
+           	android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	android:gravity="center"
+           	android:text=""
+           	android:textSize="14sp"
+           	android:layout_marginTop="5dp"
+           	android:textColor="#85888D" />
+	</LinearLayout>
+ 		
+	<LinearLayout
+		android:layout_marginTop="5dp"
+    	android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        
+        <ImageView
+            android:id="@+id/beer_icon"
+         	android:layout_width="35dp"
+          	android:layout_height="35dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/white_beer"/>
+
+        <ImageView
+            android:id="@+id/wine_icon"
+            android:layout_marginTop="5dp"
+         	android:layout_width="27dp"
+          	android:layout_height="27dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/white_wine"/>
+        <ImageView
+             android:id="@+id/liquor_icon"
+            android:layout_marginTop="-2dp"
+         	android:layout_width="40dp"
+          	android:layout_height="40dp"
+          	android:background="@android:color/transparent"
+          	android:src="@drawable/white_liquor"/>
+        
+        <TextView
+           	android:id="@+id/day_cal_drink_count"
+            android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#85888D"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp" />
+	</LinearLayout>
+	<LinearLayout
+   		android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+            	
+   		<ImageView
+        	android:layout_width="35dp"
+         	android:layout_height="35dp"
+         	android:background="@android:color/transparent"
+         	android:src="@drawable/ic_time_drinking" 
+         	android:paddingRight="5dp"/>
+
+        <TextView
+        	android:id="@+id/day_drink_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:textColor="#85888D"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp" />
+	</LinearLayout>
+
+	<LinearLayout
+   		android:layout_width="match_parent"
+     	android:layout_height="wrap_content"
+     	android:orientation="horizontal">
+           
+		<ImageView
+       		android:layout_width="30dp"
+        	android:layout_height="30dp"
+        	android:background="@android:color/transparent"
+        	android:src="@drawable/ic_calendar_spedometer"/>
+     
+        <TextView
+       		android:id="@+id/day_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=""
+            android:layout_marginLeft="5dp"
+            android:textColor="#85888D"
+            android:textSize="14sp"
+            android:layout_marginTop="5dp" />
+	</LinearLayout>
+			
+			<LinearLayout
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:gravity="center"
+			    android:layout_marginTop="30dp">
+			<Button
+	            android:id="@+id/close_info"
+	            android:layout_width="100dp"
+	            android:layout_height="35dp"
+	            android:text="@string/okay"
+	            android:textColor="#ffffff"
+	            android:background="@drawable/calendar_button" />
+			</LinearLayout>
+</LinearLayout>
+

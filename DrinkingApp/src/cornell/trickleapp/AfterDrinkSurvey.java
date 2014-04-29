@@ -74,10 +74,10 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 					case R.id.yes_vomit:
-							vomit_result= "yes";
+							vomit_result= "1";
 							break;
 					case R.id.no_vomit:
-							vomit_result = "no";
+							vomit_result = "0";
 							break;
 					default:
 						throw new RuntimeException(
@@ -94,10 +94,10 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 					case R.id.yes_memory_loss:
-							memory_result= "yes";
+							memory_result= "1";
 							break;
 					case R.id.no_memory_loss:
-							memory_result = "no";
+							memory_result = "0";
 							break;
 					default:
 						throw new RuntimeException(
@@ -114,10 +114,10 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
 				switch (checkedId) {
 					case R.id.yes_regret:
-							regret_result= "yes";
+							regret_result= "1";
 							break;
 					case R.id.no_regret:
-							regret_result = "no";
+							regret_result = "0";
 							break;
 					default:
 						throw new RuntimeException(
@@ -136,6 +136,7 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 			db.updateOrAddYesterday("regret", regret_result);
 		}
 		if(!vomit_result.equals("")){
+			db.updateOrAddYesterday("vomit", vomit_result);
 		}
 		saveCheckBoxes();
 		
