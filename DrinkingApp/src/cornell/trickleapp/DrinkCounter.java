@@ -74,15 +74,6 @@ public class DrinkCounter extends Activity {
 		
 		start();
 		updateFace();
-		
-		SharedPreferences getPrefs = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-		Boolean checkSurveyed = getPrefs.getBoolean("hints", true);
-		
-		if (checkSurveyed) {
-			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
-			startActivity(openTutorial);
-		}
 
 		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 	}

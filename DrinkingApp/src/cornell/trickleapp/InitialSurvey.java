@@ -61,8 +61,8 @@ public class InitialSurvey extends Activity implements OnClickListener {
 		save.setOnClickListener(this);
 		lb.setOnClickListener(this);
 		kg.setOnClickListener(this);
-		
-		//dont populate field when it's the 1st time setting up
+
+		// don't populate field when it's the 1st time setting up
 		if (db.variableExistAll("firstTime"))
 			initialize();
 	}
@@ -78,26 +78,19 @@ public class InitialSurvey extends Activity implements OnClickListener {
 					.parseInt(db.getAllVarValue("weight").get(0).value);
 		}
 		if (db.variableExistAll("weight_unit")) {
-			List<DatabaseStore> dummy=db.getAllVarValue("weight_unit");
+			List<DatabaseStore> dummy = db.getAllVarValue("weight_unit");
 			weightUnitResult = db.getAllVarValue("weight_unit").get(0).value;
 		}
-		//Selects options that are previously recorded in the database
-		if (sexResult.equals("Male")){
+		// Selects options that are previously recorded in the database
+		if (sexResult.equals("Male")) {
 			male.setSelected(true);
 		}
-		if (sexResult.equals("Female")){
-			male.setSelected(true);
-		}
-		if (sexResult.equals("Male")){
+		if (sexResult.equals("Female")) {
 			female.setSelected(true);
 		}
-		if (weightUnitResult.equals("lb")){
-			lb.setSelected(true);
-		}
-		if (weightUnitResult.equals("kg")){
-			kg.setSelected(true);
-		}
-		weight.setText(""+weightResult);
+		// always show lb result due to rounding error
+		lb.setSelected(true);
+		weight.setText("" + weightResult);
 
 	}
 
@@ -158,11 +151,9 @@ public class InitialSurvey extends Activity implements OnClickListener {
 				db.addValue("weight_unit", "lb");
 			}
 			// sets the mark for 1st time use proceed to home page afterwards
-			if (!db.variableExistAll("firstTime")){
-				db.addValue("firstTime", "1");
-				Intent goToThisPage=new Intent(this,MainMenu3.class);
-				startActivity(goToThisPage);
-			}
+			db.addValue("firstTime", "1");
+			Intent goToThisPage = new Intent(this, MainMenu3.class);
+			startActivity(goToThisPage);
 			break;
 
 		}
@@ -179,6 +170,5 @@ public class InitialSurvey extends Activity implements OnClickListener {
 
 		finish();
 	}
-
 
 }

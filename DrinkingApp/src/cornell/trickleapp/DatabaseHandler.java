@@ -390,7 +390,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable, "", date);
 		// Delete the variable for today from the DB
 		String delete_sql = "DELETE FROM " + TABLE_QUES + " WHERE "
-				+ QUES_KEY_VAR + "='" + ds.variable + ";";
+				+ QUES_KEY_VAR + "='" + ds.variable + "';";
 		// execute the SQL
 		db.execSQL(delete_sql);
 		// close the database
