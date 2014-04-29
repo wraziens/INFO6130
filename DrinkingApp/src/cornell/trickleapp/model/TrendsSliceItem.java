@@ -1,4 +1,4 @@
-package cornell.eickleapp.model;
+package cornell.trickleapp.model;
 
 import java.sql.Date;
 import java.text.SimpleDateFormat;

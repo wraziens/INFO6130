@@ -11,17 +11,14 @@
         android:layout_centerHorizontal="true"
 
         android:layout_centerVertical="true"
-        
-        android:background="@drawable/tutorialmain" />
+        />
         <TextView
         android:id="@+id/tvMainMenuTutorial2"
         android:layout_width="250sp"
         android:layout_height="350sp"
         android:layout_centerHorizontal="true"
 
-        android:layout_centerVertical="true"
-        android:visibility="invisible"
-        android:background="@drawable/tutorialmain" />
+        android:layout_centerVertical="true"/>
 
     <Button
         android:id="@+id/bMainMenuPrevious"

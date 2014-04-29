@@ -1,542 +1,629 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cornell.trickleapp.FlyOutContainer xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f3f7"
-    android:orientation="vertical"
-    android:weightSum="1" >
+    android:background="#f7f3f7" >
+
+    <ListView
+        android:id="@+id/list_slidermenu"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="#52555a"
+        android:choiceMode="singleChoice"
+        android:divider="#52555a"
+        android:dividerHeight="10dp"
+        android:listSelector="@drawable/list_selector"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp" />
 
     <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.2"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         android:weightSum="1" >
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bSet"
-                android:layout_width="90dp"
-                android:layout_height="35dp"
-                android:layout_gravity="right"
-                android:layout_margin="5dp"
-                android:background="@drawable/goals_save_input_border_red_filled_selected"
-                android:text="Set"
-                android:textColor="#ffffff" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bTrack"
-                android:layout_width="90dp"
-                android:layout_height="35dp"
-                android:layout_gravity="left"
-                android:layout_margin="5dp"
-                android:background="@drawable/goals_input_border_red_clear"
-                android:text="Track"
-                android:textColor="#ef5d52" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.10"
-        android:orientation="horizontal"
-        android:weightSum="1" >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.15"
             android:gravity="center"
-            android:orientation="vertical" >
+            android:orientation="horizontal"
+            android:weightSum="1" >
 
-            <CheckBox
-                android:id="@+id/cbDaysPerWeek"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:gravity="left"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/bToggleMenu"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/ic_drawer" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.7"
+                android:gravity="top"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/tvDateDisplayTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Trickle"
+                    android:textColor="#a5aaad"
+                    android:textSize="30dp" />
+
+                <TextView
+                    android:id="@+id/tvDateDisplayBot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Februrary 10"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"
+                android:gravity="right"
+                android:orientation="horizontal" >
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.85"
+            android:background="#f7f3f7"
+            android:orientation="vertical"
+            android:weightSum="1" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Limit # of days I drink per"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" week "
-                android:textColor="#ef5d52"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bDaysPerWeek"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_red_clear"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="0"
-                android:textSize="14dp" >
+                android:layout_height="0dp"
+                android:layout_weight="0.2"
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
-                <requestFocus />
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.10"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+                    <Button
+                        android:id="@+id/bSet"
+                        android:layout_width="90dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="right"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/goals_save_input_border_red_filled_selected"
+                        android:text="Set"
+                        android:textColor="#ffffff" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:gravity="center"
-            android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical" >
 
-            <CheckBox
-                android:id="@+id/cbDrinksPerOuting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/bTrack"
+                        android:layout_width="90dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="left"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/goals_input_border_red_clear"
+                        android:text="Track"
+                        android:textColor="#ef5d52" />
+                </LinearLayout>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Limit # of drinks per"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" outing "
-                android:textColor="#ef5d52"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bDrinksPerOuting"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_red_clear"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="0"
-                android:textSize="14dp" >
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
-                <requestFocus />
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.10"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.10"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+                    <CheckBox
+                        android:id="@+id/cbDaysPerWeek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:gravity="center"
-            android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/cbBAC"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Limit # of days I drink per"
+                        android:textSize="14dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.34"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" week "
+                        android:textColor="#ef5d52"
+                        android:textSize="14dp" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Limit my"
-                android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        android:textSize="14dp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" BAC "
-                android:textColor="#ef5d52"
-                android:textSize="14dp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to"
-                android:textSize="14dp" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/bDaysPerWeek"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_red_clear"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textSize="14dp" >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
+                        <requestFocus />
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/bGreenBAC"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_green_filled"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="&lt;0.06"
-                android:textColor="#ffffff"
-                android:textSize="14dp" >
-            </Button>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bYellowBAC"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_yellow_filled"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="&lt;0.15"
-                android:textColor="#ffffff"
-                android:textSize="14dp" >
-            </Button>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bRedBAC"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_red_filled"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="&lt;0.24"
-                android:textColor="#ffffff"
-                android:textSize="14dp" >
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.10"
-        android:orientation="horizontal"
-        android:weightSum="1" >
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <CheckBox
-                android:id="@+id/cbDaysPerMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Limit # of days I drink per"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" month "
-                android:textColor="#ef5d52"
-                android:textSize="14dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to"
-                android:textSize="14dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
-
-            <Button
-                android:id="@+id/bDaysPerMonth"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_red_clear"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="0"
-                android:textSize="14dp" >
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
-                <requestFocus />
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.10"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.10"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+                    <CheckBox
+                        android:id="@+id/cbDrinksPerOuting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:gravity="center"
-            android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/cbDrinksPerMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Limit # of drinks per"
+                        android:textSize="14dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" outing "
+                        android:textColor="#ef5d52"
+                        android:textSize="14dp" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Limit # of drinks per"
-                android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        android:textSize="14dp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" month "
-                android:textColor="#ef5d52"
-                android:textSize="14dp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to"
-                android:textSize="14dp" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/bDrinksPerOuting"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_red_clear"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textSize="14dp" >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
+                        <requestFocus />
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
 
-            <Button
-                android:id="@+id/bDrinksPerMonth"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_red_clear"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="0"
-                android:textSize="14dp" >
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
-                <requestFocus />
-            </Button>
-        </LinearLayout>
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.10"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.10"
-        android:orientation="horizontal"
-        android:weightSum="1" >
+                    <CheckBox
+                        android:id="@+id/cbBAC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.10"
-            android:gravity="center"
-            android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.34"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
 
-            <CheckBox
-                android:id="@+id/cbDollarsPerMonth"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Limit my"
+                        android:textSize="14dp" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.70"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" BAC "
+                        android:textColor="#ef5d52"
+                        android:textSize="14dp" />
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Limit the $ I spend per"
-                android:textSize="14dp" />
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        android:textSize="14dp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=" month "
-                android:textColor="#ef5d52"
-                android:textSize="14dp" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="to"
-                android:textSize="14dp" />
-        </LinearLayout>
+                    <Button
+                        android:id="@+id/bGreenBAC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_green_filled"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="&lt;0.06"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp" >
+                    </Button>
+                </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.18"
-            android:gravity="center"
-            android:orientation="vertical" >
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
 
-            <Button
-                android:id="@+id/bDollarsPerMonth"
+                    <Button
+                        android:id="@+id/bYellowBAC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_yellow_filled"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="&lt;0.15"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp" >
+                    </Button>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/bRedBAC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_red_filled"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="&lt;0.24"
+                        android:textColor="#ffffff"
+                        android:textSize="14dp" >
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:background="@drawable/goals_input_border_red_clear"
-                android:gravity="center"
-                android:inputType="number"
-                android:text="0"
-                android:textSize="14dp" >
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
-                <requestFocus />
-            </Button>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.10"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <CheckBox
+                        android:id="@+id/cbDaysPerMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Limit # of days I drink per"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" month "
+                        android:textColor="#ef5d52"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/bDaysPerMonth"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_red_clear"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textSize="14dp" >
+
+                        <requestFocus />
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:weightSum="1" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.10"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <CheckBox
+                        android:id="@+id/cbDrinksPerMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Limit # of drinks per"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" month "
+                        android:textColor="#ef5d52"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/bDrinksPerMonth"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_red_clear"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textSize="14dp" >
+
+                        <requestFocus />
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.10"
+                android:orientation="horizontal"
+                android:weightSum="1" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.10"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <CheckBox
+                        android:id="@+id/cbDollarsPerMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.70"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Limit the $ I spend per"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" month "
+                        android:textColor="#ef5d52"
+                        android:textSize="14dp" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="to"
+                        android:textSize="14dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.18"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/bDollarsPerMonth"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@drawable/goals_input_border_red_clear"
+                        android:gravity="center"
+                        android:inputType="number"
+                        android:text="0"
+                        android:textSize="14dp" >
+
+                        <requestFocus />
+                    </Button>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.20"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <Button
+                    android:id="@+id/bFinish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="@drawable/goals_save_input_border_red_filled"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:text="Set"
+                    android:textColor="#ffffff" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.20"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/bFinish"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:background="@drawable/goals_save_input_border_red_filled"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:text="Set"
-            android:textColor="#ffffff" />
-    </LinearLayout>
-
-</LinearLayout>
+</cornell.trickleapp.FlyOutContainer>

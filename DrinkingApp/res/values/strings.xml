@@ -161,7 +161,6 @@
         <item>Home</item>
         <item>Help</item>
         <item>Settings</item>
-        <item>Kiip Rewards</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -170,7 +169,6 @@
         <item>@drawable/ic_trickle</item>
         <item>@drawable/ic_help</item>
         <item>@drawable/ic_settings</item>
-        <item>@drawable/ic_kiip2</item>
     </array>
         <!-- Content Description -->
     <string name="desc_list_item_icon">Item Icon</string>

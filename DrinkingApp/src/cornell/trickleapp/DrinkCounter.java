@@ -9,7 +9,9 @@ import java.util.Iterator;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +33,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 public class DrinkCounter extends Activity {
+
+	AlarmManager alarmManager;
 	private static FlyOutContainer root;
 	private int drink_count = 0;
 	private DatabaseHandler db;
@@ -79,6 +83,8 @@ public class DrinkCounter extends Activity {
 			Intent openTutorial = new Intent(this, DrinkCounterTutorial.class);
 			startActivity(openTutorial);
 		}
+
+		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 	}
 
 	@Override
@@ -574,6 +580,7 @@ public class DrinkCounter extends Activity {
 	}
 	
 	
+	//adds a drink and also sets an alarm for morning after-survey 12 hours after
 	public void addDrinkHandler(View view){
 		click_vibe.vibrate(75);
 		Toast t = Toast.makeText(getApplicationContext(), 
@@ -582,6 +589,7 @@ public class DrinkCounter extends Activity {
 		t.show();
 		updateFace();
 		hadDrink(view);
+		setAlarm(43200000L,666);//666=unique notification id for morning after survey
 	}
 	
 	public void removeLastHandler(View view){
@@ -678,5 +686,25 @@ public class DrinkCounter extends Activity {
 	}
 	public void toggleMenu(View v) {
 		this.root.toggleMenu();
+	}
+	private void setAlarm(long miliSec, int id) {
+
+		Intent intent = new Intent(this, ReminderAlarm.class);
+		intent.putExtra("id", id);
+
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id,
+				intent, 0);
+
+		Calendar calendar = Calendar.getInstance();
+		// calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeValue));
+
+		// calendar.setTimeInMillis(calendar.getTimeInMillis() + 86400000);
+
+		long todayMili = calendar.getTimeInMillis();
+
+		long miliForAlarm = todayMili + miliSec;
+
+		alarmManager.cancel(pendingIntent);
+		alarmManager.set(AlarmManager.RTC_WAKEUP, miliForAlarm, pendingIntent);
 	}
 }

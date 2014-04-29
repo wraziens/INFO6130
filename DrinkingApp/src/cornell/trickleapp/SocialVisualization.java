@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import android.annotation.SuppressLint;
+import cornell.trickleapp.model.TrendsSliceItem;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Point;
@@ -23,14 +24,16 @@ import android.widget.Toast;
 
 public class SocialVisualization extends Activity implements OnClickListener {
 	private TimeBacGraph visual;
+
+	private static FlyOutContainer root;
 	private ArrayList<String> groupName = new ArrayList<String>();
 	private ArrayList<Integer> hangoutCount = new ArrayList<Integer>();
 	private ArrayList<Double> bacLevel = new ArrayList<Double>();
 	private Button dateLeft, dateRight;
 	private TextView dateMain;
 	private Button beer, wine;
-	private Button smileyNausia, smileyFatigue, smileyHeadache, smileyDizziness,
-			smileyMemory, smileyVomit;
+	private Button smileyNausia, smileyFatigue, smileyHeadache,
+			smileyDizziness, smileyMemory, smileyVomit;
 	private LinearLayout liquor;
 	private int windowWidth = 0;
 	private int windowHeight = 0;
@@ -45,6 +48,7 @@ public class SocialVisualization extends Activity implements OnClickListener {
 	private ArrayList<TrendsSliceItem> eveningCounts;
 	private BacTime bacTime;
 	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -73,6 +77,11 @@ public class SocialVisualization extends Activity implements OnClickListener {
 
 		visual = new TimeBacGraph(this, eveningCounts, morningCounts);
 		setContentView(R.layout.trends);
+		visual = new SocialGraphics(this, sliceArray);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.trends, null);
+
+		this.setContentView(root);
 		mainLayout = (LinearLayout) findViewById(R.id.llTesting);
 		
 		// get window width
@@ -198,25 +207,21 @@ public class SocialVisualization extends Activity implements OnClickListener {
 		}
 	}
 
-	//given arrays of time (sec) when drinks were counted and corresponding array of bac level
-	
-	private void setupTrendSliceItems(ArrayList<DatabaseStore> drinks){
-		
-	}
 	/*
+=======
+	// given arrays of time (sec) when drinks were counted and corresponding
+	// array of bac level
 	private void setupTrendSliceItem(ArrayList<Integer> drinkSecRaw,
 			ArrayList<Double> drinkBAC) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < drinkSecRaw.size(); i++) {
-			if (i + 1 == drinkSecRaw.size()){
-				int one=drinkSecRaw.get(i);
-				int two=drinkSecRaw.get(i) + 3600;
-				double three=drinkBAC.get(i);
-				sliceArray.add(new TrendsSliceItem(one,two
-						,three ));
-				int n=0+1;
-			}
-			else
+			if (i + 1 == drinkSecRaw.size()) {
+				int one = drinkSecRaw.get(i);
+				int two = drinkSecRaw.get(i) + 3600;
+				double three = drinkBAC.get(i);
+				sliceArray.add(new TrendsSliceItem(one, two, three));
+				int n = 0 + 1;
+			} else
 				sliceArray.add(new TrendsSliceItem(drinkSecRaw.get(i),
 						drinkSecRaw.get(i + 1), drinkBAC.get(i)));
 		}

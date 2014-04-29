@@ -660,16 +660,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		db.execSQL(query);
 		db.close();
 	}
-	
-	public void deleteAllVariables(String name){
+
+	public void deleteAllVariables(String name) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		String query = "DELETE FROM " + TABLE_QUES + " WHERE " +
-				QUES_KEY_VAR + "='" + name + "';";
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " + QUES_KEY_VAR
+				+ "='" + name + "';";
 		db.execSQL(query);
 		db.close();
 	}
-	
-	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore){
+
+	public void deleteAllVariablesByValue(String name, String value) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		String query = "DELETE FROM " + TABLE_QUES + " WHERE " + QUES_KEY_VAR
+				+ "='" + name + "' AND "+QUES_KEY_VALUE+" = '"
+				+ value + "';";
+		db.execSQL(query);
+		db.close();
+	}
+
+	public void deleteVaribles(ArrayList<String> names, DatabaseStore dbstore) {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String variable_str = "(" + QUES_KEY_VAR + "='" + names.get(0);
 		for (int i = 1; i < names.size(); i++) {
@@ -721,7 +730,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		else
 			return false;
 	}
-//check the existence of all instance of a variable
+
+	// check the existence of all instance of a variable
 	public Boolean variableExistAll(String variable) {
 		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>) this
 				.getAllVarValue(variable);

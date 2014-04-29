@@ -38,6 +38,7 @@ public class SocialChart extends Activity{
 		
 		//visual = new TimeBacGraph(this,groupName,hangoutCount,bacLevel);
 		//setContentView(visual);
+		setContentView(visual);
 
 	}
 

@@ -1,6 +1,7 @@
 package cornell.trickleapp;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.prefs.Preferences;
 
 import cornell.trickleapp.R;
@@ -28,19 +29,17 @@ import android.widget.TextView;
 
 public class InitialSurvey extends Activity implements OnClickListener {
 
-	FlyOutContainer root;
+	static FlyOutContainer root;
 	Button save, male, female, kg, lb;
 	EditText weight;
-	int weightResult=100;
-	String sexResult="f", weightUnitResult="lb";
-	AlarmManager alarmManager;
+	int weightResult = 100;
+	String sexResult = "Female", weightUnitResult = "lb";
 	DatabaseHandler db;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -56,30 +55,50 @@ public class InitialSurvey extends Activity implements OnClickListener {
 		save = (Button) findViewById(R.id.bSettingsSave);
 		lb = (Button) findViewById(R.id.bLb);
 		kg = (Button) findViewById(R.id.bKg);
-		weight=(EditText)findViewById(R.id.etWeight);
+		weight = (EditText) findViewById(R.id.etWeight);
 		male.setOnClickListener(this);
 		female.setOnClickListener(this);
 		save.setOnClickListener(this);
 		lb.setOnClickListener(this);
 		kg.setOnClickListener(this);
-
-		// sets the mark for 1st time use
-		db.updateOrAdd("firstTime", "here");
+		
+		//dont populate field when it's the 1st time setting up
+		if (db.variableExistAll("firstTime"))
+			initialize();
 	}
 
-	// first time reset. delete before launching of app.
-	private void initiate() {
+	// pulls data from database and populates the field based on that.
+	private void initialize() {
 		// TODO Auto-generated method stub
-		alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+		if (db.variableExistAll("gender")) {
+			sexResult = db.getAllVarValue("gender").get(0).value;
+		}
+		if (db.variableExistAll("weight")) {
+			weightResult = Integer
+					.parseInt(db.getAllVarValue("weight").get(0).value);
+		}
+		if (db.variableExistAll("weight_unit")) {
+			List<DatabaseStore> dummy=db.getAllVarValue("weight_unit");
+			weightUnitResult = db.getAllVarValue("weight_unit").get(0).value;
+		}
+		//Selects options that are previously recorded in the database
+		if (sexResult.equals("Male")){
+			male.setSelected(true);
+		}
+		if (sexResult.equals("Female")){
+			male.setSelected(true);
+		}
+		if (sexResult.equals("Male")){
+			female.setSelected(true);
+		}
+		if (weightUnitResult.equals("lb")){
+			lb.setSelected(true);
+		}
+		if (weightUnitResult.equals("kg")){
+			kg.setSelected(true);
+		}
+		weight.setText(""+weightResult);
 
-		SharedPreferences getPreference = PreferenceManager
-				.getDefaultSharedPreferences(getBaseContext());
-		SharedPreferences.Editor preferenceEditor = getPreference.edit();
-		// preferenceEditor.putBoolean("sleepInEvaluation", false);
-		preferenceEditor.putBoolean("exerciseInEvaluation", false);
-		preferenceEditor.putBoolean("productivityInEvaluation", false);
-		// preferenceEditor.putBoolean("socialInEvaluation", false);
-		preferenceEditor.commit();
 	}
 
 	@Override
@@ -87,52 +106,64 @@ public class InitialSurvey extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.bMale:
-			sexResult="m";
+			sexResult = "Male";
 			male.setSelected(true);
 			female.setSelected(false);
 			break;
 		case R.id.bFemale:
-			sexResult="f";
+			sexResult = "Female";
 			female.setSelected(true);
 			male.setSelected(false);
 			break;
 		case R.id.bLb:
-			weightUnitResult="kg";
+			weightUnitResult = "lb";
 			lb.setSelected(true);
 			kg.setSelected(false);
 			break;
 		case R.id.bKg:
-			weightUnitResult="lb";
+			weightUnitResult = "kg";
 			kg.setSelected(true);
 			lb.setSelected(false);
 			break;
 		case R.id.bSettingsSave:
-			weightResult=Integer.getInteger(weight.getText().toString());
-			if (sexResult=="m"){
-				
+			weightResult = Integer.parseInt(weight.getText().toString());
+			// adds the gender
+			if (db.variableExistAll("gender")) {
+				db.deleteAllVariables("gender");
 			}
-			if (sexResult=="f"){
-				
+			db.addValue("gender", sexResult);
+
+			// sets the unit for weight to kg BUT stores value (in lb)
+			if (weightUnitResult.equals("kg")) {
+				if (db.variableExistAll("weight")) {
+					db.deleteAllVariables("weight");
+				}
+				// converts from kg to lb and rounds to the nearest integer and
+				// stores it
+				db.addValue("weight", (int) (0.453592 * weightResult));
+				if (db.variableExistAll("weight_unit")) {
+					db.deleteAllVariables("weight_unit");
+				}
+				db.addValue("weight_unit", "kg");
 			}
-			if (weightUnitResult=="kg"){
-				
+			// sets the unit for weight to lb and stores value (in lb)
+			if (weightUnitResult.equals("lb")) {
+				if (db.variableExistAll("weight")) {
+					db.deleteAllVariables("weight");
+				}
+				db.addValue("weight", weightResult);
+				if (db.variableExistAll("weight_unit")) {
+					db.deleteAllVariables("weight_unit");
+				}
+				db.addValue("weight_unit", "lb");
 			}
-			if (weightUnitResult=="lb"){
-				
+			// sets the mark for 1st time use proceed to home page afterwards
+			if (!db.variableExistAll("firstTime")){
+				db.addValue("firstTime", "1");
+				Intent goToThisPage=new Intent(this,MainMenu3.class);
+				startActivity(goToThisPage);
 			}
-			/** test.setText("TESTED");
-			SharedPreferences getPrefs = PreferenceManager
-					.getDefaultSharedPreferences(getBaseContext());
-			SharedPreferences.Editor editPrefs = getPrefs.edit();
-			editPrefs.putBoolean("initialSurvey", true);
-			editPrefs.putString("goal", "" + goal);
-			editPrefs.commit();
-			preferenceCheck();
-			Intent goToMenu = new Intent(this, MainMenu.class);
-			startActivity(goToMenu);
-			**/
 			break;
-			
 
 		}
 
@@ -140,7 +171,6 @@ public class InitialSurvey extends Activity implements OnClickListener {
 
 	// check if the categories for evaluations are checked, if yes: check it in
 	// settings.
-	
 
 	@Override
 	protected void onPause() {
@@ -150,15 +180,5 @@ public class InitialSurvey extends Activity implements OnClickListener {
 		finish();
 	}
 
-	// currently reminds the user 24 hours since 1st use
-	public void setAlarm() {
-		Intent intent = new Intent(this, ReminderAlarm.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
-				intent, 0);
-
-		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-				System.currentTimeMillis(), (86400000), pendingIntent);
-		// System.currentTimeMillis(), (5000), pendingIntent);
-	}
 
 }

@@ -1,4 +1,4 @@
-package cornell.eickleapp;
+package cornell.trickleapp;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,6 +34,9 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 	DatabaseHandler db;
 
+	private static FlyOutContainer root;
+	long sevenDays= 604800000,everyDay=86400000L,month=2160000000L;
+	
 	Button greenBACButton, yellowBACButton, redBACButton, DaysPerWeek,
 			DrinksPerOuting, DaysPerMonth, DrinksPerMonth, DollarsPerMonth,
 			finish, track;
@@ -51,8 +54,10 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.goalslayout, null);
 
-		setContentView(R.layout.goalslayout);
+		this.setContentView(root);
 		greenBACButton = (Button) findViewById(R.id.bGreenBAC);
 		yellowBACButton = (Button) findViewById(R.id.bYellowBAC);
 		redBACButton = (Button) findViewById(R.id.bRedBAC);
@@ -96,22 +101,22 @@ public class GoalsLayout extends Activity implements OnClickListener {
 		// to show the checked static page for goals setting from previous
 		// sessions
 		if (db.variableExistAll("goal_checked")) {
-			List<DatabaseStore> goals_checked = db
+			List<DatabaseStore> goal_checked = db
 					.getAllVarValue("goal_checked");
-			if (!goals_checked.isEmpty()) {
-				for (int i = 0; i < goals_checked.size(); i++) {
-					String dummy = goals_checked.get(i).value;
-					if (goals_checked.get(i).value.equals("1")) {
+			if (!goal_checked.isEmpty()) {
+				for (int i = 0; i < goal_checked.size(); i++) {
+					String dummy = goal_checked.get(i).value;
+					if (goal_checked.get(i).value.equals("1")) {
 						cbDaysPerWeek.setChecked(true);
 						DaysPerWeek.setText(db.getAllVarValue(
 								"goal_DaysPerWeek").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("2")) {
+					if (goal_checked.get(i).value.equals("2")) {
 						cbDrinksPerOuting.setChecked(true);
 						DrinksPerOuting.setText(db.getAllVarValue(
 								"goal_DrinksPerOuting").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("3")) {
+					if (goal_checked.get(i).value.equals("3")) {
 						cbBAC.setChecked(true);
 
 						String colorSelected = db.getAllVarValue(
@@ -140,17 +145,17 @@ public class GoalsLayout extends Activity implements OnClickListener {
 									"goal_BAC_val").get(0).value);
 						}
 					}
-					if (goals_checked.get(i).value.equals("4")) {
+					if (goal_checked.get(i).value.equals("4")) {
 						cbDaysPerMonth.setChecked(true);
 						DaysPerMonth.setText(db.getAllVarValue(
 								"goal_DaysPerMonth").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("5")) {
+					if (goal_checked.get(i).value.equals("5")) {
 						cbDrinksPerMonth.setChecked(true);
 						DrinksPerMonth.setText(db.getAllVarValue(
 								"goal_DrinksPerMonth").get(0).value);
 					}
-					if (goals_checked.get(i).value.equals("6")) {
+					if (goal_checked.get(i).value.equals("6")) {
 						cbDollarsPerMonth.setChecked(true);
 						DollarsPerMonth.setText(db.getAllVarValue(
 								"goal_DollarsPerMonth").get(0).value);
@@ -205,30 +210,54 @@ public class GoalsLayout extends Activity implements OnClickListener {
 			progressBarGeneral(4, DollarsPerMonth);
 			break;
 		case R.id.bFinish:
+			//int dummy=db.getAllVarValue("goal_DaysPerWeek").size();
 			// if these are checked store them into the database
 			// the following array will have values of 1 to 6
 			// corresponding
 			// to whether or not checkboxes are checked
 			// resets all values in goals checklist entry to clear for new entry
-			if (db.variableExistAll("goal_checked"))
-				db.clearAllValues("goal_checked");
+			if (db.variableExistAll("goal_checked")){
+				db.deleteAllVariables("goal_checked");
+				db.deleteAllVariables("goal_DaysPerWeek");
+				db.deleteAllVariables("goal_DrinksPerOuting");
+				db.deleteAllVariables("goal_BAC_color");
+				db.deleteAllVariables("goal_BAC_val");
+				db.deleteAllVariables("goal_DaysPerMonth");
+				db.deleteAllVariables("goal_DrinksPerMonth");
+				db.deleteAllVariables("goal_DollarsPerMonth");
+			}
 
 			if (cbDaysPerWeek.isChecked()) {
 				// store
+				if (db.variableExistAll("goal_DaysPerWeek"))
+					db.deleteAllVariables("goal_DaysPerWeek");
 				db.updateOrAdd("goal_DaysPerWeek", DaysPerWeek.getText()
 						.toString());
 				db.addValue("goal_checked", 1);
+				setAlarm( sevenDays, 1);// 7 days
+				//db.addValue("star_DaysPerWeek", 0);
 			}
 			if (cbDrinksPerOuting.isChecked()) {
 				// store
+
+				if (db.variableExistAll("goal_DrinksPerOuting"))
+					db.deleteAllVariables("goal_DrinksPerOuting");
 				db.updateOrAdd("goal_DrinksPerOuting", DrinksPerOuting
 						.getText().toString());
 
 				db.addValue("goal_checked", 2);
+				//db.addValue("star_DrinksPerOuting", 0);
+				setAlarm(everyDay,2);// every day
 			}
 			// check if checkbox is checked, if yes store both color of
 			// bac+Value (1=green 2=yellow 3=red)
 			if (cbBAC.isChecked()) {
+
+				if (db.variableExistAll("goal_BAC_color"))
+					db.deleteAllVariables("goal_BAC_color");
+
+				if (db.variableExistAll("goal_BAC_val"))
+					db.deleteAllVariables("goal_BAC_val");
 				if (greenBACButton.isSelected()) {
 					// =bGreenBAC.getText();
 
@@ -256,29 +285,44 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 					db.addValue("goal_checked", 3);
 				}
-
+				//db.addValue("star_BAC", 0);
+				setAlarm(everyDay, 3);// everyday
 			}
 			if (cbDaysPerMonth.isChecked()) {
 				// store
+				if (db.variableExistAll("goal_DaysPerMonth"))
+					db.deleteAllVariables("goal_DaysPerMonth");
 				db.updateOrAdd("goal_DaysPerMonth", DaysPerMonth.getText()
 						.toString());
 
 				db.addValue("goal_checked", 4);
+				setAlarm(month, 4);// 25 days or a month
+				//db.addValue("star_DaysPerMonth", 0);
 			}
 			if (cbDrinksPerMonth.isChecked()) {
 				// store
+
+				if (db.variableExistAll("goal_DrinksPerMonth"))
+					db.deleteAllVariables("goal_DrinksPerMonth");
 				db.updateOrAdd("goal_DrinksPerMonth", DrinksPerMonth.getText()
 						.toString());
 
 				db.addValue("goal_checked", 5);
+				setAlarm(month, 5);// 25 days or a month
+				//db.addValue("star_DrinksPerMonth", 0);
 			}
 			if (cbDollarsPerMonth.isChecked()) {
 				// store
+
+				if (db.variableExistAll("goal_DollarsPerMonth"))
+					db.deleteAllVariables("goal_DollarsPerMonth");
 				db.updateOrAdd("goal_DollarsPerMonth", DollarsPerMonth
 						.getText().toString());
 				db.addValue("goal_checked", 6);
+
+				setAlarm(month, 6);// 25 days or a month
+				//db.addValue("star_DollarsPerMonth", 0);
 			}
-			setAlarm(604800000);// 7 days
 			break;
 		}
 
@@ -444,10 +488,12 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 	// if the checkbox is confirmed, set the alarm designated for that specific
 	// period
-	private void setAlarm(int miliSec) {
+	private void setAlarm(long miliSec, int id) {
 
 		Intent intent = new Intent(this, ReminderAlarm.class);
-		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0,
+		intent.putExtra("id", id);
+
+		PendingIntent pendingIntent = PendingIntent.getBroadcast(this, id,
 				intent, 0);
 
 		Calendar calendar = Calendar.getInstance();
@@ -459,7 +505,9 @@ public class GoalsLayout extends Activity implements OnClickListener {
 
 		long miliForAlarm = todayMili + miliSec;
 
-		alarmManager.set(AlarmManager.RTC_WAKEUP, miliForAlarm, pendingIntent);
+		alarmManager.cancel(pendingIntent);
+		//alarmManager.set(AlarmManager.RTC_WAKEUP, miliForAlarm, pendingIntent);
+		alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, miliForAlarm, miliSec, pendingIntent);
 	}
 
 	@Override
