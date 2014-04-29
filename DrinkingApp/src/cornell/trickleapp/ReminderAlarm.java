@@ -49,7 +49,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 			 * alarm else ringAlarm = false;
 			 */
 			if (true) {
-				Intent homeIntent = new Intent(context, GoalsTracking.class);
+				//Intent homeIntent = new Intent(context, GoalsTracking.class);
 				noteManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
 				CharSequence from = "Trickle";
@@ -80,13 +80,13 @@ public class ReminderAlarm extends BroadcastReceiver {
 				} else {
 					message = ":(";
 				}
-				PendingIntent contentIntent = PendingIntent.getActivity(
-						context, 0, homeIntent, 0);
+			//	PendingIntent contentIntent = PendingIntent.getActivity(
+			//			context, 0, homeIntent, 0);
 				@SuppressWarnings("deprecation")
 				Notification notif = new Notification(
 						R.drawable.trickleiconnote, message,
 						System.currentTimeMillis());
-				notif.setLatestEventInfo(context, from, message, contentIntent);
+				//notif.setLatestEventInfo(context, from, message, contentIntent);
 
 				notif.defaults = Notification.DEFAULT_VIBRATE;
 				noteManager.notify(MainMenu.uniqueID, notif);

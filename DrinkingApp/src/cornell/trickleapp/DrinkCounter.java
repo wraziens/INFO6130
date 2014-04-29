@@ -103,7 +103,7 @@ public class DrinkCounter extends Activity {
 		Date delayedDate = DatabaseStore.getDelayedDate();
 		
 		ArrayList<DatabaseStore> drink_count_vals = (ArrayList<DatabaseStore>) db
-				.getVarValuesDelay("drink_count", new Date());
+				.getVarValuesDelay("drink_count", date);
 		
 		if(drink_count_vals != null){
 			drink_count_vals = DatabaseStore.sortByTime(drink_count_vals);
@@ -119,7 +119,7 @@ public class DrinkCounter extends Activity {
 				}
 			}else{
 				start_date = delayedDate;
-				db.addDelayValue("start_date", start_date);
+				db.addValueAtDate("start_date", start_date, start_date);
 			}
 			
 			drink_count = Integer.parseInt(drink_count_vals.get(
@@ -145,11 +145,11 @@ public class DrinkCounter extends Activity {
 					if(start_date != null){
 						drink_count = Integer.parseInt(yesterday_drink_count.get(
 							yesterday_drink_count.size()-1).value);
-					
 						double currentBAC = calculateBac(start_date, delayedDate, drink_count);
+
 						if (currentBAC > 0){	
 							//Add the start value to the db.
-							db.addDelayValue("start_date", start_date);
+							db.addValueAtDate("start_date", start_date, delayedDate);
 						
 							db.addDelayValue("drink_count", drink_count);
 							db.addDelayValue("bac", String.valueOf(currentBAC));
@@ -187,6 +187,23 @@ public class DrinkCounter extends Activity {
 		variables.add("bac");
 		variables.add("bac_color");
 		variables.add("hotdog");
+		
+		ArrayList<DatabaseStore> start_values = (ArrayList<DatabaseStore>)db.getVarValuesDelay(
+				"start_date", date);
+		if(start_values != null){
+			start_values = DatabaseStore.sortByTime(start_values);
+			Date date_val = drink_count_vals.get(drink_count_vals.size()-1).date;
+			DatabaseStore ds = start_values.get(start_values.size()-1);
+			Date last_start = DatabaseStore.retrieveDate(ds.value);
+			if (date_val.equals(last_start)){
+				db.deleteValue(ds);
+				if(start_values.size() > 1){
+					start_date = DatabaseStore.retrieveDate(start_values.get(start_values.size()-2).value);
+				}else{
+					start_date = null;
+				}
+			}
+		}
 		
 		ArrayList<DatabaseStore> hd_val = ((ArrayList<DatabaseStore>)db
 				.getVarValuesForDay("hotdog",date));
@@ -273,9 +290,6 @@ public class DrinkCounter extends Activity {
 		if(number_drinks <= 0){
 			return 0.0;
 		}
-		if(start == null){
-			start();
-		}
 		
 		// get the users gender
 		ArrayList<DatabaseStore> stored_gender = (ArrayList<DatabaseStore>) db
@@ -309,15 +323,8 @@ public class DrinkCounter extends Activity {
 		//getTime returns in milliseconds. Divide by 1000 to convert to seconds, 60 to convert
 				// to minutes and 60 to convert to hours.
 		long time_elapsed  =  (end.getTime()-start.getTime()) / (1000 * 60 * 60);
-		
-		if (number_drinks > 1){
-			double lastBac = ((0.806 * (number_drinks - 1) * 1.2) / (gender_constant * weight_kilograms))
-					- (metabolism_constant * time_elapsed);
-		}
-		
 		double bac_update = ((0.806 * number_drinks * 1.2) / (gender_constant * weight_kilograms))
 					- (metabolism_constant * time_elapsed);
-	
 		return bac_update;
 	}
 
@@ -343,7 +350,7 @@ public class DrinkCounter extends Activity {
 			if(lastBAC <= 0){
 				drink_count = 0;
 				start_date = delayedDate;
-				db.addDelayValue("start_date", start_date);
+				db.addValueAtDate("start_date", start_date, start_date);
 			}
 		}
 		

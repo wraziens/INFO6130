@@ -11,9 +11,9 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
@@ -21,6 +21,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,15 +34,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
-public class DrinkCalendar extends Activity implements OnClickListener {
+public class DrinkCalendar extends Activity implements OnClickListener{
 	FlyOutContainer root;
 	int selectedMonth, selectedYear;
 	Calendar calendar = Calendar.getInstance();
 	GridView drinkCalendar;
 	TextView monthDisplay, yearDisplay, bottomDisplay, infoDisplay, drinkCount,drinkTime,drinkBac,monthOverview, monthMoney,
 			dogCount;
+	ImageView wine_icon, beer_icon, liquor_icon;
 	RelativeLayout drink_img, dog_img;
+	
 
 	ArrayList<Button> drinkBacButtons = new ArrayList<Button>();
 	ArrayList<String> numbers = new ArrayList<String>();
@@ -66,6 +71,18 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 	private GestureDetectorCompat mDetector;
 	private DrinkCalendar dc;
 
+	private int windowWidth = 0;
+	private int windowHeight = 0;
+	private LinearLayout mainLayout;
+	private Context context;
+	private ArrayList<DatabaseStore> drinkCounts;
+	private ArrayList<Double> bacVals;
+	private ArrayList<TrendsSliceItem> morningCounts;
+	private ArrayList<TrendsSliceItem> eveningCounts;
+	private BacTime bacTime;
+	private TimeBacGraph visual;
+	ToggleButton morning, evening, after;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,7 +94,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 				R.layout.drinkcalendar, null);
 
 		this.setContentView(root);
-
+		context = this; 
 		db = new DatabaseHandler(this);
 		dc = this;
 		drinkCalendar = (GridView) findViewById(R.id.gvDrinkCalendar);
@@ -89,6 +106,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		drinkBac = (TextView) findViewById(R.id.month_bac);
 		monthOverview = (TextView) findViewById(R.id.month_overview);
 		monthMoney = (TextView) findViewById(R.id.month_money);
+
 		
 		click = (LinearLayout) findViewById(R.id.clickAppear);
 
@@ -151,6 +169,27 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		}
 	}
 
+	private int getMonthlyTotal(ArrayList<DatabaseStore> drinks){
+		
+		int month_drink = 0;
+		DatabaseStore last = null;
+		for(int i=0; i<drinks.size();i++){
+			DatabaseStore ds = drinks.get(i);
+			if(last != null){
+				if(ds.day > last.day){
+					if(Integer.parseInt(ds.value) == 1){
+						month_drink++;
+					}
+				}else{
+					month_drink++;
+				}
+			}
+			last = ds;
+		}
+		month_drink++;
+		return month_drink;
+	}
+	
 	/*
 	 * Must sort both color and values by time before calling.
 	 */
@@ -193,7 +232,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 						double time = (end.getTime() - start.getTime()) / (1000 * 60 * 60) + 1;
 						
 						//monthly aggregate values
-						month_total_drink += cnt;
 						day_time_counts.add(time);
 						cnt = 1;
 						
@@ -217,7 +255,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			day_colors.add(max_color);
 			day_counts.add(cnt);
 			
-			month_total_drink += cnt;
 			double time = (end.getTime() - start.getTime())/(1000 * 60 * 60) + 1;
 			day_time_counts.add(time);
 
@@ -294,6 +331,8 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		ArrayList<DatabaseStore> month_colors = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("bac_color", date);
 		ArrayList<DatabaseStore> month_money = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("money", date);
 
+		month_total_drink = getMonthlyTotal(month_drinks);
+		
 		if (month_bac!=null && month_drinks!=null && month_colors != null) {
 			month_colors = DatabaseStore.sortByTime(month_colors);
 			month_bac = DatabaseStore.sortByTime(month_bac);
@@ -333,10 +372,6 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			month_money += count;
 		}	
 	}
-	
-	@Override
-	public void onClick(View v) {
-	}
 
 	private String getMonthFromInt(int num){
 		String month = "";
@@ -346,12 +381,142 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		return month;
 	}
 	
+	private void constructLists(){
+		morningCounts.clear();
+		eveningCounts.clear();
+		DatabaseStore lastEvening = null;
+		int lastEveningIndex = -1;
+		DatabaseStore lastMorning = null;
+		int lastMorningIndex = -1;
+		//int lastRemovedEvening = 0;
+		//int lastRemovedMorning = 0;
+		int lastRemoved = 0;
+
+		
+		for(int i=0; i<drinkCounts.size(); i++) {
+			DatabaseStore value = drinkCounts.get(i);
+			GregorianCalendar gc = new GregorianCalendar();
+			gc.setTime(value.date);
+			gc.add(Calendar.HOUR_OF_DAY, 6);
+			
+			
+			if(value.time_seconds >= 43200){
+				value.setDate(gc.getTime());
+				if (lastEvening!=null){
+					TrendsSliceItem item = new TrendsSliceItem(lastEvening.time_seconds, value.time_seconds, i ,Double.parseDouble(lastEvening.value));
+					if (lastRemoved> 0){
+						item.setDrinkCount(item.getDrinkCount() -lastRemoved);
+
+					}
+					int removed = bacTime.adjustDrinkCount(item);
+
+					lastRemoved += Math.min(removed, i);
+					eveningCounts.add(item);
+				} else if(lastMorning != null){
+					TrendsSliceItem item = new TrendsSliceItem(lastMorning.time_seconds, value.time_seconds, i,Double.parseDouble(lastMorning.value));
+					if (lastRemoved> 0){
+						item.setDrinkCount(item.getDrinkCount() -lastRemoved);
+					}
+					int removed = bacTime.adjustDrinkCount(item);
+					morningCounts.add(item);
+					lastMorning = null;
+				}
+				lastEvening = value;
+				lastEveningIndex = i;
+			}else{
+				value.setDate(gc.getTime());
+				if (lastMorning!=null){
+					TrendsSliceItem item = new TrendsSliceItem(lastMorning.time_seconds, value.time_seconds, i, Double.parseDouble(lastMorning.value));
+					if (lastRemoved > 0){
+						item.setDrinkCount(item.getDrinkCount() -lastRemoved);
+					}
+					int removed = bacTime.adjustDrinkCount(item);
+					lastRemoved +=Math.min(removed, i);
+					morningCounts.add(item);
+				}
+				lastMorning = value;
+				lastMorningIndex = i;
+			}
+		}
+		if (lastEvening != null){
+			TrendsSliceItem item = new TrendsSliceItem(lastEvening.time_seconds, -1, drinkCounts.size(), Double.parseDouble(lastEvening.value));
+			if (lastRemoved> 0){
+				item.setDrinkCount(drinkCounts.size() -lastRemoved);
+				
+			}
+			eveningCounts.add(item);
+		}
+		if(lastMorning != null){
+			TrendsSliceItem item = new TrendsSliceItem(lastMorning.time_seconds, -1, drinkCounts.size(), Double.parseDouble(lastMorning.value));
+			if (lastRemoved > 0){
+				item.setDrinkCount(item.getDrinkCount() -lastRemoved);
+			}
+			morningCounts.add(item);
+		}
+	}
+	
 	public void showDayInfo(double bac, int index){
 		String day_day = day_values.get(index).day_week;
+		Date date_val = day_values.get(index).date; 
 		final Dialog dialog = new Dialog(this);
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		dialog.setContentView(R.layout.calendar_day_info);
+		
+		
+		
+		
+		//-------
+		bacTime = new BacTime(this);
+		db = new DatabaseHandler(this);
+		context = this;
+		Date date = new Date();
+		drinkCounts = (ArrayList<DatabaseStore>)db.getVarValuesForDay("bac", date_val);
+		ArrayList<DatabaseStore> drinks = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", date_val);
+		drinks = DatabaseStore.sortByTime(drinks);
+		
+		int rec_drinks=0;
+		if(Integer.parseInt(drinks.get(0).value)>1){
+			rec_drinks = drinks.size()-1;
+		}else{
+			rec_drinks = drinks.size();
+		}
+		
+		
+		morningCounts = new ArrayList<TrendsSliceItem>();
+		eveningCounts = new ArrayList<TrendsSliceItem>();
+		if (drinkCounts != null){
+			drinkCounts = DatabaseStore.sortByTime(drinkCounts);
+			constructLists();
+		}
+		
+		beer_icon = (ImageView)dialog.findViewById(R.id.beer_icon);
+		wine_icon = (ImageView) dialog.findViewById(R.id.wine_icon);
+		liquor_icon = (ImageView) dialog.findViewById(R.id.liquor_icon);
+		// initializes the necessary values
+		//setupTrendSliceItem(drinkSecRaw, drinkBAC);
+
+		visual = new TimeBacGraph(this, eveningCounts, morningCounts);
+		mainLayout = (LinearLayout) dialog.findViewById(R.id.pieGraph);
+		evening = (ToggleButton) dialog.findViewById(R.id.evening_button);
+		evening.setPressed(true);
+		morning = (ToggleButton) dialog.findViewById(R.id.morning_button);
+		after = (ToggleButton) dialog.findViewById(R.id.after_button);
+		evening.setOnClickListener(this);
+		morning.setOnClickListener(this);
+		after.setOnClickListener(this);
+		evening.setChecked(true);
+		// get window width
+		Display display = getWindowManager().getDefaultDisplay();
+		windowWidth = display.getWidth(); // deprecated
+		windowHeight = display.getHeight(); // deprecated
+		visual.bringToFront();
+		
+		mainLayout.addView(visual, windowWidth, windowHeight/2);
+		
+		//-----------
+		
+		
 		
 		//dialog.setTitle(title);
 		
@@ -374,7 +539,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		TextView bac_text = (TextView) dialog.findViewById(R.id.day_bac);
 		bac_text.setText(formatter.format(bac) + " max BAC");
 		TextView count_text = (TextView) dialog.findViewById(R.id.day_cal_drink_count);
-		count_text.setText(day_counts.get(index) + " drinks recorded");
+		count_text.setText(String.valueOf(rec_drinks) + " drinks recorded");
 		
 		
 		TextView rate_text = (TextView) dialog.findViewById(R.id.day_rate);
@@ -392,7 +557,28 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 			}
 		});
 		
+		ArrayList<DatabaseStore> beer_result = (ArrayList<DatabaseStore>) db.getVarValuesForDay("type_beer", date_val);
+		ArrayList<DatabaseStore> wine_result = (ArrayList<DatabaseStore>) db.getVarValuesForDay("type_wine", date_val);
+		ArrayList<DatabaseStore> liquor_result = (ArrayList<DatabaseStore>) db.getVarValuesForDay("type_liquor", date_val);
 		
+		if(beer_result != null){
+			int val = Integer.parseInt(beer_result.get(0).value);
+			if(val == 1){
+				beer_icon.setImageResource(R.drawable.ic_calendar_beer);
+			}
+		}
+		if(wine_result != null){
+			int val = Integer.parseInt(wine_result.get(0).value);
+			if(val == 1){
+				wine_icon.setImageResource(R.drawable.ic_calendar_wine);
+			}
+		}
+		if(liquor_result != null){
+			int val = Integer.parseInt(liquor_result.get(0).value);
+			if(val == 1){
+				liquor_icon.setImageResource(R.drawable.ic_calendar_liquor);
+			}
+		}
 		
 		ImageView face = (ImageView)dialog.findViewById(R.id.drink_calendar_day);
 		//Update the face color
@@ -484,6 +670,31 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		finish();
 	}
 
+	@Override
+	public void onClick(View v) {
+	switch (v.getId()) {
+	    case R.id.evening_button:
+	    	morning.setChecked(false);
+			evening.setChecked(true);
+			after.setChecked(false);
+			
+			visual.setEvening();
+	        break;
+	    case R.id.morning_button:
+	    	morning.setChecked(true);
+			evening.setChecked(false);
+			after.setChecked(false);
+			visual.setMorning();
+	       break;
+	    case R.id.after_button:
+	    	morning.setChecked(false);
+			evening.setChecked(false);
+			after.setChecked(true);
+			visual.setAfter();
+			break;
+	    }   
+	}
+	
 	class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 		private static final int SWIPE_MIN_DISTANCE = 30;
 		private static final int SWIPE_MAX_OFF_PATH = 150;

@@ -122,7 +122,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		DatabaseStore ds = DatabaseStore.DatabaseDateStore(variable, dateVal, date);
 		addQuestion(ds);
 	}
-	
+	public void addValueAtDate(String variable, Date dateVal, Date date) {
+		DatabaseStore ds = DatabaseStore.DatabaseDateStore(variable, dateVal, date);
+		addQuestion(ds);
+	}
+	public void addValueAtDate(String variable, String strVal, Date date) {
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable, strVal, date);
+		addQuestion(ds);
+	}
+	public void addValueAtDate(String variable, int intVal, Date date) {
+		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable, String.valueOf(intVal), date);
+		addQuestion(ds);
+	}
+	public void addValueAtDate(String variable, double dblVal, Date date) {
+		DatabaseStore ds = DatabaseStore.DatabaseDoubleStore(variable, String.valueOf(dblVal), date);
+		addQuestion(ds);
+	}
 	public void addValueTomorrow(String variable, String str_value) {
 		Date date = new Date();
 		// Add a day to our date
