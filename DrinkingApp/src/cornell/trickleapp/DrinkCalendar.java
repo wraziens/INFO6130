@@ -465,10 +465,6 @@ public class DrinkCalendar extends Activity implements OnClickListener{
 		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		dialog.setContentView(R.layout.calendar_day_info);
 		
-		
-		
-		
-		//-------
 		bacTime = new BacTime(this);
 		db = new DatabaseHandler(this);
 		context = this;

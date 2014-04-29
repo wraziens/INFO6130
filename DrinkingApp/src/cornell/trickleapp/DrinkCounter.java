@@ -328,8 +328,6 @@ public class DrinkCounter extends Activity {
 	@SuppressLint("NewApi")
 	public void hadDrink(View view) {
 		clicked=true;
-		
-		Date date = new Date();
 		Date delayedDate = DatabaseStore.getDelayedDate();
 		
 		//First drink of the session, add to db

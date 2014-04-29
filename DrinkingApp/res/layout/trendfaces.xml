@@ -2,24 +2,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-      	<LinearLayout
+    
+    <LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:layout_marginTop="10dp"
 		android:orientation="horizontal"
 		android:layout_weight="1">
-      <TextView
-                android:id="@+id/trendDate"
-                android:layout_width="120dp"
-                android:layout_height="50dp"
-                android:background="@drawable/trends_tab"
-                android:gravity="center"
-                android:text="April"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ffffff"
-                android:textSize="18dp" />
-      </LinearLayout>
+     
+     	<TextView
+        	android:id="@+id/trendDate"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:background="@drawable/trends_tab"
+            android:gravity="center"
+            android:text="April"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#ffffff"
+            android:textSize="18dp" />
+    </LinearLayout>
+	
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -27,23 +30,69 @@
 		android:layout_marginTop="10dp"
 		android:orientation="horizontal"
 		android:layout_weight="1">
-		<ImageView
-            android:id="@+id/memory"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_memory_filled"/>
-	    <ImageView
-            android:id="@+id/vomit"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_vomit_filled"/>
+	
+	    <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			<TextView
+   				android:id="@+id/mem_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Memory Loss"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/>  
+			<ImageView
+	            android:id="@+id/memory"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_memory_filled"/>
+			<TextView
+   				android:id="@+id/memory_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/>  
+		     
 		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			<TextView
+   				android:id="@+id/vomit_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Vomitting"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/> 
+			<ImageView
+	            android:id="@+id/vomit"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_vomit_filled"/>
+			<TextView
+   				android:id="@+id/vomit_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/>  
+		</LinearLayout>
+	</LinearLayout>
+		
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -51,53 +100,159 @@
 		android:layout_marginTop="10dp"
 		android:orientation="horizontal"
 		android:layout_weight="1">
-	    <ImageView
-            android:id="@+id/nausea"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_nausea_filled"/>
-	    <ImageView
-            android:id="@+id/fatigue"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_fatigue_filled"/>
-	    <ImageView
-            android:id="@+id/dizzy"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_dizziness_filled"/>
+	    <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+			<TextView
+   				android:id="@+id/nausea_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Nausea"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/> 
+		    <ImageView
+	            android:id="@+id/nausea"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_nausea_filled"/>
+	   	 	<TextView
+   				android:id="@+id/nausea_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/>  
+		</LinearLayout>  
+       	 <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+	   	 	<TextView
+   				android:id="@+id/fatigue_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Fatigue"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/> 
+		    <ImageView
+	            android:id="@+id/fatigue"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_fatigue_filled"/>
+		    <TextView
+   				android:id="@+id/fatigue_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/>  
 		</LinearLayout>
 		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+		    <TextView
+   				android:id="@+id/dizzy_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Dizziness"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/> 
+		    <ImageView
+	            android:id="@+id/dizzy"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_dizziness_filled"/>
+		    <TextView
+   				android:id="@+id/dizzy_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/> 
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
 		android:layout_marginTop="10dp"
 		android:orientation="horizontal"
 		android:layout_weight="1">
-	    <ImageView
-            android:id="@+id/headache"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_headache_filled"/>
-	    <ImageView
-            android:id="@+id/regret"
-            android:layout_marginTop="5dp"
-         	android:layout_width="120dp"
-          	android:layout_height="120dp"
-          	android:layout_weight="1"
-          	android:background="@android:color/transparent"
-          	android:src="@drawable/smiley_regret_filled"/>
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+		    <TextView
+   				android:id="@+id/headache_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Headache"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/> 
+		   	<ImageView
+	            android:id="@+id/headache"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_headache_filled"/>
+	   		<TextView
+   				android:id="@+id/headache_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/> 
 		</LinearLayout>
+	    
+	    <LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical">
+	   		<TextView
+   				android:id="@+id/regret_label"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="Regret"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="18sp"/> 
+		    <ImageView
+	            android:id="@+id/regret"
+	            android:layout_marginTop="5dp"
+	         	android:layout_width="120dp"
+	          	android:layout_height="120dp"
+	          	android:layout_weight="1"
+	          	android:background="@android:color/transparent"
+	          	android:src="@drawable/smiley_regret_filled"/>
+	   		<TextView
+   				android:id="@+id/dizzy_count"
+       			android:layout_width="fill_parent"
+		       	android:layout_height="wrap_content"
+		       	android:gravity="center"
+		       	android:text="1/2"
+		       	android:textColor="#6bbe42"
+		       	android:textSize="24sp"/> 
+		 </LinearLayout>
+	</LinearLayout>
 </LinearLayout>

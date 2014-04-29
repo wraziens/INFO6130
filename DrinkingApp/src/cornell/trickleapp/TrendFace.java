@@ -28,6 +28,8 @@ public class TrendFace extends Activity {
 	private ArrayList<DatabaseStore> month_regret, month_dizzy, month_nausea, month_vomit, month_headache, month_memory, month_fatigue;
 	private HashMap<String, ArrayList<Date>> symptoms;
 	
+	private int total_drinking_days;
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
@@ -73,7 +75,12 @@ public class TrendFace extends Activity {
 		month_memory = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("symptom_memory", date);
 		month_fatigue = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("symptom_fatigue", date);
 		
+		ArrayList<DatabaseStore> drinking_days = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("drank", date);
+		if (drinking_days !=  null){
+			total_drinking_days = drinking_days.size();
+		}
 		
+		Toast.makeText(TrendFace.this, "total drinking days" + total_drinking_days, Toast.LENGTH_SHORT).show();
 		
 		if(month_regret == null){
 			regret.setImageResource(R.drawable.smiley_regret_blank);
@@ -148,7 +155,10 @@ public class TrendFace extends Activity {
 		headache =  (ImageView) findViewById(R.id.headache);
 		memory =  (ImageView) findViewById(R.id.memory);
 		fatigue =  (ImageView) findViewById(R.id.fatigue);
+		
 		trendDate = (TextView)findViewById(R.id.trendDate);
+		
+		
 		
 		
 		//setup onclick listeners
