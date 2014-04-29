@@ -17,19 +17,22 @@ import android.widget.TextView;
 
 public class SocialVisualization extends Activity implements OnClickListener {
 	private SocialGraphics visual;
+
+	private static FlyOutContainer root;
 	private ArrayList<String> groupName = new ArrayList<String>();
 	private ArrayList<Integer> hangoutCount = new ArrayList<Integer>();
 	private ArrayList<Double> bacLevel = new ArrayList<Double>();
 	private Button dateLeft, dateRight;
 	private TextView dateMain;
 	private Button beer, wine;
-	private Button smileyNausia, smileyFatigue, smileyHeadache, smileyDizziness,
-			smileyMemory, smileyVomit;
+	private Button smileyNausia, smileyFatigue, smileyHeadache,
+			smileyDizziness, smileyMemory, smileyVomit;
 	private LinearLayout liquor;
 	private int windowWidth = 0;
 	private int windowHeight = 0;
 	private LinearLayout mainLayout;
 	private ArrayList<TrendsSliceItem> sliceArray = new ArrayList<TrendsSliceItem>();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -57,7 +60,10 @@ public class SocialVisualization extends Activity implements OnClickListener {
 		setupTrendSliceItem(drinkSecRaw, drinkBAC);
 
 		visual = new SocialGraphics(this, sliceArray);
-		setContentView(R.layout.trends);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.trends, null);
+
+		this.setContentView(root);
 		mainLayout = (LinearLayout) findViewById(R.id.llTesting);
 		// get window width
 		Display display = getWindowManager().getDefaultDisplay();
@@ -88,20 +94,19 @@ public class SocialVisualization extends Activity implements OnClickListener {
 				false, true);
 	}
 
-	//given arrays of time (sec) when drinks were counted and corresponding array of bac level
+	// given arrays of time (sec) when drinks were counted and corresponding
+	// array of bac level
 	private void setupTrendSliceItem(ArrayList<Integer> drinkSecRaw,
 			ArrayList<Double> drinkBAC) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < drinkSecRaw.size(); i++) {
-			if (i + 1 == drinkSecRaw.size()){
-				int one=drinkSecRaw.get(i);
-				int two=drinkSecRaw.get(i) + 3600;
-				double three=drinkBAC.get(i);
-				sliceArray.add(new TrendsSliceItem(one,two
-						,three ));
-				int n=0+1;
-			}
-			else
+			if (i + 1 == drinkSecRaw.size()) {
+				int one = drinkSecRaw.get(i);
+				int two = drinkSecRaw.get(i) + 3600;
+				double three = drinkBAC.get(i);
+				sliceArray.add(new TrendsSliceItem(one, two, three));
+				int n = 0 + 1;
+			} else
 				sliceArray.add(new TrendsSliceItem(drinkSecRaw.get(i),
 						drinkSecRaw.get(i + 1), drinkBAC.get(i)));
 		}

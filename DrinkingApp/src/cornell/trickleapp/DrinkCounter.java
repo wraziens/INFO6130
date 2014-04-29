@@ -378,7 +378,7 @@ public class DrinkCounter extends Activity {
 		t.show();
 		updateFace();
 		hadDrink(view);
-		setAlarm(10000,666);//666=unique notification id for morning after survey
+		setAlarm(43200000L,666);//666=unique notification id for morning after survey
 	}
 	
 	public void removeLastHandler(View view){

@@ -138,9 +138,9 @@ public class FlyOutContainer extends LinearLayout implements
 				.getResourceId(1, -1)));
 		navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons
 				.getResourceId(2, -1)));
-		navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
+		/*navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons
 				.getResourceId(3, -1)));
-
+*/
 		ListAdapter adapter = new NavDrawerListAdapter(this.getContext(),
 				navDrawerItems);
 
@@ -217,10 +217,6 @@ public class FlyOutContainer extends LinearLayout implements
 			break;
 		case 2:
 			goToThisPage = new Intent("cornell.trickleapp.INITIALSURVEY");
-			getContext().startActivity(goToThisPage);
-			break;
-		case 3:
-			goToThisPage = new Intent("cornell.trickleapp.GOALSTRACKING");
 			getContext().startActivity(goToThisPage);
 			break;
 
@@ -308,7 +304,7 @@ public class FlyOutContainer extends LinearLayout implements
 			break;
 		}
 		// initializes swiping left/right control
-		image_no = 0;
+		image_no = 1;
 		tvImagePlaceholder.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -356,7 +352,7 @@ public class FlyOutContainer extends LinearLayout implements
 		if (classTitle.equals("DrinkCalendar")) {
 			tutorialInitialization(3);
 		}
-		if (classTitle.equals("TrendsLayout")) {
+		if (classTitle.equals("SocialVisualization")) {
 			tutorialInitialization(4);
 		}
 		if (classTitle.equals("GoalsLayout")) {

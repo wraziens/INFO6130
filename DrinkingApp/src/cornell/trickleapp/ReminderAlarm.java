@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -19,45 +20,78 @@ import android.preference.PreferenceManager;
 public class ReminderAlarm extends BroadcastReceiver {
 	private NotificationManager noteManager;
 	DatabaseHandler db;
-	boolean reward = false;
+	private Boolean reward;
 	Boolean ringAlarm = true;
 	int id;
 	CharSequence message;
+	long sevenDays= 604800000,everyDay=86400000L,month=2160000000L;
+	Context alarm_context;
+	Intent receivedIntent;
+	boolean one, two, three, four, five, six;
+	private List<DatabaseStore> checkList;
+	AlarmManager alarmManager;
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onReceive(Context context, Intent arg1) {
 		// TODO Auto-generated method stub
-
+		receivedIntent = arg1;
+		alarm_context = context;
+		alarmManager = (AlarmManager) alarm_context
+				.getSystemService(Context.ALARM_SERVICE);
 		db = new DatabaseHandler(context);
+		if (db.variableExistAll("goal_checked")) {
+			checkList = db.getAllVarValue("goal_checked");
+		}
+
+		// see if id matches goals tht's currently being checked, if not then
+		// disregard rest of the code
 
 		id = arg1.getExtras().getInt("id");
-		//if notification for goals
+		// if notification for goals
 		if (id != 666) {
 			Intent homeIntent = new Intent(context, GoalsTracking.class);
 			noteManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
 			CharSequence from = "Trickle";
-
-			// if the goal is met:
-			notificationEvaluation();
-			if (reward) {
-				message = "New goal achieved, collect reward!";
-			} else {
-				message = ":(";
+			// see if the goal is currently being tracked in goals
+			boolean isChecked = false;
+			if (checkList != null) {
+				for (int i = 0; i < checkList.size(); i++) {
+					if (Integer.parseInt(checkList.get(i).value) == id)
+						isChecked = true;
+				}
 			}
-			PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
-					homeIntent, 0);
-			@SuppressWarnings("deprecation")
-			Notification notif = new Notification(R.drawable.trickleiconnote,
-					message, System.currentTimeMillis());
-			notif.setLatestEventInfo(context, from, message, contentIntent);
+			if (isChecked) {
+				// if the goal is met:
+				notificationEvaluation();
+				if (reward != null) {
+					if (reward) {
+						message = message
+								+ "New goal achieved, collect reward!";
+					} else {
+						message = message + ":(";
+					}
+					PendingIntent contentIntent = PendingIntent.getActivity(
+							context, 0, homeIntent, 0);
+					@SuppressWarnings("deprecation")
+					Notification notif = new Notification(
+							R.drawable.trickleiconnote, message,
+							System.currentTimeMillis());
+					notif.setLatestEventInfo(context, from, message,
+							contentIntent);
 
-			notif.defaults = Notification.DEFAULT_VIBRATE;
-			noteManager.notify(id, notif);
+					notif.defaults = Notification.DEFAULT_VIBRATE;
+					noteManager.notify(id, notif);
+				}
+			} else {
+				PendingIntent pendingIntent = PendingIntent.getBroadcast(
+						alarm_context, id, receivedIntent, 0);
+				alarmManager.cancel(pendingIntent);
+			}
 		}
-		//else notification for morning after survey
-		else{
+		// else notification for morning after survey
+		else {
 			Intent homeIntent = new Intent(context, AfterDrinkSurvey.class);
 			noteManager = (NotificationManager) context
 					.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -65,7 +99,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 
 			// if the goal is met:
 			notificationEvaluation();
-			message="How are you feeling?";
+			message = "How are you feeling?";
 			PendingIntent contentIntent = PendingIntent.getActivity(context, 0,
 					homeIntent, 0);
 			@SuppressWarnings("deprecation")
@@ -85,6 +119,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 
 		switch (id) {
 		case 1:
+			DatabaseStore something = db.getAllVarValue("goal_DaysPerWeek")
+					.get(0);
 			if (db.variableExistAll("drink_count")) {
 				Date date = new Date();
 				List<DatabaseStore> value_list = db.getVarValuesForWeek(
@@ -108,6 +144,12 @@ public class ReminderAlarm extends BroadcastReceiver {
 						reward = false;
 						db.deleteAllVariables("star_DaysPerWeek");
 					}
+				} else {
+					reward = true;
+					db.addValue("star_DaysPerWeek", 1);
+
+					db.addValue("reward_kiip", 1);
+					db.addValue("reward_kiip_home", 1);
 				}
 			} else {
 				reward = true;
@@ -115,6 +157,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 
 				db.addValue("reward_kiip", 1);
 				db.addValue("reward_kiip_home", 1);
+
 			}
 			message = "1";
 			break;
@@ -123,7 +166,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 			if (db.variableExistAll("drink_count")) {
 				Date date = new Date();
 				// evaluates from the day before
-				date.setTime(date.getTime() - 86400000);
+				date.setTime(date.getTime() - everyDay);
 				List<DatabaseStore> value_list = db.getVarValuesForDay(
 						"drink_count", date);
 				if (value_list != null) {
@@ -141,22 +184,22 @@ public class ReminderAlarm extends BroadcastReceiver {
 						db.deleteAllVariables("star_DrinksPerOuting");
 					}
 				}
-			} 
-			/*else {
-				reward = true;
-				db.addValue("star_DrinksPerOuting", 1);
-				db.addValue("reward_kiip_home", 1);
-
-				db.addValue("reward_kiip", 2);
 			}
+			/*
+			 * else { reward = true; db.addValue("star_DrinksPerOuting", 1);
+			 * db.addValue("reward_kiip_home", 1);
+			 * 
+			 * db.addValue("reward_kiip", 2); } message = "2";
+			 */
+
 			message = "2";
-			*/
+
 			break;
 		case 3:
 			if (db.variableExistAll("bac")) {
 				Date date = new Date();
 				// evaluates from the day before
-				date.setTime(date.getTime() - 86400000);
+				date.setTime(date.getTime() - everyDay);
 				List<DatabaseStore> value_list = db.getVarValuesForDay("bac",
 						date);
 				if (value_list != null) {
@@ -182,13 +225,13 @@ public class ReminderAlarm extends BroadcastReceiver {
 						db.deleteAllVariables("star_BAC");
 					}
 				}
-			} /*else {
-				reward = true;
-				db.addValue("star_BAC", 1);
-				db.addValue("reward_kiip", 3);
-				db.addValue("reward_kiip_home", 1);
-			}*/
+			} /*
+			 * else { reward = true; db.addValue("star_BAC", 1);
+			 * db.addValue("reward_kiip", 3); db.addValue("reward_kiip_home",
+			 * 1); }
+			 */
 			message = "3";
+
 			break;
 		case 4:
 			if (db.variableExistAll("drink_count")) {
@@ -214,6 +257,11 @@ public class ReminderAlarm extends BroadcastReceiver {
 						reward = false;
 						db.deleteAllVariables("star_DaysPerMonth");
 					}
+				} else {
+					reward = true;
+					db.addValue("star_DaysPerMonth", 1);
+					db.addValue("reward_kiip", 4);
+					db.addValue("reward_kiip_home", 1);
 				}
 			} else {
 				reward = true;
@@ -223,6 +271,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 			}
 
 			message = "4";
+
 			break;
 		case 5:
 			if (db.variableExistAll("drink_count")) {
@@ -243,6 +292,11 @@ public class ReminderAlarm extends BroadcastReceiver {
 						reward = false;
 						db.deleteAllVariables("star_DrinksPerMonth");
 					}
+				} else {
+					reward = true;
+					db.addValue("star_DrinksPerMonth", 1);
+					db.addValue("reward_kiip", 5);
+					db.addValue("reward_kiip_home", 1);
 				}
 			} else {
 				reward = true;
@@ -251,6 +305,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 				db.addValue("reward_kiip_home", 1);
 			}
 			message = "5";
+
 			break;
 		case 6:
 			if (db.variableExistAll("money")) {
@@ -275,6 +330,11 @@ public class ReminderAlarm extends BroadcastReceiver {
 						reward = false;
 						db.deleteAllVariables("star_DollarsPerMonth");
 					}
+				} else {
+					reward = true;
+					db.addValue("star_DollarsPerMonth", 1);
+					db.addValue("reward_kiip", 6);
+					db.addValue("reward_kiip_home", 1);
 				}
 			} else {
 				reward = true;
@@ -284,6 +344,7 @@ public class ReminderAlarm extends BroadcastReceiver {
 			}
 
 			message = "6";
+
 			break;
 		}
 

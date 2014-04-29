@@ -26,7 +26,8 @@ public class GoalsTracking extends BaseActivity implements OnClickListener,
 	DatabaseHandler db;
 	SlidingDrawer sdKiipRewards;
 	TextView tvAchievementMessage;
-	
+
+	private static FlyOutContainer root;
 	int DaysPerWeek_val, DrinksPerOuting_val, BAC_val, DaysPerMonth_val,
 			DrinksPerMonth_val, SpendingPerMonth_val;
 
@@ -53,7 +54,10 @@ public class GoalsTracking extends BaseActivity implements OnClickListener,
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
-		setContentView(R.layout.goalstracking);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.goalstracking, null);
+
+		this.setContentView(root);
 		// badges that show up when goal is tracked
 		bDaysPerWeek_star = (Button) findViewById(R.id.bDaysPerWeek_star);
 		bDrinksPerOuting_star = (Button) findViewById(R.id.bDrinksPerOuting_star);
@@ -84,17 +88,17 @@ public class GoalsTracking extends BaseActivity implements OnClickListener,
 
 		sdKiipRewards = (SlidingDrawer) findViewById(R.id.sdKiipRewards);
 		sdKiipRewards.setOnDrawerOpenListener(this);
-		tvAchievementMessage= (TextView) findViewById(R.id.tvAchievementMessage);
+		tvAchievementMessage = (TextView) findViewById(R.id.tvAchievementMessage);
 		// bDaysPerWeek_star.setBackgroundResource(R.drawable.star_2);
-		if (db.variableExistAll("reward_kiip")){
+		if (db.variableExistAll("reward_kiip")) {
 			sdKiipRewards.setVisibility(View.VISIBLE);
 			achievementMesage();
 		}
-		//deletes home page notification after coming to this page
-		if (db.variableExistAll("reward_kiip_home")){
+		// deletes home page notification after coming to this page
+		if (db.variableExistAll("reward_kiip_home")) {
 			db.deleteAllVariables("reward_kiip_home");
 		}
-		
+
 		initialize();
 	}
 
@@ -269,63 +273,63 @@ public class GoalsTracking extends BaseActivity implements OnClickListener,
 	public void onDrawerOpened() {
 		// TODO Auto-generated method stub
 		sdKiipRewards.setVisibility(View.INVISIBLE);
-		Kiip.getInstance()
-				.saveMoment(
-						"Goal Achievement!",
-						5, new Kiip.Callback() {
-							@Override
-							public void onFailed(Kiip kiip, Exception exception) {
-								// no-op
-							}
+		Kiip.getInstance().saveMoment("Goal Achievement!", 5,
+				new Kiip.Callback() {
+					@Override
+					public void onFailed(Kiip kiip, Exception exception) {
+						// no-op
+					}
 
-							@Override
-							public void onFinished(Kiip kiip, Poptart poptart) {
-								if (poptart != null) {
-									// Display the notification information in
-									// your UI
-									// showIntegratedNotification(poptart.getNotification());
+					@Override
+					public void onFinished(Kiip kiip, Poptart poptart) {
+						if (poptart != null) {
+							// Display the notification information in
+							// your UI
+							// showIntegratedNotification(poptart.getNotification());
 
-									// Clear the notification in the poptart so
-									// it doesn't display later
-									// poptart.setNotification(null);
-									// poptart.show(getBaseContext());
-									onPoptart(poptart);
-									// Save the poptart to display later
-									// mPoptart = poptart;
-									// showRewards.setVisibility(View.VISIBLE);
-								}
-							}
-						});
+							// Clear the notification in the poptart so
+							// it doesn't display later
+							// poptart.setNotification(null);
+							// poptart.show(getBaseContext());
+							onPoptart(poptart);
+							// Save the poptart to display later
+							// mPoptart = poptart;
+							// showRewards.setVisibility(View.VISIBLE);
+						}
+					}
+				});
 	}
-	//replaces the current message with correct one, then delete the database entry correlated to that value
-	private void achievementMesage(){
-		int category=Integer.parseInt(db.getAllVarValue("reward_kiip").get(0).value);
-		String message="";
-		switch(category){
+
+	// replaces the current message with correct one, then delete the database
+	// entry correlated to that value
+	private void achievementMesage() {
+		int category = Integer
+				.parseInt(db.getAllVarValue("reward_kiip").get(0).value);
+		String message = "";
+		switch (category) {
 		case 1:
-			message="Congrats! You limited # of days you went drinking this week. Pull to unlock your rewards!";
+			message = "Congrats! You limited # of days you went drinking this week. Pull to unlock your rewards!";
 			break;
 		case 2:
-			message="Congrats! You kept your # of Drinks per outing to a minimum! Pull to unlock your rewards!";
+			message = "Congrats! You kept your # of Drinks per outing to a minimum! Pull to unlock your rewards!";
 			break;
 		case 3:
-			message="Congrats! You kept your BAC in check!! Pull to unlock your rewards!";
+			message = "Congrats! You kept your BAC in check!! Pull to unlock your rewards!";
 			break;
 		case 4:
-			message="Congrats! You limited # of days you went drinking this month! Pull to unlock your rewards!";
+			message = "Congrats! You limited # of days you went drinking this month! Pull to unlock your rewards!";
 			break;
 		case 5:
-			message="Congrats! You kept your # of Drinks per month to a minimum! Pull to unlock your rewards!";
+			message = "Congrats! You kept your # of Drinks per month to a minimum! Pull to unlock your rewards!";
 			break;
 		case 6:
-			message="Congrats! You kept your $ spent this month to a minimum! Pull to unlock your rewards!";
+			message = "Congrats! You kept your $ spent this month to a minimum! Pull to unlock your rewards!";
 			break;
 		}
-		
-		
+
 		tvAchievementMessage.setText(message);
-		//delete entry from database
-		db.deleteAllVariablesByValue("reward_kiip", ""+category);
-		int stupid=1;
+		// delete entry from database
+		db.deleteAllVariablesByValue("reward_kiip", "" + category);
+		int stupid = 1;
 	}
 }

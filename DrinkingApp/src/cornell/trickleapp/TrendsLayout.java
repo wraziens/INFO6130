@@ -11,6 +11,7 @@ View addonV;
 LinearLayout layout;
 private LinearLayout linearLay;
     private void inflateLayout(Context context) {
+
         LayoutInflater layoutInflater =(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View main = layoutInflater.inflate(R.layout.trends, this);
         layout=(LinearLayout)main.findViewById(R.id.llTesting);
