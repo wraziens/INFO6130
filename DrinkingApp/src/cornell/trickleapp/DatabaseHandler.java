@@ -119,6 +119,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		Date date = new Date();
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
 		gc.add(Calendar.HOUR_OF_DAY, -24);
 		date = gc.getTime();
 		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
@@ -195,6 +196,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
 		gc.add(Calendar.DAY_OF_YEAR, -1);
 		date = gc.getTime();
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
@@ -314,7 +316,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
-		gc.add(Calendar.DAY_OF_YEAR, 1);
+		gc.add(Calendar.DAY_OF_YEAR, -1);
 		date = gc.getTime();
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
 				str_value.toString(), date);
@@ -324,14 +326,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Updates an integer value in the database
 	public void updateValueYesterday(String variable, Integer int_value) {
 		Date date = new Date();
-		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
-				int_value.toString(), date);
 		// Add a day to our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
-		gc.add(Calendar.DAY_OF_YEAR, 1);
+		gc.add(Calendar.DAY_OF_YEAR, -1);
 		date = gc.getTime();
+		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
+				int_value.toString(), date);
 		updateQuestion(ds);
 	}
 
@@ -630,6 +632,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		// subtract a day from our date
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
 		gc.add(Calendar.DAY_OF_YEAR, -1);
 		date = gc.getTime();
 
@@ -802,7 +805,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		GregorianCalendar gc = new GregorianCalendar();
 		gc.setTime(date);
 		gc.add(Calendar.HOUR_OF_DAY, -6);
-		gc.add(Calendar.DAY_OF_YEAR, 1);
+		gc.add(Calendar.DAY_OF_YEAR, -1);
 		date = gc.getTime();
 		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>) getVarValuesForDay(
 				variable, date);
