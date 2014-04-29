@@ -126,6 +126,9 @@
     <string name="drawer_close">Slider Menu Closed</string>
     <string name="drink_image">Drink Image</string>
     <string name="okay">OKAY</string> 
+   <string name="morning">MORNING</string> 
+   <string name="evening">EVENING</string> 
+   <string name="after">AFTER</string> 
 
     <!-- after_drinking_durvey -->
     <string name="type_drink_prompt">What did you drink last night?</string>
