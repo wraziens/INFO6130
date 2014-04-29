@@ -1,21 +1,16 @@
 package cornell.trickleapp;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.widget.Toast;
 
 public class TimeBacGraph extends View {
 
@@ -70,8 +65,6 @@ public class TimeBacGraph extends View {
 			start = this.eveningCounts.get(0).getStartDegree();
 			startDegreeEvening = this.eveningCounts.get(0).getStartDegree();
 		}
-		Toast.makeText(context,
-				"start  " + start, Toast.LENGTH_SHORT).show();
 		if(morningCounts.size() > 0){
 			startDegreeMorning = this.morningCounts.get(0).getStartDegree();
 		}
@@ -303,8 +296,7 @@ public class TimeBacGraph extends View {
 							 PieSlice p2 = new PieSlice(degree - new_degree, this.startingDegree + new_degree, 0.07, paint);
 							 after.add(p2);
 						}
-						Toast.makeText(context,
-								"starting+degree " + startingDegree + degree, Toast.LENGTH_SHORT).show();
+		
 						slices.add(p);
 					}else{
 						if (this.startingDegree + degree > 810){
@@ -340,8 +332,6 @@ public class TimeBacGraph extends View {
 						}
 						slices.add(p);
 					}else{
-						Toast.makeText(context,
-								"greenStart  " + this.startingDegree + degree, Toast.LENGTH_SHORT).show();
 						if (this.startingDegree + degree > 810){
 							float new_degree = 810 - this.startingDegree;
 							 p = new PieSlice(new_degree, this.startingDegree, 0.01, paint);
