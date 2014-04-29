@@ -2,7 +2,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    
+      	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:layout_marginTop="10dp"
+		android:orientation="horizontal"
+		android:layout_weight="1">
+      <TextView
+                android:id="@+id/trendDate"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:background="@drawable/trends_tab"
+                android:gravity="center"
+                android:text="April"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#ffffff"
+                android:textSize="18dp" />
+      </LinearLayout>
 	<LinearLayout
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"

@@ -16,11 +16,15 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class TrendFace extends Activity {
 	private DatabaseHandler db;
+	
 	private ImageView regret, dizzy, nausea, vomit, headache, memory, fatigue;
+	private TextView trendDate;
+	
 	private ArrayList<DatabaseStore> month_regret, month_dizzy, month_nausea, month_vomit, month_headache, month_memory, month_fatigue;
 	private HashMap<String, ArrayList<Date>> symptoms;
 	
@@ -76,6 +80,8 @@ public class TrendFace extends Activity {
 		month_headache = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("symptom_headache", date);
 		month_memory = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("symptom_memory", date);
 		month_fatigue = (ArrayList<DatabaseStore>)db.getVarValuesForMonth("symptom_fatigue", date);
+		
+		
 		
 		if(month_regret == null){
 			regret.setImageResource(R.drawable.smiley_regret_blank);
@@ -150,6 +156,8 @@ public class TrendFace extends Activity {
 		headache =  (ImageView) findViewById(R.id.headache);
 		memory =  (ImageView) findViewById(R.id.memory);
 		fatigue =  (ImageView) findViewById(R.id.fatigue);
+		trendDate = (TextView)findViewById(R.id.trendDate);
+		
 		
 		//setup onclick listeners
 		regret.setOnClickListener(new View.OnClickListener() {
