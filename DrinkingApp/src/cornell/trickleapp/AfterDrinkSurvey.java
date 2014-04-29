@@ -17,11 +17,11 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 	FlyOutContainer root;
 	private CheckBox beer_chk, wine_chk, liquor_chk; 
 	private SeekBar recall_bar, regret_bar;
-	private RadioGroup vomit_group;
-	private CheckBox sym_fatigue, sym_nausea, sym_headache, sym_vomit;
+	private RadioGroup vomit_group, memory_group, regret_group;
+	private CheckBox sym_fatigue, sym_nausea, sym_headache, sym_dizzy;
 	private Button save_btn;
 	
-	private String regret_result, recall_result, vomit_result;
+	private String regret_result, vomit_result, memory_result;
 	
 	private DatabaseHandler db;
 	
@@ -42,30 +42,29 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 		
 		save_btn = (Button)findViewById(R.id.save_survey);
 		
-		recall_bar = (SeekBar)findViewById(R.id.recall_bar);
-		regret_bar = (SeekBar)findViewById(R.id.regret_bar);
-		
 		beer_chk = (CheckBox) findViewById(R.id.type_beer);
 		wine_chk = (CheckBox) findViewById(R.id.type_wine);
 		liquor_chk = (CheckBox) findViewById(R.id.type_liquor);
 		
 		vomit_group = (RadioGroup) findViewById(R.id.vomit_group);
+		regret_group = (RadioGroup) findViewById(R.id.regret_group);
+		memory_group = (RadioGroup) findViewById(R.id.memory_group);
 		
 		sym_fatigue = (CheckBox) findViewById(R.id.symptom_fatigue);
 		sym_headache = (CheckBox) findViewById(R.id.symptom_headache);
 		sym_nausea = (CheckBox) findViewById(R.id.symptom_nausea);
-		sym_vomit = (CheckBox) findViewById(R.id.symptom_vomit);
+		sym_dizzy = (CheckBox) findViewById(R.id.symptom_dizzy);
 		
-		regret_result = "";
-		recall_result = "";
 		vomit_result = "";
+		memory_result = "";
+		regret_result="";
 		
 		save_btn.setOnClickListener(this);
 	
-		
-		initializeRecallSeekBar();
-		initializeRegretSeekBar();
 		initializeVomitGroup();
+		initializeMemoryGroup();
+		initializeRegretGroup();
+		
 	}
 
 	private void initializeVomitGroup(){
@@ -88,70 +87,68 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 
 			});
 	}
-	
-	
-	private void initializeRecallSeekBar() {
-		recall_bar.setProgress(50);
-		recall_bar.setMax(100);
-		recall_bar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+	private void initializeMemoryGroup(){
+		memory_group.setOnCheckedChangeListener(
+				new RadioGroup.OnCheckedChangeListener() {
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
-				recall_result = String.valueOf(progress);
-			}
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId) {
+					case R.id.yes_memory_loss:
+							memory_result= "yes";
+							break;
+					case R.id.no_memory_loss:
+							memory_result = "no";
+							break;
+					default:
+						throw new RuntimeException(
+									"Unknown Button ID For Location Question.");
+					}
+				}
 
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-			}
-		});
+			});
 	}
-	
-	private void initializeRegretSeekBar() {
-		regret_bar.setProgress(50);
-		regret_bar.setMax(100);
-		regret_bar.setOnSeekBarChangeListener(new OnSeekBarChangeListener(){
+	private void initializeRegretGroup(){
+		regret_group.setOnCheckedChangeListener(
+				new RadioGroup.OnCheckedChangeListener() {
 			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
-				regret_result = String.valueOf(progress);
-			}
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				switch (checkedId) {
+					case R.id.yes_regret:
+							regret_result= "yes";
+							break;
+					case R.id.no_regret:
+							regret_result = "no";
+							break;
+					default:
+						throw new RuntimeException(
+									"Unknown Button ID For Location Question.");
+					}
+				}
 
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-			}
-
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-			}
-		});
+			});
 	}
 	
 	private void saveToDB(){
-		if(!recall_result.equals("")){
-			db.updateOrAdd("recall", recall_result);
+		if(!memory_result.equals("")){
+			db.updateOrAddYesterday("memory", memory_result);
 		}
 		if(!regret_result.equals("")){
-			db.updateOrAdd("regret", regret_result);
+			db.updateOrAddYesterday("regret", regret_result);
 		}
 		if(!vomit_result.equals("")){
-			db.updateOrAdd("vomit", vomit_result);
 		}
 		saveCheckBoxes();
 		
 	}
 	
 	private void saveCheckBoxes(){
-		db.updateOrAdd("type_beer", getCheckValue(beer_chk));
-		db.updateOrAdd("type_wine", getCheckValue(wine_chk));
-		db.updateOrAdd("type_liquor", getCheckValue(liquor_chk));
-		db.updateOrAdd("symptom_fatigue", getCheckValue(sym_fatigue));
-		db.updateOrAdd("symptom_headache", getCheckValue(sym_headache));
-		db.updateOrAdd("symptom_nausea", getCheckValue(sym_nausea));
-		db.updateOrAdd("symptom_vomit", getCheckValue(sym_vomit));
+		db.updateOrAddYesterday("type_beer", getCheckValue(beer_chk));
+		db.updateOrAddYesterday("type_wine", getCheckValue(wine_chk));
+		db.updateOrAddYesterday("type_liquor", getCheckValue(liquor_chk));
+		db.updateOrAddYesterday("symptom_fatigue", getCheckValue(sym_fatigue));
+		db.updateOrAddYesterday("symptom_headache", getCheckValue(sym_headache));
+		db.updateOrAddYesterday("symptom_nausea", getCheckValue(sym_nausea));
+		db.updateOrAddYesterday("symptom_dizzy", getCheckValue(sym_dizzy));
 	}
 	
 	public int getCheckValue(CheckBox chk){

@@ -81,7 +81,26 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			updateValue(variable, str_value);
 		}
 	}
+	// Will update the value if it already exists in the db for the
+		// current day. Otherwise it will add the value to the db
+		public void updateOrAddYesterday(String variable, String str_value) {
+			if (!variableExistYesterday(variable)) {
+				addValueYesterday(variable, str_value);
+			} else {
+				updateValueYesterday(variable, str_value);
+			}
+		}
 
+		// Will update the value if it already exists in the db for the
+		// current day. Otherwise it will add the value to the db
+		public void updateOrAddYesterday(String variable, Integer int_value) {
+			if (!variableExistYesterday(variable)) {
+				addValueYesterday(variable, int_value);
+			} else {
+				updateValueYesterday(variable, int_value);
+			}
+		}
+		
 	// Adds an integer value to the database
 	public void addValue(String variable, Integer int_value) {
 		Date date = new Date();
@@ -276,13 +295,42 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
 	// updates all values that have the variable and current
 	// date to the value supplied.
+	public void updateValueYesterday(String variable, String str_value) {
+		Date date = new Date();
+		// Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		gc.add(Calendar.DAY_OF_YEAR, 1);
+		date = gc.getTime();
+		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
+				str_value.toString(), date);
+		updateQuestion(ds);
+	}
+
+	// Updates an integer value in the database
+	public void updateValueYesterday(String variable, Integer int_value) {
+		Date date = new Date();
+		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
+				int_value.toString(), date);
+		// Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		gc.add(Calendar.DAY_OF_YEAR, 1);
+		date = gc.getTime();
+		updateQuestion(ds);
+	}
+
+	// updates all values that have the variable and current
+	// date to the value supplied.
 	public void updateValue(String variable, String str_value) {
 		Date date = new Date();
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
 				str_value.toString(), date);
 		updateQuestion(ds);
 	}
-
+	
 	/*
 	 * Inserts a row into the table mutlichoice and returns the pid.
 	 */
@@ -730,6 +778,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 		else
 			return false;
 	}
+	public Boolean variableExistYesterday(String variable) {
+		Date date = new Date();
+		// Add a day to our date
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		gc.add(Calendar.DAY_OF_YEAR, 1);
+		date = gc.getTime();
+		ArrayList<DatabaseStore> exist = (ArrayList<DatabaseStore>) getVarValuesForDay(
+				variable, date);
+
+		if (exist != null)
+			return true;
+		else
+			return false;
+	}
 
 	// check the existence of all instance of a variable
 	public Boolean variableExistAll(String variable) {
@@ -742,6 +806,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 			return false;
 	}
 
+	
 	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
 		// TODO Auto-generated method stub
 
