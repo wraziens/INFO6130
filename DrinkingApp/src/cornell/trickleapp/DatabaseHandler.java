@@ -104,6 +104,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Adds an integer value to the database
 	public void addValue(String variable, Integer int_value) {
 		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
 		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
 				int_value.toString(), date);
 		addQuestion(ds);
@@ -125,6 +129,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Adds a string value to the database
 	public void addValue(String variable, String str_value) {
 		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
 				str_value.toString(), date);
 		addQuestion(ds);
@@ -288,6 +296,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// Updates an integer value in the database
 	public void updateValue(String variable, Integer int_value) {
 		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
+		
 		DatabaseStore ds = DatabaseStore.DatabaseIntegerStore(variable,
 				int_value.toString(), date);
 		updateQuestion(ds);
@@ -326,8 +339,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 	// date to the value supplied.
 	public void updateValue(String variable, String str_value) {
 		Date date = new Date();
+		GregorianCalendar gc = new GregorianCalendar();
+		gc.setTime(date);
+		gc.add(Calendar.HOUR_OF_DAY, -6);
+		date = gc.getTime();
 		DatabaseStore ds = DatabaseStore.DatabaseTextStore(variable,
 				str_value.toString(), date);
+		
 		updateQuestion(ds);
 	}
 	
