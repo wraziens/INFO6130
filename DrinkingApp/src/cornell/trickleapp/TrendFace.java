@@ -1,5 +1,6 @@
 package cornell.trickleapp;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -9,8 +10,15 @@ import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -33,6 +41,9 @@ public class TrendFace extends Activity {
 	
 	private Date currentDate;
 	private int dateOffset=0;
+	private int currentInfo = 0;
+	
+	private Dialog dialog;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,6 +69,7 @@ public class TrendFace extends Activity {
 	
 	private boolean addToSymptomHash(ArrayList<DatabaseStore> sym, String symptom_name){
 		boolean added = false;
+		sym = DatabaseStore.sortByTime(sym);
 		for(int i=0; i<sym.size(); i++){
 			DatabaseStore d = sym.get(i);
 			if(Integer.parseInt(d.value)==1){
@@ -124,94 +136,349 @@ public class TrendFace extends Activity {
 		
 		if(month_regret == null){
 			regret.setImageResource(R.drawable.smiley_regret_blank);
+			regret.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_regret,"regret");
 			if(!added){
 				regret.setImageResource(R.drawable.smiley_regret_blank);
+				regret.setClickable(false);
 			}else{
 				regret.setImageResource(R.drawable.smiley_regret_filled);
 				String ratio = symptoms.get("regret").size() + "/" + total_drinking_days;
 				regret_cnt.setText(ratio);
+				regret.setClickable(true);
 			}
 		}
 		
 		if(month_dizzy == null){
 			dizzy.setImageResource(R.drawable.smiley_dizziness_blank);
+			dizzy.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_dizzy,"dizzy");
 			if(!added){
 				dizzy.setImageResource(R.drawable.smiley_dizziness_blank);
+				dizzy.setClickable(false);
 			}else{
 				dizzy.setImageResource(R.drawable.smiley_dizziness_filled);
 				String ratio = symptoms.get("dizzy").size() + "/" + total_drinking_days;
 				dizzy_cnt.setText(ratio);
+				dizzy.setClickable(true);
 			}
 		}
 		
 		if(month_nausea == null){
 			nausea.setImageResource(R.drawable.smiley_nausea_blank);
+			nausea.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_nausea,"nausea");
 			if(!added){
 				nausea.setImageResource(R.drawable.smiley_nausea_blank);
+				nausea.setClickable(false);
 			}else{
 				nausea.setImageResource(R.drawable.smiley_nausea_filled);
 				String ratio = symptoms.get("nausea").size() + "/" + total_drinking_days;
 				nausea_cnt.setText(ratio);
+				nausea.setClickable(true);
 			}
 		}
 		if(month_vomit == null){
 			vomit.setImageResource(R.drawable.smiley_vomit_blank);
+			vomit.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_vomit,"vomit");
 			if(!added){
 				vomit.setImageResource(R.drawable.smiley_vomit_blank);
+				vomit.setClickable(false);
 			}else{
 				vomit.setImageResource(R.drawable.smiley_vomit_filled);
 				String ratio = symptoms.get("vomit").size() + "/" + total_drinking_days;
 				vomit_cnt.setText(ratio);
+				vomit.setClickable(true);
 			}
 		}
 		if(month_headache == null){
 			headache.setImageResource(R.drawable.smiley_headache_blank);
+			headache.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_headache,"headache");
 			if(!added){
 				headache.setImageResource(R.drawable.smiley_headache_blank);
+				headache.setClickable(false);
 			}else{
 				headache.setImageResource(R.drawable.smiley_headache_filled);
 				String ratio = symptoms.get("headache").size() + "/" + total_drinking_days;
-				headache.setImageResource(R.drawable.smiley_headache_filled);
 				headache_cnt.setText(ratio);
+				headache.setClickable(true);
 			}
 		}
 		if(month_memory == null){
 			memory.setImageResource(R.drawable.smiley_memory_blank);
+			memory.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_memory,"memory");
 			if(!added){
 				memory.setImageResource(R.drawable.smiley_memory_blank);
+				memory.setClickable(false);
 			}else{
 				memory.setImageResource(R.drawable.smiley_memory_filled);
 				String ratio = symptoms.get("memory").size() + "/" + total_drinking_days;
 				memory_cnt.setText(ratio);
+				memory.setClickable(true);
 			}
 		}
 		if(month_fatigue == null){
 			fatigue.setImageResource(R.drawable.smiley_fatigue_blank);
-			fatigue_cnt.setText("");
+			fatigue.setClickable(false);
 		}else{
 			boolean added = addToSymptomHash(month_fatigue,"fatigue");
 			if(!added){
 				fatigue.setImageResource(R.drawable.smiley_fatigue_blank);
-				fatigue_cnt.setText("");
+				fatigue.setClickable(false);
 			}else{
 				fatigue.setImageResource(R.drawable.smiley_fatigue_filled);
 				String ratio = symptoms.get("fatigue").size() + "/" + total_drinking_days;
 				fatigue_cnt.setText(ratio);
+				fatigue.setClickable(true);
 			}
 		}
 		
+	}
+	
+	public static double getMax(ArrayList<DatabaseStore> bacVals){
+		double max = 0.0;
+		if (bacVals!=null){
+			for(int i=0; i<bacVals.size(); i++){
+				if(max < Double.parseDouble(bacVals.get(i).value)){
+					max = Double.parseDouble(bacVals.get(i).value);
+				}
+			}
+		}
+		return max;
+	}
+	
+	public static double getHours(ArrayList<DatabaseStore> drinkVals){
+		double time=0.0;
+		Date startTime = null;
+		if(drinkVals!=null && drinkVals.size()>1){
+			if(Integer.parseInt(drinkVals.get(0).value) == 1) {
+				startTime = drinkVals.get(0).date;
+				 time = (drinkVals.get(drinkVals.size()-1).date.getTime() - startTime.getTime())/(1000 * 60 * 60.0);
+			}else{
+				startTime = drinkVals.get(1).date;
+				if (drinkVals.size() > 2){
+					time = (drinkVals.get(drinkVals.size()-1).date.getTime() - startTime.getTime())/(1000 * 60 * 60.0);
+				}
+			}
+		}		
+		return time;
+	}
+	
+	public static int getCount(ArrayList<DatabaseStore> drinkVals){
+		int count = 0;
+		if(drinkVals!=null){
+			count = drinkVals.size();
+			if ((Integer.parseInt(drinkVals.get(0).value)) > 1){
+				count--;
+			}
+		}
+		return count;
+	}
+	
+	private void updateDialog(Date date){
+		TextView infoDate = (TextView) dialog.findViewById(R.id.trendsDate);
+		ImageView beer_icon = (ImageView)dialog.findViewById(R.id.sym_beer_icon);
+		ImageView wine_icon = (ImageView) dialog.findViewById(R.id.sym_wine_icon);
+		ImageView liquor_icon = (ImageView) dialog.findViewById(R.id.sym_liquor_icon);
+		TextView bac_text = (TextView) dialog.findViewById(R.id.day_bac);
+		TextView rate_text = (TextView) dialog.findViewById(R.id.day_rate);
+		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
+		TextView count_text = (TextView) dialog.findViewById(R.id.day_cal_drink_count);
+		ImageView sym_regret = (ImageView) dialog.findViewById(R.id.sym_regret_icon);
+		ImageView sym_dizzy = (ImageView) dialog.findViewById(R.id.sym_dizzy_icon);
+		ImageView sym_nausea =(ImageView) dialog.findViewById(R.id.sym_nausea_icon);
+		ImageView sym_vomit =  (ImageView) dialog.findViewById(R.id.sym_vomit_icon);
+		ImageView sym_headache =  (ImageView) dialog.findViewById(R.id.sym_headache_icon);
+		ImageView sym_memory =  (ImageView) dialog.findViewById(R.id.sym_memory_icon);
+		ImageView sym_fatigue =  (ImageView) dialog.findViewById(R.id.sym_fatigue_icon);
+		
+		
+		ArrayList<DatabaseStore> beer_result = (ArrayList<DatabaseStore>) db.getVarValuesForDay("type_beer", date);
+		ArrayList<DatabaseStore> wine_result = (ArrayList<DatabaseStore>) db.getVarValuesForDay("type_wine", date);
+		ArrayList<DatabaseStore> liquor_result = (ArrayList<DatabaseStore>) db.getVarValuesForDay("type_liquor", date);
+		ArrayList<DatabaseStore> bacVals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("bac", date);
+		ArrayList<DatabaseStore> drinkVals = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", date);
+		ArrayList<DatabaseStore> day_regret = (ArrayList<DatabaseStore>)db.getVarValuesForDay("regret", date);
+		ArrayList<DatabaseStore> day_dizzy = (ArrayList<DatabaseStore>)db.getVarValuesForDay("symptom_dizzy", date);
+		ArrayList<DatabaseStore> day_nausea = (ArrayList<DatabaseStore>)db.getVarValuesForDay("symptom_nausea", date);
+		ArrayList<DatabaseStore> day_vomit = (ArrayList<DatabaseStore>)db.getVarValuesForDay("vomit", date);
+		ArrayList<DatabaseStore> day_headache = (ArrayList<DatabaseStore>)db.getVarValuesForDay("symptom_headache", date);
+		ArrayList<DatabaseStore> day_memory = (ArrayList<DatabaseStore>)db.getVarValuesForDay("memory", date);
+		ArrayList<DatabaseStore> day_fatigue = (ArrayList<DatabaseStore>)db.getVarValuesForDay("symptom_fatigue", date);
+		
+		SimpleDateFormat date_ft = new SimpleDateFormat("EEE MM/dd/yy", Locale.US);
+		infoDate.setText(date_ft.format(date));
+		
+		DecimalFormat formatter = new DecimalFormat("#.###");
+		
+		double maxBac = getMax(bacVals);
+		bac_text.setText(formatter.format(maxBac) + " max BAC");
+		
+		double hrs = getHours(drinkVals);
+		int count = getCount(drinkVals);
+		
+		count_text.setText(count + " drinks recorded");
+		rate_text.setText(formatter.format(count/hrs) + " drinks / hour");		
+		time_text.setText(formatter.format(hrs)+ " hours elapsed drinking");
+		
+		if(beer_result != null){
+			int val = Integer.parseInt(beer_result.get(0).value);
+			if(val == 1){
+				beer_icon.setImageResource(R.drawable.ic_calendar_beer);
+			}
+		}
+		if(wine_result != null){
+			int val = Integer.parseInt(wine_result.get(0).value);
+			if(val == 1){
+				wine_icon.setImageResource(R.drawable.ic_calendar_wine);
+			}
+		}
+		if(liquor_result != null){
+			int val = Integer.parseInt(liquor_result.get(0).value);
+			if(val == 1){
+				liquor_icon.setImageResource(R.drawable.ic_calendar_liquor);
+			}
+		}
+		
+		if(day_dizzy == null){
+			sym_dizzy.setImageResource(R.drawable.smiley_dizziness_blank);
+		}else{
+			if(Integer.parseInt(day_dizzy.get(0).value)==0){
+				sym_dizzy.setImageResource(R.drawable.smiley_dizziness_blank);
+			}else{
+				sym_dizzy.setImageResource(R.drawable.smiley_dizziness_filled);
+			}
+		}
+		
+		if(day_nausea == null){
+			sym_nausea.setImageResource(R.drawable.smiley_nausea_blank);
+		}else{
+			if(Integer.parseInt(day_nausea.get(0).value)==0){
+				sym_nausea.setImageResource(R.drawable.smiley_nausea_blank);
+			}else{
+				sym_nausea.setImageResource(R.drawable.smiley_nausea_filled);
+			}
+		}
+		if(day_vomit == null){
+			sym_vomit.setImageResource(R.drawable.smiley_vomit_blank);
+		}else{
+			if(Integer.parseInt(day_vomit.get(0).value)==0){
+				sym_vomit.setImageResource(R.drawable.smiley_vomit_blank);
+			}else{
+				sym_vomit.setImageResource(R.drawable.smiley_vomit_filled);
+			}
+		}
+		if(day_headache == null){
+			sym_headache.setImageResource(R.drawable.smiley_headache_blank);
+		}else{
+			if(Integer.parseInt(day_headache.get(0).value)==0){
+				sym_headache.setImageResource(R.drawable.smiley_headache_blank);
+			}else{
+				sym_headache.setImageResource(R.drawable.smiley_headache_filled);
+			}
+		}
+		if(day_memory == null){
+			sym_memory.setImageResource(R.drawable.smiley_memory_blank);
+		}else{
+			if(Integer.parseInt(day_memory.get(0).value)==0){
+				sym_memory.setImageResource(R.drawable.smiley_memory_blank);
+			}else{
+				sym_memory.setImageResource(R.drawable.smiley_memory_filled);
+			}
+		}
+		if(day_fatigue == null){
+			sym_fatigue.setImageResource(R.drawable.smiley_fatigue_blank);
+		}else{
+			if(Integer.parseInt(day_fatigue.get(0).value)==0){
+				sym_fatigue.setImageResource(R.drawable.smiley_fatigue_blank);
+			}else{
+				sym_fatigue.setImageResource(R.drawable.smiley_fatigue_filled);
+			}
+		}
+		if(day_regret == null){
+			sym_regret.setImageResource(R.drawable.smiley_regret_blank);
+		}else{
+			if(Integer.parseInt(day_regret.get(0).value)==0){
+				sym_regret.setImageResource(R.drawable.smiley_regret_blank);
+			}else{
+				sym_regret.setImageResource(R.drawable.smiley_regret_filled);
+			}
+		}
+		
+		
+		ImageView face = (ImageView)dialog.findViewById(R.id.drink_calendar_day);
+		//Update the face color
+		((GradientDrawable)((LayerDrawable) face.getDrawable()).getDrawable(0)
+				).setColor(DrinkCounter.getBacColor(maxBac));	
+		
+		int icon_face = DrinkCalendar.getFaceIcon(maxBac);
+		//Update the face icon
+		Drawable to_replace = getResources().getDrawable(icon_face);	
+		((LayerDrawable) face.getDrawable()).setDrawableByLayerId(
+				R.id.face_icon, to_replace);
+		face.invalidate();
+		face.refreshDrawableState();
+	}
+	
+	private void showInfo(String key, String label){
+		dialog = new Dialog(TrendFace.this);
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		dialog.setContentView(R.layout.trend_info);
+		
+		TextView symLabel = (TextView) dialog.findViewById(R.id.symptom_label);
+		symLabel.setText(label);
+		
+		Button right = (Button) dialog.findViewById(R.id.trends_left_arrow);
+		Button left = (Button) dialog.findViewById(R.id.trends_right_arrow);
+		Button close = (Button)dialog.findViewById(R.id.close_trend_info);
+		
+	
+		
+		int dateIndex =0;
+		
+		final ArrayList<Date> dateVals = symptoms.get(key);
+		currentInfo=0;
+		right.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(currentInfo>0){
+					currentInfo--;
+					updateDialog(dateVals.get(currentInfo));
+				}
+			}
+		});
+		left.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if(currentInfo < dateVals.size()-1){
+					currentInfo++;
+					updateDialog(dateVals.get(currentInfo));
+					Toast.makeText(TrendFace.this, "testermcjester", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		close.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v){
+				dialog.dismiss();
+			}
+		});
+
+		updateDialog(dateVals.get(0));
+		
+		dialog.show();
 	}
 	
 	private void setupFaces(){
@@ -241,7 +508,7 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "regret", Toast.LENGTH_SHORT).show();
+				showInfo("regret", "Regret " + regret_cnt.getText());
 				
 			}
 		});
@@ -249,15 +516,14 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "dizzy", Toast.LENGTH_SHORT).show();
-				
+				showInfo("dizzy", "Dizziness " + dizzy_cnt.getText());
 			}
 		});
 		nausea.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "nausea", Toast.LENGTH_SHORT).show();
+				showInfo("nausea", "Nausea " + nausea_cnt.getText());
 				
 			}
 		});
@@ -265,7 +531,7 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "vomit", Toast.LENGTH_SHORT).show();
+				showInfo("vomit", "Vomitting " + vomit_cnt.getText());
 				
 			}
 		});
@@ -273,28 +539,22 @@ public class TrendFace extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "headache", Toast.LENGTH_SHORT).show();
-				/*final Dialog dialog = new Dialog(TrendFace.this);
-				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-				dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-				dialog.setContentView(R.layout.trend_info);
-				dialog.show();*/
+				showInfo("headache", "Headache " + headache_cnt.getText());
 			}
 		});
 		memory.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "memory", Toast.LENGTH_SHORT).show();
-				
+				showInfo("memory", "Memory Loss " + memory_cnt.getText());
 			}
 		});
 		fatigue.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Toast.makeText(TrendFace.this, "fatigue", Toast.LENGTH_SHORT).show();
 				
+				showInfo("fatigue", "Fatigue " + fatigue_cnt.getText());
 			}
 		});
 		

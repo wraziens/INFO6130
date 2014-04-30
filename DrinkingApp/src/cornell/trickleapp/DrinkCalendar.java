@@ -468,7 +468,6 @@ public class DrinkCalendar extends Activity implements OnClickListener{
 		bacTime = new BacTime(this);
 		db = new DatabaseHandler(this);
 		context = this;
-		Date date = new Date();
 		drinkCounts = (ArrayList<DatabaseStore>)db.getVarValuesForDay("bac", date_val);
 		ArrayList<DatabaseStore> drinks = (ArrayList<DatabaseStore>)db.getVarValuesForDay("drink_count", date_val);
 		drinks = DatabaseStore.sortByTime(drinks);
@@ -541,11 +540,11 @@ public class DrinkCalendar extends Activity implements OnClickListener{
 		
 		
 		TextView rate_text = (TextView) dialog.findViewById(R.id.day_rate);
-		rate_text.setText(formatter.format(day_counts.get(index)/day_time_counts.get(index)) + " drinks / hour");
+		rate_text.setText(formatter.format(TrendFace.getCount(drinks)/TrendFace.getHours(drinks)) + " drinks / hour");
 		
 		DecimalFormat time_formatter = new DecimalFormat("#.##");
 		TextView time_text = (TextView) dialog.findViewById(R.id.day_drink_time);
-		time_text.setText(time_formatter.format(day_times.get(index)) + " hours intoxicated");
+		time_text.setText(time_formatter.format(TrendFace.getHours(drinks)) + " hours elapsed drinking");
 		
 		Button close = (Button)dialog.findViewById(R.id.close_info);
 		close.setOnClickListener(new View.OnClickListener() {
@@ -598,7 +597,7 @@ public class DrinkCalendar extends Activity implements OnClickListener{
 			showDayInfo(bac, index);
 	}
 	
-	public int getFaceIcon(double bac_value){
+	public static int getFaceIcon(double bac_value){
 		if (bac_value < 0.06) {
 			return R.drawable.ic_tracker_smile;
 		} else if (bac_value < 0.15) {

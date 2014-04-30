@@ -92,7 +92,6 @@ public class BacTime extends Object{
 		int remove = 0;
 		if(item.getTimeNextDrink() > -1){
 			remove = (int)Math.floor(item.getDuration() / (timeProcess * 60 * 60 ));
-			//item.setDrinkCount(item.getDrinkCount() - remove);
 			
 		}
 		return remove;
