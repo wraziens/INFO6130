@@ -18,13 +18,11 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class TrendFace extends Activity {
 	private DatabaseHandler db;
@@ -32,7 +30,6 @@ public class TrendFace extends Activity {
 	private ImageView regret, dizzy, nausea, vomit, headache, memory, fatigue;
 	private TextView regret_cnt, dizzy_cnt, nausea_cnt, vomit_cnt, headache_cnt, memory_cnt, fatigue_cnt;
 	private TextView trendDate;
-	private Button left_month, right_month;
 	
 	private ArrayList<DatabaseStore> month_regret, month_dizzy, month_nausea, month_vomit, month_headache, month_memory, month_fatigue;
 	private HashMap<String, ArrayList<Date>> symptoms;
@@ -122,8 +119,6 @@ public class TrendFace extends Activity {
 		if (drinking_days !=  null){
 			total_drinking_days = drinking_days.size();
 		}
-		
-		Toast.makeText(TrendFace.this, "total drinking days" + total_drinking_days, Toast.LENGTH_SHORT).show();
 		
 		//reset all text values
 		fatigue_cnt.setText("");
@@ -334,18 +329,24 @@ public class TrendFace extends Activity {
 			int val = Integer.parseInt(beer_result.get(0).value);
 			if(val == 1){
 				beer_icon.setImageResource(R.drawable.ic_calendar_beer);
+			}else{
+				beer_icon.setImageResource(R.drawable.white_beer);
 			}
 		}
 		if(wine_result != null){
 			int val = Integer.parseInt(wine_result.get(0).value);
 			if(val == 1){
 				wine_icon.setImageResource(R.drawable.ic_calendar_wine);
+			}else{
+				wine_icon.setImageResource(R.drawable.white_wine);
 			}
 		}
 		if(liquor_result != null){
 			int val = Integer.parseInt(liquor_result.get(0).value);
 			if(val == 1){
 				liquor_icon.setImageResource(R.drawable.ic_calendar_liquor);
+			}else{
+				liquor_icon.setImageResource(R.drawable.white_liquor);
 			}
 		}
 		
@@ -465,7 +466,6 @@ public class TrendFace extends Activity {
 				if(currentInfo < dateVals.size()-1){
 					currentInfo++;
 					updateDialog(dateVals.get(currentInfo));
-					Toast.makeText(TrendFace.this, "testermcjester", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
