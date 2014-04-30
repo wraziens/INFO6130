@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
+import android.widget.Toast;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 
 public class AfterDrinkSurvey extends Activity implements OnClickListener{
@@ -154,8 +155,11 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 	
 	public int getCheckValue(CheckBox chk){
 		if(chk.isChecked()){
+			
+			Toast.makeText(this, "checked" , Toast.LENGTH_SHORT).show();
 			return 1;
 		}else{
+			Toast.makeText(this, "not checked" , Toast.LENGTH_SHORT).show();
 			return 0;
 		}
 	}
