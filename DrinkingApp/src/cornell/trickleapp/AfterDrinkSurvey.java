@@ -156,20 +156,23 @@ public class AfterDrinkSurvey extends Activity implements OnClickListener{
 	public int getCheckValue(CheckBox chk){
 		if(chk.isChecked()){
 			
-			Toast.makeText(this, "checked" , Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "checked" , Toast.LENGTH_SHORT).show();
 			return 1;
 		}else{
-			Toast.makeText(this, "not checked" , Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "not checked" , Toast.LENGTH_SHORT).show();
 			return 0;
 		}
 	}
 	
+
+	//stores data and turns off the survey
 	@Override
 	public void onClick(View view) {
 		switch(view.getId()){
 		case R.id.save_survey:
 			saveToDB();
 			db.close();
+			db.deleteAllVariables("fill_survey_check");
 			finish();
 			break;
 		}

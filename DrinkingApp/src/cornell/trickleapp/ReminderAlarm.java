@@ -109,6 +109,8 @@ public class ReminderAlarm extends BroadcastReceiver {
 
 			notif.defaults = Notification.DEFAULT_VIBRATE;
 			noteManager.notify(id, notif);
+			//allows survey to be prompted
+			db.addValue("fill_survey_check",1);
 		}
 
 	}

@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.DisplayMetrics;
@@ -469,18 +470,23 @@ public class TimeBacGraph extends View {
 		int circle=0;
 		//Add labels to the Image
 		Rect labelRect = new Rect();
-		
-		paint.setColor(Color.parseColor("#51A7F9"));
+		paint.setTextAlign(Align.CENTER);
+		paint.setColor(Color.parseColor("#85888D"));
 		for(int i=0; i<4; i++){
 			paint.getTextBounds(drawLabels[i], 0, drawLabels[i].length(), labelRect);	
-			paint.setTextSize(24);
+			int paintSize=18;
+			paint.setTextSize(paintSize);
 			//paint.setTextAlign(Align.RIGHT);
 			float[] startEndXY = trigMeasurement(circle, oval,
-					ovalRadius * 1.2f);
+					ovalRadius * 1.15f);
 			float timeFinalPositionX = startEndXY[2];
 			float timeFinalPositionY = startEndXY[3];
-			canvasPie.drawText(drawLabels[i], timeFinalPositionX-25, timeFinalPositionY+5,
+			if (i==1)
+			canvasPie.drawText(drawLabels[i], timeFinalPositionX, timeFinalPositionY+(paintSize/2),
 					paint);
+			else
+				canvasPie.drawText(drawLabels[i], timeFinalPositionX, timeFinalPositionY,
+						paint);
 			circle+=90;
 		}
 		

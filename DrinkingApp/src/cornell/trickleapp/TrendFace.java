@@ -39,7 +39,8 @@ public class TrendFace extends Activity {
 	private Date currentDate;
 	private int dateOffset=0;
 	private int currentInfo = 0;
-	
+
+	private FlyOutContainer root;
 	private Dialog dialog;
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,10 @@ public class TrendFace extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		this.setContentView(R.layout.trendfaces);
+		this.root = (FlyOutContainer) this.getLayoutInflater().inflate(
+				R.layout.trendfaces, null);
+
+		this.setContentView(root);
 
 		db = new DatabaseHandler(this);
 		symptoms = new HashMap<String, ArrayList<Date>>();

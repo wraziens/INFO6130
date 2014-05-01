@@ -349,7 +349,7 @@ public class FlyOutContainer extends LinearLayout implements
 		if (classTitle.equals("DrinkCalendar")) {
 			tutorialInitialization(3);
 		}
-		if (classTitle.equals("SocialVisualization")) {
+		if (classTitle.equals("TrendFace")) {
 			tutorialInitialization(4);
 		}
 		if (classTitle.equals("GoalsLayout")) {

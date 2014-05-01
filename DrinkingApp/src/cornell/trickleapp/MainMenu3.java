@@ -3,6 +3,7 @@ package cornell.trickleapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.SlidingDrawer;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainMenu3 extends Activity implements OnClickListener,
 		OnDrawerOpenListener {
@@ -21,6 +23,7 @@ public class MainMenu3 extends Activity implements OnClickListener,
 	SlidingDrawer sdKiipRewards, sdSetGoals;
 	TextView tvAchievementMessage, tvSetupMessage;
 	FlyOutContainer root;
+	boolean survey_allowed;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,7 @@ public class MainMenu3 extends Activity implements OnClickListener,
 		getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
 		// getActionBar().hide();
 
-		//initialize();
+		// initialize();
 
 	}
 
@@ -64,7 +67,8 @@ public class MainMenu3 extends Activity implements OnClickListener,
 
 		// bDaysPerWeek_star.setBackgroundResource(R.drawable.star_2);
 		// prompts setting of goals after initial survey
-		if (!db.variableExistAll("initialSurvey_goalsPrompt")&&!db.variableExistAll("reward_kiip_home")) {
+		if (!db.variableExistAll("initialSurvey_goalsPrompt")
+				&& !db.variableExistAll("reward_kiip_home")) {
 			db.addValue("initialSurvey_goalsPrompt", 1);
 			sdKiipRewards.setVisibility(View.VISIBLE);
 			tvAchievementMessage.setText("Set your goals now?");
@@ -73,6 +77,14 @@ public class MainMenu3 extends Activity implements OnClickListener,
 		}
 		if (db.variableExistAll("reward_kiip_home")) {
 			sdKiipRewards.setVisibility(View.VISIBLE);
+		}
+		// blanks out survey if it's not prompted
+		if (db.variableExistAll("fill_survey_check") == false) {
+			surveyMenu.setBackgroundResource(R.drawable.ic_survey2);
+			survey_allowed=false;
+		}
+		else{
+			survey_allowed=true;
 		}
 	}
 
@@ -98,8 +110,15 @@ public class MainMenu3 extends Activity implements OnClickListener,
 			startActivity(goToThisPage);
 			break;
 		case R.id.bSurveyMenu:
-			goToThisPage = new Intent(MainMenu3.this, AfterDrinkSurvey.class);
-			startActivity(goToThisPage);
+			if (survey_allowed) {
+				goToThisPage = new Intent(MainMenu3.this,
+						AfterDrinkSurvey.class);
+				startActivity(goToThisPage);
+			}
+			else{
+				//if survey is blanked out, give an explanation
+				Toast.makeText(getBaseContext(), "Please record drinks first!", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		case R.id.bGoalsMenu:
 			goToThisPage = new Intent(MainMenu3.this, GoalsLayout.class);
