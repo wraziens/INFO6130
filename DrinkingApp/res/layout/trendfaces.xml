@@ -87,52 +87,75 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.9"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:weightSum="1" >
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_weight="0.1"
                 android:gravity="center"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:weightSum="1" >
 
-                <Button
-                    android:id="@+id/month_left_arrow"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="left"
-                    android:layout_marginRight="50dp"
-                    android:background="@drawable/trends_arrow_left"
-                    android:onClick="previousMonth" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.3"
+                    android:orientation="horizontal" >
 
-                <TextView
-                    android:id="@+id/trendMonth"
-                    android:layout_width="120dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/trends_tab"
+                    <Button
+                        android:id="@+id/month_left_arrow"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="50dp"
+                        android:background="@drawable/trends_arrow_left"
+                        android:onClick="previousMonth" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.4"
                     android:gravity="center"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#ffffff"
-                    android:textSize="18sp" />
+                    android:orientation="horizontal" >
 
-                <Button
-                    android:id="@+id/month_right_arrow"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="right"
-                    android:layout_marginLeft="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/trends_arrow_right"
-                    android:onClick="nextMonth" />
+                    <TextView
+                        android:id="@+id/trendMonth"
+                        android:layout_width="120dp"
+                        android:layout_height="60dp"
+                        android:background="@drawable/trends_tab"
+                        android:gravity="center"
+                        android:text=""
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="0.3"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/month_right_arrow"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="50dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/trends_arrow_right"
+                        android:onClick="nextMonth" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
@@ -205,9 +228,9 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:weightSum="3" >
@@ -320,9 +343,9 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:layout_weight="1"
+                android:layout_weight="0.3"
                 android:gravity="center"
                 android:orientation="horizontal" >
 
