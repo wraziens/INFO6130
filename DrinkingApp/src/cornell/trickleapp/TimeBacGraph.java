@@ -3,7 +3,6 @@ package cornell.trickleapp;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,24 +14,18 @@ import android.view.View;
 
 public class TimeBacGraph extends View {
 
-	private ArrayList<TrendsSliceItem> slicedArray;
 	private float startingDegree;
-	private Bitmap bitmap;
-	private ArrayList<Integer> highestBacSlot = new ArrayList<Integer>();
-	private ArrayList<Integer> highestDrinkingSpeedSlot = new ArrayList<Integer>();
-	private ArrayList<Double> drinkingSpeedArray = new ArrayList<Double>(); 
+
 	private int density;
 	private BacTime bacTime;
-	private Context context;
 
-	private ArrayList<DatabaseStore> drinkCounts;
 	private ArrayList<TrendsSliceItem> morningCounts;
 	private ArrayList<TrendsSliceItem> eveningCounts;
 	private ArrayList<TrendsSliceItem> drawCounts;
  	private ArrayList<PieSlice> slices;
 	private ArrayList<PieSlice> after;
 	private ArrayList<PieSlice> morningSlices;
-	private ArrayList<PieSlice> eveningSlices;
+	
 	String[] eveningLabels;
 	String[] morningLabels;
 	String[] afterLabels;
@@ -44,7 +37,7 @@ public class TimeBacGraph extends View {
 	
 	private float startDegreeEvening = -1;
 	private float startDegreeMorning = -1;
-	private float start = -1;
+	
 	private Canvas canvasPie;
 	private RectF oval;
 	private Paint paint;
@@ -53,8 +46,7 @@ public class TimeBacGraph extends View {
 		super(context);
 		
 		drawCounts = new ArrayList<TrendsSliceItem>();
-		
-		this.context = context;
+
 		this.morningCounts = morningCounts;
 		this.eveningCounts = eveningCounts;
 		this.slices = new ArrayList<PieSlice>();
@@ -63,7 +55,6 @@ public class TimeBacGraph extends View {
 		this.drawSlices = new ArrayList<PieSlice>();
 		
 		if(eveningCounts.size() > 0){
-			start = this.eveningCounts.get(0).getStartDegree();
 			startDegreeEvening = this.eveningCounts.get(0).getStartDegree();
 		}
 		if(morningCounts.size() > 0){
@@ -103,8 +94,6 @@ public class TimeBacGraph extends View {
 		
 		if (eveningCounts != null){
 			drawCounts = eveningCounts;
-		} else{
-			drawCounts.clear();
 		}
 	}
 	
@@ -145,79 +134,6 @@ public class TimeBacGraph extends View {
 		
 	}
 	
-		/*
-		slicedArray = s;
-		ArrayList<Double> inputArray = new ArrayList<Double>();
-		// parse each bac val into array
-		for (int i = 0; i < slicedArray.size(); i++)
-			inputArray.add(slicedArray.get(i).getBAC());
-		highestBacSlot = highestValue(inputArray);
-		// parse drink speed val (per hour) into array
-		int count = 0;
-		double val = 0;
-		double totalSec = 0;
-		for (int i = 0; i < slicedArray.size(); i++) {
-			if (count == 0) {
-				val = (i + 1) / (double) slicedArray.get(i).getDuration();
-				totalSec = slicedArray.get(i).getDuration();
-			}
-			// else number of drinks consumed divided by sum of all the time
-			// spent drinking up until now
-			else
-				val = (i + 1)
-						/ ((double) slicedArray.get(i).getDuration() + drinkingSpeedArray
-								.get(i - count) * totalSec);
-			drinkingSpeedArray.add(val);
-			totalSec = totalSec + (double) slicedArray.get(i).getDuration();
-			count++;
-		}
-		for (int i = 0; i < drinkingSpeedArray.size(); i++)
-			drinkingSpeedArray.set(i, drinkingSpeedArray.get(i));
-		highestDrinkingSpeedSlot = highestValueGeneral(drinkingSpeedArray);
-		DisplayMetrics metrics = getResources().getDisplayMetrics();
-		density = metrics.densityDpi;
-	}
-*/
-	private ArrayList<Integer> highestValue(ArrayList<Double> valArray) {
-		ArrayList<Double> dummyArray = new ArrayList<Double>();
-		ArrayList<Integer> highestValSlot = new ArrayList<Integer>();
-		// gets the max value of the ArrayList
-		double highestVal = 0;
-		for (int i = 0; i < slicedArray.size(); i++) {
-			if (highestVal < slicedArray.get(i).getBAC()) {
-				highestVal = slicedArray.get(i).getBAC();
-			}
-			dummyArray.add(slicedArray.get(i).getBAC());
-		}
-		for (int i = 0; i < dummyArray.size(); i++) {
-			if (dummyArray.get(i) == highestVal)
-				highestValSlot.add(i);
-		}
-
-		return highestValSlot;
-
-	}
-
-	private ArrayList<Integer> highestValueGeneral(ArrayList<Double> valArray) {
-		ArrayList<Double> dummyArray = new ArrayList<Double>();
-		ArrayList<Integer> highestValSlot = new ArrayList<Integer>();
-		// gets the max value of the ArrayList
-		double highestVal = 0;
-		for (int i = 0; i < valArray.size(); i++) {
-			if (highestVal < valArray.get(i)) {
-				highestVal = valArray.get(i);
-			}
-			dummyArray.add(valArray.get(i));
-		}
-		for (int i = 0; i < dummyArray.size(); i++) {
-			if (dummyArray.get(i) == highestVal)
-				highestValSlot.add(i);
-		}
-
-		return highestValSlot;
-
-	}
-
 	private void processColors(TrendsSliceItem item, Paint paint){
 		int colorTime = -1;
 		double bac = item.getBAC();
@@ -356,13 +272,6 @@ public class TimeBacGraph extends View {
 							}
 							slices.add(p);
 						}
-						/*else{
-							if (this.startingDegree + degree > 810){
-								float new_degree = 810 - this.startingDegree;
-								 p = new PieSlice(new_degree, this.startingDegree, 0.00, paint);
-								 after.add(p);
-							}
-						}*/
 						this.startingDegree = this.startingDegree + degree;
 						item.setTimeStart(colorTime);
 					}
@@ -412,7 +321,6 @@ public class TimeBacGraph extends View {
 		canvasPie = canvas;
 		canvasPie.setDensity(density);
 
-		//canvasPie.drawColor(Color.parseColor("#f7f3f7"));
 		canvasPie.drawColor(Color.parseColor("#DCDEE0"));
 		float canvasWidth = canvasPie.getWidth();
 		float canvasHeight = canvasPie.getHeight();
@@ -440,8 +348,6 @@ public class TimeBacGraph extends View {
 		oval.set(left, top, right, bottom);
 		paint.setColor(Color.parseColor("#f0f0f0"));
 		canvasPie.drawArc(oval, 0, 360, true, paint);
-
-		int countSize = eveningCounts.size();
 		
 		this.startingDegree = this.drawStart;
 		
@@ -452,7 +358,7 @@ public class TimeBacGraph extends View {
 		}
 		paint.setColor(Color.parseColor("#BBBDBE"));
 
-		// draws white lines to seperate the times.
+		// draws white lines to mark the hours on the clock.
 		paint.setStrokeWidth(1);
 		for (int i = 0; i < 12; i++) {
 			float[] startEndXY = trigMeasurement(i * 30, oval, ovalRadius);
@@ -476,7 +382,6 @@ public class TimeBacGraph extends View {
 			paint.getTextBounds(drawLabels[i], 0, drawLabels[i].length(), labelRect);	
 			int paintSize=18;
 			paint.setTextSize(paintSize);
-			//paint.setTextAlign(Align.RIGHT);
 			float[] startEndXY = trigMeasurement(circle, oval,
 					ovalRadius * 1.15f);
 			float timeFinalPositionX = startEndXY[2];
@@ -490,109 +395,11 @@ public class TimeBacGraph extends View {
 			circle+=90;
 		}
 		
-		
-		
-		
-		
-		
-		// points out the highest val here
-		// takes the midpoint of the
+
 		paint.setColor(Color.BLACK);
 		oval.set(left, top, right, bottom);
 
 		paint.setStrokeWidth(1);
-		/*
-		 * for (int i = 0; i < highestBacSlot.size(); i++) { TrendsSliceItem
-		 * highestBAC = slicedArray.get(highestBacSlot.get(i)); float degree =
-		 * highestBAC.getStartDegree() + (highestBAC.getDegree() / 2); float[]
-		 * startEndXY = trigMeasurement(degree, oval, ovalRadius * 1.1f); float
-		 * startX = (startEndXY[0] + startEndXY[2]) / 2; float startY =
-		 * (startEndXY[1] + startEndXY[3]) / 2; canvas.drawLine(startX, startY,
-		 * startEndXY[2], startEndXY[3], paint); // draws text
-		 * paint.setTextSize(15); String highestText = "" + highestBAC.getBAC();
-		 * Rect highestTextRect = new Rect(); paint.getTextBounds(highestText,
-		 * 0, highestText.length(), highestTextRect); // draws text and make (y
-		 * position) bottom of text align to ending // pt of the pointer float
-		 * bottomOfText = (float) startEndXY[3] - highestTextRect.height() / 2;
-		 * float rightOfText = (float) startEndXY[2] + highestTextRect.width();
-		 * 
-		 * // draws line underlining the text canvas.drawLine((float)
-		 * startEndXY[2], (float) startEndXY[3], rightOfText, (float)
-		 * startEndXY[3], paint); paint = setColor(paint, highestBAC.getBAC());
-		 * canvas.drawText(highestText, (float) startEndXY[2], bottomOfText,
-		 * paint); }
-		 */
-		// draws the highest drinking speed
-		/*
-		for (int i = 0; i < highestDrinkingSpeedSlot.size(); i++) {
-			TrendsSliceItem highestBAC = slicedArray
-					.get(highestDrinkingSpeedSlot.get(i));
-			float degree = highestBAC.getStartDegree()
-					+ (highestBAC.getDegree() / 2);
-			float[] startEndXY = trigMeasurement(degree, oval,
-					ovalRadius * 1.1f);
-			// shortens the path by 1/4
-			float startX = (startEndXY[0] + startEndXY[2]) / 2;
-			startX = (startX + startEndXY[2]) / 2;
-			float startY = (startEndXY[1] + startEndXY[3]) / 2;
-			startY = (startY + startEndXY[3]) / 2;
-			canvas.drawLine(startX, startY, startEndXY[2], startEndXY[3], paint);
-			// draws text
-			paint.setTextSize(15);
-			Boolean alignLeft = textAndUnderlineOrientation(degree);
-			if (alignLeft)
-				paint.setTextAlign(Align.LEFT);
-			if (!alignLeft)
-				paint.setTextAlign(Align.RIGHT);
-			// currently drinks per sec so it needs to be converted to
-			// drinks/hours
-			String highestText = ""
-					+ drinkingSpeedArray.get((highestDrinkingSpeedSlot.get(i)))
-					* 3600;
-			// cuts off the decimal places and trailing numbers
-			int placementOfDecimal = 0;
-			placementOfDecimal = highestText.indexOf(".");
-			highestText = highestText.substring(0, placementOfDecimal)
-					+ " drinks/hr";
-			Rect highestTextRect = new Rect();
-			paint.getTextBounds(highestText, 0, highestText.length(),
-					highestTextRect);
-			// draws text and make (y position) bottom of text align to ending
-			// pt of the pointer
-			float bottomOfText = (float) startEndXY[3]
-					- highestTextRect.height() / 2;
-			float rightOfText=0;
-			if (alignLeft)
-				rightOfText = (float) startEndXY[2] + highestTextRect.width();
-			if (!alignLeft)
-				rightOfText = (float) startEndXY[2] - highestTextRect.width();
-			// draws line underlining the text
-			canvas.drawLine((float) startEndXY[2], (float) startEndXY[3],
-					rightOfText, (float) startEndXY[3], paint);
-			paint = setColor(paint, highestBAC.getBAC());
-			canvas.drawText(highestText, (float) startEndXY[2], bottomOfText,
-					paint);
-		}*/
-		// draws the starting time for drinking
-		/*
-		paint.setColor(Color.BLACK);
-		Boolean AlignLeft=textAndUnderlineOrientation(startDegreeEvening);
-		if(drawCounts.size() >0){
-			String startTime = drawCounts.get(0).getTimeStartInString();
-			Rect timeStringRect = new Rect();
-			paint.getTextBounds(startTime, 0, startTime.length(), timeStringRect);
-			float[] startEndXY = trigMeasurement(startDegreeEvening, oval,
-					ovalRadius * 1.1f);
-			if(AlignLeft){
-				paint.setTextAlign(Align.LEFT);
-			}else{
-				paint.setTextAlign(Align.RIGHT);
-			}
-			float timeFinalPositionX = startEndXY[2];
-			float timeFinalPositionY = startEndXY[3];
-			canvasPie.drawText(startTime, timeFinalPositionX, timeFinalPositionY,
-					paint);
-		}*/
 		forceLayout();
 		
 	}
@@ -606,14 +413,11 @@ public class TimeBacGraph extends View {
 		float circleCenterY = (oval.bottom - oval.top) / 2 + oval.top;
 		float textDegree = degree;
 		float radius = rad;
-		double z = 0;
 		double y = 0;
 		double x = 0;
 		float endingX = 0;
 		float endingY = 0;
 		// gets text's width
-		Rect textBounds = new Rect();
-		Paint text = new Paint();
 		float[] startXstartYendXendY = new float[4];
 		if (textDegree == 0) {
 			x = radius;
@@ -682,13 +486,4 @@ public class TimeBacGraph extends View {
 		return result;
 	}
 
-	//Alignment of the text depending on degree
-	private Boolean textAndUnderlineOrientation(float degree) {
-		if (degree <= 90)
-			return true;
-		if (degree <= 270 && degree > 90)
-			return false;
-		else
-			return true;
-	}
 }

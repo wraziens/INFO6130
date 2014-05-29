@@ -399,8 +399,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		int lastEveningIndex = -1;
 		DatabaseStore lastMorning = null;
 		int lastMorningIndex = -1;
-		// int lastRemovedEvening = 0;
-		// int lastRemovedMorning = 0;
+
 		int lastRemoved = 0;
 
 		for (int i = 0; i < drinkCounts.size(); i++) {
@@ -509,8 +508,7 @@ public class DrinkCalendar extends Activity implements OnClickListener {
 		beer_icon = (ImageView) dialog.findViewById(R.id.beer_icon);
 		wine_icon = (ImageView) dialog.findViewById(R.id.wine_icon);
 		liquor_icon = (ImageView) dialog.findViewById(R.id.liquor_icon);
-		// initializes the necessary values
-		// setupTrendSliceItem(drinkSecRaw, drinkBAC);
+
 
 		visual = new TimeBacGraph(this, eveningCounts, morningCounts);
 		mainLayout = (LinearLayout) dialog.findViewById(R.id.pieGraph);
